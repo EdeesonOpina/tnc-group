@@ -37,8 +37,13 @@
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Email Address</label>
-                                    <input type="text" class="form-control" name="email" placeholder="Email Address" value="{{ old('email') ?? $project->email }}">
+                                    <label for="company">Company</label><br />
+                                    <select id="company" name="company_id" class="custom-select" data-toggle="select">
+                                        <option value="{{ $project->company->id }}">{{ $project->company->name }}</option>
+                                        @foreach($companies as $company)
+                                            <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -46,8 +51,13 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Contact Person</label>
-                                    <input type="text" class="form-control" name="person" placeholder="Contact Person" value="{{ old('person') ?? $project->person }}">
+                                    <label for="client">Client</label><br />
+                                    <select id="client" name="client_id" class="custom-select" data-toggle="select">
+                                        <option value="{{ $project->client->id }}">{{ $project->client->name }}</option>
+                                        @foreach($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col">
@@ -58,29 +68,14 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Phone <i>(optional)</i></label>
-                                    <input type="text" name="phone" class="form-control" placeholder="Phone" value="{{ old('phone') ?? $project->phone }}">
+                                    <label>Cost</label>
+                                    <input type="text" name="cost" class="form-control" placeholder="Cost" value="{{ old('cost') ?? $project->cost }}">
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Mobile</label>
-                                    <input type="text" name="mobile" class="form-control" placeholder="Mobile" value="{{ old('mobile') ?? $project->mobile }}">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>Line Address 1</label>
-                                    <input type="text" name="line_address_1" class="form-control" placeholder="Line Address 1" value="{{ old('line_address_1') ?? $project->line_address_1 }}">
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>Line Address 2</label>
-                                    <input type="text" name="line_address_2" class="form-control" placeholder="Line Address 2" value="{{ old('line_address_2') ?? $project->line_address_2 }}">
+                                    <label>End Date</label>
+                                    <input type="date" name="end_date" class="form-control" value="{{ old('end_date') ?? $project->end_date }}">
                                 </div>
                             </div>
                         </div>

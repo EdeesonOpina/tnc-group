@@ -137,8 +137,14 @@ class ProjectController extends Controller
     public function edit($project_id)
     {
         $project = Project::find($project_id);
+        $clients = Client::where('status', ClientStatus::ACTIVE)
+                        ->get();
+        $companies = Company::where('status', CompanyStatus::ACTIVE)
+                        ->get();
 
         return view('admin.projects.edit', compact(
+            'clients',
+            'companies',
             'project'
         ));
     }
