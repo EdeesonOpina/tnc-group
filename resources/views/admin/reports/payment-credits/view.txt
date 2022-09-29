@@ -1,0 +1,468 @@
+@php
+  use Carbon\Carbon;
+  use App\Models\Order;
+  use App\Models\OrderStatus;
+  use App\Models\Payment;
+  use App\Models\PaymentCredit;
+  use App\Models\PaymentReceipt;
+  use App\Models\PaymentCreditRecord;
+  use App\Models\PaymentCreditStatus;
+  use App\Models\PaymentReceiptStatus;
+  use App\Models\PaymentCreditRecordStatus;
+  use App\Models\PaymentStatus;
+  use App\Models\POSDiscount;
+  use App\Models\POSDiscountStatus;
+  use App\Models\POSVat;
+  use App\Models\POSVatStatus;
+
+  $total_cost = 0;
+  $profit = 0;
+  $grand_total = 0;
+  $paid_balance = 0;
+  $overall_profit_total = 0;
+  $overall_costing_total = 0;
+  $pos_grand_total_sales = 0;
+
+  $pos_cash_total_with_deductions = 0;
+  $pos_credit_total_with_deductions = 0;
+  $pos_credit_card_total_with_deductions = 0;
+  $pos_cheque_total_with_deductions = 0;
+  $pos_bank_deposit_total_with_deductions = 0;
+@endphp
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reports</title>
+  <link type="text/css" href="{{ url('auth/pdf/assets/css/app.css') }}" rel="stylesheet">
+  <style type="text/css">
+    #compact-table {
+      white-space:nowrap;
+    }
+
+    #margin-left {
+        margin-left: 7px;
+    }
+
+    #margin-right {
+        margin-right: 7px;
+    }
+
+    #space-table {
+      margin-left: 7px;
+      margin-right: 7px;
+    }
+
+    .text-pdf-small {
+      font-size: 11px;
+    }
+
+    .font-change {
+        font-family: "Lucida Console", "Courier New", monospace;
+    }
+
+    .heading-text {
+      font-size: 30px;
+    }
+
+    .no-underline {
+      text-decoration: none !important;
+    }
+
+    body {
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+  <br><br>
+  <div class="container">
+    <a href="{{ route('admin.reports.payment-credits') }}" style="text-decoration: none">
+      <button class="btn btn-default" id="margin-right">Go Back</button>
+    </a>
+    <button type="button" id="btnExport" class="btn btn-success" onclick="fnExcelReport();">Create Excel File</button>
+    <button class="btn btn-success" onClick="printdiv('div_print');" id="margin-left">Print page</button>
+    <br><br>
+
+    <div id="div_print" class="font-change">
+      <img src="{{ url(env('APP_LOGO_WITH_TEXT')) }}" width="180px">
+      <hr>
+      <h4><b>Credits Report</b></h4>
+      <h6>
+         <div class="row">
+            <div class="col-md-2">
+             <strong>From Date:</strong>
+            </div>
+
+            <div class="col-md-4">
+              @if ($from_date != '*')
+                {{ date('m-d-Y',strtotime($from_date)) }}
+              @endif
+            </div>
+
+            <div class="col-md-2">
+              <strong>To Date:</strong>
+            </div>
+
+            <div class="col-md-4">
+              @if ($to_date != '*')
+                {{ date('m-d-Y',strtotime($to_date)) }}
+              @endif
+            </div>
+        </div>
+    </h6>
+
+    <br>
+
+    <table class="table table-responsive-sm table-bordered table-striped table-sm" id="mainTable">
+      <thead>
+        <tr>
+          <th>SO #</th>
+          <th>Customer</th>
+          <th>Salesperson</th>
+          <th>POS</th>
+          <th id="compact-table">MOP</th>
+          <th id="compact-table">Date</th>
+          <th id="compact-table">Time</th>
+          <th id="compact-table">Total</th>
+          <th id="compact-table">VAT</th>
+          <th id="compact-table">Discount</th>
+          <th id="compact-table">Paid Balance</th>
+          <th id="compact-table">Grand Total</th>
+          <th id="compact-table">Cost</th>
+          <th id="compact-table">Profit</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach($payment_credits->unique('so_number') as $payment_credit)
+        @php
+            $payment_receipt = Payment::where('so_number', $payment_credit->so_number)->first();
+
+            $paid_balance = PaymentCreditRecord::where('so_number', $payment_credit->so_number)
+                                            ->where('status', PaymentCreditRecordStatus::APPROVED)
+                                            ->sum('price');
+
+            $payment = Payment::where('so_number', $payment_credit->so_number)
+                            ->first();
+
+            $payment_items = Payment::where('so_number', $payment->so_number)
+                                  ->where('status', '!=', PaymentStatus::INACTIVE)
+                                  ->get();
+
+            $payments_count = Payment::where('so_number', $payment->so_number)
+                                    ->where('status', '!=', PaymentStatus::INACTIVE)
+                                    ->sum('qty');
+
+            $payments_total = Payment::where('so_number', $payment->so_number)
+                                    ->where('status', '!=', PaymentStatus::CANCELLED)
+                                    ->where('status', '!=', PaymentStatus::INACTIVE)
+                                    ->sum('total');
+
+            $payments_discount = POSDiscount::where('so_number', $payment->so_number)
+                                        ->where('status', POSDiscountStatus::ACTIVE)
+                                        ->first()
+                                        ->price ?? 0;
+
+            $payments_vat = POSVat::where('so_number', $payment->so_number)
+                                        ->where('status', POSVatStatus::ACTIVE)
+                                        ->first()
+                                        ->price ?? 0;
+
+            if ($payment->status == PaymentStatus::DELIVERED) {
+                $total_with_deductions = ($payments_total - ($payments_discount + $payments_vat));
+
+                $grand_total += $total_with_deductions;
+            }
+
+            $profit_arr = [];
+            $cost_arr = [];
+
+            /* pos cash deduction */
+            $pos_cash_discount_deduction = POSDiscount::leftJoin('payments', 'pos_discounts.so_number', 'payments.so_number')
+                                        ->select('pos_discounts.*')
+                                        ->where('payments.mop', 'cash')
+                                        ->where('payments.so_number', $payment->so_number)
+                                        ->where('pos_discounts.status', POSDiscountStatus::ACTIVE)
+                                        ->first()
+                                        ->price ?? 0;
+
+            $pos_cash_vat_deduction = POSVat::leftJoin('payments', 'pos_vat.so_number', 'payments.so_number')
+                                        ->select('pos_vat.*')
+                                        ->where('payments.mop', 'cash')
+                                        ->where('payments.so_number', $payment->so_number)
+                                        ->where('pos_vat.status', POSVatStatus::ACTIVE)
+                                        ->first()
+                                        ->price ?? 0;
+
+            $pos_cash_total_with_deductions += ($pos_cash_discount_deduction + $pos_cash_vat_deduction);
+            /* pos cash deduction */
+
+            /* pos credit deduction */
+            $pos_credit_discount_deduction = POSDiscount::leftJoin('payments', 'pos_discounts.so_number', 'payments.so_number')
+                                        ->select('pos_discounts.*')
+                                        ->where('payments.mop', 'credit')
+                                        ->where('payments.so_number', $payment->so_number)
+                                        ->where('pos_discounts.status', POSDiscountStatus::ACTIVE)
+                                        ->first()
+                                        ->price ?? 0;
+
+            $pos_credit_vat_deduction = POSVat::leftJoin('payments', 'pos_vat.so_number', 'payments.so_number')
+                                        ->select('pos_vat.*')
+                                        ->where('payments.mop', 'credit')
+                                        ->where('payments.so_number', $payment->so_number)
+                                        ->where('pos_vat.status', POSVatStatus::ACTIVE)
+                                        ->first()
+                                        ->price ?? 0;
+
+            $pos_credit_total_with_deductions += ($pos_credit_discount_deduction + $pos_credit_vat_deduction);
+            /* pos credit deduction */
+
+            /* pos credit-card deduction */
+            $pos_credit_card_discount_deduction = POSDiscount::leftJoin('payments', 'pos_discounts.so_number', 'payments.so_number')
+                                        ->select('pos_discounts.*')
+                                        ->where('payments.mop', 'credit-card')
+                                        ->where('payments.so_number', $payment->so_number)
+                                        ->where('pos_discounts.status', POSDiscountStatus::ACTIVE)
+                                        ->first()
+                                        ->price ?? 0;
+
+            $pos_credit_card_vat_deduction = POSVat::leftJoin('payments', 'pos_vat.so_number', 'payments.so_number')
+                                        ->select('pos_vat.*')
+                                        ->where('payments.mop', 'credit-card')
+                                        ->where('payments.so_number', $payment->so_number)
+                                        ->where('pos_vat.status', POSVatStatus::ACTIVE)
+                                        ->first()
+                                        ->price ?? 0;
+
+            $pos_credit_card_total_with_deductions += ($pos_credit_card_discount_deduction + $pos_credit_card_vat_deduction);
+            /* pos credit-card deduction */
+
+            /* pos bank-deposit deduction */
+            $pos_bank_deposit_discount_deduction = POSDiscount::leftJoin('payments', 'pos_discounts.so_number', 'payments.so_number')
+                                        ->select('pos_discounts.*')
+                                        ->where('payments.mop', 'bank-deposit')
+                                        ->where('payments.so_number', $payment->so_number)
+                                        ->where('pos_discounts.status', POSDiscountStatus::ACTIVE)
+                                        ->first()
+                                        ->price ?? 0;
+
+            $pos_bank_deposit_vat_deduction = POSVat::leftJoin('payments', 'pos_vat.so_number', 'payments.so_number')
+                                        ->select('pos_vat.*')
+                                        ->where('payments.mop', 'bank-deposit')
+                                        ->where('payments.so_number', $payment->so_number)
+                                        ->where('pos_vat.status', POSVatStatus::ACTIVE)
+                                        ->first()
+                                        ->price ?? 0;
+
+            $pos_bank_deposit_total_with_deductions += ($pos_bank_deposit_discount_deduction + $pos_bank_deposit_vat_deduction);
+            /* pos bank-deposit deduction */
+
+            /* pos cheque deduction */
+            $pos_cheque_discount_deduction = POSDiscount::leftJoin('payments', 'pos_discounts.so_number', 'payments.so_number')
+                                        ->select('pos_discounts.*')
+                                        ->where('payments.mop', 'cheque')
+                                        ->where('payments.so_number', $payment->so_number)
+                                        ->where('pos_discounts.status', POSDiscountStatus::ACTIVE)
+                                        ->first()
+                                        ->price ?? 0;
+
+            $pos_cheque_vat_deduction = POSVat::leftJoin('payments', 'pos_vat.so_number', 'payments.so_number')
+                                        ->select('pos_vat.*')
+                                        ->where('payments.mop', 'cheque')
+                                        ->where('payments.so_number', $payment->so_number)
+                                        ->where('pos_vat.status', POSVatStatus::ACTIVE)
+                                        ->first()
+                                        ->price ?? 0;
+
+            $pos_cheque_total_with_deductions += ($pos_cheque_discount_deduction + $pos_cheque_vat_deduction);
+            /* pos cheque deduction */
+
+            foreach($payment_items as $payment_item) {
+              if ($payment_item->status == PaymentStatus::DELIVERED) {
+                $landing_price = Order::where('item_id', $payment_item->item->id)
+                                  ->where('goods_receipt_id', $payment_item->inventory->goods_receipt->id)
+                                  ->where('status', OrderStatus::ACTIVE)
+                                  ->first()
+                                  ->price ?? 0;
+
+                $cost_price = ($landing_price * $payment_item->qty);
+                $overall_costing_total += $cost_price;
+
+                $overall_profit_total += ($payment->qty * $payment->price) - $cost_price;
+
+                // debugging the total cost and profit
+                // echo $payment->so_number . ' ' . $landing_price . ' * ' . $payment->qty . ' = ' . $cost_price . ' TOTAL ' . $overall_costing_total . '<br>';
+              }
+            }
+        @endphp
+        <tr>
+          <td>
+            <!-- <strong><a href="{{ route('accounting.payments.view', [$payment->so_number]) }}" class="no-underline">{{ $payment->so_number }}</a></strong> -->
+            <strong><a href="{{ route('accounting.payment-credits.view', [$payment->so_number]) }}" class="no-underline">{{ $payment->so_number }}</a></strong>
+          </td>
+          <td>{{ $payment->user->firstname }} {{ $payment->user->lastname }}</td>
+          <td>
+              @if ($payment->salesperson)
+                {{ $payment->salesperson->firstname }} {{ $payment->salesperson->lastname }}
+              @endif
+          </td>
+          <td>
+            @if ($payment->is_pos_transaction == 1)
+              yes
+            @else
+              no
+            @endif
+          </td>
+          <td id="compact-table">{{ $payment->mop }}</td>
+          <td id="compact-table">{{ $payment->created_at->format('M-d-Y') }}</td>
+          <td id="compact-table">{{ $payment->created_at->format('g:iA') }}</td>
+          <td>{{ number_format($payments_total, 2) }}</td>
+          <td>{{ number_format($payments_vat, 2) }}</td>
+          <td>{{ number_format($payments_discount, 2) }}</td>
+          <td>{{ number_format($paid_balance, 2) }}</td>
+          <td>{{ number_format($total_with_deductions, 2) }}</td>
+          <td>
+            @php
+              $costing = 0;
+
+              $var_cost = Order::where('item_id', $payment_item->item->id)
+                              ->where('goods_receipt_id', $payment_item->inventory->goods_receipt->id)
+                              ->where('status', OrderStatus::ACTIVE)
+                              ->first();
+
+              foreach($payment_items as $payment_item) {
+                $landing_price = Order::where('item_id', $payment_item->item->id)
+                                    ->where('goods_receipt_id', $payment_item->inventory->goods_receipt->id)
+                                    ->where('status', OrderStatus::ACTIVE)
+                                    ->first()
+                                    ->price ?? 0;
+
+                $cost_price = ($landing_price * $payment_item->qty);
+                $costing += $cost_price;
+              }
+            @endphp
+
+            {{ number_format($costing, 2) }}
+          </td>
+          <td>
+            @php
+              $costing = 0;
+
+              foreach($payment_items as $payment_item) {
+                $landing_price = Order::where('item_id', $payment_item->item->id)
+                                    ->where('goods_receipt_id', $payment_item->inventory->goods_receipt->id)
+                                    ->where('status', OrderStatus::ACTIVE)
+                                    ->first()
+                                    ->price ?? 0;
+
+                $cost_price = ($landing_price * $payment_item->qty);
+                $costing += $cost_price;
+              }
+            @endphp
+
+            {{ number_format($total_with_deductions - $costing, 2) }}
+          </td>
+          <td>
+            @if ($payment_credit->status == PaymentCreditStatus::PENDING)
+                pending
+            @elseif ($payment_credit->status == PaymentCreditStatus::PARTIALLY_PAID)
+                partially paid
+            @elseif ($payment_credit->status == PaymentCreditStatus::FULLY_PAID)
+                <strong style="color: green">fully paid</strong>
+            @elseif ($payment_credit->status == PaymentCreditStatus::CREDIT)
+                credit
+            @elseif ($payment_credit->status == PaymentCreditStatus::UNPAID)
+                unpaid
+            @elseif ($payment_credit->status == PaymentCreditStatus::OVERDUE)
+                <strong style="color: red">overdue</strong>
+            @endif
+            <br>
+            @if ($payment_receipt)
+              @if ($payment_receipt->status == PaymentReceiptStatus::PENDING)
+                pending
+              @elseif ($payment->status == PaymentReceiptStatus::CONFIRMED)
+                confirmed
+              @elseif ($payment->status == PaymentReceiptStatus::FOR_DELIVERY)
+                for-delivery
+              @elseif ($payment->status == PaymentReceiptStatus::DELIVERED)
+                <strong style="color: green">delivered</strong>
+              @elseif ($payment->status == PaymentReceiptStatus::CANCELLED)
+                <strong style="color: red">cancelled</strong>
+              @elseif ($payment->status == PaymentReceiptStatus::INACTIVE)
+                inactive
+              @endif
+            @endif
+          </td>
+        </tr>
+        @endforeach
+
+        @php
+          $overall_profit_total = ($grand_total - $overall_costing_total);
+        @endphp
+
+        <tr>
+          <td colspan="10"></td>
+          <td id="compact-table"><b>Grand Total</b></td>
+          <td style="width:1%;white-space:nowrap !important; font-weight: 500 !important;"><b>{{ number_format($grand_total, 2) }}</b></td>
+          <td colspan="3"></td>
+        </tr>
+
+        <tr class="bg-danger text-white">
+          <td colspan="10"></td>
+          <td id="compact-table"><b>Total Cost</b></td>
+          <td style="width:1%;white-space:nowrap !important; font-weight: 500 !important;"><b>{{ number_format($overall_costing_total, 2) }}</b></td>
+          <td colspan="3"></td>
+        </tr>
+
+        <tr class="bg-success text-white">
+          <td colspan="10"></td>
+          <td id="compact-table"><b>Total Profit</b></td>
+          <td style="width:1%;white-space:nowrap !important; font-weight: 500 !important;"><b>{{ number_format($overall_profit_total, 2) }}</b></td>
+          <td colspan="3"></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+
+  <script type="text/javascript">
+    function fnExcelReport()
+    {
+      TableToExcel.convert(document.getElementById("mainTable"), {
+        name: "Credits Report {{ date('m-d-y') }}.xlsx",
+        sheet: {
+          name: "Main",
+        }
+      });
+
+      TableToExcel.convert(document.getElementById("summaryTable"), {
+        name: "Summary Credits Report {{ date('m-d-y') }}.xlsx",
+        sheet: {
+          name: "Main",
+        }
+      });
+    }
+  </script>
+
+  <script language="javascript">
+    function printdiv(printpage)
+    {
+      var headstr = "<html><head><title></title></head><body>";
+      var footstr = "</body>";
+      var newstr = document.all.item(printpage).innerHTML;
+      var oldstr = document.body.innerHTML;
+      document.body.innerHTML = headstr+newstr+footstr;
+      window.print();
+      document.body.innerHTML = oldstr;
+      return false;
+    }
+  </script>
+
+</body>
+</html>

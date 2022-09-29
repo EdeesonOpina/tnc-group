@@ -18,9 +18,29 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'firstname',
+        'lastname',
+        'company',
         'email',
         'password',
+        'birthdate',
+        'phone',
+        'mobile',
+        'country_id',
+        'region_id',
+        'province_id',
+        'city_id',
+        'barangay_id',
+        'line_address_1',
+        'line_address_2',
+        'branch_id',
+        'role',
+        'provider',
+        'oauth_id',
+        'avatar',
+        'signature',
+        'points',
+        'status',
     ];
 
     /**
@@ -41,4 +61,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function country()
+    {
+        return $this->hasOne(Country::class, 'id', 'country_id');
+    }
+
+    public function branch()
+    {
+        return $this->hasOne(Branch::class, 'id', 'branch_id');
+    }
 }
