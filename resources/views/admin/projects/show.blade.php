@@ -121,6 +121,7 @@ use App\Models\ProjectStatus;
                                         <div class="d-flex">
                                             <a href="{{ route('internals.projects.view', [$project->id]) }}" id="table-letter-margin">View</a> | 
                                             <a href="{{ route('internals.projects.edit', [$project->id]) }}" id="space-table">Edit</a> | 
+                                            <a href="{{ route('internals.projects.manage', [$project->id]) }}" id="space-table">Manage</a> | 
                                             @if ($project->status == ProjectStatus::FOR_APPROVAL)
                                                 <a href="#" data-href="{{ route('internals.projects.delete', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
                                             @endif
@@ -136,7 +137,7 @@ use App\Models\ProjectStatus;
                                     <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($project->end_date)->format('M d Y') }}</td>
                                     <td>
                                         @if ($project->status == ProjectStatus::FOR_APPROVAL)
-                                            <div class="badge badge-success ml-2">Active</div>
+                                            <div class="badge badge-success ml-2">For Approval</div>
                                         @elseif ($project->status == ProjectStatus::INACTIVE)
                                             <div class="badge badge-danger ml-2">Inactive</div>
                                         @endif
