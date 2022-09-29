@@ -948,8 +948,8 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
         // for searching projects
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\ProjectController@search')->name('admin.projects.search');
-            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ProjectController@filter')->name('admin.projects.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\ProjectController@search')->name('internals.projects.search');
+            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ProjectController@filter')->name('internals.projects.filter');
         });
     });
 

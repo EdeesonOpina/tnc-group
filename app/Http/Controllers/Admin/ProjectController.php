@@ -4,6 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Auth;
+use Mail;
+use Validator;
+use App\Models\Project;
+use App\Models\ProjectStatus;
+use App\Models\ProjectDetail;
+use App\Models\ProjectDetailStatus;
+use App\Models\Client;
+use App\Models\ClientStatus;
+use App\Models\Company;
+use App\Models\CompanyStatus;
 
 class ProjectController extends Controller
 {
@@ -24,7 +36,7 @@ class ProjectController extends Controller
         $from_date = $request->from_date ?? '*';
         $to_date = $request->to_date ?? '*';
 
-        return redirect()->route('admin.projects.filter', [$name, $status, $from_date, $to_date])->withInput();
+        return redirect()->route('internals.projects.filter', [$name, $status, $from_date, $to_date])->withInput();
     }
 
     public function filter($name, $status, $from_date, $to_date)
@@ -55,18 +67,26 @@ class ProjectController extends Controller
 
     public function add()
     {
-        return view('admin.projects.add');
+        $clients = Client::where('status', ClientStatus::ACTIVE)
+                        ->get();
+        $companies = Company::where('status', CompanyStatus::ACTIVE)
+                        ->get();
+
+        return view('admin.projects.add', compact(
+            'clients',
+            'companies'
+        ));
     }
 
     public function create(Request $request)
     {
         $rules = [
+            'company_id' => 'required',
+            'client_id' => 'required',
             'name' => 'required',
-            'person' => 'required',
-            'mobile' => 'required',
-            'email' => 'required',
-            'line_address_1' => 'required',
-            'line_address_2' => 'required',
+            'cost' => 'required',
+            'end_date' => 'required',
+            'description' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -83,12 +103,12 @@ class ProjectController extends Controller
             $data['image'] = 'uploads/images/projects/' . $image_name; // save the destination of the file to the database
         }
 
-        $data['status'] = ProjectStatus::ACTIVE; // if you want to insert to a specific column
+        $data['status'] = ProjectStatus::FOR_APPROVAL; // if you want to insert to a specific column
         Project::create($data); // create data in a model
 
         $request->session()->flash('success', 'Data has been added');
 
-        return redirect()->route('admin.projects');
+        return redirect()->route('internals.projects');
     }
 
     public function view($project_id)
@@ -126,13 +146,14 @@ class ProjectController extends Controller
     public function update(Request $request)
     {
         $rules = [
+            'company_id' => 'required',
+            'client_id' => 'required',
             'name' => 'required',
-            'person' => 'required',
-            'mobile' => 'required',
-            'email' => 'required',
-            'line_address_1' => 'required',
-            'line_address_2' => 'required',
+            'cost' => 'required',
+            'end_date' => 'required',
+            'description' => 'required',
         ];
+
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
@@ -152,16 +173,27 @@ class ProjectController extends Controller
 
         $request->session()->flash('success', 'Data has been updated');
 
-        return redirect()->route('admin.projects');
+        return redirect()->route('internals.projects');
     }
 
     public function recover(Request $request, $project_id)
     {
         $project = Project::find($project_id);
-        $project->status = ProjectStatus::ACTIVE; // mark data as active
+        $project->status = ProjectStatus::FOR_APPROVAL; // mark data as active
         $project->save();
 
         $request->session()->flash('success', 'Data has been recovered');
+
+        return back();
+    }
+
+    public function cancel(Request $request, $project_id)
+    {
+        $project = Project::find($project_id);
+        $project->status = ProjectStatus::CANCELLED; // mark data as cancelled
+        $project->save();
+
+        $request->session()->flash('success', 'Data has been cancelled');
 
         return back();
     }

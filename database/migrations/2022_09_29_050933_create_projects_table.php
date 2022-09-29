@@ -19,7 +19,7 @@ class CreateProjectsTable extends Migration
             $table->integer('client_id')->unsigned();
             $table->string('name');
             $table->decimal('cost', $precision = 10, $scale = 2);
-            $table->date('duration_date');
+            $table->date('end_date');
             $table->longtext('description')->nullable();
             $table->bigInteger('created_by_user_id')->default(0);
             $table->bigInteger('noted_by_user_id')->default(0);
