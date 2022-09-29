@@ -1,9 +1,7 @@
 @include('layouts.auth.header')
 @php
     use App\Models\Order;
-    use App\Models\Payable;
     use App\Models\OrderStatus;
-    use App\Models\PayableStatus;
     use App\Models\GoodsReceiptStatus;
 @endphp
 
@@ -124,10 +122,6 @@
                                 $orders_total = Order::where('goods_receipt_id', $goods_receipt->id)
                                                     ->where('status', OrderStatus::ACTIVE)
                                                     ->sum('total');
-
-                                $paid_total = Payable::where('goods_receipt_id', $goods_receipt->id)
-                                                    ->where('status', PayableStatus::PAID)
-                                                    ->sum('price');
                             @endphp
                                 <tr>
                                     <td id="compact-table">
@@ -152,22 +146,10 @@
                                     </td>
                                     <td id="compact-table">
                                         <b># {{ $goods_receipt->purchase_order->reference_number }}</b>
-                                        <div class="d-flex"> 
-                                            @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
-                                                @if ($paid_total < $orders_total)
-                                                    <a href="#" data-toggle="modal" data-target="#payables-goods-receipt-{{ $goods_receipt->id }}">Pay</a>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    </td>
-                                    <td id="compact-table">
-                                        @if ($paid_total)
-                                            P{{ number_format($paid_total, 2) }}
-                                        @endif
                                     </td>
                                     <td id="compact-table">P{{ number_format($orders_total, 2) }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">business</i> {{ $goods_receipt->purchase_order->supplier->name }}</td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">business</i> {{ $goods_receipt->purchase_order->branch->name }}</td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">business</i> {{ $goods_receipt->purchase_order->company->name }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $goods_receipt->purchase_order->created_by_user->firstname }} {{ $goods_receipt->purchase_order->created_by_user->lastname }}</td>
                                     <td id="compact-table">
                                         @if ($goods_receipt->purchase_order->approved_by_user)

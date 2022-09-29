@@ -19,7 +19,7 @@
   $agent_price = ($price + ($price * 0.02)) ?? '0.00';
 @endphp
 
-<form action="{{ route('internals.inventories.landing-price.create', [$inventory->branch_id, $inventory->id]) }}" method="post">
+<form action="{{ route('internals.inventories.landing-price.create', [$inventory->company_id, $inventory->id]) }}" method="post">
   {{ csrf_field() }}
   <input type="hidden" name="inventory_id" value="{{ $inventory->id }}">
   <input type="hidden" name="item_id" value="{{ $inventory->item->id }}">

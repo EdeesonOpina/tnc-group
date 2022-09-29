@@ -699,8 +699,8 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\InventoryBranchController@search')->name('internals.inventories.branches.search');
-            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\InventoryBranchController@filter')->name('internals.inventories.branches.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\InventoryCompanyController@search')->name('internals.inventories.companies.search');
+            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\InventoryCompanyController@filter')->name('internals.inventories.companies.filter');
         });
     });
 
@@ -810,19 +810,19 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
     });
 
     // branches
-    Route::group(['prefix' => 'branches/'], function () {
-        Route::get('/', 'App\Http\Controllers\Admin\BranchController@show')->name('admin.branches');
-        Route::get('/add', 'App\Http\Controllers\Admin\BranchController@add')->name('admin.branches.add');
-        Route::post('/create', 'App\Http\Controllers\Admin\BranchController@create')->name('admin.branches.create');
-        Route::get('/edit/{branch_id}', 'App\Http\Controllers\Admin\BranchController@edit')->name('admin.branches.edit');
-        Route::post('/edit', 'App\Http\Controllers\Admin\BranchController@update')->name('admin.branches.update');
-        Route::get('/delete/{branch_id}', 'App\Http\Controllers\Admin\BranchController@delete')->name('admin.branches.delete');
-        Route::get('/recover/{branch_id}', 'App\Http\Controllers\Admin\BranchController@recover')->name('admin.branches.recover');
+    Route::group(['prefix' => 'companies/'], function () {
+        Route::get('/', 'App\Http\Controllers\Admin\CompanyController@show')->name('admin.companies');
+        Route::get('/add', 'App\Http\Controllers\Admin\CompanyController@add')->name('admin.companies.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\CompanyController@create')->name('admin.companies.create');
+        Route::get('/edit/{branch_id}', 'App\Http\Controllers\Admin\CompanyController@edit')->name('admin.companies.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\CompanyController@update')->name('admin.companies.update');
+        Route::get('/delete/{branch_id}', 'App\Http\Controllers\Admin\CompanyController@delete')->name('admin.companies.delete');
+        Route::get('/recover/{branch_id}', 'App\Http\Controllers\Admin\CompanyController@recover')->name('admin.companies.recover');
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\BranchController@search')->name('admin.branches.search');
-            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\BranchController@filter')->name('admin.branches.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\CompanyController@search')->name('admin.companies.search');
+            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\CompanyController@filter')->name('admin.companies.filter');
         });
     });
 

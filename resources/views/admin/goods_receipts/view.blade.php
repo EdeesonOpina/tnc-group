@@ -201,7 +201,7 @@
                     <div class="col">
                         <div class="form-group">
                             <h6>Destination</h6>
-                            {{ $goods_receipt->purchase_order->branch->name }}
+                            {{ $goods_receipt->purchase_order->company->name }}
                         </div>
                     </div>
                 </div>

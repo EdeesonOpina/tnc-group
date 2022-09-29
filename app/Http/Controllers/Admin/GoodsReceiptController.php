@@ -107,7 +107,7 @@ class GoodsReceiptController extends Controller
             return redirect()->route('internals.goods-receipts.manage', [$existing_goods_receipt->id]);
         }
 
-        $grpo_count = str_replace('GRPO-', '', GoodsReceipt::orderBy('created_at', 'desc')->first()->reference_number) + 1; // get the latest po sequence then add 1
+        $grpo_count = str_replace('GRPO-', '', GoodsReceipt::orderBy('created_at', 'desc')->first()->reference_number ?? 0) + 1; // get the latest po sequence then add 1
 
         $data = request()->all(); // get all request
         $data['reference_number'] = 'GRPO-' . str_pad($grpo_count, 8, '0', STR_PAD_LEFT);

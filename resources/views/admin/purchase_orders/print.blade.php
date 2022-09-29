@@ -70,16 +70,16 @@
         <tbody>
             <tr>
                 <td class="text-left">
-                    <div class="text-label"><strong>Branch</strong></div>
+                    <div class="text-label"><strong>Company</strong></div>
                     <p class="mb-4">
-                    <strong class="text-body">{{ $purchase_order->branch->name }}</strong><br>
-                    {{ $purchase_order->branch->line_address_1 }}<br>
-                    {{ $purchase_order->branch->line_address_2 }}<br>
-                    @if ($purchase_order->branch->phone)
-                        {{ $purchase_order->branch->phone }} / 
+                    <strong class="text-body">{{ $purchase_order->company->name }}</strong><br>
+                    {{ $purchase_order->company->line_address_1 }}<br>
+                    {{ $purchase_order->company->line_address_2 }}<br>
+                    @if ($purchase_order->company->phone)
+                        {{ $purchase_order->company->phone }} / 
                     @endif
-                    @if ($purchase_order->branch->mobile)
-                        {{ $purchase_order->branch->mobile }}
+                    @if ($purchase_order->company->mobile)
+                        {{ $purchase_order->company->mobile }}
                     @endif
                     </p>
                     <strong>Date: </strong>{{ date('M d Y') }}

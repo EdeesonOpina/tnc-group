@@ -10,7 +10,7 @@ class PurchaseOrder extends Model
     use HasFactory;
 
     protected $fillable = [
-        'branch_id',
+        'company_id',
         'supplier_id',
         'reference_number',
         'note',
@@ -20,9 +20,9 @@ class PurchaseOrder extends Model
         'status',
     ];
 
-    public function branch()
+    public function company()
     {
-        return $this->hasOne(Branch::class, 'id', 'branch_id');
+        return $this->hasOne(Company::class, 'id', 'company_id');
     }
 
     public function supplier()

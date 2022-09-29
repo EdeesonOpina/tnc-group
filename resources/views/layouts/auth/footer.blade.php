@@ -46,8 +46,26 @@
 
                 <div class="sidebar-heading">Operations</div>
                 <div class="sidebar-block p-0">
+                    @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales')
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ route('internals.purchase-orders') }}">
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">playlist_add</i>
+                                <span class="sidebar-menu-text">Purchase Orders</span>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Stockman')
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ route('internals.goods-receipts') }}">
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">playlist_add_check</i>
+                                <span class="sidebar-menu-text">Goods Receipts</span>
+                            </a>
+                        </li>
+                    @endif
+
                     <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-button" href="{{ route('internals.inventories.manage', [auth()->user()->branch->id]) }}">
+                        <a class="sidebar-menu-button" href="{{ route('internals.inventories') }}">
                             <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">assignment</i>
                             <span class="sidebar-menu-text">Inventory</span>
                         </a>
@@ -119,7 +137,7 @@
                                 </a>
                             </li>
                             <li class="sidebar-menu-item">
-                                <a class="sidebar-menu-button" href="{{ route('admin.branches') }}">
+                                <a class="sidebar-menu-button" href="{{ route('admin.companies') }}">
                                     <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">store_mall_directory</i>
                                     <span class="sidebar-menu-text">Companies</span>
                                 </a>
@@ -269,11 +287,6 @@
   @endif
 
   @if (request()->is('admin/goods-receipts') || request()->is('admin/goods-receipts/*'))
-    @if (request()->is('admin/goods-receipts/view/*') || request()->is('admin/goods-receipts/manage/*'))
-
-    @else
-        @include('layouts.modals.payables.goods-receipts.pay')
-    @endif
   @endif
 
   @if (request()->is('accounting/payables/*') || request()->is('accounting/payables'))
@@ -311,10 +324,10 @@
   @endif
 
   @if (request()->is('admin/inventories/manage/*'))
-    @include('layouts.modals.inventories.items.set-price')
+    <!-- @include('layouts.modals.inventories.items.set-price')
     @include('layouts.modals.inventories.items.set-discount')
     @include('layouts.modals.inventories.items.set-barcode')
-    @include('layouts.modals.inventories.items.add-landing-price')
+    @include('layouts.modals.inventories.items.add-landing-price') -->
   @endif
 
   @if (request()->is('admin/inventories/serial-numbers/items/*'))

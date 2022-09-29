@@ -42,7 +42,7 @@
                                 <th id="compact-table">Role</th>
                                 <th id="compact-table">Email</th>
                                 <th id="compact-table">Contact</th>
-                                <th id="compact-table">Country</th>
+                                <th id="compact-table">Company</th>
                                 <th id="compact-table">Status</th>
                                 <th id="compact-table">Created At</th>
                             </tr>

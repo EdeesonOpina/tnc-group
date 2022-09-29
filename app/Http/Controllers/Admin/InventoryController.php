@@ -10,14 +10,14 @@ use Mail;
 use Validator;
 use App\Models\Item;
 use App\Models\Order;
-use App\Models\Branch;
+use App\Models\Company;
 use App\Models\Supply;
 use App\Models\Inventory;
 use App\Models\ItemStatus;
 use App\Models\OrderStatus;
 use App\Models\SupplyStatus;
 use App\Models\GoodsReceipt;
-use App\Models\BranchStatus;
+use App\Models\CompanyStatus;
 use App\Models\PurchaseOrder;
 use App\Models\InventoryStatus;
 use App\Models\ItemSerialNumber;
@@ -29,37 +29,37 @@ class InventoryController extends Controller
 {
     public function show()
     {
-        $branches = Branch::where('status', BranchStatus::ACTIVE)
+        $companies = Company::where('status', CompanyStatus::ACTIVE)
                         ->orderBy('created_at', 'desc')
                         ->paginate(15);
 
         return view('admin.inventories.show', compact(
-            'branches'
+            'companies'
         ));
     }
 
-    public function view($branch_id)
+    public function view($company_id)
     {
-        $branch = Branch::find($branch_id);
+        $company = Company::find($company_id);
 
-        $inventories = Inventory::where('branch_id', $branch_id)
+        $inventories = Inventory::where('company_id', $company_id)
                             ->where('status', InventoryStatus::ACTIVE)
                             ->orderBy('created_at', 'desc')
                             ->paginate(15);
 
         return view('admin.inventories.view', compact(
-            'branch',
+            'company',
             'inventories'
         ));
     }
 
-    public function manage($branch_id)
+    public function manage($company_id)
     {
-        $branch = Branch::find($branch_id);
+        $company = Company::find($company_id);
 
         // $inventories = Inventory::leftJoin('items', 'inventories.item_id', '=', 'items.id')
         //                     ->select('inventories.*')
-        //                     ->where('inventories.branch_id', $branch_id)
+        //                     ->where('inventories.company_id', $company_id)
         //                     ->where('inventories.status', InventoryStatus::ACTIVE)
         //                     ->where('items.status', ItemStatus::ACTIVE)
         //                     ->orderBy('inventories.created_at', 'desc')
@@ -67,19 +67,19 @@ class InventoryController extends Controller
 
         $inventories = Inventory::leftJoin('items', 'inventories.item_id', '=', 'items.id')
                             ->select('inventories.*')
-                            ->where('inventories.branch_id', $branch_id)
+                            ->where('inventories.company_id', $company_id)
                             ->where('inventories.status', InventoryStatus::ACTIVE)
                             ->where('items.status', ItemStatus::ACTIVE)
                             ->orderBy('inventories.created_at', 'desc')
                             ->paginate(5);
 
         return view('admin.inventories.manage', compact(
-            'branch',
+            'company',
             'inventories'
         ));
     }
 
-    public function search(Request $request, $branch_id)
+    public function search(Request $request, $company_id)
     {
         $barcode = $request->barcode ?? '*';
         $name = $request->name ?? '*';
@@ -87,15 +87,15 @@ class InventoryController extends Controller
         $from_date = $request->from_date ?? '*';
         $to_date = $request->to_date ?? '*';
 
-        return redirect()->route('internals.inventories.items.filter', [$branch_id, $barcode, $name, $status, $from_date, $to_date])->withInput();
+        return redirect()->route('internals.inventories.items.filter', [$company_id, $barcode, $name, $status, $from_date, $to_date])->withInput();
     }
 
-    public function filter($branch_id, $barcode, $name, $status, $from_date, $to_date)
+    public function filter($company_id, $barcode, $name, $status, $from_date, $to_date)
     {
         $query = Inventory::leftJoin('items', 'inventories.item_id', '=', 'items.id')
                     ->leftJoin('brands', 'items.brand_id', '=', 'brands.id')
                     ->select('items.*', 'brands.*', 'inventories.*')
-                    ->where('branch_id', $branch_id)
+                    ->where('company_id', $company_id)
                     ->where('inventories.status', InventoryStatus::ACTIVE)
                     ->where('items.status', ItemStatus::ACTIVE)
                     ->orderBy('inventories.created_at', 'desc');
@@ -122,10 +122,10 @@ class InventoryController extends Controller
 
         $inventories = $query->paginate(15);
 
-        $branch = Branch::find($branch_id);
+        $company = Company::find($company_id);
 
         return view('admin.inventories.manage', compact(
-            'branch',
+            'company',
             'inventories'
         ));
     }

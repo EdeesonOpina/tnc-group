@@ -20,7 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'firstname',
         'lastname',
-        'company',
+        'company_id',
         'email',
         'password',
         'birthdate',
@@ -62,13 +62,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function country()
+    public function company()
     {
-        return $this->hasOne(Country::class, 'id', 'country_id');
-    }
-
-    public function branch()
-    {
-        return $this->hasOne(Branch::class, 'id', 'branch_id');
+        return $this->hasOne(Company::class, 'id', 'company_id');
     }
 }

@@ -100,11 +100,11 @@
             <tr>
                 <td class="text-left">
                     <p class="font-change">
-                      <strong>Branch:</strong><br>
-                      {{ $goods_receipt->purchase_order->branch->name }}<br>
-                      {{ $goods_receipt->purchase_order->branch->line_address_1 }}<br>
-                      {{ $goods_receipt->purchase_order->branch->line_address_2 }}<br>
-                      {{ $goods_receipt->purchase_order->branch->mobile }} / {{ $goods_receipt->purchase_order->branch->phone }}
+                      <strong>Company:</strong><br>
+                      {{ $goods_receipt->purchase_order->company->name }}<br>
+                      {{ $goods_receipt->purchase_order->company->line_address_1 }}<br>
+                      {{ $goods_receipt->purchase_order->company->line_address_2 }}<br>
+                      {{ $goods_receipt->purchase_order->company->mobile }} / {{ $goods_receipt->purchase_order->company->phone }}
                     </p>
                 </td>
                 <td class="text-right">
@@ -113,7 +113,7 @@
                       {{ $goods_receipt->purchase_order->supplier->name }}<br>
                       {{ $goods_receipt->purchase_order->supplier->line_address_1 }}<br>
                       {{ $goods_receipt->purchase_order->supplier->line_address_2 }}<br>
-                      {{ $goods_receipt->purchase_order->supplier->mobile }} / {{ $goods_receipt->purchase_order->branch->phone }}
+                      {{ $goods_receipt->purchase_order->supplier->mobile }} / {{ $goods_receipt->purchase_order->company->phone }}
                     </p>
                 </td>
             </tr>

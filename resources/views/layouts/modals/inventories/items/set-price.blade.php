@@ -19,7 +19,7 @@
   $agent_price = ($price + ($price * 0.02)) ?? '0.00';
 @endphp
 
-<form action="{{ route('internals.inventories.items.set-price', [$inventory->branch_id]) }}" method="post">
+<form action="{{ route('internals.inventories.items.set-price', [$inventory->company_id]) }}" method="post">
   {{ csrf_field() }}
   <input type="hidden" name="inventory_id" value="{{ $inventory->id }}">
   <div class="modal fade" id="set-price-{{ $inventory->item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -40,7 +40,7 @@
                 <!-- <strong>P{{ number_format($agent_price, 2) }}</strong><br> -->
                 <strong>P{{ number_format($agent_price, 2) }}</strong><br>
                 <strong class="text-success">Landed Price:</strong><br><strong>P{{ number_format($price, 2) }}</strong><br><br>
-                <small>Check history landing prices? <a href="{{ route('internals.inventories.landing-price.masterlist', [$inventory->branch_id, $inventory->id]) }}">Click Here</a></small>
+                <small>Check history landing prices? <a href="{{ route('internals.inventories.landing-price.masterlist', [$inventory->company_id, $inventory->id]) }}">Click Here</a></small>
                 <br><br>
                 <a href="#" data-toggle="modal" data-target="#add-landing-price-{{ $inventory->item->id }}" >
                   <button class="btn btn-success btn-sm form-control">Add Landing Price</button>

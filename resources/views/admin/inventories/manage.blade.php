@@ -11,13 +11,13 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('internals.inventories') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('internals.inventories.manage', [auth()->user()->branch->id]) }}">Inventory</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ $branch->name }}</li>
+                    <li class="breadcrumb-item"><a href="{{ route('internals.inventories.manage', [auth()->user()->company->id]) }}">Inventory</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ $company->name }}</li>
                 </ol>
             </nav>
-            <h1 class="m-0">{{ $branch->name }} Inventory</h1>
+            <h1 class="m-0">{{ $company->name }} Inventory</h1>
         </div>
-        <a href="{{ route('internals.inventories.print', [auth()->user()->branch->id]) }}">
+        <a href="{{ route('internals.inventories.print', [auth()->user()->company->id]) }}">
                             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print</button>
                         </a>
     </div>
@@ -25,9 +25,8 @@
 
 <div class="container-fluid page__container">
     @include('layouts.partials.alerts')
-    @include('layouts.partials.top-tabs')
 
-    <form action="{{ route('internals.inventories.items.search', [$branch->id]) }}" method="post">
+    <form action="{{ route('internals.inventories.items.search', [$company->id]) }}" method="post">
         {{ csrf_field() }}
         <div class="card card-form d-flex flex-column flex-sm-row">
             <div class="card-form__body card-body-form-group flex">
@@ -80,7 +79,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label><a href="{{ route('internals.inventories.manage', [$branch->id]) }}" id="no-underline">Clear Filters</a></label>
+                        <label><a href="{{ route('internals.inventories.manage', [$company->id]) }}" id="no-underline">Clear Filters</a></label>
                     </div>
                 </div>
             </div>
@@ -92,7 +91,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-header card-header-large bg-white d-flex align-items-center">
-                    <h4 class="card-header__title flex m-0">{{ $branch->name }} Inventory</h4>
+                    <h4 class="card-header__title flex m-0">{{ $company->name }} Inventory</h4>
                     <div data-toggle="flatpickr" data-flatpickr-wrap="true" data-flatpickr-static="true" data-flatpickr-mode="range" data-flatpickr-alt-format="d/m/Y" data-flatpickr-date-format="d/m/Y">
                         
                     </div>
@@ -105,9 +104,9 @@
                                 <th id="compact-table">#ID</th>
                                 <th id="compact-table"></th>
                                 <th id="compact-table">Name</th>
-                                <th id="compact-table">Price</th>
+                                <!-- <th id="compact-table">Price</th>
                                 <th id="compact-table">Agent Price</th>
-                                <th id="compact-table">Discount</th>
+                                <th id="compact-table">Discount</th> -->
                                 <th id="compact-table">Qty</th>
                                 <th id="compact-table">S/N available</th>
                                 <th id="compact-table">Status</th>
@@ -138,16 +137,16 @@
                                         <strong>{{ $inventory->item->name }}</strong><br>
                                         {{ $inventory->item->brand->name }}<br>
                                         {{ $inventory->item->category->name }}
-                                        <div class="d-flex">
+                                        <!-- <div class="d-flex">
                                             @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
                                                 <a href="#" data-toggle="modal" data-target="#set-price-{{ $inventory->item->id }}" style="margin-right: 7px">Set Price</a> | 
                                                 <a href="#" data-toggle="modal" data-target="#set-discount-{{ $inventory->item->id }}" id="space-table">Set Discount</a> | 
                                             @endif
                                             <a href="#" data-toggle="modal" data-target="#set-barcode-{{ $inventory->item->id }}" id="space-table">Set Barcode</a> | 
                                             <a href="{{ route('internals.inventories.items.serial-numbers', [$inventory->item->id]) }}" id="space-table">S/N</a>
-                                        </div>
+                                        </div> -->
                                     </td>
-                                    <td id="compact-table">
+                                    <!-- <td id="compact-table">
                                         <a href="#" data-toggle="modal" data-target="#set-price-{{ $inventory->item->id }}">
                                             P{{ number_format($inventory->price, 2) }}
                                         </a>
@@ -161,7 +160,7 @@
                                         <a href="#" data-toggle="modal" data-target="#set-discount-{{ $inventory->item->id }}">
                                             P{{ number_format($inventory->discount, 2) }}
                                         </a>
-                                    </td>
+                                    </td> -->
                                     <td id="compact-table">{{ $inventory->qty }}</td>
                                     <td id="compact-table">
                                         <a href="{{ route('internals.inventories.items.serial-numbers', [$inventory->item->id]) }}">

@@ -22,7 +22,6 @@
 
 <div class="container-fluid page__container">
     @include('layouts.partials.alerts')
-    @include('layouts.partials.reports.sales-all')
     @include('layouts.partials.top-tabs')
 
     <div class="row">
@@ -44,7 +43,7 @@
                                 <th id="compact-table">Role</th>
                                 <th id="compact-table">Email</th>
                                 <th id="compact-table">Contact</th>
-                                <th id="compact-table">Country</th>
+                                <th id="compact-table">Company</th>
                                 <th id="compact-table">Status</th>
                                 <th id="compact-table">Created At</th>
                             </tr>
@@ -99,7 +98,7 @@
                                             <i class="material-icons icon-16pt mr-1 text-muted">phone</i> {{ $user->phone }}
                                         @endif
                                     </td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">location_on</i> {{ $user->country->name }}</td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">location_on</i> {{ $user->company->name }}</td>
                                     <td>
                                         @if ($user->status == UserStatus::ACTIVE)
                                             <div class="badge badge-success ml-2">Active</div>

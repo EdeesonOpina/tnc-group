@@ -9,12 +9,12 @@ use Auth;
 use Mail;
 use Validator;
 use App\Models\Order;
-use App\Models\Branch;
+use App\Models\Company;
 use App\Models\Supply;
 use App\Models\Supplier;
 use App\Models\OrderStatus;
 use App\Models\SupplyStatus;
-use App\Models\BranchStatus;
+use App\Models\CompanyStatus;
 use App\Models\GoodsReceipt;
 use App\Models\PurchaseOrder;
 use App\Models\SupplierStatus;
@@ -78,7 +78,7 @@ class PurchaseOrderController extends Controller
 
     public function add()
     {
-        $branches = Branch::where('status', BranchStatus::ACTIVE)
+        $companies = Company::where('status', CompanyStatus::ACTIVE)
                         ->orderBy('name', 'asc')
                         ->get();
 
@@ -87,7 +87,7 @@ class PurchaseOrderController extends Controller
                         ->get();
 
         return view('admin.purchase_orders.add', compact(
-            'branches',
+            'companies',
             'suppliers'
         ));
     }
@@ -96,7 +96,7 @@ class PurchaseOrderController extends Controller
     {
         $rules = [
             'supplier_id' => 'required',
-            'branch_id' => 'required',
+            'company_id' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -105,12 +105,12 @@ class PurchaseOrderController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
-        $po_count = str_replace('PO-', '', PurchaseOrder::orderBy('created_at', 'desc')->first()->reference_number) + 1; // get the latest po sequence then add 1
+        $po_count = str_replace('PO-', '', PurchaseOrder::orderBy('created_at', 'desc')->first()->reference_number ?? 0) + 1; // get the latest po sequence then add 1
 
         $data = request()->all(); // get all request
         $data['reference_number'] = 'PO-' . str_pad($po_count, 8, '0', STR_PAD_LEFT);
         $data['supplier_id'] = $request->supplier_id;
-        $data['branch_id'] = $request->branch_id;
+        $data['company_id'] = $request->company_id;
         $data['created_by_user_id'] = auth()->user()->id;
         $data['status'] = PurchaseOrderStatus::ON_PROCESS; // if you want to insert to a specific column
         PurchaseOrder::create($data); // create data in a model

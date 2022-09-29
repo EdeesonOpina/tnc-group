@@ -11,7 +11,7 @@ class Inventory extends Model
 
     protected $fillable = [
         'goods_receipt_id',
-        'branch_id',
+        'company_id',
         'item_id',
         'qty',
         'agent_price',
@@ -30,9 +30,9 @@ class Inventory extends Model
         return $this->hasOne(GoodsReceipt::class, 'id', 'goods_receipt_id');
     }
 
-    public function branch()
+    public function company()
     {
-        return $this->hasOne(Branch::class, 'id', 'branch_id');
+        return $this->hasOne(Branch::class, 'id', 'company_id');
     }
 
     public function item()

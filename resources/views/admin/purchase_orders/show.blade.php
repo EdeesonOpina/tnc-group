@@ -197,7 +197,7 @@
                                     </td>
                                     <td id="compact-table">P{{ number_format($orders_total, 2) }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">business</i> {{ $purchase_order->supplier->name }}</td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">business</i> {{ $purchase_order->branch->name }}</td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">business</i> {{ $purchase_order->company->name }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $purchase_order->created_by_user->firstname }} {{ $purchase_order->created_by_user->lastname }}</td>
                                     <td id="compact-table">
                                         @if ($purchase_order->approved_by_user)

@@ -17,16 +17,14 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('company')->nullable();
             $table->date('birthdate')->nullable();
             $table->string('phone')->nullable();
             $table->string('mobile');
-
-            $table->string('company_id')->default(1);
+            
             $table->string('line_address_1')->nullable();
             $table->string('line_address_2')->nullable();
 
-            $table->integer('branch_id')->unsigned()->default(1); // employee assigned branch
+            $table->integer('company_id')->unsigned()->default(1); // employee assigned branch
             $table->string('role'); // if cashier, agent, admin, or customer
             
             $table->string('email')->unique();

@@ -1,5 +1,5 @@
 @foreach ($inventories as $inventory)
-<form action="{{ route('internals.inventories.items.set-barcode', [$inventory->branch_id]) }}" method="post">
+<form action="{{ route('internals.inventories.items.set-barcode', [$inventory->company_id]) }}" method="post">
   {{ csrf_field() }}
   <input type="hidden" name="inventory_id" value="{{ $inventory->id }}">
   <div class="modal fade" id="set-barcode-{{ $inventory->item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

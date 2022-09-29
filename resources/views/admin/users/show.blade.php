@@ -127,6 +127,7 @@ use App\Models\UserStatus;
                             <tr>
                                 <th id="compact-table">#ID</th>
                                 <th id="compact-table">Name</th>
+                                <th id="compact-table">Company</th>
                                 <th id="compact-table">Role</th>
                                 <th id="compact-table">Email</th>
                                 <th id="compact-table">Contact</th>
@@ -174,6 +175,7 @@ use App\Models\UserStatus;
                                             @endif
                                         </div>
                                     </td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">location_on</i> {{ $user->company->name }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $user->role }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $user->email }}</td>
                                     <td id="compact-table">

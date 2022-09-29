@@ -15,18 +15,6 @@ class AccountSeeder extends Seeder
     public function run()
     {
         $account = new Account;
-        $account->bank = 'Cash On Delivery';
-        $account->number = 'Upon Arrival';
-        $account->name = 'COD';
-        $account->save();
-
-        $account = new Account;
-        $account->bank = 'Paypal';
-        $account->number = 'Online';
-        $account->name = 'Paypal';
-        $account->save();
-
-        $account = new Account;
         $account->bank = 'BDO';
         $account->number = '003880151274';
         $account->name = 'Big Four Global Technologies Inc.';

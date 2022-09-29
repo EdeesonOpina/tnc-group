@@ -90,7 +90,7 @@
                                             ->where('status', OrderStatus::ACTIVE)
                                             ->first();
 
-                                $inventory = Inventory::where('branch_id', auth()->user()->branch_id)
+                                $inventory = Inventory::where('company_id', auth()->user()->company_id)
                                                     ->where('item_id', $supply->item->id)
                                                     ->first();
                             @endphp
@@ -245,7 +245,7 @@
                     <div class="col">
                         <div class="form-group">
                             <h6>Destination</h6>
-                            {{ $purchase_order->branch->name }}
+                            {{ $purchase_order->company->name }}
                         </div>
                     </div>
                 </div>

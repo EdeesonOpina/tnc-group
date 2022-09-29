@@ -8,19 +8,21 @@ use App\Models\CompanyStatus;
         <div class="flex">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('internals.inventories') }}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Inventories</li>
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Companies</li>
                 </ol>
             </nav>
-            <h1 class="m-0">Inventories</h1>
+            <h1 class="m-0">Companies</h1>
         </div>
+        <a href="{{ route('admin.companies.add') }}" class="btn btn-primary"><i class="material-icons">add</i> Add</a>
     </div>
 </div>
 
 <div class="container-fluid page__container">
     @include('layouts.partials.alerts')
+    @include('layouts.partials.top-tabs')
 
-    <form action="{{ route('internals.inventories.companies.search') }}" method="post">
+    <form action="{{ route('admin.companies.search') }}" method="post">
         {{ csrf_field() }}
         <div class="card card-form d-flex flex-column flex-sm-row">
             <div class="card-form__body card-body-form-group flex">
@@ -67,7 +69,7 @@ use App\Models\CompanyStatus;
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label><a href="{{ route('internals.inventories') }}" id="no-underline">Clear Filters</a></label>
+                        <label><a href="{{ route('admin.companies') }}" id="no-underline">Clear Filters</a></label>
                     </div>
                 </div>
             </div>
@@ -79,7 +81,7 @@ use App\Models\CompanyStatus;
         <div class="col">
             <div class="card">
                 <div class="card-header card-header-large bg-white d-flex align-items-center">
-                    <h4 class="card-header__title flex m-0">Inventories</h4>
+                    <h4 class="card-header__title flex m-0">Branches</h4>
                     <div data-toggle="flatpickr" data-flatpickr-wrap="true" data-flatpickr-static="true" data-flatpickr-mode="range" data-flatpickr-alt-format="d/m/Y" data-flatpickr-date-format="d/m/Y">
                         
                     </div>
@@ -109,7 +111,7 @@ use App\Models\CompanyStatus;
                                                 @if ($company->image)
                                                     <img src="{{ url($company->image) }}" width="100px">
                                                 @else
-                                                    <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="40px" style="margin-right: 7px;">
+                                                    <img src="{{ url(env('APP_ICON')) }}" width="40px" style="margin-right: 7px;">
                                                 @endif
                                             </div>
                                         </div>
@@ -117,8 +119,14 @@ use App\Models\CompanyStatus;
                                     <td id="compact-table">
                                         <b>{{ $company->name }}</b>
                                         <div class="d-flex">
-                                            <a href="{{ route('internals.inventories.view', [$company->id]) }}" style="margin-right: 7px">View</a> | 
-                                            <a href="{{ route('internals.inventories.manage', [$company->id]) }}" id="space-table">Manage</a> 
+                                            <a href="{{ route('admin.companies.edit', [$company->id]) }}" id="table-letter-margin">Edit</a> | 
+                                            @if ($company->status == CompanyStatus::ACTIVE)
+                                                <a href="#" data-href="{{ route('admin.companies.delete', [$company->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
+                                            @endif
+
+                                            @if ($company->status == CompanyStatus::INACTIVE)
+                                                <a href="#" data-href="{{ route('admin.companies.recover', [$company->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Recover</a>
+                                            @endif
                                         </div>
                                     </td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $company->person }}</td>

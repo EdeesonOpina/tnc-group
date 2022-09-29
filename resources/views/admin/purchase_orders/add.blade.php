@@ -43,11 +43,11 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="branch">Branch</label><br />
-                                    <select id="branch" name="branch_id" class="custom-select" data-toggle="select">
+                                    <label for="company">Company</label><br />
+                                    <select id="company" name="company_id" class="custom-select" data-toggle="select">
                                         <option value=""></option>
-                                        @foreach($branches as $branch)
-                                            <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                        @foreach($companies as $company)
+                                            <option value="{{ $company->id }}">{{ $company->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

@@ -5,10 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CompanyStatus extends Model
+class ClientStatus extends Model
 {
     use HasFactory;
-
-    const INACTIVE = 0;
-    const ACTIVE = 1;
 }

@@ -16,7 +16,7 @@ class CreatePurchaseOrdersTable extends Migration
         Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
             $table->string('reference_number');
-            $table->integer('branch_id')->unsigned();
+            $table->integer('company_id')->unsigned();
             $table->integer('supplier_id')->unsigned();
             $table->bigInteger('created_by_user_id')->default(0);
             $table->bigInteger('approved_by_user_id')->default(0);

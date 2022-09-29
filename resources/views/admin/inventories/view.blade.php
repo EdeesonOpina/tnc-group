@@ -11,18 +11,17 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('internals.inventories') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('internals.inventories.manage', [auth()->user()->branch->id]) }}">Inventory</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ $branch->name }}</li>
+                    <li class="breadcrumb-item"><a href="{{ route('internals.inventories.manage', [auth()->user()->company->id]) }}">Inventory</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ $company->name }}</li>
                 </ol>
             </nav>
-            <h1 class="m-0">{{ $branch->name }} Inventory</h1>
+            <h1 class="m-0">{{ $company->name }} Inventory</h1>
         </div>
     </div>
 </div>
 
 <div class="container-fluid page__container">
     @include('layouts.partials.alerts')
-    @include('layouts.partials.top-tabs')
 
     <div class="row">
         <div class="col">
@@ -30,14 +29,14 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <h6>Branch</h6>
-                            {{ $branch->name }}
+                            <h6>Company</h6>
+                            {{ $company->name }}
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <h6>Email Address</h6>
-                            {{ $branch->email }}
+                            {{ $company->email }}
                         </div>
                     </div>
                 </div>
@@ -46,7 +45,7 @@
                     <div class="col">
                         <div class="form-group">
                             <h6>Contact Person</h6>
-                            {{ $branch->person }}
+                            {{ $company->person }}
                         </div>
                     </div>
                     <div class="col">
@@ -58,13 +57,13 @@
                     <div class="col">
                         <div class="form-group">
                             <h6>Phone</h6>
-                            {{ $branch->phone }}
+                            {{ $company->phone }}
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <h6>Mobile</h6>
-                            {{ $branch->mobile }}
+                            {{ $company->mobile }}
                         </div>
                     </div>
                 </div>
@@ -73,13 +72,13 @@
                     <div class="col">
                         <div class="form-group">
                             <h6>Line Address 1</h6>
-                            {{ $branch->line_address_1 }}
+                            {{ $company->line_address_1 }}
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <h6>Line Address 2</h6>
-                            {{ $branch->line_address_2 }}
+                            {{ $company->line_address_2 }}
                         </div>
                     </div>
                 </div>
@@ -89,7 +88,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header card-header-large bg-white d-flex align-items-center">
-                    <h4 class="card-header__title flex m-0">{{ $branch->name }} Inventory</h4>
+                    <h4 class="card-header__title flex m-0">{{ $company->name }} Inventory</h4>
                     <div data-toggle="flatpickr" data-flatpickr-wrap="true" data-flatpickr-static="true" data-flatpickr-mode="range" data-flatpickr-alt-format="d/m/Y" data-flatpickr-date-format="d/m/Y">
                         
                     </div>
@@ -102,9 +101,9 @@
                                 <th id="compact-table">#ID</th>
                                 <th id="compact-table"></th>
                                 <th id="compact-table">Name</th>
-                                <th id="compact-table">Price</th>
+                                <!-- <th id="compact-table">Price</th>
                                 <th id="compact-table">Agent Price</th>
-                                <th id="compact-table">Discount</th>
+                                <th id="compact-table">Discount</th> -->
                                 <th id="compact-table">Qty</th>
                                 <th id="compact-table">S/N available</th>
                                 <th id="compact-table">Status</th>
@@ -135,9 +134,9 @@
                                         {{ $inventory->item->brand->name }}<br>
                                         {{ $inventory->item->category->name }}
                                     </td>
-                                    <td id="compact-table">P{{ number_format($inventory->price, 2) }}</td>
+                                    <!-- <td id="compact-table">P{{ number_format($inventory->price, 2) }}</td>
                                     <td id="compact-table">P{{ number_format($inventory->agent_price, 2) }}</td>
-                                    <td id="compact-table">P{{ number_format($inventory->discount, 2) }}</td>
+                                    <td id="compact-table">P{{ number_format($inventory->discount, 2) }}</td> -->
                                     <td id="compact-table">{{ $inventory->qty }}</td>
                                     <td id="compact-table">{{ $item_serial_numbers_count }}</td>
                                     <td>

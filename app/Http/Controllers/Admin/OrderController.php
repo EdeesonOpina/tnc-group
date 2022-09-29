@@ -247,16 +247,16 @@ class OrderController extends Controller
 
         // check item on the inventory if it exists
         if (Inventory::where('item_id', $order->item->id)
-            ->where('branch_id', $order->goods_receipt->purchase_order->branch->id)
+            ->where('company_id', $order->goods_receipt->purchase_order->company->id)
             ->where('status', InventoryStatus::ACTIVE)
             ->exists()) {
             // find the existing inventory data
             $existing_inventory = Inventory::where('item_id', $order->item->id)
-                                        ->where('branch_id', $order->goods_receipt->purchase_order->branch->id)
+                                        ->where('company_id', $order->goods_receipt->purchase_order->company->id)
                                         ->where('status', InventoryStatus::ACTIVE)
                                         ->first();
             $existing_inventory->goods_receipt_id = $order->goods_receipt->id;
-            $existing_inventory->branch_id = $order->goods_receipt->purchase_order->branch->id;
+            $existing_inventory->company_id = $order->goods_receipt->purchase_order->company->id;
             $existing_inventory->qty += $request->received_qty;
             $existing_inventory->save();
 
@@ -273,7 +273,7 @@ class OrderController extends Controller
         } else {
             $inventory = new Inventory;
             $inventory->goods_receipt_id = $order->goods_receipt->id;
-            $inventory->branch_id = $order->goods_receipt->purchase_order->branch->id;
+            $inventory->company_id = $order->goods_receipt->purchase_order->company->id;
             $inventory->item_id = $order->item->id;
             $inventory->qty = $request->received_qty;
             $inventory->status = InventoryStatus::ACTIVE;
@@ -317,17 +317,17 @@ class OrderController extends Controller
 
         // check item on the inventory if it exists
         if (Inventory::where('item_id', $order->item->id)
-            ->where('branch_id', $order->goods_receipt->purchase_order->branch->id)
+            ->where('company_id', $order->goods_receipt->purchase_order->company->id)
             ->where('status', InventoryStatus::ACTIVE)
             ->exists()) {
             // find the existing inventory data
             $existing_inventory = Inventory::where('item_id', $order->item->id)
-                                        ->where('branch_id', $order->goods_receipt->purchase_order->branch->id)
+                                        ->where('company_id', $order->goods_receipt->purchase_order->company->id)
                                         ->where('status', InventoryStatus::ACTIVE)
                                         ->first();
 
             $existing_inventory->goods_receipt_id = $order->goods_receipt->id;
-            $existing_inventory->branch_id = $order->goods_receipt->purchase_order->branch->id;
+            $existing_inventory->company_id = $order->goods_receipt->purchase_order->company->id;
             $existing_inventory->qty -= $request->returning_qty;
             $existing_inventory->save();
 
@@ -343,7 +343,7 @@ class OrderController extends Controller
         } else {
             $inventory = new Inventory;
             $inventory->goods_receipt_id = $order->goods_receipt->id;
-            $inventory->branch_id = $order->goods_receipt->purchase_order->branch->id;
+            $inventory->company_id = $order->goods_receipt->purchase_order->company->id;
             $inventory->item_id = $order->item->id;
             $inventory->qty = $request->returning_qty;
             $inventory->status = InventoryStatus::ACTIVE;
