@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ClientStatus extends Model
 {
     use HasFactory;
+
+    const INACTIVE = 0;
+    const ACTIVE = 1;
 }

@@ -775,6 +775,44 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         });
     });
 
+    // clients
+    Route::group(['prefix' => 'clients/'], function () {
+        Route::get('/', 'App\Http\Controllers\Admin\ClientController@show')->name('admin.clients');
+        Route::get('/add', 'App\Http\Controllers\Admin\ClientController@add')->name('admin.clients.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\ClientController@create')->name('admin.clients.create');
+        Route::get('/view/{supplier_id}', 'App\Http\Controllers\Admin\ClientController@view')->name('admin.clients.view');
+        Route::get('/edit/{supplier_id}', 'App\Http\Controllers\Admin\ClientController@edit')->name('admin.clients.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\ClientController@update')->name('admin.clients.update');
+        Route::get('/delete/{supplier_id}', 'App\Http\Controllers\Admin\ClientController@delete')->name('admin.clients.delete');
+        Route::get('/recover/{supplier_id}', 'App\Http\Controllers\Admin\ClientController@recover')->name('admin.clients.recover');
+
+        // manage
+        Route::group(['prefix' => 'manage/{supplier_id}'], function () {
+            Route::get('/', 'App\Http\Controllers\Admin\ClientController@manage')->name('admin.clients.manage');
+            Route::get('/items/masterlist', 'App\Http\Controllers\Admin\SupplyController@masterlist')->name('admin.clients.items.masterlist');
+
+            // supplies
+            Route::group(['prefix' => 'supplies'], function () {
+                Route::post('/create', 'App\Http\Controllers\Admin\SupplyController@create')->name('admin.supplies.create');
+                Route::post('/update/price', 'App\Http\Controllers\Admin\SupplyController@price')->name('admin.supplies.update.price');
+                Route::get('/recover/{supply_id}', 'App\Http\Controllers\Admin\SupplyController@recover')->name('admin.supplies.recover');
+                Route::get('/delete/{supply_id}', 'App\Http\Controllers\Admin\SupplyController@delete')->name('admin.supplies.delete');
+
+                // for searching supplies
+                Route::group(['prefix' => 'search/'], function () {
+                    Route::post('/', 'App\Http\Controllers\Admin\SupplyController@search')->name('admin.supplies.search');
+                    Route::get('/{name}', 'App\Http\Controllers\Admin\SupplyController@filter')->name('admin.supplies.filter');
+                });
+            });
+        });
+
+        // for searching clients
+        Route::group(['prefix' => 'search/'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\ClientController@search')->name('admin.clients.search');
+            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ClientController@filter')->name('admin.clients.filter');
+        });
+    });
+
     // brands
     Route::group(['prefix' => 'brands/'], function () {
         Route::get('/', 'App\Http\Controllers\Admin\BrandController@show')->name('admin.brands');
@@ -874,6 +912,44 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::group(['prefix' => 'search/'], function () {
             Route::post('/', 'App\Http\Controllers\Admin\CategoryController@search')->name('admin.categories.search');
             Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\CategoryController@filter')->name('admin.categories.filter');
+        });
+    });
+
+    // projects
+    Route::group(['prefix' => 'projects/'], function () {
+        Route::get('/', 'App\Http\Controllers\Admin\ProjectController@show')->name('internals.projects');
+        Route::get('/add', 'App\Http\Controllers\Admin\ProjectController@add')->name('internals.projects.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\ProjectController@create')->name('internals.projects.create');
+        Route::get('/view/{project_id}', 'App\Http\Controllers\Admin\ProjectController@view')->name('internals.projects.view');
+        Route::get('/edit/{project_id}', 'App\Http\Controllers\Admin\ProjectController@edit')->name('internals.projects.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\ProjectController@update')->name('internals.projects.update');
+        Route::get('/delete/{project_id}', 'App\Http\Controllers\Admin\ProjectController@delete')->name('internals.projects.delete');
+        Route::get('/recover/{project_id}', 'App\Http\Controllers\Admin\ProjectController@recover')->name('internals.projects.recover');
+
+        // manage
+        Route::group(['prefix' => 'manage/{project_id}'], function () {
+            Route::get('/', 'App\Http\Controllers\Admin\ProjectController@manage')->name('internals.projects.manage');
+            Route::get('/items/masterlist', 'App\Http\Controllers\Admin\SupplyController@masterlist')->name('internals.projects.items.masterlist');
+
+            // details
+            Route::group(['prefix' => 'details'], function () {
+                Route::post('/create', 'App\Http\Controllers\Admin\ProjectDetailController@create')->name('internals.projects.details.create');
+                Route::post('/update/price', 'App\Http\Controllers\Admin\ProjectDetailController@price')->name('internals.projects.details.update.price');
+                Route::get('/recover/{project_detail_id}', 'App\Http\Controllers\Admin\ProjectDetailController@recover')->name('internals.projects.details.recover');
+                Route::get('/delete/{project_detail_id}', 'App\Http\Controllers\Admin\ProjectDetailController@delete')->name('internals.projects.details.delete');
+
+                // for searching project
+                Route::group(['prefix' => 'search/'], function () {
+                    Route::post('/', 'App\Http\Controllers\Admin\ProjectDetailController@search')->name('internals.projects.details.search');
+                    Route::get('/{name}', 'App\Http\Controllers\Admin\ProjectDetailController@filter')->name('internals.projects.details.filter');
+                });
+            });
+        });
+
+        // for searching projects
+        Route::group(['prefix' => 'search/'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\ProjectController@search')->name('admin.projects.search');
+            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ProjectController@filter')->name('admin.projects.filter');
         });
     });
 

@@ -1,7 +1,6 @@
 @include('layouts.auth.header')
 @php
-use App\Models\SubCategory;
-use App\Models\CategoryStatus;
+use App\Models\ClientStatus;
 @endphp
 
 <div class="container-fluid page__heading-container">
@@ -10,19 +9,19 @@ use App\Models\CategoryStatus;
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Categories</li>
+                    <li class="breadcrumb-item active" aria-current="page">Clients</li>
                 </ol>
             </nav>
-            <h1 class="m-0">Categories</h1>
+            <h1 class="m-0">Clients</h1>
         </div>
-        <a href="{{ route('admin.categories.add') }}" class="btn btn-primary"><i class="material-icons">add</i> Add</a>
+        <a href="{{ route('admin.clients.add') }}" class="btn btn-primary"><i class="material-icons">add</i> Add</a>
     </div>
 </div>
 
 <div class="container-fluid page__container">
     @include('layouts.partials.alerts')
 
-    <form action="{{ route('admin.categories.search') }}" method="post">
+    <form action="{{ route('admin.clients.search') }}" method="post">
         {{ csrf_field() }}
         <div class="card card-form d-flex flex-column flex-sm-row">
             <div class="card-form__body card-body-form-group flex">
@@ -39,18 +38,18 @@ use App\Models\CategoryStatus;
                             <select name="status" class="form-control" data-toggle="select">
                                 @if (old('status'))
                                     @if (old('status') != '*')
-                                        @if (old('status') == CategoryStatus::ACTIVE)
+                                        @if (old('status') == ClientStatus::ACTIVE)
                                             <option value="{{ old('status') }}">Active</option>
                                         @endif
 
-                                        @if (old('status') == CategoryStatus::INACTIVE)
+                                        @if (old('status') == ClientStatus::INACTIVE)
                                             <option value="{{ old('status') }}">Inactive</option>
                                         @endif
                                     @endif
                                 @endif
                                 <option value="*">All</option>
-                                <option value="{{ CategoryStatus::ACTIVE }}">Active</option>
-                                <option value="{{ CategoryStatus::INACTIVE }}">Inactive</option>
+                                <option value="{{ ClientStatus::ACTIVE }}">Active</option>
+                                <option value="{{ ClientStatus::INACTIVE }}">Inactive</option>
                             </select>
                         </div>
                     </div>
@@ -69,7 +68,7 @@ use App\Models\CategoryStatus;
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label><a href="{{ route('admin.categories') }}" id="no-underline">Clear Filters</a></label>
+                        <label><a href="{{ route('admin.clients') }}" id="no-underline">Clear Filters</a></label>
                     </div>
                 </div>
             </div>
@@ -81,7 +80,7 @@ use App\Models\CategoryStatus;
         <div class="col">
             <div class="card">
                 <div class="card-header card-header-large bg-white d-flex align-items-center">
-                    <h4 class="card-header__title flex m-0">Categories</h4>
+                    <h4 class="card-header__title flex m-0">Clients</h4>
                     <div data-toggle="flatpickr" data-flatpickr-wrap="true" data-flatpickr-static="true" data-flatpickr-mode="range" data-flatpickr-alt-format="d/m/Y" data-flatpickr-date-format="d/m/Y">
                         
                     </div>
@@ -94,88 +93,74 @@ use App\Models\CategoryStatus;
                                 <th id="compact-table">#ID</th>
                                 <th id="compact-table"></th>
                                 <th id="compact-table">Name</th>
-                                <th id="compact-table">Sub Categories</th>
-                                <th id="compact-table">Is Package</th>
-                                <th id="compact-table">Sort Order #</th>
+                                <th id="compact-table">Person</th>
+                                <th id="compact-table">Email</th>
+                                <th id="compact-table">Contact</th>
                                 <th id="compact-table">Status</th>
                                 <th id="compact-table">Created At</th>
                             </tr>
                         </thead>
                         <tbody class="list" id="companies">
-                            @foreach($categories as $category)
-                            @php
-                                $sub_categories = SubCategory::where('category_id', $category->id)->get();
-                            @endphp
+                            @foreach($clients as $client)
                                 <tr>
-                                    <td><div class="badge badge-light">#{{ $category->id }}</div></td>
+                                    <td><div class="badge badge-light">#{{ $client->id }}</div></td>
                                     <td id="compact-table">
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex align-items-center">
-                                                @if ($category->image)
-                                                    <img src="{{ url($category->image) }}" width="100px">
+                                                @if ($client->image)
+                                                    <img src="{{ url($client->image) }}" width="100px">
                                                 @else
-                                                    <img src="{{ url(env('APP_ICON')) }}" width="40px" style="margin-right: 7px;">
+                                                    <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="40px" style="margin-right: 7px;">
                                                 @endif
                                             </div>
                                         </div>
                                     </td>
                                     <td id="compact-table">
-                                        <b>{{ $category->name }}</b>
+                                        <b>{{ $client->name }}</b>
                                         <div class="d-flex">
-                                            <a href="{{ route('admin.categories.edit', [$category->id]) }}" id="table-letter-margin">Edit</a> | 
-                                            @if ($category->status == CategoryStatus::ACTIVE)
-                                                <a href="#" data-href="{{ route('admin.categories.delete', [$category->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
+                                            <a href="{{ route('admin.clients.view', [$client->id]) }}" id="table-letter-margin">View</a> | 
+                                            <a href="{{ route('admin.clients.edit', [$client->id]) }}" id="space-table">Edit</a> | 
+                                            @if ($client->status == ClientStatus::ACTIVE)
+                                                <a href="#" data-href="{{ route('admin.clients.delete', [$client->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
                                             @endif
 
-                                            @if ($category->status == CategoryStatus::INACTIVE)
-                                                <a href="#" data-href="{{ route('admin.categories.recover', [$category->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Recover</a>
+                                            @if ($client->status == ClientStatus::INACTIVE)
+                                                <a href="#" data-href="{{ route('admin.clients.recover', [$client->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Recover</a>
                                             @endif
                                         </div>
                                     </td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $client->person }}</td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $client->email }}</td>
                                     <td id="compact-table">
-                                        @if (count($sub_categories) > 0)
-                                            @foreach($sub_categories as $sub_category)
-                                                {{ $sub_category->name }}
-                                                <a href="#" class="text-success" data-toggle="modal" data-target="#edit-sub-category-{{ $sub_category->id }}"><i class="material-icons icon-16pt" data-toggle="tooltip" data-placement="top" title="Edit">edit</i></a>
-                                                <a href="#" data-href="{{ route('admin.sub-categories.delete', [$sub_category->id]) }}" class="text-danger" data-toggle="modal" data-target="#confirm-action"><i class="material-icons icon-16pt" data-toggle="tooltip" data-placement="top" title="Delete">delete</i></a>
-                                                <br>
-                                            @endforeach
-                                        @else
-                                            No record/s<br>
+                                        @if ($client->mobile)
+                                            <i class="material-icons icon-16pt mr-1 text-muted">phone_android</i> {{ $client->mobile }}<br>
                                         @endif
-                                        <br>
-                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add-sub-category-{{ $category->id }}">Add</button>
-                                    </td>
-                                    <td id="compact-table">
-                                        @if ($category->_is_package == 1)
-                                            Yes
-                                        @else
-                                            No
+                                        
+                                        @if ($client->phone)
+                                            <i class="material-icons icon-16pt mr-1 text-muted">phone</i> {{ $client->phone }}
                                         @endif
                                     </td>
-                                    <td id="compact-table">{{ $category->sort_order }}</td>
-
                                     <td>
-                                        @if ($category->status == CategoryStatus::ACTIVE)
+                                        @if ($client->status == ClientStatus::ACTIVE)
                                             <div class="badge badge-success ml-2">Active</div>
-                                        @elseif ($category->status == CategoryStatus::INACTIVE)
+                                        @elseif ($client->status == ClientStatus::INACTIVE)
                                             <div class="badge badge-danger ml-2">Inactive</div>
                                         @endif
                                     </td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ $category->created_at->format('M d Y') }}</td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ $client->created_at->format('M d Y') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
 
-                    @if (count($categories) <= 0)
+                    @if (count($clients) <= 0)
                         <div style="padding: 20px">
                             <center><i class="material-icons icon-16pt mr-1 text-muted">assignment</i> No record/s found</center>
                         </div>
                     @endif
                 </div>
             </div>
-            {{ $categories->links() }}
+            {{ $clients->links() }}
         </div>
     </div>
 </div>

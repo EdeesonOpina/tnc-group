@@ -58,10 +58,10 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="country">Country</label><br />
-                            <select id="country" name="country_id" class="custom-select" data-toggle="select">
-                                @foreach($countries as $country)
-                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                            <label for="company">Company</label><br />
+                            <select id="company" name="company_id" class="custom-select" data-toggle="select">
+                                @foreach($companies as $company)
+                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -48,6 +48,15 @@
                 <div class="sidebar-block p-0">
                     @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales')
                         <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ route('internals.projects') }}">
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">playlist_add</i>
+                                <span class="sidebar-menu-text">Projects</span>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales')
+                        <li class="sidebar-menu-item">
                             <a class="sidebar-menu-button" href="{{ route('internals.purchase-orders') }}">
                                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">playlist_add</i>
                                 <span class="sidebar-menu-text">Purchase Orders</span>
@@ -167,6 +176,13 @@
                                 <a class="sidebar-menu-button" href="{{ route('admin.users') }}">
                                     <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">account_circle</i>
                                     <span class="sidebar-menu-text">Users</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-menu-item">
+                                <a class="sidebar-menu-button" href="{{ route('admin.clients') }}">
+                                    <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">account_circle</i>
+                                    <span class="sidebar-menu-text">Clients</span>
                                 </a>
                             </li>
 

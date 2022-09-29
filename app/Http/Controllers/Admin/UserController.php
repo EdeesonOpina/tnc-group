@@ -10,6 +10,8 @@ use Mail;
 use Validator;
 use App\Models\User;
 use App\Models\Country;
+use App\Models\Company;
+use App\Models\CompanyStatus;
 use App\Models\UserStatus;
 
 class UserController extends Controller
@@ -71,10 +73,11 @@ class UserController extends Controller
 
     public function add()
     {
-        $countries = Country::where('status', 1)->get();
+        $companies = Company::where('status', CompanyStatus::ACTIVE)
+                        ->get();
 
         return view('admin.users.add', compact(
-            'countries'
+            'companies'
         ));
     }
 
@@ -89,7 +92,7 @@ class UserController extends Controller
             'line_address_1' => 'required',
             'line_address_2' => 'nullable',
             'email' => 'required|unique:users',
-            'country_id' => 'required',
+            'company_id' => 'required',
             'mobile' => 'required',
         ];
 
@@ -155,7 +158,7 @@ class UserController extends Controller
             'line_address_1' => 'required',
             'line_address_2' => 'nullable',
             'email' => 'required',
-            'country_id' => 'required',
+            'company_id' => 'required',
             'mobile' => 'required',
         ];
 
