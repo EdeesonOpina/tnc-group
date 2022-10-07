@@ -187,6 +187,8 @@
                       <strong>Prepared By:</strong><br>
                       @if ($project->prepared_by_user->signature)
                           <img src="{{ url($project->prepared_by_user->signature) }}" width="80px"><br>
+                      @else
+                        <br><br><br>
                       @endif
                       <strong>{{ $project->prepared_by_user->firstname }} {{ $project->prepared_by_user->lastname }}</strong><br>
                       {{ $project->prepared_by_user->role }}<br>
@@ -199,6 +201,8 @@
                       <strong>Noted By:</strong><br>
                       @if ($project->noted_by_user->signature)
                           <img src="{{ url($project->noted_by_user->signature) }}" width="80px"><br>
+                      @else
+                        <br><br><br>
                       @endif
                       <strong>{{ $project->noted_by_user->firstname }} {{ $project->noted_by_user->lastname }}</strong><br>
                       {{ $project->noted_by_user->role }}<br>
@@ -211,9 +215,9 @@
                     <p class="font-change">
                       <strong>Conforme</strong>
                         <br><br><br><br>
-                        <strong>{{ $project->client->person }}</strong><br>
-                        {{ $project->client->position }}<br>
-                        {{ $project->client->name }}<br>
+                        <strong>{{ $project->conforme_by_user->person }}</strong><br>
+                        {{ $project->conforme_by_user->position }}<br>
+                        {{ $project->conforme_by_user->name }}<br>
                     </p>
                 </td>
             </tr>

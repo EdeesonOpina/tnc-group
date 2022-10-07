@@ -205,9 +205,9 @@
                         <div class="form-group">
                             <strong>Conforme</strong>
                             <br><br><br><br>
-                            {{ $project->client->person }}<br>
-                            {{ $project->client->position }}<br>
-                            {{ $project->client->name }}<br>
+                            {{ $project->conforme_by_user->person }}<br>
+                            {{ $project->conforme_by_user->position }}<br>
+                            {{ $project->conforme_by_user->name }}<br>
                         </div>
                     </div>
                 </div>

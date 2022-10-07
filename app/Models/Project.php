@@ -43,6 +43,11 @@ class Project extends Model
         return $this->hasOne(User::class, 'id', 'prepared_by_user_id');
     }
 
+    public function conforme_by_user()
+    {
+        return $this->hasOne(Client::class, 'id', 'conforme_by_user_id');
+    }
+
     public function client()
     {
         return $this->hasOne(Client::class, 'id', 'client_id');

@@ -93,6 +93,23 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="company">Conforme</label><br />
+                                    <select id="company" name="conforme_by_user_id" class="custom-select" data-toggle="select">
+                                        @foreach($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }} ({{ $client->person }})</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col">
+
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea id="tiny" name="description" placeholder="Enter your description here">{{ old('description') }}</textarea>
