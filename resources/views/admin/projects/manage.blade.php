@@ -17,9 +17,9 @@
             </nav>
             <h1 class="m-0">Manage Project</h1>
         </div>
-        <!-- <a href="{{ route('internals.projects.edit', [$project->id]) }}">
-            <button type="button" class="btn btn-success" id="table-letter-margin"><i class="material-icons icon-16pt mr-1 text-white">edit</i> Edit</button>
-        </a> -->
+        <a href="{{ route('internals.exports.projects.print.ce', [$project->id]) }}">
+            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print CE</button>
+        </a>
     </div>
 </div>
 
@@ -144,6 +144,7 @@
                                 <td colspan="4">&nbsp;</td>
                                 <td id="compact-table"><strong>Total Cost</strong></td>
                                 <td id="compact-table">P{{ number_format($project->total, 2) }}</td>
+                                <td>&nbsp;</td>
                             </tr>
 
                             <tr>
@@ -152,6 +153,7 @@
                                 <td id="compact-table">
                                     P{{ number_format($project->asf, 2) }}
                                 </td>
+                                <td>&nbsp;</td>
                             </tr>
 
                             <tr>
@@ -160,12 +162,14 @@
                                 <td id="compact-table">
                                     P{{ number_format($project->vat, 2) }}
                                 </td>
+                                <td>&nbsp;</td>
                             </tr>
 
                             <tr>
                                 <td colspan="4">&nbsp;</td>
                                 <td id="compact-table"><strong>Grand Total</strong></td>
                                 <td id="compact-table">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
+                                <td>&nbsp;</td>
                             </tr>
                         </tbody>
                     </table>
