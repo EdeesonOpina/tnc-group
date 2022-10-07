@@ -52,6 +52,7 @@
                                 <div class="form-group">
                                     <label for="client">Client</label><br />
                                     <select id="client" name="client_id" class="custom-select" data-toggle="select">
+                                        <option value=""></option>
                                         @foreach($clients as $client)
                                             <option value="{{ $client->id }}">{{ $client->name }}</option>
                                         @endforeach
@@ -59,21 +60,35 @@
                                 </div>
                             </div>
                             <div class="col">
-                                &nbsp;
+                                <div class="form-group">
+                                    <label>End Date</label>
+                                    <input type="date" name="end_date" class="form-control" value="{{ old('end_date') }}">
+                                </div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Cost</label>
-                                    <input type="text" name="cost" class="form-control" placeholder="Cost" value="{{ old('cost') }}">
+                                    <label for="client">Prepared By</label><br />
+                                    <select id="client" name="prepared_by_user_id" class="custom-select" data-toggle="select">
+                                        <option value=""></option>
+                                        @foreach($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
+
                             <div class="col">
                                 <div class="form-group">
-                                    <label>End Date</label>
-                                    <input type="date" name="end_date" class="form-control" value="{{ old('end_date') }}">
+                                    <label for="client">Noted By</label><br />
+                                    <select id="client" name="noted_by_user_id" class="custom-select" data-toggle="select">
+                                        <option value=""></option>
+                                        @foreach($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -92,6 +107,37 @@
                 <br>
                 <div class="form-group">
                     <input type="file" name="image">
+                </div>
+            </div>
+
+            <br>
+
+            <div id="semi-spaced-card" class="card card-body">
+                <h3>Terms</h3>
+                <br>
+                <div class="form-group">
+                    <label for="proposal_ownership">Proposal Ownership</label>
+                    <textarea name="proposal_ownership" class="form-control">{{ old('proposal_ownership') ?? 'The project cost estimate is the property of Digimart, Inc. and is made exclusively to the recipient of this cost estimate.' }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="confidentiality">Confidentiality</label>
+                    <textarea name="confidentiality" class="form-control">{{ old('confidentiality') ?? 'This document shall be treated confidential all times and is limited to internal use only.' }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="project_confirmation">Project Confirmation</label>
+                    <textarea name="project_confirmation" class="form-control">{{ old('project_confirmation') ?? 'Upon signing this document, the client confirms the project.' }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="payment_terms">Payment Terms</label>
+                    <textarea name="payment_terms" class="form-control">{{ old('payment_terms') ?? '50% down payment upon project confirmation. 50% balance to be settled 15 days after project completion. All check payments shall be made payable to TheNet.Com, Inc.' }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="validity">Validity</label>
+                    <textarea name="validity" class="form-control">{{ old('validity') ?? 'This project cost estimate is only valid until September 15, 2022.' }}</textarea>
                 </div>
             </div>
         </div>

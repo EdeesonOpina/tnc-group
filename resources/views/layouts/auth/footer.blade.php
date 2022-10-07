@@ -55,6 +55,15 @@
                         </li>
                     @endif
 
+                    @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ route('internals.brf') }}">
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">playlist_add</i>
+                                <span class="sidebar-menu-text">BRF</span>
+                            </a>
+                        </li>
+                    @endif
+
                     @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales')
                         <li class="sidebar-menu-item">
                             <a class="sidebar-menu-button" href="{{ route('internals.purchase-orders') }}">
@@ -415,6 +424,17 @@
   @if (request()->is('admin/categories'))
     @include('layouts.modals.categories.sub-categories.add')
     @include('layouts.modals.categories.sub-categories.edit')
+  @endif
+
+  @if (request()->is('admin/projects/manage/*'))
+    @include('layouts.modals.projects.details.add')
+    @include('layouts.modals.projects.asf')
+    @include('layouts.modals.projects.vat')
+    @include('layouts.modals.brf.add')
+  @endif
+
+  @if (request()->is('admin/brf') || request()->is('admin/brf/*'))
+    @include('layouts.modals.brf.add-from-project-list')
   @endif
 
   @if (request()->is('admin/items/photos/*'))

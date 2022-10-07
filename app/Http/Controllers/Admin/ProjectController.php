@@ -8,10 +8,14 @@ use Carbon\Carbon;
 use Auth;
 use Mail;
 use Validator;
+use App\Models\User;
+use App\Models\UserStatus;
 use App\Models\Project;
 use App\Models\ProjectStatus;
 use App\Models\ProjectDetail;
 use App\Models\ProjectDetailStatus;
+use App\Models\BudgetRequestForm;
+use App\Models\BudgetRequestFormStatus;
 use App\Models\Client;
 use App\Models\ClientStatus;
 use App\Models\Company;
@@ -67,12 +71,15 @@ class ProjectController extends Controller
 
     public function add()
     {
+        $users = User::where('status', UserStatus::ACTIVE)
+                        ->get();
         $clients = Client::where('status', ClientStatus::ACTIVE)
                         ->get();
         $companies = Company::where('status', CompanyStatus::ACTIVE)
                         ->get();
 
         return view('admin.projects.add', compact(
+            'users',
             'clients',
             'companies'
         ));
@@ -84,7 +91,6 @@ class ProjectController extends Controller
             'company_id' => 'required',
             'client_id' => 'required',
             'name' => 'required',
-            'cost' => 'required',
             'end_date' => 'required',
             'description' => 'required',
         ];
@@ -104,18 +110,32 @@ class ProjectController extends Controller
         }
 
         $data['status'] = ProjectStatus::FOR_APPROVAL; // if you want to insert to a specific column
-        Project::create($data); // create data in a model
+        $project = Project::create($data); // create data in a model
 
         $request->session()->flash('success', 'Data has been added');
-
-        return redirect()->route('internals.projects');
+        return redirect()->route('internals.projects.manage', [$project->id]);
     }
 
     public function view($project_id)
     {
         $project = Project::find($project_id);
+        $project_details = ProjectDetail::where('project_id', $project_id)
+                        ->where('status', '!=', ProjectDetailStatus::INACTIVE)
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(15);
+        $budget_request_forms = BudgetRequestForm::where('project_id', $project_id)
+                        ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(15);
+
+        $budget_request_forms_total = BudgetRequestForm::where('project_id', $project_id)
+                                            ->where('status', BudgetRequestFormStatus::APPROVED)
+                                            ->sum('total');
 
         return view('admin.projects.view', compact(
+            'budget_request_forms_total',
+            'budget_request_forms',
+            'project_details',
             'project'
         ));
     }
@@ -123,13 +143,23 @@ class ProjectController extends Controller
     public function manage($project_id)
     {
         $project = Project::find($project_id);
-        $details = ProjectDetail::where('project_id', $project_id)
-                        ->where('status', ProjectDetailStatus::ACTIVE)
+        $project_details = ProjectDetail::where('project_id', $project_id)
+                        ->where('status', '!=', ProjectDetailStatus::INACTIVE)
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(15);
+        $budget_request_forms = BudgetRequestForm::where('project_id', $project_id)
+                        ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
                         ->orderBy('created_at', 'desc')
                         ->paginate(15);
 
+        $budget_request_forms_total = BudgetRequestForm::where('project_id', $project_id)
+                                            ->where('status', BudgetRequestFormStatus::APPROVED)
+                                            ->sum('total');
+
         return view('admin.projects.manage', compact(
-            'details',
+            'budget_request_forms_total',
+            'budget_request_forms',
+            'project_details',
             'project'
         ));
     }
@@ -155,7 +185,6 @@ class ProjectController extends Controller
             'company_id' => 'required',
             'client_id' => 'required',
             'name' => 'required',
-            'cost' => 'required',
             'end_date' => 'required',
             'description' => 'required',
         ];
@@ -180,6 +209,66 @@ class ProjectController extends Controller
         $request->session()->flash('success', 'Data has been updated');
 
         return redirect()->route('internals.projects');
+    }
+
+    public function asf(Request $request)
+    {
+        $rules = [
+            'asf' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails())
+            return back()->withInput()->withErrors($validator);
+
+        $data = $request->all();
+        $project = Project::find($request->project_id);
+        $project->fill($data)->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return redirect()->route('internals.projects.manage', [$project->id]);
+    }
+
+    public function vat(Request $request)
+    {
+        $rules = [
+            'vat' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails())
+            return back()->withInput()->withErrors($validator);
+
+        $data = $request->all();
+        $project = Project::find($request->project_id);
+        $project->fill($data)->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return redirect()->route('internals.projects.manage', [$project->id]);
+    }
+
+    public function approve(Request $request, $project_id)
+    {
+        $project = Project::find($project_id);
+        $project->status = ProjectStatus::APPROVED; // mark data as cancelled
+        $project->save();
+
+        $request->session()->flash('success', 'Data has been approved');
+
+        return back();
+    }
+
+    public function disapprove(Request $request, $project_id)
+    {
+        $project = Project::find($project_id);
+        $project->status = ProjectStatus::DISAPPROVED; // mark data as cancelled
+        $project->save();
+
+        $request->session()->flash('success', 'Data has been disapproved');
+
+        return back();
     }
 
     public function recover(Request $request, $project_id)

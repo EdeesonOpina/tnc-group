@@ -51,6 +51,8 @@ use App\Models\ProjectStatus;
                                 <option value="*">All</option>
                                 <option value="{{ ProjectStatus::FOR_APPROVAL }}">Active</option>
                                 <option value="{{ ProjectStatus::INACTIVE }}">Inactive</option>
+                                <option value="{{ ProjectStatus::APPROVED }}">Approved</option>
+                                <option value="{{ ProjectStatus::DISAPPROVED }}">Disapproved</option>
                             </select>
                         </div>
                     </div>
@@ -81,7 +83,7 @@ use App\Models\ProjectStatus;
         <div class="col">
             <div class="card">
                 <div class="card-header card-header-large bg-white d-flex align-items-center">
-                    <h4 class="card-header__title flex m-0">Clients</h4>
+                    <h4 class="card-header__title flex m-0">Projects</h4>
                     <div data-toggle="flatpickr" data-flatpickr-wrap="true" data-flatpickr-static="true" data-flatpickr-mode="range" data-flatpickr-alt-format="d/m/Y" data-flatpickr-date-format="d/m/Y">
                         
                     </div>
@@ -97,6 +99,9 @@ use App\Models\ProjectStatus;
                                 <th id="compact-table">Name</th>
                                 <th id="compact-table">Client</th>
                                 <th id="compact-table">Cost</th>
+                                <th id="compact-table">ASF</th>
+                                <th id="compact-table">VAT</th>
+                                <th id="compact-table">Grand Total</th>
                                 <th id="compact-table">End Date</th>
                                 <th id="compact-table">Status</th>
                             </tr>
@@ -120,9 +125,20 @@ use App\Models\ProjectStatus;
                                         <b>{{ $project->name }}</b>
                                         <div class="d-flex">
                                             <a href="{{ route('internals.projects.view', [$project->id]) }}" id="table-letter-margin">View</a> | 
-                                            <a href="{{ route('internals.projects.edit', [$project->id]) }}" id="space-table">Edit</a> | 
-                                            <a href="{{ route('internals.projects.manage', [$project->id]) }}" id="space-table">Manage</a> | 
+
+                                            <!-- <a href="{{ route('internals.projects.edit', [$project->id]) }}" id="space-table">Edit</a> |  -->
+
                                             @if ($project->status == ProjectStatus::FOR_APPROVAL)
+                                                <a href="{{ route('internals.projects.manage', [$project->id]) }}" id="space-table">Manage</a> | 
+                                            @endif
+
+                                            @if ($project->status == ProjectStatus::FOR_APPROVAL)
+                                                <a href="#" data-href="{{ route('internals.projects.approve', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
+
+                                                <a href="#" data-href="{{ route('internals.projects.disapprove', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a> | 
+                                            @endif
+
+                                            @if (auth()->user()->role == 'Super Admin')
                                                 <a href="#" data-href="{{ route('internals.projects.delete', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
                                             @endif
 
@@ -133,11 +149,18 @@ use App\Models\ProjectStatus;
                                     </td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $project->company->name }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $project->client->name }}</td>
-                                    <td id="compact-table">P{{ number_format($project->cost, 2) }}</td>
+                                    <td id="compact-table">P{{ number_format($project->total, 2) }}</td>
+                                    <td id="compact-table">P{{ number_format($project->asf, 2) }}</td>
+                                    <td id="compact-table">P{{ number_format($project->vat, 2) }}</td>
+                                    <td id="compact-table">P{{ number_format($project->total + $project->asf + $project->vat, 2) }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($project->end_date)->format('M d Y') }}</td>
                                     <td>
                                         @if ($project->status == ProjectStatus::FOR_APPROVAL)
-                                            <div class="badge badge-success ml-2">For Approval</div>
+                                            <div class="badge badge-warning ml-2">For Approval</div>
+                                        @elseif ($project->status == ProjectStatus::APPROVED)
+                                            <div class="badge badge-success ml-2">Approved</div>
+                                        @elseif ($project->status == ProjectStatus::DISAPPROVED)
+                                            <div class="badge badge-danger ml-2">Disapproved</div>
                                         @elseif ($project->status == ProjectStatus::INACTIVE)
                                             <div class="badge badge-danger ml-2">Inactive</div>
                                         @endif

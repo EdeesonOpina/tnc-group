@@ -57,5 +57,16 @@ class CompanySeeder extends Seeder
         $company->line_address_2 = 'Quezon City';
         $company->status = 1;
         $company->save();
+
+        $company = new Company;
+        $company->name = 'TNC Group';
+        $company->email = 'eric@tnc.com.ph';
+        $company->person = 'Eric Redulfin';
+        $company->phone = '712-0089';
+        $company->mobile = '123456789';
+        $company->line_address_1 = '11 N. Roxas St. Brgy. San Isidro Labrador';
+        $company->line_address_2 = 'Quezon City';
+        $company->status = 1;
+        $company->save();
     }
 }

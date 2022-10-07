@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class BudgetRequestForm extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'project_id',
         'name',
+        'qty',
         'description',
-        'person',
-        'position',
-        'email',
-        'phone',
-        'mobile',
-        'line_address_1',
-        'line_address_2',
-        'image',
-        'status',
+        'price',
+        'total',
     ];
+
+    public function project()
+    {
+        return $this->hasOne(Project::class, 'id', 'project_id');
+    }
 }

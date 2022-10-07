@@ -923,33 +923,71 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::get('/view/{project_id}', 'App\Http\Controllers\Admin\ProjectController@view')->name('internals.projects.view');
         Route::get('/edit/{project_id}', 'App\Http\Controllers\Admin\ProjectController@edit')->name('internals.projects.edit');
         Route::post('/edit', 'App\Http\Controllers\Admin\ProjectController@update')->name('internals.projects.update');
+        Route::get('/approve/{project_id}', 'App\Http\Controllers\Admin\ProjectController@approve')->name('internals.projects.approve');
+        Route::get('/disapprove/{project_id}', 'App\Http\Controllers\Admin\ProjectController@disapprove')->name('internals.projects.disapprove');
         Route::get('/delete/{project_id}', 'App\Http\Controllers\Admin\ProjectController@delete')->name('internals.projects.delete');
         Route::get('/recover/{project_id}', 'App\Http\Controllers\Admin\ProjectController@recover')->name('internals.projects.recover');
+
+        Route::post('/asf', 'App\Http\Controllers\Admin\ProjectController@asf')->name('internals.projects.update.asf');
+        Route::post('/vat', 'App\Http\Controllers\Admin\ProjectController@vat')->name('internals.projects.update.vat');
 
         // manage
         Route::group(['prefix' => 'manage/{project_id}'], function () {
             Route::get('/', 'App\Http\Controllers\Admin\ProjectController@manage')->name('internals.projects.manage');
             Route::get('/items/masterlist', 'App\Http\Controllers\Admin\SupplyController@masterlist')->name('internals.projects.items.masterlist');
+        });
 
-            // details
-            Route::group(['prefix' => 'details'], function () {
-                Route::post('/create', 'App\Http\Controllers\Admin\ProjectDetailController@create')->name('internals.projects.details.create');
-                Route::post('/update/price', 'App\Http\Controllers\Admin\ProjectDetailController@price')->name('internals.projects.details.update.price');
-                Route::get('/recover/{project_detail_id}', 'App\Http\Controllers\Admin\ProjectDetailController@recover')->name('internals.projects.details.recover');
-                Route::get('/delete/{project_detail_id}', 'App\Http\Controllers\Admin\ProjectDetailController@delete')->name('internals.projects.details.delete');
-
-                // for searching project
-                Route::group(['prefix' => 'search/'], function () {
-                    Route::post('/', 'App\Http\Controllers\Admin\ProjectDetailController@search')->name('internals.projects.details.search');
-                    Route::get('/{name}', 'App\Http\Controllers\Admin\ProjectDetailController@filter')->name('internals.projects.details.filter');
-                });
-            });
+        // exports
+        Route::group(['prefix' => 'exports/'], function () {
+            Route::get('print/ce/{project_id}', 'App\Http\Controllers\Export\ProjectController@print_ce')->name('internals.exports.projects.print.ce');
+            Route::get('excel/{project_id}', 'App\Http\Controllers\Export\ProjectController@excel')->name('internals.exports.projects.ce.excel');
+            Route::get('pdf/{project_id}', 'App\Http\Controllers\Export\ProjectController@pdf')->name('internals.exports.projects.ce.pdf');
+            Route::get('sql', 'App\Http\Controllers\Admin\Report\ProjectController@sql')->name('internals.exports.projects.sql');
         });
 
         // for searching projects
         Route::group(['prefix' => 'search/'], function () {
             Route::post('/', 'App\Http\Controllers\Admin\ProjectController@search')->name('internals.projects.search');
             Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ProjectController@filter')->name('internals.projects.filter');
+        });
+    });
+
+    // details
+    Route::group(['prefix' => 'details'], function () {
+        Route::post('/create', 'App\Http\Controllers\Admin\ProjectDetailController@create')->name('internals.projects.details.create');
+        Route::post('/update/price', 'App\Http\Controllers\Admin\ProjectDetailController@price')->name('internals.projects.details.update.price');
+        Route::get('/approve/{id}','App\Http\Controllers\Admin\ProjectDetailController@approve')->name('internals.projects.details.approve');
+        Route::get('/disapprove/{id}','App\Http\Controllers\Admin\ProjectDetailController@disapprove')->name('internals.projects.details.disapprove');
+        Route::get('/activate/{id}','App\Http\Controllers\Admin\ProjectDetailController@activate')->name('internals.projects.details.activate');
+        Route::get('/deactivate/{id}','App\Http\Controllers\Admin\ProjectDetailController@deactivate')->name('internals.projects.details.deactivate');
+        Route::get('/recover/{project_detail_id}', 'App\Http\Controllers\Admin\ProjectDetailController@recover')->name('internals.projects.details.recover');
+        Route::get('/delete/{project_detail_id}', 'App\Http\Controllers\Admin\ProjectDetailController@delete')->name('internals.projects.details.delete');
+
+        // for searching project
+        Route::group(['prefix' => 'search/'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\ProjectDetailController@search')->name('internals.projects.details.search');
+            Route::get('/{name}', 'App\Http\Controllers\Admin\ProjectDetailController@filter')->name('internals.projects.details.filter');
+        });
+    });
+
+    // brf
+    Route::group(['prefix' => 'brf/'], function () {
+        Route::get('/','App\Http\Controllers\Admin\BRFController@show')->name('internals.brf');
+
+        Route::get('/view/{id}','App\Http\Controllers\Admin\BRFController@view')->name('internals.brf.view');
+        Route::get('/add','App\Http\Controllers\Admin\BRFController@add')->name('internals.brf.add');
+        Route::post('/create','App\Http\Controllers\Admin\BRFController@create')->name('internals.brf.create');
+        Route::post('/update','App\Http\Controllers\Admin\BRFController@update')->name('internals.brf.update');
+        Route::get('/approve/{id}','App\Http\Controllers\Admin\BRFController@approve')->name('internals.brf.approve');
+        Route::get('/disapprove/{id}','App\Http\Controllers\Admin\BRFController@disapprove')->name('internals.brf.disapprove');
+        Route::get('/activate/{id}','App\Http\Controllers\Admin\BRFController@activate')->name('internals.brf.activate');
+        Route::get('/deactivate/{id}','App\Http\Controllers\Admin\BRFController@deactivate')->name('internals.brf.deactivate');
+        Route::get('/delete/{project_detail_id}', 'App\Http\Controllers\Admin\ProjectDetailController@delete')->name('internals.brf.delete');
+
+        // for searching
+        Route::group(['prefix' => 'search/'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\BRFController@search')->name('internals.brf.search');
+            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\BRFController@filter')->name('internals.brf.filter');
         });
     });
 

@@ -28,7 +28,7 @@
                 <p class="text-muted mb-0">Please enter the details needed in order for you to proceed.</p>
             </div>
             <div class="col-lg-8 card-form__body card-body">
-                <form action="{{ route('admin.users.update') }}" method="post">
+                <form action="{{ route('admin.users.update') }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" name="user_id" value="{{ $user->id }}">
 
@@ -62,23 +62,20 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="country">Country</label><br />
-                            <select id="country" name="country_id" class="custom-select" data-toggle="select">
-                                @if (old('country_id'))
-                                @php
-                                    $old_country = Country::find(old('country_id'));
-                                @endphp
-                                    <option value="{{ $old_country->id }}">{{ $old_country->name }}</option>
-                                @endif
-
-                                @foreach($countries as $country)
-                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                            <label for="company">Company</label><br />
+                            <select id="company" name="company_id" class="custom-select" data-toggle="select">
+                                <option value="{{ $user->company->id }}">{{ $user->company->name }}</option>
+                                @foreach($companies as $company)
+                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col">
-                        &nbsp;
+                        <div class="form-group">
+                            <label>Position</label>
+                            <input type="text" name="position" class="form-control" placeholder="Position" value="{{ $user->position }}">
+                        </div>
                     </div>
                 </div>
 

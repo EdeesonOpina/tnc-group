@@ -1,4 +1,9 @@
 @include('layouts.auth.header')
+@php
+    use Carbon\Carbon;
+    use App\Models\ProjectDetailStatus;
+    use App\Models\BudgetRequestFormStatus;
+@endphp
 
 <div class="container page__heading-container">
     <div class="page__heading d-flex align-items-center">
@@ -10,10 +15,10 @@
                     <li class="breadcrumb-item active" aria-current="page">View Project</li>
                 </ol>
             </nav>
-            <h1 class="m-0">View Project</h1>
+            <h1 class="m-0">Project</h1>
         </div>
-        <a href="{{ route('internals.projects.edit', [$project->id]) }}">
-            <button type="button" class="btn btn-success" id="table-letter-margin"><i class="material-icons icon-16pt mr-1 text-white">edit</i> Edit</button>
+        <a href="{{ route('internals.exports.projects.print.ce', [$project->id]) }}">
+            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print CE</button>
         </a>
     </div>
 </div>
@@ -22,83 +27,262 @@
     @include('layouts.partials.alerts')
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div id="spaced-card" class="card card-body">
+                <h4>Cost Estimate</h4>
+                <br>
                 <div class="row">
                     <div class="col">
                         <div class="row">
-                            <div class="col-md-4">
-                                @if ($project->image)
-                                    <img src="{{ url($project->image) }}" width="100%" class="img-thumbnail">
-                                @else
-                                    <img src="{{ url(env('APP_ICON')) }}" width="100%" style="padding: 5%;" class="img-thumbnail">
-                                @endif
-                            </div>
                             <div class="col">
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-md-2">
                                         <div class="form-group">
-                                            <h6>Project Name</h6>
-                                            {{ $project->name }}
+                                            <h6>Client Name</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            {{ $project->client->name }}
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <h6>Email Address</h6>
-                                            {{ $project->email }}
+                                            <h6>Date</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            {{ $project->created_at->format('M d Y') }}
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-md-2">
                                         <div class="form-group">
-                                            <h6>Contact Person</h6>
-                                            {{ $project->person }}
+                                            <h6>Project Name</h6>
                                         </div>
                                     </div>
                                     <div class="col">
-                                        &nbsp;
+                                        {{ $project->name }}
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-md-2">
                                         <div class="form-group">
-                                            <h6>Phone</h6>
-                                            {{ $project->phone }}
+                                            <h6>Project Duration</h6>
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div class="form-group">
-                                            <h6>Mobile</h6>
-                                            {{ $project->mobile }}
-                                        </div>
+                                        {{ Carbon::parse($project->end_date)->format('M d Y') }}
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <h6>Line Address 1</h6>
-                                            {{ $project->line_address_1 }}
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <h6>Line Address 2</h6>
-                                            {{ $project->line_address_2 }}
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                <hr>
-                <h6>Description</h6>
-                {!! $project->description !!}
+                <br>
+
+                <div class="row">
+                    <div class="col">
+                        <h4 class="card-header__title flex m-0">Project Details</h4>
+                    </div>
+                </div>
+                <br>
+
+                <div class="table-responsive">
+                    <table class="table mb-0 thead-border-top-0 table-striped">
+                        <thead>
+                            <tr>
+                                <th id="compact-table">#ID</th>
+                                <th id="compact-table"></th>
+                                <th id="compact-table">Quantity</th>
+                                <th id="compact-table">Description</th>
+                                <th id="compact-table">Unit Price</th>
+                                <th id="compact-table">Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list" id="companies">
+                            @foreach ($project_details as $project_detail)
+                                <tr>
+                                    <td>{{ $project_detail->id }}</td>
+                                    <td>
+                                        <strong>{{ $project_detail->name }}</strong>
+                                    </td>
+                                    <td>{{ $project_detail->qty }}</td>
+                                    <td>{!! $project_detail->description !!}</td>
+                                    <td>P{{ number_format($project_detail->price, 2) }}</td>
+                                    <td>P{{ number_format($project_detail->total, 2) }}</td>
+                                </tr>
+                            @endforeach
+                            <tr>
+                                <td colspan="4">&nbsp;</td>
+                                <td id="compact-table"><strong>ASF</strong></td>
+                                <td id="compact-table">
+                                    P{{ number_format($project->asf, 2) }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4">&nbsp;</td>
+                                <td id="compact-table"><strong>VAT</strong></td>
+                                <td id="compact-table">
+                                    P{{ number_format($project->vat, 2) }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4">&nbsp;</td>
+                                <td id="compact-table"><strong>Total Cost</strong></td>
+                                <td id="compact-table">P{{ number_format($project->total, 2) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    @if (count($project_details) <= 0)
+                        <div style="padding: 20px">
+                            <center><i class="material-icons icon-16pt mr-1 text-muted">assignment</i> No record/s found</center>
+                        </div>
+                    @endif
+                </div>
+
+                <br><br>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Proposal Ownership.</strong>
+                    </div>
+                    <div class="col">
+                        {!! $project->proposal_ownership !!}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Confidentiality.</strong>
+                    </div>
+                    <div class="col">
+                        {!! $project->confidentiality !!}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Project Confirmation.</strong>
+                    </div>
+                    <div class="col">
+                        {!! $project->project_confirmation !!}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Payment Terms</strong>
+                    </div>
+                    <div class="col">
+                        {!! $project->payment_terms !!}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Validity.</strong>
+                    </div>
+                    <div class="col">
+                        {!! $project->validity !!}
+                    </div>
+                </div>
+                <br><br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <strong>Prepared By</strong>
+                            <br><br><br><br>
+                            {{ $project->prepared_by_user->firstname }} {{ $project->prepared_by_user->lastname }}<br>
+                            {{ $project->prepared_by_user->position }}<br>
+                            {{ $project->prepared_by_user->company->name }}<br>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <strong>Noted By</strong>
+                            <br><br><br><br>
+                            {{ $project->noted_by_user->firstname }} {{ $project->noted_by_user->lastname }}<br>
+                            {{ $project->noted_by_user->position }}<br>
+                            {{ $project->noted_by_user->company->name }}<br>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <strong>Conforme</strong>
+                            <br><br><br><br>
+                            {{ $project->client->person }}<br>
+                            {{ $project->client->position }}<br>
+                            {{ $project->client->name }}<br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div id="spaced-card" class="card card-body">
+                <div class="row">
+                    <div class="col">
+                        <h4 class="card-header__title flex m-0">Budget Request Forms</h4>
+                    </div>
+
+                    <div class="col-md-2">
+                        
+                    </div>
+                </div>
+                <br>
+
+                <div class="table-responsive">
+                    <table class="table mb-0 thead-border-top-0 table-striped">
+                        <thead>
+                            <tr>
+                                <th id="compact-table">#ID</th>
+                                <th id="compact-table"></th>
+                                <th id="compact-table">Quantity</th>
+                                <th id="compact-table">Description</th>
+                                <th id="compact-table">Unit Price</th>
+                                <th id="compact-table">Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list" id="companies">
+                            @foreach ($budget_request_forms as $budget_request_form)
+                                <tr>
+                                    <td>{{ $budget_request_form->id }}</td>
+                                    <td>
+                                        {{ $budget_request_form->name }}
+                                    </td>
+                                    <td>{{ $budget_request_form->qty }}</td>
+                                    <td>{{ $budget_request_form->description }}</td>
+                                    <td>P{{ number_format($budget_request_form->price, 2) }}</td>
+                                    <td>P{{ number_format($budget_request_form->total, 2) }}</td>
+                                </tr>
+                            @endforeach
+                            <tr> 
+                                <td colspan="4">&nbsp;</td>
+                                <td id="compact-table"><strong>Total Cost</strong></th>
+                                <td id="compact-table">P{{ number_format($budget_request_forms_total, 2) }}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    @if (count($budget_request_forms) <= 0)
+                        <div style="padding: 20px">
+                            <center><i class="material-icons icon-16pt mr-1 text-muted">assignment</i> No record/s found</center>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
         <div class="col">

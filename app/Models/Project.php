@@ -13,9 +13,19 @@ class Project extends Model
         'company_id',
         'client_id',
         'name',
-        'cost',
+        'total',
         'end_date',
         'description',
+        'asf',
+        'vat',
+        'proposal_ownership',
+        'confidentiality',
+        'project_confirmation',
+        'payment_terms',
+        'validity',
+        'prepared_by_user_id',
+        'noted_by_user_id',
+        'conforme_by_user_id',
         'created_by_user_id',
         'noted_by_user_id',
         'approved_by_user_id',
@@ -26,6 +36,11 @@ class Project extends Model
     public function company()
     {
         return $this->hasOne(Company::class, 'id', 'company_id');
+    }
+
+    public function prepared_by_user()
+    {
+        return $this->hasOne(User::class, 'id', 'prepared_by_user_id');
     }
 
     public function client()

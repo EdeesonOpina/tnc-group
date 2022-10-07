@@ -25,7 +25,7 @@
                 <p class="text-muted mb-0">Please enter the details needed in order for you to proceed.</p>
             </div>
             <div class="col-lg-8 card-form__body card-body">
-                <form action="{{ route('admin.users.create') }}" method="post">
+                <form action="{{ route('admin.users.create') }}" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                 
                 <div class="row">
@@ -67,7 +67,10 @@
                         </div>
                     </div>
                     <div class="col">
-                        &nbsp;
+                        <div class="form-group">
+                            <label>Position</label>
+                            <input type="text" name="position" class="form-control" placeholder="Position" value="{{ old('position') }}">
+                        </div>
                     </div>
                 </div>
 
@@ -146,6 +149,9 @@
                         &nbsp;
                     </div>
                 </div>
+
+                <label>Signature</label><br>
+                <input type="file" name="signature"><br><br>
                 
                 <div class="form-group m-0">
                     <button type="submit" class="btn btn-success">Submit</button>

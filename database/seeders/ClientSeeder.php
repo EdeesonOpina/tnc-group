@@ -15,9 +15,10 @@ class ClientSeeder extends Seeder
     public function run()
     {
         $client = new Client;
-        $client->name = 'Eric';
-        $client->email = 'eric@tnc.com.ph';
-        $client->person = 'Eric Redulfin';
+        $client->name = 'Acer Philippines';
+        $client->email = 'princess.lao@acer.com.ph';
+        $client->position = 'Senior Marketing Manager';
+        $client->person = 'Princess Lao';
         $client->phone = '712-0089';
         $client->mobile = '123456789';
         $client->line_address_1 = '11 N. Roxas St. Brgy. San Isidro Labrador';

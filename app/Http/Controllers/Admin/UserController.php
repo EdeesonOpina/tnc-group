@@ -103,6 +103,13 @@ class UserController extends Controller
         }
 
         $data = request()->all(); // get all request
+
+        if ($request->file('signature')) { // if the file is present
+            $image_name = $request->name . '-' . time() . '.' . $request->file('signature')->getClientOriginalExtension(); // set unique name for that file
+            $request->file('signature')->move('uploads/users/signatures', $image_name); // move the file to the laravel project
+            $data['signature'] = 'uploads/users/signatures/' . $image_name; // save the destination of the file to the database
+        }
+
         $data['status'] = UserStatus::PENDING; // if you want to insert to a specific column
         $data['password'] = bcrypt('123123123');
         User::create($data); // create data in a model
@@ -140,9 +147,12 @@ class UserController extends Controller
     {
         $user = User::find($user_id);
         $countries = Country::where('status', 1)->get();
+        $companies = Company::where('status', CompanyStatus::ACTIVE)
+                        ->get();
 
         return view('admin.users.edit', compact(
             'user',
+            'companies',
             'countries'
         ));
     }
@@ -152,9 +162,9 @@ class UserController extends Controller
         $rules = [
             'firstname' => 'required',
             'lastname' => 'required',
-            'birthdate' => 'nullable',
             'role' => 'required',
             'mobile' => 'required',
+            'birthdate' => 'nullable',
             'line_address_1' => 'required',
             'line_address_2' => 'nullable',
             'email' => 'required',
@@ -169,6 +179,12 @@ class UserController extends Controller
         }
         
         $data = $request->all();
+
+        if ($request->file('signature')) { // if the file is present
+            $image_name = $request->name . '-' . time() . '.' . $request->file('signature')->getClientOriginalExtension(); // set unique name for that file
+            $request->file('signature')->move('uploads/users/signatures', $image_name); // move the file to the laravel project
+            $data['image'] = 'uploads/users/signatures/' . $image_name; // save the destination of the file to the database
+        }
 
         $user = User::find($request->user_id);
         $user->fill($data)->save();
