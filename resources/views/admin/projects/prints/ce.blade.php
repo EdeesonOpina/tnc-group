@@ -31,6 +31,10 @@
         font-size: 30px;
     }
 
+    .table-black-border {
+        border: 2px solid #000 !important;
+    }
+
     .no-underline {
       text-decoration: none !important;
     }
@@ -40,6 +44,10 @@
       border-top: none !important;
       border-bottom: none !important;
       margin-bottom: 0px;
+    }
+
+    .table-color-primary {
+        color: #E74414 !important;
     }
 
     #compact-table {
@@ -69,7 +77,7 @@
     @endif
     
     <br><br><br>
-    <h2 class="font-change">Cost Estimate</h2>
+    <h2 class="font-change table-color-primary">Cost Estimate</h2>
     <table class="table border-bottom no-border table-borderless font-change">
         <tbody>
             <tr>
@@ -110,51 +118,51 @@
     <table class="table table-bordered font-change">
         <thead>
             <tr>
-                <th id="compact-table">Name</th>
-                <th id="compact-table">Quantity</th>
-                <th id="compact-table">Description</th>
-                <th id="compact-table">Unit Price</th>
-                <th id="compact-table">Total Price</th>
+                <th id="compact-table" class="table-black-border table-color-primary">Name</th>
+                <th id="compact-table" class="table-black-border table-color-primary">Quantity</th>
+                <th id="compact-table" class="table-black-border table-color-primary">Description</th>
+                <th id="compact-table" class="table-black-border table-color-primary">Unit Price</th>
+                <th id="compact-table" class="table-black-border table-color-primary">Total Price</th>
             </tr>
         </thead>
         <tbody class="list" id="companies">
             @foreach ($project_details as $project_detail)
                 <tr>
-                    <td>
+                    <td class="table-black-border">
                         <strong>{{ $project_detail->name }}</strong>
                     </td>
-                    <td>{{ $project_detail->qty }}</td>
-                    <td>{!! $project_detail->description !!}</td>
-                    <td>P{{ number_format($project_detail->price, 2) }}</td>
-                    <td>P{{ number_format($project_detail->total, 2) }}</td>
+                    <td class="table-black-border">{{ $project_detail->qty }}</td>
+                    <td class="table-black-border">{!! $project_detail->description !!}</td>
+                    <td class="table-black-border">P{{ number_format($project_detail->price, 2) }}</td>
+                    <td class="table-black-border">P{{ number_format($project_detail->total, 2) }}</td>
                 </tr>
             @endforeach
             <tr>
-                <td colspan="3">&nbsp;</td>
-                <td id="compact-table"><strong>Total Cost</strong></td>
-                <td id="compact-table">P{{ number_format($project->total, 2) }}</td>
+                <td colspan="3" class="table-black-border">&nbsp;</td>
+                <td id="compact-table" class="table-black-border"><strong>Total Cost</strong></td>
+                <td id="compact-table" class="table-black-border">P{{ number_format($project->total, 2) }}</td>
             </tr>
             
             <tr>
-                <td colspan="3">&nbsp;</td>
-                <td id="compact-table"><strong>ASF</strong></td>
-                <td id="compact-table">
+                <td colspan="3" class="table-black-border">&nbsp;</td>
+                <td id="compact-table" class="table-black-border"><strong>ASF</strong></td>
+                <td id="compact-table" class="table-black-border">
                     P{{ number_format($project->asf, 2) }}
                 </td>
             </tr>
 
             <tr>
-                <td colspan="3">&nbsp;</td>
-                <td id="compact-table"><strong>VAT</strong></td>
-                <td id="compact-table">
+                <td colspan="3" class="table-black-border">&nbsp;</td>
+                <td id="compact-table" class="table-black-border"><strong>VAT</strong></td>
+                <td id="compact-table" class="table-black-border">
                     P{{ number_format($project->vat, 2) }}
                 </td>
             </tr>
 
             <tr>
-                <td colspan="3">&nbsp;</td>
-                <td id="compact-table"><strong>Grand Total</strong></td>
-                <td id="compact-table">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
+                <td colspan="3" class="table-black-border">&nbsp;</td>
+                <td id="compact-table" class="table-black-border"><strong>Grand Total</strong></td>
+                <td id="compact-table" class="table-black-border">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
             </tr>
         </tbody>
     </table>
@@ -163,28 +171,28 @@
     <table class="table table-bordered font-change">
         <tbody>
             <tr>
-                <td><strong>Proposal Ownership.</strong></td>
-                <td>{!! $project->proposal_ownership !!}</td>
+                <td class="table-black-border"><strong>Proposal Ownership.</strong></td>
+                <td class="table-black-border">{!! $project->proposal_ownership !!}</td>
             </tr>
 
             <tr>
-                <td><strong>Confidentiality.</strong></td>
-                <td>{!! $project->confidentiality !!}</td>
+                <td class="table-black-border"><strong>Confidentiality.</strong></td>
+                <td class="table-black-border">{!! $project->confidentiality !!}</td>
             </tr>
 
             <tr>
-                <td><strong>Project Confirmation.</strong></td>
-                <td>{!! $project->project_confirmation !!}</td>
+                <td class="table-black-border"><strong>Project Confirmation.</strong></td>
+                <td class="table-black-border">{!! $project->project_confirmation !!}</td>
             </tr>
 
             <tr>
-                <td><strong>Payment Terms</strong></td>
-                <td>{!! $project->payment_terms !!}</td>
+                <td class="table-black-border"><strong>Payment Terms</strong></td>
+                <td class="table-black-border">{!! $project->payment_terms !!}</td>
             </tr>
 
             <tr>
-                <td><strong>Validity.</strong></td>
-                <td>{!! $project->validity !!}</td>
+                <td class="table-black-border"><strong>Validity.</strong></td>
+                <td class="table-black-border">{!! $project->validity !!}</td>
             </tr>
         </tbody>
     </table>
