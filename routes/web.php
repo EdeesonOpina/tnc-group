@@ -1002,7 +1002,7 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         // for searching
         Route::group(['prefix' => 'search/'], function () {
             Route::post('/', 'App\Http\Controllers\Admin\BRFController@search')->name('internals.brf.search');
-            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\BRFController@filter')->name('internals.brf.filter');
+            Route::get('/{reference_number}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\BRFController@filter')->name('internals.brf.filter');
         });
     });
 

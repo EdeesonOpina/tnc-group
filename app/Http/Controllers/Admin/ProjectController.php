@@ -282,6 +282,17 @@ class ProjectController extends Controller
         return back();
     }
 
+    public function done(Request $request, $project_id)
+    {
+        $project = Project::find($project_id);
+        $project->status = ProjectStatus::DONE; // mark data as active
+        $project->save();
+
+        $request->session()->flash('success', 'Data has been recovered');
+
+        return back();
+    }
+
     public function cancel(Request $request, $project_id)
     {
         $project = Project::find($project_id);

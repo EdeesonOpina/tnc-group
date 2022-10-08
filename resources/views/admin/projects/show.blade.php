@@ -49,6 +49,7 @@ use App\Models\ProjectStatus;
                                     @endif
                                 @endif
                                 <option value="*">All</option>
+                                <option value="{{ ProjectStatus::DONE }}">Done</option>
                                 <option value="{{ ProjectStatus::FOR_APPROVAL }}">For Approval</option>
                                 <option value="{{ ProjectStatus::INACTIVE }}">Inactive</option>
                                 <option value="{{ ProjectStatus::APPROVED }}">Approved</option>
@@ -132,6 +133,10 @@ use App\Models\ProjectStatus;
                                                 <a href="{{ route('internals.projects.manage', [$project->id]) }}" id="space-table">Manage</a> | 
                                             @endif
 
+                                            @if ($project->status == ProjectStatus::APPROVED)
+                                                <a href="#" data-href="{{ route('internals.projects.done', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Mark as Done</a> | 
+                                            @endif
+
                                             @if ($project->status == ProjectStatus::FOR_APPROVAL)
                                                 <a href="#" data-href="{{ route('internals.projects.approve', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
 
@@ -159,6 +164,8 @@ use App\Models\ProjectStatus;
                                             <div class="badge badge-warning ml-2">For Approval</div>
                                         @elseif ($project->status == ProjectStatus::APPROVED)
                                             <div class="badge badge-success ml-2">Approved</div>
+                                        @elseif ($project->status == ProjectStatus::DONE)
+                                            <div class="badge badge-success ml-2">Done</div>
                                         @elseif ($project->status == ProjectStatus::DISAPPROVED)
                                             <div class="badge badge-danger ml-2">Disapproved</div>
                                         @elseif ($project->status == ProjectStatus::INACTIVE)

@@ -33,17 +33,22 @@ class BRFController extends Controller
 
     public function search(Request $request)
     {
+        $reference_number = $request->reference_number ?? '*';
         $name = $request->name ?? '*';
         $status = $request->status ?? '*';
         $from_date = $request->from_date ?? '*';
         $to_date = $request->to_date ?? '*';
 
-        return redirect()->route('internals.brf.filter', [$name, $status, $from_date, $to_date])->withInput();
+        return redirect()->route('internals.brf.filter', [$reference_number, $name, $status, $from_date, $to_date])->withInput();
     }
 
-    public function filter($name, $status, $from_date, $to_date)
+    public function filter($reference_number, $name, $status, $from_date, $to_date)
     {
         $query = BudgetRequestForm::orderBy('created_at', 'desc');
+
+        if ($reference_number != '*') {
+            $query->where('reference_number', $reference_number);
+        }
 
         if ($name != '*') {
             $query->where('name', 'LIKE', '%' . $name . '%');

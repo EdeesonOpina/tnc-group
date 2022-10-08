@@ -94,6 +94,7 @@ use App\Models\BudgetRequestFormStatus;
                         <thead>
                             <tr>
                                 <th id="compact-table">#BRF</th>
+                                <th id="compact-table">Pay To</th>
                                 <th id="compact-table">Payment For</th>
                                 <th id="compact-table">Project</th>
                                 <th id="compact-table">Needed Date</th>
@@ -110,17 +111,22 @@ use App\Models\BudgetRequestFormStatus;
                                             @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
                                                 <a href="{{ route('internals.brf.view', [$budget_request_form->id]) }}" id="margin-right">View</a> | 
 
-                                                <a href="{{ route('internals.brf.manage', [$budget_request_form->id]) }}" id="space-table">Manage</a> | 
+                                                @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
+                                                    <a href="{{ route('internals.brf.manage', [$budget_request_form->id]) }}" id="space-table">Manage</a> | 
+                                                
 
-                                                <a href="#" data-href="{{ route('internals.brf.approve', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
+                                                    <a href="#" data-href="{{ route('internals.brf.approve', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
 
-                                                <a href="#" data-href="{{ route('internals.brf.disapprove', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
+                                                    <a href="#" data-href="{{ route('internals.brf.disapprove', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
+
+                                                @endif
                                             @endif
                                         </div>
                                     </td>
-                                    <td>
+                                    <td id="compact-table">
                                         {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
                                     </td>
+                                    <td id="compact-table">{{ $budget_request_form->name }}</td>
                                     <td id="compact-table">{{ $budget_request_form->project->name }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}</td>
                                     <td>P{{ number_format($budget_request_form->total, 2) }}</td>
