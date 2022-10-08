@@ -93,7 +93,7 @@ use App\Models\BudgetRequestFormStatus;
                     <table class="table mb-0 thead-border-top-0 table-striped">
                         <thead>
                             <tr>
-                                <th id="compact-table">#BRF</th>
+                                <th id="compact-table">BRF#</th>
                                 <th id="compact-table">Pay To</th>
                                 <th id="compact-table">Payment For</th>
                                 <th id="compact-table">Project</th>

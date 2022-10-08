@@ -20,6 +20,10 @@
         <a href="{{ route('internals.exports.projects.print.ce', [$project->id]) }}">
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print CE</button>
         </a>
+
+        <a href="{{ route('internals.exports.projects.print.internal-ce', [$project->id]) }}">
+            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print Internal CE</button>
+        </a>
     </div>
 </div>
 
@@ -38,7 +42,18 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <h6>Client Name</h6>
+                                            <strong>PRJ#</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        {{ $project->reference_number }}
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <strong>Client Name</strong>
                                         </div>
                                     </div>
                                     <div class="col-md-7">
@@ -48,7 +63,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <h6>Date</h6>
+                                            <strong>Date</strong>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -61,7 +76,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <h6>Project Name</h6>
+                                            <strong>Project Name</strong>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -72,7 +87,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <h6>Project Duration</h6>
+                                            <strong>Project Duration</strong>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -141,9 +156,21 @@
 
                             <tr>
                                 <td colspan="3">&nbsp;</td>
-                                <td id="compact-table"><strong>Grand Total</strong></td>
-                                <td id="compact-table">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
+                                <td id="compact-table"><strong>CE Grand Total</strong></td>
+                                <td id="compact-table">P{{ number_format($grand_total, 2) }}</td>
                             </tr>
+
+                            <!-- <tr>
+                                <td colspan="3">&nbsp;</td>
+                                <td id="compact-table"><strong>Internal CE Grand Total</strong></td>
+                                <td id="compact-table">P{{ number_format($internal_grand_total, 2) }}</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3">&nbsp;</td>
+                                <td id="compact-table"><strong>Profit</strong></td>
+                                <td id="compact-table">P{{ number_format($grand_total - $internal_grand_total, 2) }}</td>
+                            </tr> -->
                         </tbody>
                     </table>
 

@@ -21,9 +21,9 @@
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print CE</button>
         </a>
 
-        <!-- <a href="{{ route('internals.projects.done', [$project->id]) }}">
-            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Mark As Done</button>
-        </a> -->
+        <a href="{{ route('internals.exports.projects.print.internal-ce', [$project->id]) }}">
+            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print Internal CE</button>
+        </a>
     </div>
 </div>
 
@@ -40,7 +40,18 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <h6>Client Name</h6>
+                                            <strong>PRJ#</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        {{ $project->reference_number }}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <strong>Client Name</strong>
                                         </div>
                                     </div>
                                     <div class="col-md-7">
@@ -50,7 +61,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <h6>Date</h6>
+                                            <strong>Date</strong>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -63,7 +74,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <h6>Project Name</h6>
+                                            <strong>Project Name</strong>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -74,7 +85,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <h6>Project Duration</h6>
+                                            <strong>Project Duration</strong>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -96,7 +107,7 @@
 
                     <div class="col-md-2">
                         <a href="#" data-toggle="modal" data-target="#add-project-details-{{ $project->id }}">
-                            <button type="button" class="btn btn-success form-control" id="table-letter-margin"><i class="material-icons icon-16pt mr-1 text-white">add</i> Add Details</button>
+                            <button type="button" class="btn btn-success form-control" id="table-letter-margin"><i class="material-icons">add</i> Add Details</button>
                         </a>
                     </div>
                 </div>
@@ -106,7 +117,6 @@
                     <table class="table mb-0 thead-border-top-0 table-striped">
                         <thead>
                             <tr>
-                                <th id="compact-table">#ID</th>
                                 <th id="compact-table">Particulars</th>
                                 <th id="compact-table">Quantity</th>
                                 <th id="compact-table">Description</th>
@@ -120,9 +130,12 @@
                         <tbody class="list" id="companies">
                             @foreach ($project_details as $project_detail)
                                 <tr>
-                                    <td>{{ $project_detail->id }}</td>
                                     <td>
-                                        <strong>{{ $project_detail->name }}</strong>
+                                        <strong>{{ $project_detail->name }} 
+                                            @if ($project_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
+                                                <a href="#" data-toggle="modal" data-target="#edit-project-detail-{{ $project_detail->id }}"><i class="material-icons icon-16pt text-success">edit</i></a>
+                                            @endif
+                                        </strong>
                                         <div class="d-flex">
                                             @if ($project_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
                                                 <a href="#" data-href="{{ route('internals.projects.details.approve', [$project_detail->id]) }}" data-toggle="modal" data-target="#confirm-action" id="margin-right">Approve</a> | 
@@ -133,8 +146,8 @@
                                     </td>
                                     <td>{{ $project_detail->qty }}</td>
                                     <td>{!! $project_detail->description !!}</td>
-                                    <td>P{{ number_format($project_detail->price, 2) }}</td>
                                     <td>P{{ number_format($project_detail->internal_price, 2) }}</td>
+                                    <td>P{{ number_format($project_detail->price, 2) }}</td>
                                     <td>P{{ number_format($project_detail->total, 2) }}</td>
                                     <td>P{{ number_format($project_detail->internal_total, 2) }}</td>
                                     <td>
@@ -149,14 +162,14 @@
                                 </tr>
                             @endforeach
                             <tr>
-                                <td colspan="4">&nbsp;</td>
+                                <td colspan="5">&nbsp;</td>
                                 <td id="compact-table"><strong>Total Cost</strong></td>
                                 <td id="compact-table">P{{ number_format($project->total, 2) }}</td>
                                 <td>&nbsp;</td>
                             </tr>
 
                             <tr>
-                                <td colspan="4">&nbsp;</td>
+                                <td colspan="5">&nbsp;</td>
                                 <td id="compact-table"><strong>ASF</strong></td>
                                 <td id="compact-table">
                                     <a href="#" data-toggle="modal" data-target="#asf-{{ $project->id }}">
@@ -167,7 +180,7 @@
                             </tr>
 
                             <tr>
-                                <td colspan="4">&nbsp;</td>
+                                <td colspan="5">&nbsp;</td>
                                 <td id="compact-table"><strong>VAT</strong></td>
                                 <td id="compact-table">
                                     <a href="#" data-toggle="modal" data-target="#vat-{{ $project->id }}">
@@ -178,9 +191,23 @@
                             </tr>
 
                             <tr>
-                                <td colspan="4">&nbsp;</td>
-                                <td id="compact-table"><strong>Grand Total</strong></td>
-                                <td id="compact-table">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
+                                <td colspan="5">&nbsp;</td>
+                                <td id="compact-table"><strong>CE Grand Total</strong></td>
+                                <td id="compact-table">P{{ number_format($grand_total, 2) }}</td>
+                                <td>&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="5">&nbsp;</td>
+                                <td id="compact-table"><strong>Internal CE Grand Total</strong></td>
+                                <td id="compact-table">P{{ number_format($internal_grand_total, 2) }}</td>
+                                <td>&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="5">&nbsp;</td>
+                                <td id="compact-table"><strong>Profit</strong></td>
+                                <td id="compact-table">P{{ number_format($grand_total - $internal_grand_total, 2) }}</td>
                                 <td>&nbsp;</td>
                             </tr>
                         </tbody>
@@ -191,6 +218,51 @@
                             <center><i class="material-icons icon-16pt mr-1 text-muted">assignment</i> No record/s found</center>
                         </div>
                     @endif
+                </div>
+                <br><br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Proposal Ownership.</strong>
+                    </div>
+                    <div class="col">
+                        {!! $project->proposal_ownership !!}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Confidentiality.</strong>
+                    </div>
+                    <div class="col">
+                        {!! $project->confidentiality !!}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Project Confirmation.</strong>
+                    </div>
+                    <div class="col">
+                        {!! $project->project_confirmation !!}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Payment Terms</strong>
+                    </div>
+                    <div class="col">
+                        {!! $project->payment_terms !!}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Validity.</strong>
+                    </div>
+                    <div class="col">
+                        {!! $project->validity !!}
+                    </div>
                 </div>
 
                 <br><br>

@@ -62,7 +62,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>End Date</label>
-                                    <input type="date" name="end_date" class="form-control" value="{{ old('end_date') }}">
+                                    <input type="date" name="end_date" class="form-control" value="{{ old('end_date') }}" required>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="client">Prepared By</label><br />
-                                    <select id="client" name="prepared_by_user_id" class="custom-select" data-toggle="select">
+                                    <select id="prepared_by_user" name="prepared_by_user_id" class="custom-select" data-toggle="select">
                                         <option value=""></option>
                                         @foreach($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
@@ -83,7 +83,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="client">Noted By</label><br />
-                                    <select id="client" name="noted_by_user_id" class="custom-select" data-toggle="select">
+                                    <select id="noted_by_user" name="noted_by_user_id" class="custom-select" data-toggle="select">
                                         <option value=""></option>
                                         @foreach($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
@@ -96,8 +96,8 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="company">Conforme</label><br />
-                                    <select id="company" name="conforme_by_user_id" class="custom-select" data-toggle="select">
+                                    <label for="conforme">Conforme</label><br />
+                                    <select id="conforme" name="conforme_by_user_id" class="custom-select" data-toggle="select">
                                         @foreach($clients as $client)
                                             <option value="{{ $client->id }}">{{ $client->name }} ({{ $client->person }})</option>
                                         @endforeach

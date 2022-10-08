@@ -941,6 +941,7 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         // exports
         Route::group(['prefix' => 'exports/'], function () {
             Route::get('print/ce/{project_id}', 'App\Http\Controllers\Export\ProjectController@print_ce')->name('internals.exports.projects.print.ce');
+            Route::get('print/internal-ce/{project_id}', 'App\Http\Controllers\Export\ProjectController@print_internal_ce')->name('internals.exports.projects.print.internal-ce');
             Route::get('excel/{project_id}', 'App\Http\Controllers\Export\ProjectController@excel')->name('internals.exports.projects.ce.excel');
             Route::get('pdf/{project_id}', 'App\Http\Controllers\Export\ProjectController@pdf')->name('internals.exports.projects.ce.pdf');
             Route::get('sql', 'App\Http\Controllers\Admin\Report\ProjectController@sql')->name('internals.exports.projects.sql');
@@ -956,6 +957,7 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
     // details
     Route::group(['prefix' => 'details'], function () {
         Route::post('/create', 'App\Http\Controllers\Admin\ProjectDetailController@create')->name('internals.projects.details.create');
+        Route::post('/update', 'App\Http\Controllers\Admin\ProjectDetailController@update')->name('internals.projects.details.update');
         Route::post('/update/price', 'App\Http\Controllers\Admin\ProjectDetailController@price')->name('internals.projects.details.update.price');
         Route::get('/approve/{id}','App\Http\Controllers\Admin\ProjectDetailController@approve')->name('internals.projects.details.approve');
         Route::get('/disapprove/{id}','App\Http\Controllers\Admin\ProjectDetailController@disapprove')->name('internals.projects.details.disapprove');

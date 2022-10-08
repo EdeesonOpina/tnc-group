@@ -27,9 +27,9 @@ class ProjectController extends Controller
     {
         $project = Project::find($project_id);
         $project_details = ProjectDetail::where('project_id', $project_id)
-                        ->where('status', '!=', ProjectDetailStatus::INACTIVE)
-                        ->orderBy('created_at', 'desc')
-                        ->paginate(15);
+                                ->where('status', '!=', ProjectDetailStatus::INACTIVE)
+                                ->orderBy('created_at', 'desc')
+                                ->paginate(15);
         $budget_request_forms = BudgetRequestForm::where('project_id', $project_id)
                         ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
                         ->orderBy('created_at', 'desc')
@@ -39,7 +39,41 @@ class ProjectController extends Controller
                                             ->where('status', BudgetRequestFormStatus::APPROVED)
                                             ->sum('total');
 
+        $grand_total = $project->total + $project->vat + $project->asf;
+        $internal_grand_total = $project->internal_total + $project->asf;
+
         return view('admin.projects.prints.ce', compact(
+            'grand_total',
+            'internal_grand_total',
+            'budget_request_forms_total',
+            'budget_request_forms',
+            'project_details',
+            'project'
+        ));
+    }
+
+    public function print_internal_ce($project_id)
+    {
+        $project = Project::find($project_id);
+        $project_details = ProjectDetail::where('project_id', $project_id)
+                                ->where('status', '!=', ProjectDetailStatus::INACTIVE)
+                                ->orderBy('created_at', 'desc')
+                                ->paginate(15);
+        $budget_request_forms = BudgetRequestForm::where('project_id', $project_id)
+                        ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(15);
+
+        $budget_request_forms_total = BudgetRequestForm::where('project_id', $project_id)
+                                            ->where('status', BudgetRequestFormStatus::APPROVED)
+                                            ->sum('total');
+
+        $grand_total = $project->total + $project->vat + $project->asf;
+        $internal_grand_total = $project->internal_total + $project->asf;
+
+        return view('admin.projects.prints.internal-ce', compact(
+            'grand_total',
+            'internal_grand_total',
             'budget_request_forms_total',
             'budget_request_forms',
             'project_details',

@@ -54,6 +54,39 @@ class ProjectDetailController extends Controller
         return redirect()->route('internals.projects.manage', [$project_detail->project->id]);
     }
 
+    public function update(Request $request)
+    {
+        $rules = [
+            'name' => 'required',
+            'qty' => 'required',
+            'price' => 'required',
+            'internal_price' => 'required',
+            'description' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);
+        }
+
+        $data = $request->all();
+
+        if ($request->file('image')) { // if the file is present
+            $image_name = $request->name . '-' . time() . '.' . $request->file('image')->getClientOriginalExtension(); // set unique name for that file
+            $request->file('image')->move('uploads/images/projects', $image_name); // move the file to the laravel project
+            $data['image'] = 'uploads/images/projects/' . $image_name; // save the destination of the file to the database
+        }
+
+        $project_detail = ProjectDetail::find($request->project_detail_id);
+        $data['internal_total'] = $request->internal_price * $request->qty;
+        $data['total'] = $request->price * $request->qty;
+        $project_detail->fill($data)->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return back();
+    }
+
     public function approve(Request $request, $project_detail_id)
     {
         $project_detail = ProjectDetail::find($project_detail_id);
@@ -61,6 +94,7 @@ class ProjectDetailController extends Controller
         $project_detail->save();
 
         $project = Project::find($project_detail->project_id);
+        $project->internal_total += $project_detail->internal_total;
         $project->total += $project_detail->total;
         $project->save();
 

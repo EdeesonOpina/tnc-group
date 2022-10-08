@@ -101,7 +101,10 @@ class ProjectController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
+        $prj_count = str_replace('PRJ-', '', Project::orderBy('created_at', 'desc')->first()->reference_number ?? 0) + 1; // get the latest tnc sequence then add 1
+
         $data = request()->all(); // get all request
+        $data['reference_number'] = 'PRJ-' . str_pad($prj_count, 8, '0', STR_PAD_LEFT);
 
         if ($request->file('image')) { // if the file is present
             $image_name = $request->name . '-' . time() . '.' . $request->file('image')->getClientOriginalExtension(); // set unique name for that file
@@ -132,7 +135,12 @@ class ProjectController extends Controller
                                             ->where('status', BudgetRequestFormStatus::APPROVED)
                                             ->sum('total');
 
+        $grand_total = $project->total + $project->vat + $project->asf;
+        $internal_grand_total = $project->internal_total + $project->asf;
+
         return view('admin.projects.view', compact(
+            'grand_total',
+            'internal_grand_total',
             'budget_request_forms_total',
             'budget_request_forms',
             'project_details',
@@ -144,9 +152,9 @@ class ProjectController extends Controller
     {
         $project = Project::find($project_id);
         $project_details = ProjectDetail::where('project_id', $project_id)
-                        ->where('status', '!=', ProjectDetailStatus::INACTIVE)
-                        ->orderBy('created_at', 'desc')
-                        ->paginate(15);
+                                ->where('status', '!=', ProjectDetailStatus::INACTIVE)
+                                ->orderBy('created_at', 'desc')
+                                ->paginate(15);
         $budget_request_forms = BudgetRequestForm::where('project_id', $project_id)
                         ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
                         ->orderBy('created_at', 'desc')
@@ -156,7 +164,12 @@ class ProjectController extends Controller
                                             ->where('status', BudgetRequestFormStatus::APPROVED)
                                             ->sum('total');
 
+        $grand_total = $project->total + $project->vat + $project->asf;
+        $internal_grand_total = $project->internal_total + $project->asf;
+
         return view('admin.projects.manage', compact(
+            'grand_total',
+            'internal_grand_total',
             'budget_request_forms_total',
             'budget_request_forms',
             'project_details',

@@ -15,10 +15,12 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->string('reference_number');
             $table->integer('company_id')->unsigned();
             $table->integer('client_id')->unsigned();
             $table->string('name');
             $table->decimal('total', $precision = 10, $scale = 2)->default('0.00');
+            $table->decimal('internal_total', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('asf', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('vat', $precision = 10, $scale = 2)->default('0.00');
             $table->date('end_date');

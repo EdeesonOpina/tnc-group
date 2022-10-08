@@ -428,6 +428,7 @@
 
   @if (request()->is('admin/projects/manage/*'))
     @include('layouts.modals.projects.details.add')
+    @include('layouts.modals.projects.details.edit')
     @include('layouts.modals.projects.asf')
     @include('layouts.modals.projects.vat')
   @endif
