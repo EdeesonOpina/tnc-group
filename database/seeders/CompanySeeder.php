@@ -22,6 +22,7 @@ class CompanySeeder extends Seeder
         $company->mobile = '123456789';
         $company->line_address_1 = '11 N. Roxas St. Brgy. San Isidro Labrador';
         $company->line_address_2 = 'Quezon City';
+        $company->image = 'uploads/images/companies/digimart.png';
         $company->status = 1;
         $company->save();
 
@@ -44,6 +45,7 @@ class CompanySeeder extends Seeder
         $company->mobile = '123456789';
         $company->line_address_1 = '11 N. Roxas St. Brgy. San Isidro Labrador';
         $company->line_address_2 = 'Quezon City';
+        $company->image = 'uploads/images/companies/tnc-pro-team.png';
         $company->status = 1;
         $company->save();
 
@@ -66,6 +68,31 @@ class CompanySeeder extends Seeder
         $company->mobile = '123456789';
         $company->line_address_1 = '11 N. Roxas St. Brgy. San Isidro Labrador';
         $company->line_address_2 = 'Quezon City';
+        $company->image = 'uploads/images/companies/tnc-group.png';
+        $company->status = 1;
+        $company->save();
+
+        $company = new Company;
+        $company->name = 'Cosine Digital';
+        $company->email = 'eric@tnc.com.ph';
+        $company->person = 'Eric Redulfin';
+        $company->phone = '712-0089';
+        $company->mobile = '123456789';
+        $company->line_address_1 = '11 N. Roxas St. Brgy. San Isidro Labrador';
+        $company->line_address_2 = 'Quezon City';
+        $company->image = 'uploads/images/companies/cosine.png';
+        $company->status = 1;
+        $company->save();
+
+        $company = new Company;
+        $company->name = 'TNC Events';
+        $company->email = 'eric@tnc.com.ph';
+        $company->person = 'Eric Redulfin';
+        $company->phone = '712-0089';
+        $company->mobile = '123456789';
+        $company->line_address_1 = '11 N. Roxas St. Brgy. San Isidro Labrador';
+        $company->line_address_2 = 'Quezon City';
+        $company->image = 'uploads/images/companies/tnc-events.png';
         $company->status = 1;
         $company->save();
     }

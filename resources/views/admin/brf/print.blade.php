@@ -62,7 +62,11 @@
   <br><br>
   <!-- START OF PRINTABLE AREA -->
   <div id="printableArea">
-    <img src="{{ url(env('APP_ICON')) }}" width="80px">
+    @if ($budget_request_form->project->company->image)
+        <img src="{{ url($budget_request_form->project->company->image) }}" width="350px">
+    @else
+        <img src="{{ url(env('APP_ICON')) }}" width="80px">
+    @endif
     <br><br><br>
     <h2 class="font-change">Cost Estimate</h2>
     <table class="table border-bottom no-border table-borderless font-change">
@@ -110,7 +114,7 @@
                     <div class="text-label"><strong>Get Budget From:</strong></div>
                 </td>
                 <td>
-                    {{ $budget_request_form->project->prepared_by_user->company->name }}<br>
+                    {{ $budget_request_form->project->company->name }}<br>
                 </td>
             </tr>
             <tr>

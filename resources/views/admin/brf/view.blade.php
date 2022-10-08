@@ -94,7 +94,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        {{ $budget_request_form->project->prepared_by_user->company->name }}
+                        {{ $budget_request_form->project->company->name }}
                     </div>
                 </div>
                 
