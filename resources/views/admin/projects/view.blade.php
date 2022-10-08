@@ -98,7 +98,6 @@
                     <table class="table mb-0 thead-border-top-0 table-striped">
                         <thead>
                             <tr>
-                                <th id="compact-table">#ID</th>
                                 <th id="compact-table"></th>
                                 <th id="compact-table">Quantity</th>
                                 <th id="compact-table">Description</th>
@@ -109,7 +108,6 @@
                         <tbody class="list" id="companies">
                             @foreach ($project_details as $project_detail)
                                 <tr>
-                                    <td>{{ $project_detail->id }}</td>
                                     <td>
                                         <strong>{{ $project_detail->name }}</strong>
                                     </td>
