@@ -45,6 +45,8 @@
               <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') }}"><br>
               <label>Qty</label><br>
               <input type="text" name="qty" class="form-control" placeholder="Qty" value="{{ old('qty') }}"><br>
+              <label>Internal CE Price</label><br>
+              <input type="text" name="internal_price" class="form-control" placeholder="Internal CE Price" value="{{ old('internal_price') }}"><br>
               <label>Price</label><br>
               <input type="text" name="price" class="form-control" placeholder="Price" value="{{ old('price') }}"><br>
             </div>

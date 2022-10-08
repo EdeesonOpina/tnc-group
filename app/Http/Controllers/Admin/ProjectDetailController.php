@@ -26,6 +26,8 @@ class ProjectDetailController extends Controller
         $rules = [
             'name' => 'required',
             'qty' => 'required',
+            'price' => 'required',
+            'internal_price' => 'required',
             'description' => 'required',
         ];
 
@@ -44,6 +46,7 @@ class ProjectDetailController extends Controller
         }
 
         $data['total'] = $request->qty * $request->price;
+        $data['internal_total'] = $request->qty * $request->internal_price;
         $data['status'] = ProjectDetailStatus::FOR_APPROVAL; // if you want to insert to a specific column
         $project_detail = ProjectDetail::create($data); // create data in a model
 

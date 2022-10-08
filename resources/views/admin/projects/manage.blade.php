@@ -107,11 +107,13 @@
                         <thead>
                             <tr>
                                 <th id="compact-table">#ID</th>
-                                <th id="compact-table"></th>
+                                <th id="compact-table">Particulars</th>
                                 <th id="compact-table">Quantity</th>
                                 <th id="compact-table">Description</th>
+                                <th id="compact-table">Internal Price</th>
                                 <th id="compact-table">Unit Price</th>
                                 <th id="compact-table">Total Price</th>
+                                <th id="compact-table">Internal Total Price</th>
                                 <th id="compact-table">Status</th>
                             </tr>
                         </thead>
@@ -132,7 +134,9 @@
                                     <td>{{ $project_detail->qty }}</td>
                                     <td>{!! $project_detail->description !!}</td>
                                     <td>P{{ number_format($project_detail->price, 2) }}</td>
+                                    <td>P{{ number_format($project_detail->internal_price, 2) }}</td>
                                     <td>P{{ number_format($project_detail->total, 2) }}</td>
+                                    <td>P{{ number_format($project_detail->internal_total, 2) }}</td>
                                     <td>
                                         @if ($project_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
                                             <div class="badge badge-warning ml-2">For Approval</div>
