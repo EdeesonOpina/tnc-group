@@ -991,6 +991,14 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
             Route::get('/items/masterlist', 'App\Http\Controllers\Admin\BRFController@masterlist')->name('internals.brf.items.masterlist');
         });
 
+        // exports
+        Route::group(['prefix' => 'exports/'], function () {
+            Route::get('print/{brf_id}', 'App\Http\Controllers\Export\BRFController@print')->name('internals.exports.brf.print');
+            Route::get('excel/{brf_id}', 'App\Http\Controllers\Export\BRFController@excel')->name('internals.exports.brf.excel');
+            Route::get('pdf/{brf_id}', 'App\Http\Controllers\Export\BRFController@pdf')->name('internals.exports.brf.pdf');
+            Route::get('sql', 'App\Http\Controllers\Admin\Report\BRFController@sql')->name('internals.exports.brf.sql');
+        });
+
         // for searching
         Route::group(['prefix' => 'search/'], function () {
             Route::post('/', 'App\Http\Controllers\Admin\BRFController@search')->name('internals.brf.search');

@@ -29,6 +29,12 @@ use App\Models\BudgetRequestFormStatus;
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
+                            <label>BRF #</label>
+                            <input name="reference_number" type="text" class="form-control" placeholder="Search by reference number" value="{{ old('reference_number') }}">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
                             <label>Name</label>
                             <input name="name" type="text" class="form-control" placeholder="Search by name" value="{{ old('name') }}">
                         </div>
@@ -49,7 +55,7 @@ use App\Models\BudgetRequestFormStatus;
                                     @endif
                                 @endif
                                 <option value="*">All</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_APPROVAL }}">Active</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_APPROVAL }}">For Approval</option>
                                 <option value="{{ BudgetRequestFormStatus::INACTIVE }}">Inactive</option>
                                 <option value="{{ BudgetRequestFormStatus::APPROVED }}">Approved</option>
                                 <option value="{{ BudgetRequestFormStatus::DISAPPROVED }}">Disapproved</option>
@@ -58,14 +64,8 @@ use App\Models\BudgetRequestFormStatus;
                     </div>
                     <div class="col">
                         <div class="form-group">
-                            <label>From</label>
-                            <input name="from_date" type="date" class="form-control" data-toggle="flatpickr" max="{{ date('Y-m-d') }}" value="{{ old('from_date') }}">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>To</label>
-                            <input name="to_date" type="date" class="form-control" data-toggle="flatpickr" max="{{ date('Y-m-d') }}" value="{{ old('to_date') }}">
+                            <label>Needed Date</label>
+                            <input name="from_date" type="needed_date" class="form-control" data-toggle="flatpickr" max="{{ date('Y-m-d') }}" value="{{ old('needed_date') }}">
                         </div>
                     </div>
                 </div>

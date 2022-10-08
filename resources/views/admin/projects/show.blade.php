@@ -49,7 +49,7 @@ use App\Models\ProjectStatus;
                                     @endif
                                 @endif
                                 <option value="*">All</option>
-                                <option value="{{ ProjectStatus::FOR_APPROVAL }}">Active</option>
+                                <option value="{{ ProjectStatus::FOR_APPROVAL }}">For Approval</option>
                                 <option value="{{ ProjectStatus::INACTIVE }}">Inactive</option>
                                 <option value="{{ ProjectStatus::APPROVED }}">Approved</option>
                                 <option value="{{ ProjectStatus::DISAPPROVED }}">Disapproved</option>

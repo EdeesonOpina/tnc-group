@@ -15,9 +15,11 @@
                     <li class="breadcrumb-item active" aria-current="page">Manage BRF</li>
                 </ol>
             </nav>
-            <h1 class="m-0">Manage BRF</h1>
+            <h1 class="m-0">View BRF</h1>
         </div>
-        
+        <a href="{{ route('internals.exports.brf.print', [$budget_request_form->id]) }}">
+            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print</button>
+        </a>
     </div>
 </div>
 
