@@ -98,7 +98,7 @@
                     <table class="table mb-0 thead-border-top-0 table-striped">
                         <thead>
                             <tr>
-                                <th id="compact-table"></th>
+                                <th id="compact-table">Particulars</th>
                                 <th id="compact-table">Quantity</th>
                                 <th id="compact-table">Description</th>
                                 <th id="compact-table">Unit Price</th>
