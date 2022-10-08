@@ -430,11 +430,14 @@
     @include('layouts.modals.projects.details.add')
     @include('layouts.modals.projects.asf')
     @include('layouts.modals.projects.vat')
-    @include('layouts.modals.brf.add')
   @endif
 
   @if (request()->is('admin/brf') || request()->is('admin/brf/*'))
     @include('layouts.modals.brf.add-from-project-list')
+  @endif
+
+  @if (request()->is('admin/brf/manage/*'))
+    @include('layouts.modals.brf.add')
   @endif
 
   @if (request()->is('admin/items/photos/*'))

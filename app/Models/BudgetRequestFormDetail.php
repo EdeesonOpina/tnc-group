@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BudgetRequestForm extends Model
+class BudgetRequestFormDetail extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'reference_number',
-        'needed_date',
+        'budget_request_form_id',
         'name',
-        'remarks',
-        'payment_for_user_id',
-        'project_id',
+        'qty',
         'description',
         'price',
         'total',
@@ -24,10 +21,5 @@ class BudgetRequestForm extends Model
     public function project()
     {
         return $this->hasOne(Project::class, 'id', 'project_id');
-    }
-
-    public function payment_for_user()
-    {
-        return $this->hasOne(User::class, 'id', 'payment_for_user_id');
     }
 }

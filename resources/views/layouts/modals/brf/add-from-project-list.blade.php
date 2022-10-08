@@ -1,6 +1,12 @@
 @php
   use App\Models\Project;
   use App\Models\ProjectStatus;
+  use App\Models\User;
+  use App\Models\UserStatus;
+
+  $users = User::where('status', '!=', UserStatus::INACTIVE)
+                  ->orderBy('created_at', 'desc')
+                  ->get();
 
   $projects = Project::where('status', '!=', ProjectStatus::INACTIVE)
                   ->where('status', ProjectStatus::FOR_APPROVAL)
@@ -25,23 +31,25 @@
               </select>
               <br>
 
-              <label>Name</label><br>
-              <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') }}"><br>
+              <label>Payment To</label><br>
+              <select class="form-control" name="payment_for_user_id">
+                <option value=""></option>
+                @foreach ($users as $user)
+                  <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
+                @endforeach
+              </select>
+              <br>
 
-              <div class="row">
-                <div class="col">
-                  <label>Qty</label><br>
-                  <input type="text" name="qty" class="form-control" placeholder="Qty" value="{{ old('qty') }}">
-                </div>
-                <div class="col">
-                  <label>Price</label><br>
-                  <input type="text" name="price" class="form-control" placeholder="Price" value="{{ old('price') }}">
-                </div>
-              </div>
+              <label>In Payment For</label><br>
+              <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+              <br>
+
+              <label>Needed Date</label><br>
+              <input type="date" name="needed_date" class="form-control" value="{{ old('needed_date') }}">
               <br>
               
-              <label>Description</label><br>
-              <textarea name="description" class="form-control" placeholder="Description">{{ old('description') }}</textarea><br>
+              <label>Remarks</label><br>
+              <textarea name="remarks" class="form-control" placeholder="Remarks">{{ old('remarks') }}</textarea><br>
 
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Save changes</button>

@@ -20,6 +20,10 @@
         <a href="{{ route('internals.exports.projects.print.ce', [$project->id]) }}">
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print CE</button>
         </a>
+
+        <!-- <a href="{{ route('internals.projects.done', [$project->id]) }}">
+            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Mark As Done</button>
+        </a> -->
     </div>
 </div>
 
@@ -223,12 +227,6 @@
                     <div class="col">
                         <h4 class="card-header__title flex m-0">Budget Request Forms</h4>
                     </div>
-
-                    <div class="col-md-2">
-                        <a href="#" data-toggle="modal" data-target="#add-brf-{{ $project->id }}">
-                            <button type="button" class="btn btn-success form-control" id="table-letter-margin"><i class="material-icons icon-16pt mr-1 text-white">add</i> Add BRF</button>
-                        </a>
-                    </div>
                 </div>
                 <br>
 
@@ -236,11 +234,10 @@
                     <table class="table mb-0 thead-border-top-0 table-striped">
                         <thead>
                             <tr>
-                                <th id="compact-table">#ID</th>
-                                <th id="compact-table"></th>
-                                <th id="compact-table">Quantity</th>
-                                <th id="compact-table">Description</th>
-                                <th id="compact-table">Unit Price</th>
+                                <th id="compact-table">#BRF</th>
+                                <th id="compact-table">Payment For</th>
+                                <th id="compact-table">Project</th>
+                                <th id="compact-table">Needed Date</th>
                                 <th id="compact-table">Total Price</th>
                                 <th id="compact-table">Status</th>
                             </tr>
@@ -248,20 +245,25 @@
                         <tbody class="list" id="companies">
                             @foreach ($budget_request_forms as $budget_request_form)
                                 <tr>
-                                    <td>{{ $budget_request_form->id }}</td>
                                     <td>
-                                        {{ $budget_request_form->name }}
+                                        {{ $budget_request_form->reference_number }}
                                         <div class="d-flex">
                                             @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                                <a href="#" data-href="{{ route('internals.brf.approve', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="margin-right">Approve</a> | 
+                                                <a href="{{ route('internals.brf.view', [$budget_request_form->id]) }}" id="margin-right">View</a> | 
+
+                                                <a href="{{ route('internals.brf.manage', [$budget_request_form->id]) }}" id="space-table">Manage</a> | 
+
+                                                <a href="#" data-href="{{ route('internals.brf.approve', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
 
                                                 <a href="#" data-href="{{ route('internals.brf.disapprove', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
                                             @endif
                                         </div>
                                     </td>
-                                    <td>{{ $budget_request_form->qty }}</td>
-                                    <td>{{ $budget_request_form->description }}</td>
-                                    <td>P{{ number_format($budget_request_form->price, 2) }}</td>
+                                    <td>
+                                        {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                                    </td>
+                                    <td id="compact-table">{{ $budget_request_form->project->name }}</td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}</td>
                                     <td>P{{ number_format($budget_request_form->total, 2) }}</td>
                                     <td>
                                         @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
@@ -274,12 +276,6 @@
                                     </td>
                                 </tr>
                             @endforeach
-                            <tr> 
-                                <td colspan="4">&nbsp;</td>
-                                <td id="compact-table"><strong>Total Cost</strong></th>
-                                <td id="compact-table">P{{ number_format($budget_request_forms_total, 2) }}</th>
-                                <td>&nbsp;</td>
-                            </tr>
                         </tbody>
                     </table>
 

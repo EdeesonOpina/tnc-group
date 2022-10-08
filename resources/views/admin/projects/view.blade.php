@@ -248,32 +248,27 @@
                     <table class="table mb-0 thead-border-top-0 table-striped">
                         <thead>
                             <tr>
-                                <th id="compact-table">#ID</th>
-                                <th id="compact-table"></th>
-                                <th id="compact-table">Quantity</th>
-                                <th id="compact-table">Description</th>
-                                <th id="compact-table">Unit Price</th>
+                                <th id="compact-table">#BRF</th>
+                                <th id="compact-table">Payment For</th>
+                                <th id="compact-table">Project</th>
+                                <th id="compact-table">Needed Date</th>
                                 <th id="compact-table">Total Price</th>
                             </tr>
                         </thead>
                         <tbody class="list" id="companies">
                             @foreach ($budget_request_forms as $budget_request_form)
                                 <tr>
-                                    <td>{{ $budget_request_form->id }}</td>
                                     <td>
-                                        {{ $budget_request_form->name }}
+                                        {{ $budget_request_form->reference_number }}
                                     </td>
-                                    <td>{{ $budget_request_form->qty }}</td>
-                                    <td>{{ $budget_request_form->description }}</td>
-                                    <td>P{{ number_format($budget_request_form->price, 2) }}</td>
+                                    <td>
+                                        {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                                    </td>
+                                    <td id="compact-table">{{ $budget_request_form->project->name }}</td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}</td>
                                     <td>P{{ number_format($budget_request_form->total, 2) }}</td>
                                 </tr>
                             @endforeach
-                            <tr> 
-                                <td colspan="4">&nbsp;</td>
-                                <td id="compact-table"><strong>Total Cost</strong></th>
-                                <td id="compact-table">P{{ number_format($budget_request_forms_total, 2) }}</th>
-                            </tr>
                         </tbody>
                     </table>
 
