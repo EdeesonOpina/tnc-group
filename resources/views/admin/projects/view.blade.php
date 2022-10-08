@@ -120,13 +120,13 @@
                                 </tr>
                             @endforeach
                             <tr>
-                                <td colspan="3">&nbsp;</td>
+                                <td colspan="4">&nbsp;</td>
                                 <td id="compact-table"><strong>Total Cost</strong></td>
                                 <td id="compact-table">P{{ number_format($project->total, 2) }}</td>
                             </tr>
 
                             <tr>
-                                <td colspan="3">&nbsp;</td>
+                                <td colspan="4">&nbsp;</td>
                                 <td id="compact-table"><strong>ASF</strong></td>
                                 <td id="compact-table">
                                     P{{ number_format($project->asf, 2) }}
@@ -134,7 +134,7 @@
                             </tr>
 
                             <tr>
-                                <td colspan="3">&nbsp;</td>
+                                <td colspan="4">&nbsp;</td>
                                 <td id="compact-table"><strong>VAT</strong></td>
                                 <td id="compact-table">
                                     P{{ number_format($project->vat, 2) }}
@@ -142,7 +142,7 @@
                             </tr>
 
                             <tr>
-                                <td colspan="3">&nbsp;</td>
+                                <td colspan="4">&nbsp;</td>
                                 <td id="compact-table"><strong>Grand Total</strong></td>
                                 <td id="compact-table">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
                             </tr>
