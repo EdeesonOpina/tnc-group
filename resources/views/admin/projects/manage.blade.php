@@ -166,7 +166,7 @@
                                 <td colspan="4">&nbsp;</td>
                                 <td id="compact-table"><strong>VAT</strong></td>
                                 <td id="compact-table">
-                                    <a href="#" data-toggle="modal" data-target="#asf-{{ $project->id }}">
+                                    <a href="#" data-toggle="modal" data-target="#vat-{{ $project->id }}">
                                         P{{ number_format($project->vat, 2) }}
                                     </a>
                                 </td>
