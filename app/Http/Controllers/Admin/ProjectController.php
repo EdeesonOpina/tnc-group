@@ -100,7 +100,7 @@ class ProjectController extends Controller
             'company_id' => 'required',
             'client_id' => 'required',
             'name' => 'required',
-            'description' => 'required',
+            'description' => 'nullable',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -207,7 +207,7 @@ class ProjectController extends Controller
             'client_id' => 'required',
             'name' => 'required',
             'end_date' => 'required',
-            'description' => 'required',
+            'description' => 'nullable',
         ];
 
         $validator = Validator::make($request->all(), $rules);
