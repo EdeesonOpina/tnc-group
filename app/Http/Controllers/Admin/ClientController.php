@@ -127,11 +127,6 @@ class ClientController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'person' => 'required',
-            'mobile' => 'required',
-            'email' => 'required',
-            'line_address_1' => 'required',
-            'line_address_2' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
 

@@ -17,6 +17,7 @@ class CreateProjectDetailsTable extends Migration
             $table->id();
             $table->integer('project_id')->unsigned();
             $table->integer('category_id')->unsigned();
+            $table->integer('sub_category_id')->unsigned()->default(0);
             $table->string('name');
             $table->longtext('description');
             $table->integer('qty')->unsigned();

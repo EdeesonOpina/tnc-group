@@ -96,8 +96,6 @@
                                 <th id="compact-table"></th>
                                 <th id="compact-table">Name</th>
                                 <th id="compact-table">Person</th>
-                                <th id="compact-table">Email</th>
-                                <th id="compact-table">Contact</th>
                                 <th id="compact-table">Status</th>
                                 <th id="compact-table">Created At</th>
                             </tr>
@@ -105,10 +103,9 @@
                         <tbody class="list" id="companies">
                             @foreach($clients as $client)
                             @php
-                                $contact = ClientContact::where('status', ClientContactStatus::ACTIVE)
+                                $contacts = ClientContact::where('status', ClientContactStatus::ACTIVE)
                                                     ->where('client_id', $client->id)
-                                                    ->latest()
-                                                    ->first();
+                                                    ->get();
                             @endphp
                                 <tr>
                                     <td><div class="badge badge-light">#{{ $client->id }}</div></td>
@@ -137,16 +134,26 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $contact->name }}</td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $contact->email }}</td>
                                     <td id="compact-table">
-                                        @if ($contact->mobile)
-                                            <i class="material-icons icon-16pt mr-1 text-muted">phone_android</i> {{ $contact->mobile }}<br>
-                                        @endif
+                                        @foreach ($contacts as $contact)
+                                            <i class="material-icons icon-16pt mr-1 text-muted">face</i> <strong>
+                                                {{ $contact->name }} 
+                                                <a href="#" data-href="{{ route('admin.clients.contact.delete', [$contact->id]) }}" data-toggle="modal" data-target="#confirm-action">
+                                                    <i class="material-icons icon-16pt mr-1 text-danger">delete</i>
+                                                </a>
+                                            </strong><br>
+                                            <i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $contact->email }} 
+                                            @if ($contact->mobile)
+                                                <i class="material-icons icon-16pt mr-1 text-muted">phone_android</i> {{ $contact->mobile }} 
+                                            @endif
+                                            
+                                            @if ($contact->phone)
+                                                <i class="material-icons icon-16pt mr-1 text-muted">phone</i> {{ $contact->phone }}
+                                            @endif
+                                            <br><br>
+                                        @endforeach
                                         
-                                        @if ($contact->phone)
-                                            <i class="material-icons icon-16pt mr-1 text-muted">phone</i> {{ $contact->phone }}
-                                        @endif
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add-contact-{{ $client->id }}"><i class="material-icons icon-16pt mr-1 text-white">add</i> Add Contact</button>
                                     </td>
                                     <td>
                                         @if ($client->status == ClientStatus::ACTIVE)

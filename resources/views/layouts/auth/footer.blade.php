@@ -460,6 +460,12 @@
     @include('layouts.modals.brf.add-from-project-list')
   @endif
 
+  @if (request()->is('admin/clients') || request()->is('admin/clients/*'))
+    @if(!str_contains(url()->current(), '/edit'))
+        @include('layouts.modals.clients.contact.add')
+    @endif
+  @endif
+
   @if (request()->is('admin/brf/manage/*'))
     @include('layouts.modals.brf.add')
   @endif

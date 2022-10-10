@@ -832,6 +832,14 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         });
     });
 
+    // client contacts
+    Route::group(['prefix' => 'clients/contacts/'], function () {
+        Route::post('/edit', 'App\Http\Controllers\Admin\ClientContactController@update')->name('admin.clients.contact.update');
+        Route::post('/create', 'App\Http\Controllers\Admin\ClientContactController@create')->name('admin.clients.contact.create');
+        Route::get('/delete/{client_id}', 'App\Http\Controllers\Admin\ClientContactController@delete')->name('admin.clients.contact.delete');
+        Route::get('/recover/{client_id}', 'App\Http\Controllers\Admin\ClientContactController@recover')->name('admin.clients.contact.recover');
+    });
+
     // brands
     Route::group(['prefix' => 'brands/'], function () {
         Route::get('/', 'App\Http\Controllers\Admin\BrandController@show')->name('admin.brands');
@@ -931,6 +939,23 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::group(['prefix' => 'search/'], function () {
             Route::post('/', 'App\Http\Controllers\Admin\ProjectCategoryController@search')->name('admin.project-categories.search');
             Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ProjectCategoryController@filter')->name('admin.project-categories.filter');
+        });
+    });
+
+    // project sub categories
+    Route::group(['prefix' => 'project-sub-categories/'], function () {
+        Route::get('/', 'App\Http\Controllers\Admin\ProjectSubCategoryController@show')->name('admin.project-sub-categories');
+        Route::get('/add', 'App\Http\Controllers\Admin\ProjectSubCategoryController@add')->name('admin.project-sub-categories.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\ProjectSubCategoryController@create')->name('admin.project-sub-categories.create');
+        Route::get('/edit/{category_id}', 'App\Http\Controllers\Admin\ProjectSubCategoryController@edit')->name('admin.project-sub-categories.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\ProjectSubCategoryController@update')->name('admin.project-sub-categories.update');
+        Route::get('/delete/{category_id}', 'App\Http\Controllers\Admin\ProjectSubCategoryController@delete')->name('admin.project-sub-categories.delete');
+        Route::get('/recover/{category_id}', 'App\Http\Controllers\Admin\ProjectSubCategoryController@recover')->name('admin.project-sub-categories.recover');
+
+        // for searching
+        Route::group(['prefix' => 'search/'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\ProjectSubCategoryController@search')->name('admin.project-sub-categories.search');
+            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ProjectSubCategoryController@filter')->name('admin.project-sub-categories.filter');
         });
     });
 
