@@ -11,6 +11,7 @@ class ProjectDetail extends Model
 
     protected $fillable = [
         'project_id',
+        'category_id',
         'name',
         'qty',
         'description',
@@ -19,6 +20,11 @@ class ProjectDetail extends Model
         'internal_total',
         'total',
     ];
+
+    public function category()
+    {
+        return $this->hasOne(ProjectCategory::class, 'id', 'category_id');
+    }
 
     public function project()
     {

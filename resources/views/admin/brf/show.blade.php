@@ -106,7 +106,7 @@ use App\Models\BudgetRequestFormStatus;
                             @foreach ($budget_request_forms as $budget_request_form)
                                 <tr>
                                     <td>
-                                        {{ $budget_request_form->reference_number }}
+                                        <strong>{{ $budget_request_form->reference_number }}</strong>
                                         <div class="d-flex">
                                             @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
                                                 <a href="{{ route('internals.brf.view', [$budget_request_form->id]) }}" id="margin-right">View</a> | 

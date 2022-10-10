@@ -25,6 +25,7 @@ class ProjectDetailController extends Controller
     {
         $rules = [
             'name' => 'required',
+            'category_id' => 'required',
             'qty' => 'required',
             'price' => 'required',
             'internal_price' => 'required',
@@ -58,6 +59,7 @@ class ProjectDetailController extends Controller
     {
         $rules = [
             'name' => 'required',
+            'category_id' => 'required',
             'qty' => 'required',
             'price' => 'required',
             'internal_price' => 'required',

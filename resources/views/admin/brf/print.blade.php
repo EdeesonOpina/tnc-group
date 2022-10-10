@@ -122,7 +122,7 @@
                     <div class="text-label"><strong>Needed Date:</strong></div>
                 </td>
                 <td>
-                    {{ $budget_request_form->needed_date }}<br>
+                    {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}<br>
                 </td>
             </tr>
         </tbody>

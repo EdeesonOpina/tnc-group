@@ -519,6 +519,25 @@ Route::group(['prefix' => 'accounting/', 'middleware' => ['auth', 'accounting']]
         });
     });
 
+    // liquidations
+    Route::group(['prefix' => 'liquidations/'], function () {
+        Route::get('/', 'App\Http\Controllers\Admin\LiquidationController@show')->name('accounting.liquidations');
+
+        Route::get('/add', 'App\Http\Controllers\Admin\LiquidationController@add')->name('accounting.liquidations.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\LiquidationController@create')->name('accounting.liquidations.create');
+        Route::get('/view/{expense_id}', 'App\Http\Controllers\Admin\LiquidationController@view')->name('accounting.liquidations.view');
+        Route::get('/edit/{expense_id}', 'App\Http\Controllers\Admin\LiquidationController@edit')->name('accounting.liquidations.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\LiquidationController@update')->name('accounting.liquidations.update');
+        Route::get('/delete/{expense_id}', 'App\Http\Controllers\Admin\LiquidationController@delete')->name('accounting.liquidations.delete');
+        Route::get('/recover/{expense_id}', 'App\Http\Controllers\Admin\LiquidationController@recover')->name('accounting.liquidations.recover');
+
+        // for searching
+        Route::group(['prefix' => 'search/'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\LiquidationController@search')->name('accounting.liquidations.search');
+            Route::get('{description}/{category_id}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\LiquidationController@filter')->name('accounting.liquidations.filter');
+        });
+    });
+
     // expenses
     Route::group(['prefix' => 'expenses/'], function () {
         Route::get('/', 'App\Http\Controllers\Admin\ExpenseController@show')->name('accounting.expenses');
@@ -898,6 +917,40 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         });
     });
 
+    // project categories
+    Route::group(['prefix' => 'project-categories/'], function () {
+        Route::get('/', 'App\Http\Controllers\Admin\ProjectCategoryController@show')->name('admin.project-categories');
+        Route::get('/add', 'App\Http\Controllers\Admin\ProjectCategoryController@add')->name('admin.project-categories.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\ProjectCategoryController@create')->name('admin.project-categories.create');
+        Route::get('/edit/{category_id}', 'App\Http\Controllers\Admin\ProjectCategoryController@edit')->name('admin.project-categories.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\ProjectCategoryController@update')->name('admin.project-categories.update');
+        Route::get('/delete/{category_id}', 'App\Http\Controllers\Admin\ProjectCategoryController@delete')->name('admin.project-categories.delete');
+        Route::get('/recover/{category_id}', 'App\Http\Controllers\Admin\ProjectCategoryController@recover')->name('admin.project-categories.recover');
+
+        // for searching
+        Route::group(['prefix' => 'search/'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\ProjectCategoryController@search')->name('admin.project-categories.search');
+            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ProjectCategoryController@filter')->name('admin.project-categories.filter');
+        });
+    });
+
+    // liquidation categories
+    Route::group(['prefix' => 'liquidation-categories/'], function () {
+        Route::get('/', 'App\Http\Controllers\Admin\LiquidationCategoryController@show')->name('admin.liquidation-categories');
+        Route::get('/add', 'App\Http\Controllers\Admin\LiquidationCategoryController@add')->name('admin.liquidation-categories.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\LiquidationCategoryController@create')->name('admin.liquidation-categories.create');
+        Route::get('/edit/{category_id}', 'App\Http\Controllers\Admin\LiquidationCategoryController@edit')->name('admin.liquidation-categories.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\LiquidationCategoryController@update')->name('admin.liquidation-categories.update');
+        Route::get('/delete/{category_id}', 'App\Http\Controllers\Admin\LiquidationCategoryController@delete')->name('admin.liquidation-categories.delete');
+        Route::get('/recover/{category_id}', 'App\Http\Controllers\Admin\LiquidationCategoryController@recover')->name('admin.liquidation-categories.recover');
+
+        // for searching
+        Route::group(['prefix' => 'search/'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\LiquidationCategoryController@search')->name('admin.liquidation-categories.search');
+            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\LiquidationCategoryController@filter')->name('admin.liquidation-categories.filter');
+        });
+    });
+
     // sub categories
     Route::group(['prefix' => 'sub-categories/'], function () {
         Route::get('/', 'App\Http\Controllers\Admin\SubCategoryController@show')->name('admin.sub-categories');
@@ -931,6 +984,10 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
         Route::post('/asf', 'App\Http\Controllers\Admin\ProjectController@asf')->name('internals.projects.update.asf');
         Route::post('/vat', 'App\Http\Controllers\Admin\ProjectController@vat')->name('internals.projects.update.vat');
+        Route::post('/terms', 'App\Http\Controllers\Admin\ProjectController@terms')->name('internals.projects.update.terms');
+        Route::post('/duration-date', 'App\Http\Controllers\Admin\ProjectController@duration_date')->name('internals.projects.update.duration-date');
+        Route::post('/start-date', 'App\Http\Controllers\Admin\ProjectController@start_date')->name('internals.projects.update.start-date');
+        Route::post('/end-date', 'App\Http\Controllers\Admin\ProjectController@end_date')->name('internals.projects.update.end-date');
 
         // manage
         Route::group(['prefix' => 'manage/{project_id}'], function () {

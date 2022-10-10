@@ -1,3 +1,12 @@
+@php
+  use App\Models\ProjectCategory;
+  use App\Models\ProjectCategoryStatus;
+
+  $categories = ProjectCategory::where('status', ProjectCategoryStatus::ACTIVE)
+                        ->orderBy('name', 'asc')
+                        ->get();
+@endphp
+
 <form action="{{ route('internals.projects.details.create') }}" method="post">
   {{ csrf_field() }}
   <input type="hidden" name="project_id" value="{{ $project->id }}">
@@ -43,6 +52,14 @@
               <hr>
               <label>Name</label><br>
               <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') }}"><br>
+              <label>Category</label><br>
+              <select name="category_id" class="form-control">
+                <option value=""></option>
+                @foreach ($categories as $category)
+                  <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+              </select>
+              <br>
               <label>Qty</label><br>
               <input type="text" name="qty" class="form-control" placeholder="Qty" value="{{ old('qty') }}"><br>
               <label>Internal CE Price</label><br>

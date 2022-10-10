@@ -94,7 +94,7 @@ use App\Models\ProjectStatus;
                     <table class="table mb-0 thead-border-top-0 table-striped">
                         <thead>
                             <tr>
-                                <th id="compact-table">PRJ#</th>
+                                <th id="compact-table">CE#</th>
                                 <th id="compact-table"></th>
                                 <th id="compact-table">Company</th>
                                 <th id="compact-table">Name</th>
@@ -110,7 +110,7 @@ use App\Models\ProjectStatus;
                         <tbody class="list" id="companies">
                             @foreach($projects as $project)
                                 <tr>
-                                    <td><div class="badge badge-light">#{{ $project->reference_number }}</div></td>
+                                    <td id="compact-table"><strong>{{ $project->reference_number }}</strong></td>
                                     <td id="compact-table">
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex align-items-center">

@@ -12,11 +12,12 @@ class Project extends Model
     protected $fillable = [
         'reference_number',
         'company_id',
-        'category_id',
         'client_id',
         'name',
         'total',
+        'start_date',
         'end_date',
+        'duration_date',
         'description',
         'asf',
         'vat',
@@ -27,7 +28,7 @@ class Project extends Model
         'validity',
         'prepared_by_user_id',
         'noted_by_user_id',
-        'conforme_by_user_id',
+        'client_contact_id',
         'created_by_user_id',
         'noted_by_user_id',
         'approved_by_user_id',
@@ -40,19 +41,14 @@ class Project extends Model
         return $this->hasOne(Company::class, 'id', 'company_id');
     }
 
-    public function category()
-    {
-        return $this->hasOne(ProjectCategory::class, 'id', 'category_id');
-    }
-
     public function prepared_by_user()
     {
         return $this->hasOne(User::class, 'id', 'prepared_by_user_id');
     }
 
-    public function conforme_by_user()
+    public function client_contact()
     {
-        return $this->hasOne(Client::class, 'id', 'conforme_by_user_id');
+        return $this->hasOne(ClientContact::class, 'id', 'client_contact_id');
     }
 
     public function client()

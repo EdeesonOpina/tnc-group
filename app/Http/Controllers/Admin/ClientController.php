@@ -10,6 +10,8 @@ use Mail;
 use Validator;
 use App\Models\Client;
 use App\Models\ClientStatus;
+use App\Models\ClientContact;
+use App\Models\ClientContactStatus;
 
 class ClientController extends Controller
 {
@@ -81,7 +83,8 @@ class ClientController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
-        $data = request()->all(); // get all request
+        $data = request()->only('name', 'description'); // get all request
+        $contact_data = request()->all();
 
         if ($request->file('image')) { // if the file is present
             $image_name = $request->name . '-' . time() . '.' . $request->file('image')->getClientOriginalExtension(); // set unique name for that file
@@ -90,7 +93,12 @@ class ClientController extends Controller
         }
 
         $data['status'] = ClientStatus::ACTIVE; // if you want to insert to a specific column
-        Client::create($data); // create data in a model
+        $client = Client::create($data); // create data in a model
+
+        $contact_data['client_id'] = $client->id;
+        $contact_data['name'] = $request->person;
+        $contact_data['status'] = ClientContactStatus::ACTIVE; // if you want to insert to a specific column
+        ClientContact::create($contact_data); // create data in a model
 
         $request->session()->flash('success', 'Data has been added');
 

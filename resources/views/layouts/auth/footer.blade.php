@@ -49,7 +49,7 @@
                     @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales')
                         <li class="sidebar-menu-item">
                             <a class="sidebar-menu-button" href="{{ route('internals.projects') }}">
-                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">playlist_add</i>
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">beenhere</i>
                                 <span class="sidebar-menu-text">Projects</span>
                             </a>
                         </li>
@@ -58,7 +58,7 @@
                     @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
                         <li class="sidebar-menu-item">
                             <a class="sidebar-menu-button" href="{{ route('internals.brf') }}">
-                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">playlist_add</i>
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">bookmark</i>
                                 <span class="sidebar-menu-text">BRF</span>
                             </a>
                         </li>
@@ -106,6 +106,13 @@
                                     <a class="sidebar-menu-button" href="{{ route('accounting.expenses') }}">
                                         <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">attach_money</i>
                                         <span class="sidebar-menu-text">Expenses</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidebar-menu-item">
+                                    <a class="sidebar-menu-button" href="{{ route('accounting.liquidations') }}">
+                                        <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">invert_colors</i>
+                                        <span class="sidebar-menu-text">Liquidations</span>
                                     </a>
                                 </li>
                             @endif
@@ -172,6 +179,18 @@
                                     <span class="sidebar-menu-text">Expense Companies</span>
                                 </a>
                             </li>
+                            <li class="sidebar-menu-item">
+                                <a class="sidebar-menu-button" href="{{ route('admin.project-categories') }}">
+                                    <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">beenhere</i>
+                                    <span class="sidebar-menu-text">Project Categories</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <a class="sidebar-menu-button" href="{{ route('admin.liquidation-categories') }}">
+                                    <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">invert_colors</i>
+                                    <span class="sidebar-menu-text">Liquidation Categories</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 @endif
@@ -190,7 +209,7 @@
 
                             <li class="sidebar-menu-item">
                                 <a class="sidebar-menu-button" href="{{ route('admin.clients') }}">
-                                    <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">account_circle</i>
+                                    <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">face</i>
                                     <span class="sidebar-menu-text">Clients</span>
                                 </a>
                             </li>
@@ -429,6 +448,10 @@
   @if (request()->is('admin/projects/manage/*'))
     @include('layouts.modals.projects.details.add')
     @include('layouts.modals.projects.details.edit')
+    @include('layouts.modals.projects.start-date')
+    @include('layouts.modals.projects.end-date')
+    @include('layouts.modals.projects.duration-date')
+    @include('layouts.modals.projects.terms')
     @include('layouts.modals.projects.asf')
     @include('layouts.modals.projects.vat')
   @endif

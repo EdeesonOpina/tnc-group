@@ -61,8 +61,23 @@
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label>End Date</label>
-                                    <input type="date" name="end_date" class="form-control" value="{{ old('end_date') }}" required>
+                                    <label>Duration Date (optional)</label>
+                                    <input type="date" name="duration_date" class="form-control" value="{{ old('duration_date') }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Start Date (optional)</label>
+                                    <input type="date" name="start_date" class="form-control" value="{{ old('start_date') }}">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>End Date (optional)</label>
+                                    <input type="date" name="end_date" class="form-control" value="{{ old('end_date') }}">
                                 </div>
                             </div>
                         </div>
@@ -97,9 +112,9 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="conforme">Conforme</label><br />
-                                    <select id="conforme" name="conforme_by_user_id" class="custom-select" data-toggle="select">
-                                        @foreach($clients as $client)
-                                            <option value="{{ $client->id }}">{{ $client->name }} ({{ $client->person }})</option>
+                                    <select id="conforme" name="client_contact_id" class="custom-select" data-toggle="select">
+                                        @foreach($client_contacts as $client_contact)
+                                            <option value="{{ $client_contact->id }}">{{ $client_contact->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -111,7 +126,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="description">Description</label>
+                            <label for="description">Description (optional)</label>
                             <textarea id="tiny" name="description" placeholder="Enter your description here">{{ old('description') }}</textarea>
                         </div>
                     </div>

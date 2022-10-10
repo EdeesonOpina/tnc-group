@@ -103,9 +103,11 @@ class BRFController extends Controller
     public function create(Request $request)
     {
         $rules = [
-            'reference_number' => 'required|unique:projects',
+            'reference_number' => 'required|exists:projects',
             'needed_date' => 'required',
             'remarks' => 'nullable',
+            'payment_for_user_id' => 'required',
+            'name' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -114,10 +116,15 @@ class BRFController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
+        $project = Project::where('reference_number', $request->reference_number)
+                        ->where('status', '!=', ProjectStatus::INACTIVE)
+                        ->first();
+
         $brf_count = str_replace('BRF-', '', BudgetRequestForm::orderBy('created_at', 'desc')->first()->reference_number ?? 0) + 1; // get the latest brf sequence then add 1
 
         $data = request()->all(); // get all request
         $data['reference_number'] = 'BRF-' . str_pad($brf_count, 8, '0', STR_PAD_LEFT);
+        $data['project_id'] = $project->id;
 
         if ($request->file('image')) { // if the file is present
             $image_name = $request->name . '-' . time() . '.' . $request->file('image')->getClientOriginalExtension(); // set unique name for that file
@@ -127,10 +134,10 @@ class BRFController extends Controller
 
         $data['total'] = 0;
         $data['status'] = BudgetRequestFormStatus::FOR_APPROVAL; // if you want to insert to a specific column
-        BudgetRequestForm::create($data); // create data in a model
+        $brf = BudgetRequestForm::create($data); // create data in a model
 
         $request->session()->flash('success', 'Data has been added');
-        return redirect()->route('internals.brf.manage', [$request->project_id]);
+        return redirect()->route('internals.brf.manage', [$brf->id]);
     }
 
     public function view($budget_request_form_id)

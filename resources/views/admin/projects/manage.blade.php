@@ -85,11 +85,39 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <strong>Project Duration</strong>
+                                            <strong>Start Date <a href="#" data-toggle="modal" data-target="#start-date-{{ $project->id }}"><i class="material-icons icon-16pt text-success">edit</i></a></strong>
                                         </div>
                                     </div>
                                     <div class="col">
-                                        {{ Carbon::parse($project->end_date)->format('M d Y') }}
+                                        @if ($project->start_date)
+                                            {{ Carbon::parse($project->start_date)->format('M d Y') }}
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <strong>End Date <a href="#" data-toggle="modal" data-target="#end-date-{{ $project->id }}"><i class="material-icons icon-16pt text-success">edit</i></a></strong>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        @if ($project->end_date)
+                                            {{ Carbon::parse($project->end_date)->format('M d Y') }}
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <strong>Project Duration <a href="#" data-toggle="modal" data-target="#duration-date-{{ $project->id }}"><i class="material-icons icon-16pt text-success">edit</i></a></strong>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        @if ($project->duration_date)
+                                            {{ Carbon::parse($project->duration_date)->format('M d Y') }}
+                                        @endif
                                     </div>
                                 </div>
 
@@ -117,6 +145,7 @@
                     <table class="table mb-0 thead-border-top-0 table-striped">
                         <thead>
                             <tr>
+                                <th id="compact-table"></th>
                                 <th id="compact-table">Particulars</th>
                                 <th id="compact-table">Quantity</th>
                                 <th id="compact-table">Description</th>
@@ -130,6 +159,7 @@
                         <tbody class="list" id="companies">
                             @foreach ($project_details as $project_detail)
                                 <tr>
+                                    <td><strong>{{ $project_detail->category->name }}</strong></td>
                                     <td>
                                         <strong>{{ $project_detail->name }} 
                                             @if ($project_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
@@ -162,14 +192,14 @@
                                 </tr>
                             @endforeach
                             <tr>
-                                <td colspan="5">&nbsp;</td>
+                                <td colspan="6">&nbsp;</td>
                                 <td id="compact-table"><strong>Total Cost</strong></td>
                                 <td id="compact-table">P{{ number_format($project->total, 2) }}</td>
                                 <td>&nbsp;</td>
                             </tr>
 
                             <tr>
-                                <td colspan="5">&nbsp;</td>
+                                <td colspan="6">&nbsp;</td>
                                 <td id="compact-table"><strong>ASF</strong></td>
                                 <td id="compact-table">
                                     <a href="#" data-toggle="modal" data-target="#asf-{{ $project->id }}">
@@ -180,7 +210,7 @@
                             </tr>
 
                             <tr>
-                                <td colspan="5">&nbsp;</td>
+                                <td colspan="6">&nbsp;</td>
                                 <td id="compact-table"><strong>VAT</strong></td>
                                 <td id="compact-table">
                                     <a href="#" data-toggle="modal" data-target="#vat-{{ $project->id }}">
@@ -191,21 +221,21 @@
                             </tr>
 
                             <tr>
-                                <td colspan="5">&nbsp;</td>
+                                <td colspan="6">&nbsp;</td>
                                 <td id="compact-table"><strong>CE Grand Total</strong></td>
                                 <td id="compact-table">P{{ number_format($grand_total, 2) }}</td>
                                 <td>&nbsp;</td>
                             </tr>
 
                             <tr>
-                                <td colspan="5">&nbsp;</td>
+                                <td colspan="6">&nbsp;</td>
                                 <td id="compact-table"><strong>Internal CE Grand Total</strong></td>
                                 <td id="compact-table">P{{ number_format($internal_grand_total, 2) }}</td>
                                 <td>&nbsp;</td>
                             </tr>
 
                             <tr>
-                                <td colspan="5">&nbsp;</td>
+                                <td colspan="6">&nbsp;</td>
                                 <td id="compact-table"><strong>Profit</strong></td>
                                 <td id="compact-table">P{{ number_format($grand_total - $internal_grand_total, 2) }}</td>
                                 <td>&nbsp;</td>
@@ -219,6 +249,12 @@
                         </div>
                     @endif
                 </div>
+                <br><br>
+                <strong>Terms and Conditions 
+                    <a href="#" data-toggle="modal" data-target="#terms-{{ $project->id }}">
+                        <i class="material-icons icon-16pt text-success">edit</i>
+                    </a>
+                </strong>
                 <br><br>
                 <div class="row">
                     <div class="col-md-4">
@@ -292,9 +328,9 @@
                         <div class="form-group">
                             <strong>Conforme</strong>
                             <br><br><br><br>
-                            {{ $project->conforme_by_user->person }}<br>
-                            {{ $project->conforme_by_user->position }}<br>
-                            {{ $project->conforme_by_user->name }}<br>
+                            {{ $project->client_contact->name }}<br>
+                            {{ $project->client_contact->position }}<br>
+                            {{ $project->client_contact->client->name }}<br>
                         </div>
                     </div>
                 </div>

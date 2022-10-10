@@ -42,7 +42,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <strong>PRJ#</strong>
+                                            <strong>CE#</strong>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -183,6 +183,9 @@
 
                 <br><br>
 
+                <strong>Terms and Conditions</strong>
+                <br><br>
+
                 <div class="row">
                     <div class="col-md-4">
                         <strong>Proposal Ownership.</strong>
@@ -253,9 +256,9 @@
                         <div class="form-group">
                             <strong>Conforme</strong>
                             <br><br><br><br>
-                            {{ $project->conforme_by_user->person }}<br>
-                            {{ $project->conforme_by_user->position }}<br>
-                            {{ $project->conforme_by_user->name }}<br>
+                            {{ $project->client_contact->name }}<br>
+                            {{ $project->client_contact->position }}<br>
+                            {{ $project->client_contact->client->name }}<br>
                         </div>
                     </div>
                 </div>

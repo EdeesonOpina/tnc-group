@@ -18,6 +18,8 @@ use App\Models\BudgetRequestForm;
 use App\Models\BudgetRequestFormStatus;
 use App\Models\Client;
 use App\Models\ClientStatus;
+use App\Models\ClientContact;
+use App\Models\ClientContactStatus;
 use App\Models\Company;
 use App\Models\CompanyStatus;
 
@@ -74,12 +76,18 @@ class ProjectController extends Controller
         $users = User::where('status', UserStatus::ACTIVE)
                         ->get();
         $clients = Client::where('status', ClientStatus::ACTIVE)
+                        ->orderBy('name', 'asc')
                         ->get();
+        $client_contacts = ClientContact::where('status', ClientStatus::ACTIVE)
+                                    ->orderBy('name', 'asc')
+                                    ->get();
         $companies = Company::where('status', CompanyStatus::ACTIVE)
+                        ->orderBy('name', 'asc')
                         ->get();
 
         return view('admin.projects.add', compact(
             'users',
+            'client_contacts',
             'clients',
             'companies'
         ));
@@ -88,10 +96,10 @@ class ProjectController extends Controller
     public function create(Request $request)
     {
         $rules = [
+            'client_contact_id' => 'required',
             'company_id' => 'required',
             'client_id' => 'required',
             'name' => 'required',
-            'end_date' => 'required',
             'description' => 'required',
         ];
 
@@ -224,10 +232,90 @@ class ProjectController extends Controller
         return redirect()->route('internals.projects');
     }
 
+    public function terms(Request $request)
+    {
+        $rules = [
+            'proposal_ownership' => 'required',
+            'confidentiality' => 'required',
+            'project_confirmation' => 'required',
+            'payment_terms' => 'required',
+            'validity' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails())
+            return back()->withInput()->withErrors($validator);
+
+        $data = $request->all();
+        $project = Project::find($request->project_id);
+        $project->fill($data)->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return redirect()->route('internals.projects.manage', [$project->id]);
+    }
+
     public function asf(Request $request)
     {
         $rules = [
             'asf' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails())
+            return back()->withInput()->withErrors($validator);
+
+        $data = $request->all();
+        $project = Project::find($request->project_id);
+        $project->fill($data)->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return redirect()->route('internals.projects.manage', [$project->id]);
+    }
+
+    public function start_date(Request $request)
+    {
+        $rules = [
+            'start_date' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails())
+            return back()->withInput()->withErrors($validator);
+
+        $data = $request->all();
+        $project = Project::find($request->project_id);
+        $project->fill($data)->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return redirect()->route('internals.projects.manage', [$project->id]);
+    }
+
+    public function end_date(Request $request)
+    {
+        $rules = [
+            'end_date' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails())
+            return back()->withInput()->withErrors($validator);
+
+        $data = $request->all();
+        $project = Project::find($request->project_id);
+        $project->fill($data)->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return redirect()->route('internals.projects.manage', [$project->id]);
+    }
+
+    public function duration_date(Request $request)
+    {
+        $rules = [
+            'duration_date' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);

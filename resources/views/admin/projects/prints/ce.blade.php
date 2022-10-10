@@ -32,7 +32,7 @@
     }
 
     .table-black-border {
-        border: 2px solid #000 !important;
+        /*border: 2px solid #000 !important;*/
     }
 
     .no-underline {
@@ -233,9 +233,9 @@
                     <p class="font-change">
                       <strong>Conforme</strong>
                         <br><br><br><br>
-                        <strong>{{ $project->conforme_by_user->person }}</strong><br>
-                        {{ $project->conforme_by_user->position }}<br>
-                        {{ $project->conforme_by_user->name }}<br>
+                        <strong>{{ $project->client_contact->name }}</strong><br>
+                        {{ $project->client_contact->position }}<br>
+                        {{ $project->client_contact->client->name }}<br>
                     </p>
                 </td>
             </tr>

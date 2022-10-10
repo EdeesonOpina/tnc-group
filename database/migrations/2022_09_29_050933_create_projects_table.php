@@ -23,7 +23,9 @@ class CreateProjectsTable extends Migration
             $table->decimal('internal_total', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('asf', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('vat', $precision = 10, $scale = 2)->default('0.00');
-            $table->date('end_date');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->date('duration_date')->nullable();
             $table->longtext('description')->nullable();
             $table->longtext('proposal_ownership')->nullable();
             $table->longtext('confidentiality')->nullable();
@@ -32,7 +34,7 @@ class CreateProjectsTable extends Migration
             $table->longtext('validity')->nullable();
             $table->bigInteger('prepared_by_user_id')->default(0);
             $table->bigInteger('noted_by_user_id')->default(0);
-            $table->bigInteger('conforme_by_user_id')->default(0);
+            $table->bigInteger('client_contact_id')->default(0); // conforme
             $table->bigInteger('created_by_user_id')->default(0);
             $table->bigInteger('approved_by_user_id')->default(0);
             $table->integer('status')->unsigned()->default(1);

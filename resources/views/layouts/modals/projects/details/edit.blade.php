@@ -1,3 +1,12 @@
+@php
+  use App\Models\ProjectCategory;
+  use App\Models\ProjectCategoryStatus;
+
+  $categories = ProjectCategory::where('status', ProjectCategoryStatus::ACTIVE)
+                        ->orderBy('name', 'asc')
+                        ->get();
+@endphp
+
 @foreach ($project_details as $project_detail)
   <form action="{{ route('internals.projects.details.update') }}" method="post">
     {{ csrf_field() }}
@@ -44,6 +53,14 @@
                 <hr>
                 <label>Name</label><br>
                 <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') ?? $project_detail->name }}"><br>
+                <label>Category</label><br>
+                <select name="category_id" class="form-control">
+                  <option value="{{ $project_detail->category->id }}">{{ $project_detail->category->id }}</option>
+                  @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                  @endforeach
+                </select>
+                <br>
                 <label>Qty</label><br>
                 <input type="text" name="qty" class="form-control" placeholder="Qty" value="{{ old('qty') ?? $project_detail->qty }}"><br>
                 <label>Internal CE Price</label><br>
@@ -52,9 +69,6 @@
                 <input type="text" name="price" class="form-control" placeholder="Price" value="{{ old('price') ?? $project_detail->price }}"><br>
               </div>
             </div>
-
-            <label>Description</label><br>
-            <textarea id="tiny" name="description" class="form-control" placeholder="Description">{{ old('description') ?? $project_detail->description }}</textarea><br>
             
             <br>
 

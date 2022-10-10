@@ -105,7 +105,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        {{ $budget_request_form->needed_date }}
+                        {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}
                     </div>
                 </div>
 

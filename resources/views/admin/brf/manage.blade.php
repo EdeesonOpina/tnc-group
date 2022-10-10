@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        {{ $budget_request_form->needed_date }}
+                        {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}
                     </div>
                 </div>
 
@@ -126,7 +126,6 @@
                     <table class="table mb-0 thead-border-top-0 table-striped">
                         <thead>
                             <tr>
-                                <th id="compact-table">#ID</th>
                                 <th id="compact-table">Particulars</th>
                                 <th id="compact-table">Quantity</th>
                                 <th id="compact-table">Unit Price</th>
@@ -137,7 +136,6 @@
                         <tbody class="list" id="companies">
                             @foreach ($budget_request_form_details as $budget_request_form_detail)
                                 <tr>
-                                    <td>{{ $budget_request_form_detail->id }}</td>
                                     <td>
                                         {{ $budget_request_form_detail->name }}
                                         <div class="d-flex">
@@ -163,7 +161,7 @@
                                 </tr>
                             @endforeach
                             <tr> 
-                                <td colspan="3">&nbsp;</td>
+                                <td colspan="2">&nbsp;</td>
                                 <td id="compact-table"><strong>Total Cost</strong></th>
                                 <td id="compact-table">P{{ number_format($budget_request_form_details_total, 2) }}</th>
                                 <td>&nbsp;</td>
