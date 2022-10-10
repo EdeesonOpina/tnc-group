@@ -108,18 +108,16 @@ use App\Models\BudgetRequestFormStatus;
                                     <td>
                                         <strong>{{ $budget_request_form->reference_number }}</strong>
                                         <div class="d-flex">
+                                            <a href="{{ route('internals.brf.view', [$budget_request_form->id]) }}" id="margin-right">View</a> | 
+
                                             @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                                <a href="{{ route('internals.brf.view', [$budget_request_form->id]) }}" id="margin-right">View</a> | 
+                                                <a href="{{ route('internals.brf.manage', [$budget_request_form->id]) }}" id="space-table">Manage</a> | 
+                                            
 
-                                                @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                                    <a href="{{ route('internals.brf.manage', [$budget_request_form->id]) }}" id="space-table">Manage</a> | 
-                                                
+                                                <a href="#" data-href="{{ route('internals.brf.approve', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
 
-                                                    <a href="#" data-href="{{ route('internals.brf.approve', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
+                                                <a href="#" data-href="{{ route('internals.brf.disapprove', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
 
-                                                    <a href="#" data-href="{{ route('internals.brf.disapprove', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
-
-                                                @endif
                                             @endif
                                         </div>
                                     </td>

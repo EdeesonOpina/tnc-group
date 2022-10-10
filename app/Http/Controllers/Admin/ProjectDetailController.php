@@ -10,6 +10,8 @@ use Mail;
 use Validator;
 use App\Models\Project;
 use App\Models\ProjectStatus;
+use App\Models\ProjectCategory;
+use App\Models\ProjectCategoryStatus;
 use App\Models\ProjectDetail;
 use App\Models\ProjectDetailStatus;
 use App\Models\BudgetRequestForm;
@@ -26,6 +28,7 @@ class ProjectDetailController extends Controller
         $rules = [
             'name' => 'required',
             'category_id' => 'required',
+            'sub_category_id' => 'nullable',
             'qty' => 'required',
             'price' => 'required',
             'internal_price' => 'required',
@@ -46,6 +49,9 @@ class ProjectDetailController extends Controller
             $data['image'] = 'uploads/images/project/details/' . $image_name; // save the destination of the file to the database
         }
 
+        if ($request->sub_category_id == null)
+            $data['sub_category_id'] = 0;
+
         $data['total'] = $request->qty * $request->price;
         $data['internal_total'] = $request->qty * $request->internal_price;
         $data['status'] = ProjectDetailStatus::FOR_APPROVAL; // if you want to insert to a specific column
@@ -55,11 +61,46 @@ class ProjectDetailController extends Controller
         return redirect()->route('internals.projects.manage', [$project_detail->project->id]);
     }
 
+    public function add($project_id)
+    {
+        $project = Project::find($project_id);
+        $project_details = ProjectDetail::where('project_id', $project_id)
+                                ->where('status', '!=', ProjectDetailStatus::INACTIVE)
+                                ->paginate(15);
+        $categories = ProjectCategory::where('status', ProjectCategoryStatus::ACTIVE)
+                        ->orderBy('name', 'asc')
+                        ->get();
+
+        return view('admin.projects.details.add', compact(
+            'project',
+            'project_details',
+            'categories'
+        ));
+    }
+
+    public function edit($project_detail_id)
+    {
+        $curr_project_detail = ProjectDetail::find($project_detail_id);
+        $project_details = ProjectDetail::where('project_id', $curr_project_detail->project->id)
+                                ->where('status', '!=', ProjectDetailStatus::INACTIVE)
+                                ->paginate(15);
+        $categories = ProjectCategory::where('status', ProjectCategoryStatus::ACTIVE)
+                        ->orderBy('name', 'asc')
+                        ->get();
+
+        return view('admin.projects.details.edit', compact(
+            'curr_project_detail',
+            'project_details',
+            'categories'
+        ));
+    }
+
     public function update(Request $request)
     {
         $rules = [
             'name' => 'required',
             'category_id' => 'required',
+            'sub_category_id' => 'nullable',
             'qty' => 'required',
             'price' => 'required',
             'internal_price' => 'required',
@@ -80,13 +121,16 @@ class ProjectDetailController extends Controller
             $data['image'] = 'uploads/images/projects/' . $image_name; // save the destination of the file to the database
         }
 
+        if ($request->sub_category_id == null)
+            $data['sub_category_id'] = 0;
+
         $project_detail = ProjectDetail::find($request->project_detail_id);
         $data['internal_total'] = $request->internal_price * $request->qty;
         $data['total'] = $request->price * $request->qty;
         $project_detail->fill($data)->save();
 
         $request->session()->flash('success', 'Data has been updated');
-        return back();
+        return redirect()->route('internals.projects.manage', [$project_detail->project->id]);
     }
 
     public function approve(Request $request, $project_detail_id)

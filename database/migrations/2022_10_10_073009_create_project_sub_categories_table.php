@@ -15,6 +15,10 @@ class CreateProjectSubCategoriesTable extends Migration
     {
         Schema::create('project_sub_categories', function (Blueprint $table) {
             $table->id();
+            $table->integer('category_id')->unsigned();
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->integer('status')->unsigned()->default(1);
             $table->timestamps();
         });
     }

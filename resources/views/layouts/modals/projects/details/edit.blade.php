@@ -15,7 +15,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
-            <h5 class="modal-title" id="exampleModalLabel">Add Project Details</h5><br>
+            <h5 class="modal-title" id="exampleModalLabel">Edit Project Details</h5><br>
 
             <div class="row">
               <div class="col-md-4">
@@ -51,16 +51,24 @@
                   </div>
                 </div>
                 <hr>
-                <label>Name</label><br>
-                <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') ?? $project_detail->name }}"><br>
                 <label>Category</label><br>
-                <select name="category_id" class="form-control">
-                  <option value="{{ $project_detail->category->id }}">{{ $project_detail->category->id }}</option>
+                <select id="category" name="category_id" class="custom-select" data-toggle="select">
+                  <option value="{{ $project_detail->category->id }}">{{ $project_detail->category->name }}</option>
                   @foreach ($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                   @endforeach
                 </select>
-                <br>
+                <br><br>
+                <label>Sub Category</label>
+                <select id="sub_category" name="sub_category_id" class="custom-select" data-toggle="select">
+                    <option value=""></option>
+                    @if ($project_detail->sub_category)
+                      <option value="{{ $project_detail->sub_category->name }}">{{ $project_detail->sub_category->name }}</option>
+                    @endif
+                </select>
+                <br><br>
+                <label>Name</label><br>
+                <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') ?? $project_detail->name }}"><br>
                 <label>Qty</label><br>
                 <input type="text" name="qty" class="form-control" placeholder="Qty" value="{{ old('qty') ?? $project_detail->qty }}"><br>
                 <label>Internal CE Price</label><br>

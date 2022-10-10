@@ -72,6 +72,17 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <strong>Company</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        {{ $project->company->name }}
+                                    </div>
+                                </div>
                                 
                                 <div class="row">
                                     <div class="col-md-2">

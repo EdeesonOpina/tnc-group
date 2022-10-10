@@ -50,16 +50,21 @@
                 </div>
               </div>
               <hr>
-              <label>Name</label><br>
-              <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') }}"><br>
               <label>Category</label><br>
-              <select name="category_id" class="form-control">
+              <select id="category" name="category_id" class="custom-select" data-toggle="select">
                 <option value=""></option>
                 @foreach ($categories as $category)
                   <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
               </select>
-              <br>
+              <br><br>
+              <label>Sub Category</label>
+              <select id="sub_category" name="sub_category_id" class="custom-select" data-toggle="select">
+                  <option value=""></option>
+              </select>
+              <br><br>
+              <label>Name</label><br>
+              <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') }}"><br>
               <label>Qty</label><br>
               <input type="text" name="qty" class="form-control" placeholder="Qty" value="{{ old('qty') }}"><br>
               <label>Internal CE Price</label><br>

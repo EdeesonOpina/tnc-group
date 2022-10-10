@@ -1038,9 +1038,12 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
     // details
     Route::group(['prefix' => 'details'], function () {
+        Route::get('/add/{project_id}', 'App\Http\Controllers\Admin\ProjectDetailController@add')->name('internals.projects.details.add');
+        Route::get('/edit/{project_id}', 'App\Http\Controllers\Admin\ProjectDetailController@edit')->name('internals.projects.details.edit');
         Route::post('/create', 'App\Http\Controllers\Admin\ProjectDetailController@create')->name('internals.projects.details.create');
         Route::post('/update', 'App\Http\Controllers\Admin\ProjectDetailController@update')->name('internals.projects.details.update');
         Route::post('/update/price', 'App\Http\Controllers\Admin\ProjectDetailController@price')->name('internals.projects.details.update.price');
+
         Route::get('/approve/{id}','App\Http\Controllers\Admin\ProjectDetailController@approve')->name('internals.projects.details.approve');
         Route::get('/disapprove/{id}','App\Http\Controllers\Admin\ProjectDetailController@disapprove')->name('internals.projects.details.disapprove');
         Route::get('/activate/{id}','App\Http\Controllers\Admin\ProjectDetailController@activate')->name('internals.projects.details.activate');
@@ -1516,6 +1519,7 @@ Route::group(['prefix' => 'test/'], function () {
 // ajax routes
 Route::group(['prefix' => 'ajax/'], function () {
     Route::get('select/sub-categories/{category_id}', 'App\Http\Controllers\Admin\AjaxController@sub_categories')->name('ajax.sub-categories');
+    Route::get('select/projects/sub-categories/{category_id}', 'App\Http\Controllers\Admin\AjaxController@project_sub_categories')->name('ajax.projects.sub-categories');
     Route::get('select/companies/{category_id}', 'App\Http\Controllers\Admin\AjaxController@companies')->name('ajax.companies');
 });
 

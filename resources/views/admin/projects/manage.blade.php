@@ -74,6 +74,17 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
+                                            <strong>Company</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        {{ $project->company->name }}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
                                             <strong>Project Name</strong>
                                         </div>
                                     </div>
@@ -134,7 +145,11 @@
                     </div>
 
                     <div class="col-md-2">
-                        <a href="#" data-toggle="modal" data-target="#add-project-details-{{ $project->id }}">
+                        <!-- <a href="#" data-toggle="modal" data-target="#add-project-details-{{ $project->id }}">
+                            <button type="button" class="btn btn-success form-control" id="table-letter-margin"><i class="material-icons">add</i> Add Details</button>
+                        </a> -->
+                        
+                        <a href="{{ route('internals.projects.details.add', [$project->id]) }}">
                             <button type="button" class="btn btn-success form-control" id="table-letter-margin"><i class="material-icons">add</i> Add Details</button>
                         </a>
                     </div>
@@ -162,12 +177,12 @@
                                     <td><strong>{{ $project_detail->category->name }}</strong></td>
                                     <td>
                                         <strong>{{ $project_detail->name }} 
-                                            @if ($project_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                                <a href="#" data-toggle="modal" data-target="#edit-project-detail-{{ $project_detail->id }}"><i class="material-icons icon-16pt text-success">edit</i></a>
+                                            @if ($project_detail->status == ProjectDetailStatus::FOR_APPROVAL)
+                                                <a href="{{ route('internals.projects.details.edit', [$project->id]) }}"><i class="material-icons icon-16pt text-success">edit</i></a>
                                             @endif
                                         </strong>
                                         <div class="d-flex">
-                                            @if ($project_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
+                                            @if ($project_detail->status == ProjectDetailStatus::FOR_APPROVAL)
                                                 <a href="#" data-href="{{ route('internals.projects.details.approve', [$project_detail->id]) }}" data-toggle="modal" data-target="#confirm-action" id="margin-right">Approve</a> | 
 
                                                 <a href="#" data-href="{{ route('internals.projects.details.disapprove', [$project_detail->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
@@ -181,11 +196,11 @@
                                     <td>P{{ number_format($project_detail->total, 2) }}</td>
                                     <td>P{{ number_format($project_detail->internal_total, 2) }}</td>
                                     <td>
-                                        @if ($project_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
+                                        @if ($project_detail->status == ProjectDetailStatus::FOR_APPROVAL)
                                             <div class="badge badge-warning ml-2">For Approval</div>
-                                        @elseif ($project_detail->status == BudgetRequestFormStatus::APPROVED)
+                                        @elseif ($project_detail->status == ProjectDetailStatus::APPROVED)
                                             <div class="badge badge-success ml-2">Approved</div>
-                                        @elseif ($project_detail->status == BudgetRequestFormStatus::DISAPPROVED)
+                                        @elseif ($project_detail->status == ProjectDetailStatus::DISAPPROVED)
                                             <div class="badge badge-danger ml-2">Disapproved</div>
                                         @endif
                                     </td>

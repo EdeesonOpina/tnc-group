@@ -440,9 +440,18 @@
     @endif
   @endif
 
-  @if (request()->is('admin/categories'))
+  @if (request()->is('admin/categories') || request()->is('admin/categories/*'))
     @include('layouts.modals.categories.sub-categories.add')
     @include('layouts.modals.categories.sub-categories.edit')
+  @endif
+
+  @if (request()->is('admin/project-categories') || request()->is('admin/project-categories/*'))
+    @if(str_contains(url()->current(), '/add') || str_contains(url()->current(), '/edit'))
+
+    @else
+        @include('layouts.modals.project-categories.sub-categories.add')
+        @include('layouts.modals.project-categories.sub-categories.edit')
+    @endif
   @endif
 
   @if (request()->is('admin/projects/manage/*'))

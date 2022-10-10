@@ -1,6 +1,8 @@
 @include('layouts.auth.header')
 @php
+    use App\Models\ProjectSubCategory;
     use App\Models\ProjectCategoryStatus;
+    use App\Models\ProjectSubCategoryStatus;
 @endphp
 
 <div class="container-fluid page__heading-container">
@@ -93,12 +95,18 @@
                                 <th id="compact-table">#ID</th>
                                 <th id="compact-table"></th>
                                 <th id="compact-table">Name</th>
+                                <th id="compact-table">Sub Category</th>
                                 <th id="compact-table">Status</th>
                                 <th id="compact-table">Created At</th>
                             </tr>
                         </thead>
                         <tbody class="list" id="companies">
                             @foreach($categories as $category)
+                            @php
+                                $sub_categories = ProjectSubCategory::where('category_id', $category->id)
+                                                                ->where('status', ProjectSubCategoryStatus::ACTIVE)
+                                                                ->get();
+                            @endphp
                                 <tr>
                                     <td><div class="badge badge-light">#{{ $category->id }}</div></td>
                                     <td id="compact-table">
@@ -112,6 +120,7 @@
                                             </div>
                                         </div>
                                     </td>
+
                                     <td id="compact-table">
                                         <b>{{ $category->name }}</b>
                                         <div class="d-flex">
@@ -124,6 +133,21 @@
                                                 <a href="#" data-href="{{ route('admin.project-categories.recover', [$category->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Recover</a>
                                             @endif
                                         </div>
+                                    </td>
+
+                                    <td id="compact-table">
+                                        @if (count($sub_categories) > 0)
+                                            @foreach($sub_categories as $sub_category)
+                                                {{ $sub_category->name }}
+                                                <a href="#" class="text-success" data-toggle="modal" data-target="#edit-sub-category-{{ $sub_category->id }}"><i class="material-icons icon-16pt" data-toggle="tooltip" data-placement="top" title="Edit">edit</i></a>
+                                                <a href="#" data-href="{{ route('admin.project-sub-categories.delete', [$sub_category->id]) }}" class="text-danger" data-toggle="modal" data-target="#confirm-action"><i class="material-icons icon-16pt" data-toggle="tooltip" data-placement="top" title="Delete">delete</i></a>
+                                                <br>
+                                            @endforeach
+                                        @else
+                                            No record/s<br>
+                                        @endif
+                                        <br>
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add-sub-category-{{ $category->id }}">Add</button>
                                     </td>
 
                                     <td>

@@ -55,8 +55,8 @@
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Company</label>
-                                    <select id="company" name="company_id" class="custom-select" data-toggle="select">
+                                    <label>Sub Category</label>
+                                    <select id="sub_category" name="sub_category_id" class="custom-select" data-toggle="select">
                                         <option value=""></option>
                                         
                                     </select>
