@@ -12,6 +12,7 @@ class Project extends Model
     protected $fillable = [
         'reference_number',
         'company_id',
+        'category_id',
         'client_id',
         'name',
         'total',
@@ -37,6 +38,11 @@ class Project extends Model
     public function company()
     {
         return $this->hasOne(Company::class, 'id', 'company_id');
+    }
+
+    public function category()
+    {
+        return $this->hasOne(ProjectCategory::class, 'id', 'category_id');
     }
 
     public function prepared_by_user()

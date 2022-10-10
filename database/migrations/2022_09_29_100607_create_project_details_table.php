@@ -16,6 +16,7 @@ class CreateProjectDetailsTable extends Migration
         Schema::create('project_details', function (Blueprint $table) {
             $table->id();
             $table->integer('project_id')->unsigned();
+            $table->integer('catetgory_id')->unsigned();
             $table->string('name');
             $table->longtext('description');
             $table->integer('qty')->unsigned();

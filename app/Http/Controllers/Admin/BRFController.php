@@ -103,6 +103,7 @@ class BRFController extends Controller
     public function create(Request $request)
     {
         $rules = [
+            'reference_number' => 'required|unique:projects',
             'needed_date' => 'required',
             'remarks' => 'nullable',
         ];

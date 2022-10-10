@@ -40,7 +40,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <strong>PRJ#</strong>
+                                            <strong>CE#</strong>
                                         </div>
                                     </div>
                                     <div class="col">

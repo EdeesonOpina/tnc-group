@@ -101,10 +101,10 @@ class ProjectController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
-        $prj_count = str_replace('PRJ-', '', Project::orderBy('created_at', 'desc')->first()->reference_number ?? 0) + 1; // get the latest tnc sequence then add 1
+        $prj_count = str_replace('CE-', '', Project::orderBy('created_at', 'desc')->first()->reference_number ?? 0) + 1; // get the latest tnc sequence then add 1
 
         $data = request()->all(); // get all request
-        $data['reference_number'] = 'PRJ-' . str_pad($prj_count, 8, '0', STR_PAD_LEFT);
+        $data['reference_number'] = 'CE-' . str_pad($prj_count, 8, '0', STR_PAD_LEFT);
 
         if ($request->file('image')) { // if the file is present
             $image_name = $request->name . '-' . time() . '.' . $request->file('image')->getClientOriginalExtension(); // set unique name for that file

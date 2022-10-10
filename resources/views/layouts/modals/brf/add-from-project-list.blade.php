@@ -7,11 +7,6 @@
   $users = User::where('status', '!=', UserStatus::INACTIVE)
                   ->orderBy('created_at', 'desc')
                   ->get();
-
-  $projects = Project::where('status', '!=', ProjectStatus::INACTIVE)
-                  ->where('status', ProjectStatus::FOR_APPROVAL)
-                  ->orderBy('created_at', 'desc')
-                  ->get();
 @endphp
 
 <form action="{{ route('internals.brf.create') }}" method="post">
@@ -22,13 +17,8 @@
         <div class="modal-body">
           <h5 class="modal-title" id="exampleModalLabel">Add BRF</h5><br>
 
-              <label>Project</label><br>
-              <select class="form-control" name="project_id">
-                <option value=""></option>
-                @foreach ($projects as $project)
-                  <option value="{{ $project->id }}">{{ $project->name }}</option>
-                @endforeach
-              </select>
+              <label>Reference #</label><br>
+              <input type="text" name="reference_number" class="form-control">
               <br>
 
               <label>Payment To</label><br>
