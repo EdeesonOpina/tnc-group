@@ -16,8 +16,10 @@ class ProjectDetail extends Model
         'name',
         'qty',
         'description',
+        'usd_price',
         'internal_price',
         'price',
+        'usd_total',
         'internal_total',
         'total',
     ];

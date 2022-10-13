@@ -6,11 +6,11 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('admin.users') }}"><i class="material-icons icon-20pt">home</i></a></li>
-                    <li class="breadcrumb-item">Users</li>
-                    <li class="breadcrumb-item active" aria-current="page">Add User</li>
+                    <li class="breadcrumb-item">Corporate</li>
+                    <li class="breadcrumb-item active" aria-current="page">Add Corporate</li>
                 </ol>
             </nav>
-            <h1 class="m-0">Add User</h1>
+            <h1 class="m-0">Add Corporate</h1>
         </div>
     </div>
 </div>
@@ -21,44 +21,22 @@
     <div class="card card-form">
         <div class="row no-gutters">
             <div class="col-lg-4 card-body">
-                <p><strong class="headings-color">Add New User</strong></p>
+                <p><strong class="headings-color">Add New Corporate</strong></p>
                 <p class="text-muted mb-0">Please enter the details needed in order for you to proceed.</p>
             </div>
             <div class="col-lg-8 card-form__body card-body">
-                <form action="{{ route('admin.users.create') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.users.corporate.create') }}" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                 
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label>Firstname</label>
-                            <input type="text" name="firstname" class="form-control" placeholder="Firstname" value="{{ old('firstname') }}">
+                            <label>Name</label>
+                            <input type="text" name="corporate" class="form-control" placeholder="Name" value="{{ old('corporate') }}">
                         </div>
                     </div>
                     <div class="col">
-                        <div class="form-group">
-                            <label>Lastname</label>
-                            <input type="text" name="lastname" class="form-control" placeholder="Lastname" value="{{ old('lastname') }}">
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="company">Company</label><br />
-                            <select id="company" name="company_id" class="custom-select" data-toggle="select">
-                                @foreach($companies as $company)
-                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Position</label>
-                            <input type="text" name="position" class="form-control" placeholder="Position" value="{{ old('position') }}">
-                        </div>
                     </div>
                 </div>
 
@@ -92,15 +70,17 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="desc">Biography <i>(optional)</i></label>
+                    <textarea id="desc" name="biography" rows="4" class="form-control" placeholder="Enter biography">{{ old('biography') }}</textarea>
+                </div>
+
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
                             <label for="role">Role</label><br />
                             <select id="role" name="role" class="custom-select" data-toggle="select">
-                                <option value="Sales">Sales</option>
-                                <option value="Accountant">Accountant</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Super Admin">Super Admin</option>
+                                <option value="Corporate">Corporate</option>
                             </select>
                         </div>
                     </div>
@@ -120,9 +100,6 @@
                         &nbsp;
                     </div>
                 </div>
-
-                <label>Signature</label><br>
-                <input type="file" name="signature"><br><br>
                 
                 <div class="form-group m-0">
                     <button type="submit" class="btn btn-success">Submit</button>

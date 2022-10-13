@@ -1,7 +1,4 @@
 @include('layouts.auth.header')
-@php
-    use App\Models\Country;
-@endphp
 
 <div class="container page__heading-container">
     <div class="page__heading d-flex align-items-center">
@@ -9,11 +6,11 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('admin.users') }}"><i class="material-icons icon-20pt">home</i></a></li>
-                    <li class="breadcrumb-item">Users</li>
-                    <li class="breadcrumb-item active" aria-current="page">Edit User</li>
+                    <li class="breadcrumb-item">Corporate</li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit Corporate</li>
                 </ol>
             </nav>
-            <h1 class="m-0">Edit User</h1>
+            <h1 class="m-0">Edit Corporate</h1>
         </div>
     </div>
 </div>
@@ -24,46 +21,22 @@
     <div class="card card-form">
         <div class="row no-gutters">
             <div class="col-lg-4 card-body">
-                <p><strong class="headings-color">Edit User</strong></p>
+                <p><strong class="headings-color">Edit New Corporate</strong></p>
                 <p class="text-muted mb-0">Please enter the details needed in order for you to proceed.</p>
             </div>
             <div class="col-lg-8 card-form__body card-body">
-                <form action="{{ route('admin.users.update') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.users.corporate.update') }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" name="user_id" value="{{ $user->id }}">
-
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label>Firstname</label>
-                            <input type="text" name="firstname" class="form-control" placeholder="Firstname" value="{{ old('firstname') ?? $user->firstname }}">
+                            <label>Name</label>
+                            <input type="text" name="corporate" class="form-control" placeholder="Name" value="{{ old('corporate') ?? $user->corporate }}">
                         </div>
                     </div>
                     <div class="col">
-                        <div class="form-group">
-                            <label>Lastname</label>
-                            <input type="text" name="lastname" class="form-control" placeholder="Lastname" value="{{ old('lastname') ?? $user->lastname }}">
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="company">Company</label><br />
-                            <select id="company" name="company_id" class="custom-select" data-toggle="select">
-                                <option value="{{ $user->company->id }}">{{ $user->company->name }}</option>
-                                @foreach($companies as $company)
-                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Position</label>
-                            <input type="text" name="position" class="form-control" placeholder="Position" value="{{ $user->position }}">
-                        </div>
                     </div>
                 </div>
 
@@ -77,7 +50,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Line Address 2</label>
-                            <input type="text" name="line_address_2" class="form-control" placeholder="Line Address 2" value="{{ old('line_address_1') ?? $user->line_address_2 }}">
+                            <input type="text" name="line_address_2" class="form-control" placeholder="Line Address 2" value="{{ old('line_address_2') ?? $user->line_address_2 }}">
                         </div>
                     </div>
                 </div>
@@ -105,13 +78,9 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="country">Role</label><br />
-                            <select id="country" name="role" class="custom-select" data-toggle="select">
-                                <option value="{{ $user->role }}">{{ $user->role }}</option>
-                                <option value="Sales">Sales</option>
-                                <option value="Accountant">Accountant</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Super Admin">Super Admin</option>
+                            <label for="role">Role</label><br />
+                            <select id="role" name="role" class="custom-select" data-toggle="select">
+                                <option value="Corporate">Corporate</option>
                             </select>
                         </div>
                     </div>

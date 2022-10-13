@@ -645,10 +645,14 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
     Route::group(['prefix' => 'users/'], function () {
         Route::get('/', 'App\Http\Controllers\Admin\UserController@show')->name('admin.users');
         Route::get('/add', 'App\Http\Controllers\Admin\UserController@add')->name('admin.users.add');
+        Route::get('/corporate/add', 'App\Http\Controllers\Admin\UserController@corporate_add')->name('admin.users.corporate.add');
         Route::post('/create', 'App\Http\Controllers\Admin\UserController@create')->name('admin.users.create');
+        Route::post('/corporate/create', 'App\Http\Controllers\Admin\UserController@corporate_create')->name('admin.users.corporate.create');
         Route::get('/view/{user_id}', 'App\Http\Controllers\Admin\UserController@view')->name('admin.users.view');
         Route::get('/edit/{user_id}', 'App\Http\Controllers\Admin\UserController@edit')->name('admin.users.edit');
+        Route::get('/corporate/edit/{user_id}', 'App\Http\Controllers\Admin\UserController@corporate_edit')->name('admin.users.corporate.edit');
         Route::post('/edit', 'App\Http\Controllers\Admin\UserController@update')->name('admin.users.update');
+        Route::post('/corporate/edit', 'App\Http\Controllers\Admin\UserController@corporate_update')->name('admin.users.corporate.update');
         Route::get('/resend/email/{user_id}', 'App\Http\Controllers\Admin\UserController@resend')->name('admin.users.resend.email');
         Route::post('/set/password', 'App\Http\Controllers\Admin\UserController@password')->name('admin.users.set-password');
         Route::get('/delete/{user_id}', 'App\Http\Controllers\Admin\UserController@delete')->name('admin.users.delete');

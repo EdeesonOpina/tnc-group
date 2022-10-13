@@ -25,32 +25,31 @@
                 <p class="text-muted mb-0">Here are the details of this user.</p>
             </div>
             <div class="col-lg-8 card-form__body card-body">
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Firstname</label><br />
-                            {{ $user->firstname }}
+                @if ($user->role == 'Corporate')
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Name</label><br />
+                                {{ $user->corporate }}
+                            </div>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Lastname</label><br />
-                            {{ $user->lastname }}
+                @else
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Firstname</label><br />
+                                {{ $user->firstname }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Lastname</label><br />
+                                {{ $user->lastname }}
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Birthdate</label><br />
-                            {{ $user->birthdate }}
-                        </div>
-                    </div>
-                    <div class="col">
-                        &nbsp;
-                    </div>
-                </div>
+                @endif
 
                 <div class="row">
                     <div class="col">

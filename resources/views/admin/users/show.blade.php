@@ -14,7 +14,8 @@ use App\Models\UserStatus;
             </nav>
             <h1 class="m-0">Users</h1>
         </div>
-        <a href="{{ route('admin.users.add') }}" class="btn btn-primary"><i class="material-icons">add</i> Add</a>
+        <a href="{{ route('admin.users.add') }}" class="btn btn-primary" id="margin-right"><i class="material-icons">add</i> Add User</a>
+        <a href="{{ route('admin.users.corporate.add') }}" class="btn btn-primary"><i class="material-icons">add</i> Add Corporate</a>
     </div>
 </div>
 
@@ -145,10 +146,18 @@ use App\Models\UserStatus;
                                                 <a href="{{ route('auth.profile.view', [$user->id]) }}" style="text-decoration: none; color: #333;"><b>
                                                 @if ($user->avatar)
                                                     <img src="{{ url($user->avatar) }}" width="30px">
-                                                    {{ $user->firstname }} {{ $user->firstname }}
+                                                    @if ($user->role == 'Corporate')
+                                                        {{ $user->corporate }}
+                                                    @else
+                                                        {{ $user->firstname }} {{ $user->firstname }}
+                                                    @endif
                                                 @else
                                                     <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="30px" style="margin-right: 7px;">
-                                                    {{ $user->firstname }} {{ $user->lastname }}
+                                                    @if ($user->role == 'Corporate')
+                                                        {{ $user->corporate }}
+                                                    @else
+                                                        {{ $user->firstname }} {{ $user->firstname }}
+                                                    @endif
                                                 @endif
                                                 </b></a>
                                             </div>
@@ -163,7 +172,11 @@ use App\Models\UserStatus;
                                         </div>
                                         <div class="d-flex">
                                             <a href="{{ route('admin.users.view', [$user->id]) }}" style="margin-right: 7px">View</a> | 
-                                            <a href="{{ route('admin.users.edit', [$user->id]) }}" id="space-table">Edit</a> | 
+                                            @if ($user->role == 'Corporate')
+                                                <a href="{{ route('admin.users.corporate.edit', [$user->id]) }}" id="space-table">Edit</a> | 
+                                            @else
+                                                <a href="{{ route('admin.users.edit', [$user->id]) }}" id="space-table">Edit</a> | 
+                                            @endif
                                             <a href="#" data-href="{{ route('admin.users.resend.email', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Resend Email</a> | 
                                             <a href="#" data-toggle="modal" data-target="#set-password-{{ $user->id }}" id="space-table">Set Password</a> | 
                                             @if ($user->status == UserStatus::ACTIVE || $user->status == UserStatus::PENDING)
@@ -175,7 +188,13 @@ use App\Models\UserStatus;
                                             @endif
                                         </div>
                                     </td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">location_on</i> {{ $user->company->name }}</td>
+                                    <td id="compact-table">
+                                        @if ($user->company)
+                                            <i class="material-icons icon-16pt mr-1 text-muted">location_on</i> {{ $user->company->name }}
+                                        @else
+                                            Not applicable
+                                        @endif
+                                    </td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $user->role }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $user->email }}</td>
                                     <td id="compact-table">

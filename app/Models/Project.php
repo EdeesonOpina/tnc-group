@@ -14,6 +14,8 @@ class Project extends Model
         'company_id',
         'client_id',
         'name',
+        'usd_total',
+        'internal_total',
         'total',
         'start_date',
         'end_date',

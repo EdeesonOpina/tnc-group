@@ -528,7 +528,7 @@
   @endif
 
   @if (request()->is('admin/users') || request()->is('admin/users/*'))
-    @if (request()->is('admin/users/view/*') || request()->is('admin/users/edit/*') || request()->is('admin/users/add'))
+    @if (request()->is('admin/users/view/*') || request()->is('admin/users/edit/*') || request()->is('admin/users/add') || request()->is('admin/users/corporate/view/*') || request()->is('admin/users/corporate/edit/*') || request()->is('admin/users/corporate/add'))
 
     @else
         @include('layouts.modals.users.set-password')

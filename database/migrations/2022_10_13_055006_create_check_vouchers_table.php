@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLiquidationsTable extends Migration
+class CreateCheckVouchersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,9 @@ class CreateLiquidationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('liquidations', function (Blueprint $table) {
+        Schema::create('check_vouchers', function (Blueprint $table) {
             $table->id();
             $table->integer('budget_request_form_id')->unsigned();
-            $table->integer('category_id')->unsigned();
-            $table->decimal('cost', $precision = 10, $scale = 2);
-            $table->longtext('description')->nullable();
-            $table->date('date')->nullable();
-            $table->longtext('note')->nullable();
-            $table->text('image')->nullable();
             $table->integer('status')->unsigned()->default(1);
             $table->timestamps();
         });
@@ -34,6 +28,6 @@ class CreateLiquidationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('liquidations');
+        Schema::dropIfExists('check_vouchers');
     }
 }

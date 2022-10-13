@@ -81,6 +81,11 @@ class UserController extends Controller
         ));
     }
 
+    public function corporate_add()
+    {
+        return view('admin.users.corporate.add');
+    }
+
     public function create(Request $request)
     {
         $rules = [
@@ -88,9 +93,9 @@ class UserController extends Controller
             'lastname' => 'required',
             'role' => 'required',
             'mobile' => 'required',
-            'birthdate' => 'nullable',
             'line_address_1' => 'required',
             'line_address_2' => 'nullable',
+            'biography' => 'nullable',
             'email' => 'required|unique:users',
             'company_id' => 'required',
             'mobile' => 'required',
@@ -110,6 +115,51 @@ class UserController extends Controller
             $data['signature'] = 'uploads/users/signatures/' . $image_name; // save the destination of the file to the database
         }
 
+        $data['status'] = UserStatus::PENDING; // if you want to insert to a specific column
+        $data['password'] = bcrypt('123123123');
+        User::create($data); // create data in a model
+
+        // email variables for use function
+        $user = User::where('email', $request->email)->first(); // fetch the user data after creations
+        $name = $user->name;
+        $email = $user->email;
+        $subject = 'One more step! Please activate your account.';
+
+        // send mail to user
+        // Mail::send('auth.emails.register', [
+        //     'user' => $user
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('APP_EMAIL'))
+        //     ->subject($subject);
+        // });
+
+        $request->session()->flash('success', 'Data has been added');
+
+        return redirect()->route('admin.users');
+    }
+
+    public function corporate_create(Request $request)
+    {
+        $rules = [
+            'corporate' => 'required',
+            'role' => 'required',
+            'mobile' => 'required',
+            'line_address_1' => 'required',
+            'line_address_2' => 'nullable',
+            'biography' => 'nullable',
+            'email' => 'required|unique:users',
+            'mobile' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);
+        }
+
+        $data = request()->all(); // get all request
+        $data['company_id'] = 0; // if you want to insert to a specific column
         $data['status'] = UserStatus::PENDING; // if you want to insert to a specific column
         $data['password'] = bcrypt('123123123');
         User::create($data); // create data in a model
@@ -157,6 +207,15 @@ class UserController extends Controller
         ));
     }
 
+    public function corporate_edit($user_id)
+    {
+        $user = User::find($user_id);
+
+        return view('admin.users.corporate.edit', compact(
+            'user',
+        ));
+    }
+
     public function update(Request $request)
     {
         $rules = [
@@ -164,7 +223,6 @@ class UserController extends Controller
             'lastname' => 'required',
             'role' => 'required',
             'mobile' => 'required',
-            'birthdate' => 'nullable',
             'line_address_1' => 'required',
             'line_address_2' => 'nullable',
             'email' => 'required',
@@ -191,6 +249,33 @@ class UserController extends Controller
 
         $request->session()->flash('success', 'Data has been updated');
 
+        return redirect()->route('admin.users.view', [$user->id]);
+    }
+
+    public function corporate_update(Request $request)
+    {
+        $rules = [
+            'corporate' => 'required',
+            'role' => 'required',
+            'mobile' => 'required',
+            'line_address_1' => 'required',
+            'line_address_2' => 'nullable',
+            'biography' => 'nullable',
+            'email' => 'required',
+            'mobile' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);
+        }
+        
+        $data = $request->all();
+        $user = User::find($request->user_id);
+        $user->fill($data)->save();
+
+        $request->session()->flash('success', 'Data has been updated');
         return redirect()->route('admin.users.view', [$user->id]);
     }
 
