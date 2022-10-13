@@ -62,6 +62,13 @@
                                 <span class="sidebar-menu-text">BRF</span>
                             </a>
                         </li>
+
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ route('internals.cv') }}">
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">bookmark</i>
+                                <span class="sidebar-menu-text">Check Vouchers</span>
+                            </a>
+                        </li>
                     @endif
 
                     @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales')

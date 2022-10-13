@@ -17,11 +17,11 @@
             </nav>
             <h1 class="m-0">Project</h1>
         </div>
-        <a href="{{ route('internals.exports.projects.print.ce', [$project->id]) }}">
+        <a href="{{ route('internals.exports.projects.print.ce', [$project->reference_number]) }}">
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print CE</button>
         </a>
 
-        <a href="{{ route('internals.exports.projects.print.internal-ce', [$project->id]) }}">
+        <a href="{{ route('internals.exports.projects.print.internal-ce', [$project->reference_number]) }}">
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print Internal CE</button>
         </a>
     </div>

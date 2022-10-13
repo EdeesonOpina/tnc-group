@@ -55,7 +55,7 @@
 <body>
 <div class="container">
   <br><br>
-  <a href="{{ route('internals.brf.view', [$budget_request_form->reference_number]) }}" class="no-underline">
+  <a href="{{ route('internals.cv') }}" class="no-underline">
     <button class="btn btn-light">Go Back</button>
   </a>
   <button class="btn btn-success" onclick="printDiv('printableArea')">Print Page</button>
@@ -64,15 +64,15 @@
   <div id="printableArea">
     <img src="{{ url(env('APP_LOGO_WITH_TEXT')) }}" width="160px">
     <br><br>
-    <h2 class="font-change">Budget Request Form</h2>
+    <h2 class="font-change">Check Voucher Form</h2>
     <table class="table border-bottom no-border table-borderless font-change">
         <tbody>
             <tr>
                 <td>
-                    <div class="text-label"><strong>BRF #:</strong></div>
+                    <div class="text-label"><strong>CV #:</strong></div>
                 </td>
                 <td>
-                    {{ $budget_request_form->reference_number }}<br>
+                    {{ $cv->reference_number }}<br>
                 </td>
                 <td>
                     <strong>Date</strong>

@@ -127,19 +127,19 @@ class ProjectController extends Controller
         return redirect()->route('internals.projects.manage', [$project->id]);
     }
 
-    public function view($project_id)
+    public function view($reference_number)
     {
-        $project = Project::find($project_id);
-        $project_details = ProjectDetail::where('project_id', $project_id)
+        $project = Project::where('reference_number', $reference_number)->first();
+        $project_details = ProjectDetail::where('project_id', $project->id)
                         ->where('status', '!=', ProjectDetailStatus::INACTIVE)
                         ->orderBy('created_at', 'desc')
                         ->paginate(15);
-        $budget_request_forms = BudgetRequestForm::where('project_id', $project_id)
+        $budget_request_forms = BudgetRequestForm::where('project_id', $project->id)
                         ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
                         ->orderBy('created_at', 'desc')
                         ->paginate(15);
 
-        $budget_request_forms_total = BudgetRequestForm::where('project_id', $project_id)
+        $budget_request_forms_total = BudgetRequestForm::where('project_id', $project->id)
                                             ->where('status', BudgetRequestFormStatus::APPROVED)
                                             ->sum('total');
 

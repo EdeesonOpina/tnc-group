@@ -23,19 +23,19 @@ use App\Models\CompanyStatus;
 
 class ProjectController extends Controller
 {
-    public function print_ce($project_id)
+    public function print_ce($reference_number)
     {
-        $project = Project::find($project_id);
-        $project_details = ProjectDetail::where('project_id', $project_id)
+        $project = Project::where('reference_number', $reference_number)->first();
+        $project_details = ProjectDetail::where('project_id', $project->id)
                                 ->where('status', '!=', ProjectDetailStatus::INACTIVE)
                                 ->orderBy('created_at', 'desc')
                                 ->paginate(15);
-        $budget_request_forms = BudgetRequestForm::where('project_id', $project_id)
+        $budget_request_forms = BudgetRequestForm::where('project_id', $project->id)
                         ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
                         ->orderBy('created_at', 'desc')
                         ->paginate(15);
 
-        $budget_request_forms_total = BudgetRequestForm::where('project_id', $project_id)
+        $budget_request_forms_total = BudgetRequestForm::where('project_id', $project->id)
                                             ->where('status', BudgetRequestFormStatus::APPROVED)
                                             ->sum('total');
 
@@ -52,19 +52,19 @@ class ProjectController extends Controller
         ));
     }
 
-    public function print_internal_ce($project_id)
+    public function print_internal_ce($reference_number)
     {
-        $project = Project::find($project_id);
-        $project_details = ProjectDetail::where('project_id', $project_id)
+        $project = Project::where('reference_number', $reference_number)->first();
+        $project_details = ProjectDetail::where('project_id', $project->id)
                                 ->where('status', '!=', ProjectDetailStatus::INACTIVE)
                                 ->orderBy('created_at', 'desc')
                                 ->paginate(15);
-        $budget_request_forms = BudgetRequestForm::where('project_id', $project_id)
+        $budget_request_forms = BudgetRequestForm::where('project_id', $project->id)
                         ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
                         ->orderBy('created_at', 'desc')
                         ->paginate(15);
 
-        $budget_request_forms_total = BudgetRequestForm::where('project_id', $project_id)
+        $budget_request_forms_total = BudgetRequestForm::where('project_id', $project->id)
                                             ->where('status', BudgetRequestFormStatus::APPROVED)
                                             ->sum('total');
 

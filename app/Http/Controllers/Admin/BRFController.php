@@ -88,9 +88,11 @@ class BRFController extends Controller
     public function manage($budget_request_form_id)
     {
         $budget_request_form = BudgetRequestForm::find($budget_request_form_id);
-        $budget_request_form_details = BudgetRequestFormDetail::where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
+        $budget_request_form_details = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form_id)
+                                                        ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
                                                         ->get();
-        $budget_request_form_details_total = BudgetRequestFormDetail::where('status', BudgetRequestFormDetailStatus::APPROVED)
+        $budget_request_form_details_total = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form_id)
+                                                        ->where('status', BudgetRequestFormDetailStatus::APPROVED)
                                                         ->sum('total');
 
         return view('admin.brf.manage', compact(
@@ -140,12 +142,14 @@ class BRFController extends Controller
         return redirect()->route('internals.brf.manage', [$brf->id]);
     }
 
-    public function view($budget_request_form_id)
+    public function view($reference_number)
     {
-        $budget_request_form = BudgetRequestForm::find($budget_request_form_id);
-        $budget_request_form_details = BudgetRequestFormDetail::where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
+        $budget_request_form = BudgetRequestForm::where('reference_number', $reference_number)->first();
+        $budget_request_form_details = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form->id)
+                                                        ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
                                                         ->get();
-        $budget_request_form_details_total = BudgetRequestFormDetail::where('status', BudgetRequestFormDetailStatus::APPROVED)
+        $budget_request_form_details_total = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form->id)
+                                                        ->where('status', BudgetRequestFormDetailStatus::APPROVED)
                                                         ->sum('total');
 
         return view('admin.brf.view', compact(

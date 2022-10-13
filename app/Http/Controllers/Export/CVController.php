@@ -8,22 +8,19 @@ use Carbon\Carbon;
 use Auth;
 use Mail;
 use Validator;
-use App\Models\Project;
-use App\Models\ProjectStatus;
+use App\Models\CheckVoucher;
+use App\Models\CheckVoucherStatus;
 use App\Models\BudgetRequestForm;
 use App\Models\BudgetRequestFormStatus;
 use App\Models\BudgetRequestFormDetail;
 use App\Models\BudgetRequestFormDetailStatus;
-use App\Models\Client;
-use App\Models\ClientStatus;
-use App\Models\Company;
-use App\Models\CompanyStatus;
 
-class BRFController extends Controller
+class CVController extends Controller
 {
     public function print($reference_number)
     {
-        $budget_request_form = BudgetRequestForm::where('reference_number', $reference_number)->first();
+        $cv = CheckVoucher::where('reference_number', $reference_number)->first();
+        $budget_request_form = BudgetRequestForm::find($cv->budget_request_form->id);
         $budget_request_form_details = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form->id)
                                                         ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
                                                         ->get();
@@ -31,7 +28,8 @@ class BRFController extends Controller
                                                         ->where('status', BudgetRequestFormDetailStatus::APPROVED)
                                                         ->sum('total');
 
-        return view('admin.brf.print', compact(
+        return view('admin.cv.print', compact(
+            'cv',
             'budget_request_form',
             'budget_request_form_details_total',
             'budget_request_form_details'

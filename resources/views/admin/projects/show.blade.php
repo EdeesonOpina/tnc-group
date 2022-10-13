@@ -125,7 +125,7 @@ use App\Models\ProjectStatus;
                                     <td id="compact-table">
                                         <b>{{ $project->name }}</b>
                                         <div class="d-flex">
-                                            <a href="{{ route('internals.projects.view', [$project->id]) }}" id="table-letter-margin">View</a> | 
+                                            <a href="{{ route('internals.projects.view', [$project->reference_number]) }}" id="table-letter-margin">View</a> | 
 
                                             <!-- <a href="{{ route('internals.projects.edit', [$project->id]) }}" id="space-table">Edit</a> |  -->
 

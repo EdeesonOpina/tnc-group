@@ -16,6 +16,7 @@ class CreateCheckVouchersTable extends Migration
         Schema::create('check_vouchers', function (Blueprint $table) {
             $table->id();
             $table->integer('budget_request_form_id')->unsigned();
+            $table->string('reference_number');
             $table->integer('status')->unsigned()->default(1);
             $table->timestamps();
         });

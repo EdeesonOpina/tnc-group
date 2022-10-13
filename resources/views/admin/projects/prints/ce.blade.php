@@ -63,7 +63,7 @@
 <body>
 <div class="container">
   <br><br>
-  <a href="{{ route('internals.projects.view', [$project->id]) }}" class="no-underline">
+  <a href="{{ route('internals.projects.view', [$project->reference_number]) }}" class="no-underline">
     <button class="btn btn-light">Go Back</button>
   </a>
   <button class="btn btn-success" onclick="printDiv('printableArea')">Print Page</button>
@@ -107,7 +107,7 @@
                     <div class="text-label"><strong>Project Duration:</strong></div>
                 </td>
                 <td>
-                    {{ Carbon::parse($project->end_date)->format('M d Y') }}<br>
+                    {{ Carbon::parse($project->duration_date)->format('M d Y') }}<br>
                 </td>
             </tr>
         </tbody>

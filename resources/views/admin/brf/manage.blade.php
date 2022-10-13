@@ -116,7 +116,7 @@
 
                     <div class="col-md-2">
                         <a href="#" data-toggle="modal" data-target="#add-brf-{{ $budget_request_form->id }}">
-                            <button type="button" class="btn btn-success form-control" id="table-letter-margin"><i class="material-icons icon-16pt mr-1 text-white">add</i> Add BRF</button>
+                            <button type="button" class="btn btn-success form-control" id="table-letter-margin"><i class="material-icons icon-16pt mr-1 text-white">add</i> Add Details</button>
                         </a>
                     </div>
                 </div>

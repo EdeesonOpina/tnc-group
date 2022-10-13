@@ -1062,6 +1062,27 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         });
     });
 
+    // cv
+    Route::group(['prefix' => 'cv/'], function () {
+        Route::get('/','App\Http\Controllers\Admin\CVController@show')->name('internals.cv');
+        Route::get('/view/{reference_number}','App\Http\Controllers\Admin\CVController@view')->name('internals.cv.view');
+        Route::get('/create/{brf_id}','App\Http\Controllers\Admin\CVController@create')->name('internals.cv.create');
+
+        // exports
+        Route::group(['prefix' => 'exports/'], function () {
+            Route::get('print/{reference_number}', 'App\Http\Controllers\Export\CVController@print')->name('internals.exports.cv.print');
+            Route::get('excel/{cv_id}', 'App\Http\Controllers\Export\CVController@excel')->name('internals.exports.cv.excel');
+            Route::get('pdf/{cv_id}', 'App\Http\Controllers\Export\CVController@pdf')->name('internals.exports.cv.pdf');
+            Route::get('sql', 'App\Http\Controllers\Admin\Report\CVController@sql')->name('internals.exports.cv.sql');
+        });
+
+        // for searching
+        Route::group(['prefix' => 'search/'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\CVController@search')->name('internals.cv.search');
+            Route::get('/{reference_number}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\CVController@filter')->name('internals.cv.filter');
+        });
+    });
+
     // brf
     Route::group(['prefix' => 'brf/'], function () {
         Route::get('/','App\Http\Controllers\Admin\BRFController@show')->name('internals.brf');

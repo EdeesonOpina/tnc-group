@@ -32,7 +32,7 @@ class ProjectDetailController extends Controller
             'qty' => 'required',
             'price' => 'required',
             'internal_price' => 'required',
-            'description' => 'nullable',
+            'description' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -104,7 +104,7 @@ class ProjectDetailController extends Controller
             'qty' => 'required',
             'price' => 'required',
             'internal_price' => 'required',
-            'description' => 'nullable',
+            'description' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
