@@ -1,6 +1,7 @@
 @include('layouts.auth.header')
 @php
     use Carbon\Carbon;
+    use App\Models\LiquidationStatus;
     use App\Models\ProjectDetailStatus;
     use App\Models\BudgetRequestFormStatus;
 @endphp
@@ -170,6 +171,72 @@
                     </table>
 
                     @if (count($budget_request_form_details) <= 0)
+                        <div style="padding: 20px">
+                            <center><i class="material-icons icon-16pt mr-1 text-muted">assignment</i> No record/s found</center>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            <br>
+
+            <div id="spaced-card" class="card card-body">
+                <div class="row">
+                    <div class="col">
+                        <h4 class="card-header__title flex m-0">Liquidations</h4>
+                    </div>
+
+                    <div class="col-md-2">
+                        
+                    </div>
+                </div>
+                <br>
+
+                <div class="table-responsive">
+                    <table class="table mb-0 thead-border-top-0 table-striped">
+                        <thead>
+                            <tr>
+                                <th id="compact-table">Particulars</th>
+                                <th id="compact-table">Category</th>
+                                <th id="compact-table">Particulars</th>
+                                <th id="compact-table">Description</th>
+                                <th id="compact-table">Cost</th>
+                                <th id="compact-table">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list" id="companies">
+                            @foreach($liquidations as $liquidation)
+                                <tr>
+                                    <td id="compact-table"><strong>{{ $liquidation->budget_request_form->name }}</strong></td>
+                                    <td id="compact-table">
+                                        <b>{{ $liquidation->category->name }}</b>
+                                        <div class="d-flex">
+                                            <a href="{{ route('accounting.liquidations.edit', [$liquidation->id]) }}" id="table-letter-margin">Edit</a> | 
+                                            @if ($liquidation->status == LiquidationStatus::ACTIVE)
+                                                <a href="#" data-href="{{ route('accounting.liquidations.delete', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
+                                            @endif
+
+                                            @if ($liquidation->status == LiquidationStatus::INACTIVE)
+                                                <a href="#" data-href="{{ route('accounting.liquidations.recover', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Recover</a>
+                                            @endif
+                                        </div>
+                                    </td>
+                                    <td id="compact-table">{{ $liquidation->name }}</td>
+                                    <td id="compact-table">{{ $liquidation->description }}</td>
+                                    <td id="compact-table">P{{ number_format($liquidation->cost, 2) }}</td> 
+                                    <td>
+                                        @if ($liquidation->status == LiquidationStatus::ACTIVE)
+                                            <div class="badge badge-success ml-2">Active</div>
+                                        @elseif ($liquidation->status == LiquidationStatus::INACTIVE)
+                                            <div class="badge badge-danger ml-2">Inactive</div>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    @if (count($liquidations) <= 0)
                         <div style="padding: 20px">
                             <center><i class="material-icons icon-16pt mr-1 text-muted">assignment</i> No record/s found</center>
                         </div>
