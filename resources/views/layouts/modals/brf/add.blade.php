@@ -43,11 +43,16 @@
               <hr>
               <label>Name</label><br>
               <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') }}"><br>
-              <label>Qty</label><br>
-              <input type="text" name="qty" class="form-control" placeholder="Qty" value="{{ old('qty') }}"><br>
-              <label>Price</label><br>
-              <input type="text" name="price" class="form-control" placeholder="Price" value="{{ old('price') }}"><br>
-              <br>
+              <div class="row">
+                <div class="col">
+                  <label>Qty</label><br>
+                  <input type="text" name="qty" class="form-control" placeholder="Qty" value="{{ old('qty') ?? 1 }}">
+                </div>
+                <div class="col">
+                  <label>Price</label><br>
+                  <input type="text" name="price" class="form-control" placeholder="Price" value="{{ old('price') ?? '0.00' }}">
+                </div>
+              </div>
             </div>
           </div>
           

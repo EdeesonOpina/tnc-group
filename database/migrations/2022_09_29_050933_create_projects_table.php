@@ -16,13 +16,16 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('reference_number');
+            $table->string('slug');
             $table->integer('company_id')->unsigned();
             $table->integer('client_id')->unsigned();
             $table->string('name');
             $table->decimal('usd_total', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('internal_total', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('total', $precision = 10, $scale = 2)->default('0.00');
+            $table->decimal('usd_asf', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('asf', $precision = 10, $scale = 2)->default('0.00');
+            $table->decimal('usd_vat', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('vat', $precision = 10, $scale = 2)->default('0.00');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
@@ -38,6 +41,7 @@ class CreateProjectsTable extends Migration
             $table->bigInteger('client_contact_id')->default(0); // conforme
             $table->bigInteger('created_by_user_id')->default(0);
             $table->bigInteger('approved_by_user_id')->default(0);
+            $table->text('conforme_signature')->nullable();
             $table->integer('status')->unsigned()->default(1);
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();

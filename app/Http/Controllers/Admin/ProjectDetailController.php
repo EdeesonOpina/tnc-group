@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Auth;
 use Mail;
 use Validator;
+use AmrShawky\LaravelCurrency\Facade\Currency;
 use App\Models\Project;
 use App\Models\ProjectStatus;
 use App\Models\ProjectCategory;
@@ -23,11 +24,35 @@ use App\Models\CompanyStatus;
 
 class ProjectDetailController extends Controller
 {
+    public function add($project_id)
+    {
+        $project = Project::find($project_id);
+        $project_details = ProjectDetail::where('project_id', $project_id)
+                                ->where('status', '!=', ProjectDetailStatus::INACTIVE)
+                                ->paginate(15);
+        $categories = ProjectCategory::where('status', ProjectCategoryStatus::ACTIVE)
+                        ->orderBy('name', 'asc')
+                        ->get();
+
+        $usd = Currency::convert()
+        ->from('USD')
+        ->to('PHP')
+        ->get();
+
+        return view('admin.projects.details.add', compact(
+            'usd',
+            'project',
+            'project_details',
+            'categories'
+        ));
+    }
+
     public function create(Request $request)
     {
         $rules = [
             'name' => 'required',
             'category_id' => 'required',
+            'usd_rate' => 'required',
             'sub_category_id' => 'nullable',
             'qty' => 'required',
             'price' => 'required',
@@ -53,29 +78,14 @@ class ProjectDetailController extends Controller
             $data['sub_category_id'] = 0;
 
         $data['total'] = $request->qty * $request->price;
+        $data['usd_price'] = $request->price / $request->usd_rate;
+        $data['usd_total'] = ($request->qty * $request->price) / $request->usd_rate;
         $data['internal_total'] = $request->qty * $request->internal_price;
         $data['status'] = ProjectDetailStatus::FOR_APPROVAL; // if you want to insert to a specific column
         $project_detail = ProjectDetail::create($data); // create data in a model
 
         $request->session()->flash('success', 'Data has been added');
         return redirect()->route('internals.projects.manage', [$project_detail->project->id]);
-    }
-
-    public function add($project_id)
-    {
-        $project = Project::find($project_id);
-        $project_details = ProjectDetail::where('project_id', $project_id)
-                                ->where('status', '!=', ProjectDetailStatus::INACTIVE)
-                                ->paginate(15);
-        $categories = ProjectCategory::where('status', ProjectCategoryStatus::ACTIVE)
-                        ->orderBy('name', 'asc')
-                        ->get();
-
-        return view('admin.projects.details.add', compact(
-            'project',
-            'project_details',
-            'categories'
-        ));
     }
 
     public function edit($project_detail_id)
@@ -88,7 +98,13 @@ class ProjectDetailController extends Controller
                         ->orderBy('name', 'asc')
                         ->get();
 
+        $usd = Currency::convert()
+        ->from('USD')
+        ->to('PHP')
+        ->get();
+
         return view('admin.projects.details.edit', compact(
+            'usd',
             'curr_project_detail',
             'project_details',
             'categories'
@@ -99,6 +115,7 @@ class ProjectDetailController extends Controller
     {
         $rules = [
             'name' => 'required',
+            'usd_rate' => 'required',
             'category_id' => 'required',
             'sub_category_id' => 'nullable',
             'qty' => 'required',
@@ -125,6 +142,7 @@ class ProjectDetailController extends Controller
             $data['sub_category_id'] = 0;
 
         $project_detail = ProjectDetail::find($request->project_detail_id);
+        $data['usd_price'] = $request->price / $request->usd_rate;
         $data['internal_total'] = $request->internal_price * $request->qty;
         $data['total'] = $request->price * $request->qty;
         $project_detail->fill($data)->save();
@@ -140,6 +158,7 @@ class ProjectDetailController extends Controller
         $project_detail->save();
 
         $project = Project::find($project_detail->project_id);
+        $project->usd_total += $project_detail->usd_total;
         $project->internal_total += $project_detail->internal_total;
         $project->total += $project_detail->total;
         $project->save();

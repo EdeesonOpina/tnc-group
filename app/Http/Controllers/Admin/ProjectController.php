@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Auth;
 use Mail;
 use Validator;
+use AmrShawky\LaravelCurrency\Facade\Currency;
 use App\Models\User;
 use App\Models\UserStatus;
 use App\Models\Project;
@@ -112,6 +113,7 @@ class ProjectController extends Controller
         $prj_count = str_replace('CE-', '', Project::orderBy('created_at', 'desc')->first()->reference_number ?? 0) + 1; // get the latest tnc sequence then add 1
 
         $data = request()->all(); // get all request
+        $data['slug'] = rand();
         $data['reference_number'] = 'CE-' . str_pad($prj_count, 8, '0', STR_PAD_LEFT);
 
         if ($request->file('image')) { // if the file is present
@@ -144,10 +146,12 @@ class ProjectController extends Controller
                                             ->sum('total');
 
         $grand_total = $project->total + $project->vat + $project->asf;
+        $usd_grand_total = $project->usd_total + $project->usd_vat + $project->usd_asf;
         $internal_grand_total = $project->internal_total + $project->asf;
 
         return view('admin.projects.view', compact(
             'grand_total',
+            'usd_grand_total',
             'internal_grand_total',
             'budget_request_forms_total',
             'budget_request_forms',
@@ -172,10 +176,12 @@ class ProjectController extends Controller
                                             ->sum('total');
 
         $grand_total = $project->total + $project->vat + $project->asf;
+        $usd_grand_total = $project->usd_total + $project->usd_vat + $project->usd_asf;
         $internal_grand_total = $project->internal_total + $project->asf;
 
         return view('admin.projects.manage', compact(
             'grand_total',
+            'usd_grand_total',
             'internal_grand_total',
             'budget_request_forms_total',
             'budget_request_forms',
@@ -231,6 +237,33 @@ class ProjectController extends Controller
         return redirect()->route('internals.projects');
     }
 
+    public function conforme_signature(Request $request)
+    {
+        $rules = [
+            'conforme_signature' => 'required|image',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);
+        }
+
+        $data = $request->all();
+
+        if ($request->file('conforme_signature')) { // if the file is present
+            $image_name = $request->name . '-' . time() . '.' . $request->file('conforme_signature')->getClientOriginalExtension(); // set unique name for that file
+            $request->file('conforme_signature')->move('uploads/images/projects/conforme-signature', $image_name); // move the file to the laravel project
+            $data['conforme_signature'] = 'uploads/images/projects/conforme-signature/' . $image_name; // save the destination of the file to the database
+        }
+
+        $project = Project::find($request->project_id);
+        $project->fill($data)->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return back();
+    }
+
     public function terms(Request $request)
     {
         $rules = [
@@ -265,8 +298,14 @@ class ProjectController extends Controller
         if ($validator->fails())
             return back()->withInput()->withErrors($validator);
 
+        $usd_rate = Currency::convert()
+        ->from('USD')
+        ->to('PHP')
+        ->get();
+
         $data = $request->all();
         $project = Project::find($request->project_id);
+        $data['usd_asf'] = $request->asf / $usd_rate;
         $project->fill($data)->save();
 
         $request->session()->flash('success', 'Data has been updated');
@@ -341,7 +380,13 @@ class ProjectController extends Controller
         if ($validator->fails())
             return back()->withInput()->withErrors($validator);
 
+        $usd_rate = Currency::convert()
+        ->from('USD')
+        ->to('PHP')
+        ->get();
+
         $data = $request->all();
+        $data['usd_vat'] = $request->vat / $usd_rate;
         $project = Project::find($request->project_id);
         $project->fill($data)->save();
 

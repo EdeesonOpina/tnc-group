@@ -74,6 +74,20 @@ use App\Models\ProjectDetailStatus;
                             </div>
 
                             <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>USD Rate</label>
+                                    <input type="text" name="usd_rate" class="form-control" placeholder="USD Rate" value="{{ old('usd_rate') ?? $curr_project_detail->usd_rate }}">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div>
+
+                            <div class="row">
                                 <div class="col">
                                     <div class="form-group">
                                         <label>Internal CE Price</label>

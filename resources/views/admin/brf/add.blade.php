@@ -1,5 +1,5 @@
 @include('layouts.auth.header')
-<form action="{{ route('accounting.liquidations.create') }}" method="post" id="form" enctype="multipart/form-data">
+<form action="{{ route('internals.brf.create') }}" method="post" id="form" enctype="multipart/form-data">
 {{ csrf_field() }}
 
 <div class="container page__heading-container">
@@ -7,12 +7,12 @@
         <div class="flex">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('accounting.liquidations') }}"><i class="material-icons icon-20pt">home</i></a></li>
-                    <li class="breadcrumb-item">Liquidations</li>
-                    <li class="breadcrumb-item active" aria-current="page">Add Liquidation</li>
+                    <li class="breadcrumb-item"><a href="{{ route('internals.brf') }}"><i class="material-icons icon-20pt">home</i></a></li>
+                    <li class="breadcrumb-item">BRF</li>
+                    <li class="breadcrumb-item active" aria-current="page">Add BRF</li>
                 </ol>
             </nav>
-            <h1 class="m-0">Add Liquidation</h1>
+            <h1 class="m-0">Add BRF</h1>
         </div>
         <button type="submit" class="btn btn-success">Submit</button>
     </div>
@@ -26,16 +26,36 @@
             <div id="spaced-card" class="card card-body">
                 <div class="row">
                     <div class="col">
-                        <h3>Liquidation</h3>
+                        <h3>BRF</h3>
                         <br>
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Transaction Date</label>
-                                    <input type="date" name="date" class="form-control" value="{{ old('date') ?? date('Y-m-d') }}">
+                                    <label>Reference #</label>
+                                    <input type="text" name="reference_number" class="form-control">
                                 </div>
                             </div>
-
+                            <div class="col">
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Payment To</label>
+                                    <select class="form-control" name="payment_for_user_id">
+                                        <option value=""></option>
+                                        @foreach ($users as $user)
+                                            @if ($user->role == 'Corporate')
+                                                <option value="{{ $user->id }}">{{ $user->corporate }}</option>
+                                            @else
+                                                <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col">
                                 &nbsp;
                             </div>
@@ -44,35 +64,14 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Category</label>
-                                    <select id="category"  name="category_id" class="custom-select" data-toggle="select">
-                                        <option value=""></option>
-                                        @foreach($liquidation_categories as $liquidation_category)
-                                            <option value="{{ $liquidation_category->id }}">{{ $liquidation_category->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label>In Payment For</label>
+                                    <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Cost</label>
-                                    <input type="text" name="cost" class="form-control" placeholder="0.00" value="{{ old('cost') ?? '0.00' }}">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>Particulars</label>
-                                    <input type="name" name="name" class="form-control" placeholder="Particulars" value="{{ old('name') }}">
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <input type="text" name="description" class="form-control" placeholder="Description" value="{{ old('description') }}">
+                                    <label>Needed Date</label>
+                                    <input type="date" name="needed_date" class="form-control" value="{{ old('needed_date') ?? date('Y-m-d') }}">
                                 </div>
                             </div>
                         </div>
@@ -81,15 +80,15 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        <!-- <div class="col">
             <div id="semi-spaced-card" class="card card-body">
-                <h3>Liquidation Image</h3>
+                <h3>Project Image</h3>
                 <br>
                 <div class="form-group">
                     <input type="file" name="image">
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 

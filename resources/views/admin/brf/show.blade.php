@@ -17,7 +17,7 @@ use App\Models\BudgetRequestFormStatus;
             </nav>
             <h1 class="m-0">BRF</h1>
         </div>
-        <a href="#" data-toggle="modal" data-target="#add-brf" class="btn btn-primary"><i class="material-icons">add</i> Add</a>
+        <a href="{{ route('internals.brf.add') }}" class="btn btn-primary"><i class="material-icons">add</i> Add</a>
     </div>
 </div>
 

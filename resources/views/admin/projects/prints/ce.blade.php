@@ -1,6 +1,8 @@
 @php
     use Carbon\Carbon;
-    use App\Models\OrderStatus;
+    use App\Models\ProjectDetail;
+    use App\Models\ProjectDetailStatus;
+    use App\Models\BudgetRequestFormStatus;
 @endphp
 <!DOCTYPE html>
 <html>
@@ -70,13 +72,14 @@
   <br><br>
   <!-- START OF PRINTABLE AREA -->
   <div id="printableArea">
-    @if ($project->company->image)
+    <!-- @if ($project->company->image)
         <img src="{{ url($project->company->image) }}" width="350px">
     @else
-        <img src="{{ url(env('APP_ICON')) }}" width="80px">
+        <img src="{{ url(env('APP_LOGO_WITH_TEXT')) }}" width="80px">
     @endif
-    
-    <br><br><br>
+    <br><br><br> -->
+    <img src="{{ url(env('APP_LOGO_WITH_TEXT')) }}" width="160px">
+    <br><br>
     <h2 class="font-change table-color-primary">Cost Estimate</h2>
     <table class="table border-bottom no-border table-borderless font-change">
         <tbody>
@@ -101,6 +104,12 @@
                 <td>
                     {{ $project->name }}<br>
                 </td>
+                <td>
+                    <strong>Company</strong>
+                </td>
+                <td class="text-right">
+                        {{ $project->company->name }}
+                </td>
             </tr>
             <tr>
                 <td>
@@ -118,33 +127,58 @@
     <table class="table table-bordered font-change">
         <thead>
             <tr>
-                <th id="compact-table" class="table-black-border table-color-primary">Name</th>
+                <th id="compact-table" class="table-black-border table-color-primary"></th>
+                <th id="compact-table" class="table-black-border table-color-primary">Particulars</th>
                 <th id="compact-table" class="table-black-border table-color-primary">Quantity</th>
                 <th id="compact-table" class="table-black-border table-color-primary">Description</th>
+                <th id="compact-table" class="table-black-border table-color-primary">Unit Price (USD)</th>
                 <th id="compact-table" class="table-black-border table-color-primary">Unit Price</th>
                 <th id="compact-table" class="table-black-border table-color-primary">Total Price</th>
             </tr>
         </thead>
         <tbody class="list" id="companies">
-            @foreach ($project_details as $project_detail)
-                <tr>
-                    <td class="table-black-border">
-                        <strong>{{ $project_detail->name }}</strong>
-                    </td>
-                    <td class="table-black-border">{{ $project_detail->qty }}</td>
-                    <td class="table-black-border">{!! $project_detail->description !!}</td>
-                    <td class="table-black-border">P{{ number_format($project_detail->price, 2) }}</td>
-                    <td class="table-black-border">P{{ number_format($project_detail->total, 2) }}</td>
-                </tr>
+            @foreach ($project_details->unique('category_id') as $project_detail)
+                @php
+                    $pjds = ProjectDetail::where('category_id', $project_detail->category_id)
+                                    ->where('status', '!=', ProjectDetailStatus::INACTIVE)
+                                    ->get();
+                @endphp
+                    <tr>
+                        <td colspan="1" id="compact-table"><strong>{{ $project_detail->category->name }}</strong></td>
+                        <td colspan="6" id="compact-table">&nbsp;</td>
+                    </tr>  
+                @foreach ($pjds as $pjd)
+                    <tr>
+                        <td class="table-black-border">
+                            @if ($pjd->sub_category)
+                                <strong>{{ $pjd->sub_category->name }}</strong>
+                            @endif
+                        </td>
+                        <td class="table-black-border">
+                            <strong>{{ $pjd->name }}</strong>
+                        </td>
+                        <td class="table-black-border">{{ $pjd->qty }}</td>
+                        <td class="table-black-border">{!! $pjd->description !!}</td>
+                        <td class="table-black-border">${{ number_format($pjd->usd_price, 2) }}</td>
+                        <td class="table-black-border">P{{ number_format($pjd->price, 2) }}</td>
+                        <td class="table-black-border">P{{ number_format($pjd->total, 2) }}</td>
+                    </tr>
+                @endforeach
             @endforeach
             <tr>
                 <td colspan="3" class="table-black-border">&nbsp;</td>
+                <td id="compact-table" class="table-black-border"><strong>Total Cost (USD)</strong></td>
+                <td id="compact-table" class="table-black-border">${{ number_format($project->usd_total, 2) }}</td>
                 <td id="compact-table" class="table-black-border"><strong>Total Cost</strong></td>
                 <td id="compact-table" class="table-black-border">P{{ number_format($project->total, 2) }}</td>
             </tr>
             
             <tr>
                 <td colspan="3" class="table-black-border">&nbsp;</td>
+                <td id="compact-table" class="table-black-border"><strong>ASF (USD)</strong></td>
+                <td id="compact-table" class="table-black-border">
+                    ${{ number_format($project->usd_asf, 2) }}
+                </td>
                 <td id="compact-table" class="table-black-border"><strong>ASF</strong></td>
                 <td id="compact-table" class="table-black-border">
                     P{{ number_format($project->asf, 2) }}
@@ -153,6 +187,10 @@
 
             <tr>
                 <td colspan="3" class="table-black-border">&nbsp;</td>
+                <td id="compact-table" class="table-black-border"><strong>VAT (USD)</strong></td>
+                <td id="compact-table" class="table-black-border">
+                    ${{ number_format($project->usd_vat, 2) }}
+                </td>
                 <td id="compact-table" class="table-black-border"><strong>VAT</strong></td>
                 <td id="compact-table" class="table-black-border">
                     P{{ number_format($project->vat, 2) }}
@@ -161,6 +199,8 @@
 
             <tr>
                 <td colspan="3" class="table-black-border">&nbsp;</td>
+                <td id="compact-table" class="table-black-border"><strong>Grand Total (USD)</strong></td>
+                <td id="compact-table" class="table-black-border">${{ number_format($project->usd_total + $project->usd_vat + $project->usd_asf, 2) }}</td>
                 <td id="compact-table" class="table-black-border"><strong>Grand Total</strong></td>
                 <td id="compact-table" class="table-black-border">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
             </tr>
@@ -204,7 +244,7 @@
                     <p class="font-change">
                       <strong>Prepared By:</strong><br>
                       @if ($project->prepared_by_user->signature)
-                          <img src="{{ url($project->prepared_by_user->signature) }}" width="80px"><br>
+                          <br><img src="{{ url($project->prepared_by_user->signature) }}" width="80px"><br>
                       @else
                         <br><br><br>
                       @endif
@@ -218,7 +258,7 @@
                     <p class="font-change">
                       <strong>Noted By:</strong><br>
                       @if ($project->noted_by_user->signature)
-                          <img src="{{ url($project->noted_by_user->signature) }}" width="80px"><br>
+                          <br><img src="{{ url($project->noted_by_user->signature) }}" width="80px"><br>
                       @else
                         <br><br><br>
                       @endif
@@ -232,7 +272,11 @@
                 <td>
                     <p class="font-change">
                       <strong>Conforme</strong>
-                        <br><br><br><br>
+                        @if ($project->conforme_signature)
+                          <br><img src="{{ url($project->conforme_signature) }}" width="80px"><br>
+                        @else
+                            <br><br><br><br>
+                        @endif
                         <strong>{{ $project->client_contact->name }}</strong><br>
                         {{ $project->client_contact->position }}<br>
                         {{ $project->client_contact->client->name }}<br>

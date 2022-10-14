@@ -59,7 +59,11 @@
                         </div>
                     </div>
                     <div class="col">
-                        {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                        @if ($budget_request_form->payment_for_user->role == 'Corporate')
+                            {{ $budget_request_form->payment_for_user->corporate }}
+                        @else
+                            {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                        @endif
                     </div>
                 </div>
 
@@ -137,7 +141,7 @@
                             @foreach ($budget_request_form_details as $budget_request_form_detail)
                                 <tr>
                                     <td>
-                                        {{ $budget_request_form_detail->name }}
+                                        <strong>{{ $budget_request_form_detail->name }}</strong>
                                         <div class="d-flex">
                                             @if ($budget_request_form_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
                                                 <a href="#" data-href="{{ route('internals.brf.details.approve', [$budget_request_form_detail->id]) }}" data-toggle="modal" data-target="#confirm-action" id="margin-right">Approve</a> | 

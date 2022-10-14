@@ -61,7 +61,11 @@
                         </div>
                     </div>
                     <div class="col">
-                        {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                        @if ($budget_request_form->payment_for_user->role == 'Corporate')
+                            {{ $budget_request_form->payment_for_user->corporate }}
+                        @else
+                            {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                        @endif
                     </div>
                 </div>
 
@@ -133,7 +137,7 @@
                             @foreach ($budget_request_form_details as $budget_request_form_detail)
                                 <tr>
                                     <td>
-                                        {{ $budget_request_form_detail->name }}
+                                        <strong>{{ $budget_request_form_detail->name }}</strong>
                                     </td>
                                     <td>{{ $budget_request_form_detail->qty }}</td>
                                     <td>P{{ number_format($budget_request_form_detail->price, 2) }}</td>

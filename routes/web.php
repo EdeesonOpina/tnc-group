@@ -1010,6 +1010,7 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::get('/done/{project_id}', 'App\Http\Controllers\Admin\ProjectController@done')->name('internals.projects.done');
         Route::get('/delete/{project_id}', 'App\Http\Controllers\Admin\ProjectController@delete')->name('internals.projects.delete');
         Route::get('/recover/{project_id}', 'App\Http\Controllers\Admin\ProjectController@recover')->name('internals.projects.recover');
+        Route::post('/update/conforme-signature', 'App\Http\Controllers\Admin\ProjectController@conforme_signature')->name('internals.projects.update.conforme-signature');
 
         Route::post('/asf', 'App\Http\Controllers\Admin\ProjectController@asf')->name('internals.projects.update.asf');
         Route::post('/vat', 'App\Http\Controllers\Admin\ProjectController@vat')->name('internals.projects.update.vat');
@@ -1511,6 +1512,14 @@ Route::group(['prefix' => 'qr/'], function () {
     // rma
     Route::group(['prefix' => 'rma/'], function () {
         Route::get('/view/{so_number}', 'App\Http\Controllers\QR\RMAController@view')->name('qr.rma.view');
+    });
+});
+
+// share group
+Route::group(['prefix' => 'share/'], function () {
+    // projects
+    Route::group(['prefix' => 'projects/'], function () {
+        Route::get('/view/{slug}/{reference_number}', 'App\Http\Controllers\Share\ProjectController@view')->name('share.projects.view');
     });
 });
 

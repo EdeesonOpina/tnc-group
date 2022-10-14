@@ -86,7 +86,11 @@
                     <div class="text-label"><strong>Pay To:</strong></div>
                 </td>
                 <td>
-                    {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}<br>
+                    @if ($budget_request_form->payment_for_user->role == 'Corporate')
+                        {{ $budget_request_form->payment_for_user->corporate }}
+                    @else
+                        {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                    @endif<br>
                 </td>
             </tr>
             <tr>
@@ -183,10 +187,24 @@
                       @else
                         <br><br><br>
                       @endif
-                      <strong>{{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}</strong><br>
-                      {{ $budget_request_form->payment_for_user->role }}<br>
-                      {{ $budget_request_form->payment_for_user->position }}<br>
-                      {{ $budget_request_form->payment_for_user->company->name }}
+                      <strong>
+                        @if ($budget_request_form->payment_for_user->role == 'Corporate')
+                            {{ $budget_request_form->payment_for_user->corporate }}
+                        @else
+                            {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                        @endif
+                      </strong><br>
+                      @if ($budget_request_form->payment_for_user->role)
+                        {{ $budget_request_form->payment_for_user->role }}<br>
+                      @endif
+
+                      @if ($budget_request_form->payment_for_user->position)
+                        {{ $budget_request_form->payment_for_user->position }}<br>
+                      @endif
+
+                      @if ($budget_request_form->payment_for_user->company)
+                        {{ $budget_request_form->payment_for_user->company->name }}
+                      @endif
                     </p>
                 </td>
 

@@ -18,6 +18,8 @@ use App\Models\Client;
 use App\Models\ClientStatus;
 use App\Models\Company;
 use App\Models\CompanyStatus;
+use App\Models\User;
+use App\Models\UserStatus;
 
 class BRFController extends Controller
 {
@@ -74,14 +76,12 @@ class BRFController extends Controller
 
     public function add()
     {
-        $clients = Client::where('status', ClientStatus::ACTIVE)
-                        ->get();
-        $companies = Company::where('status', CompanyStatus::ACTIVE)
-                        ->get();
+        $users = User::where('status', '!=', UserStatus::INACTIVE)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
 
         return view('admin.brf.add', compact(
-            'clients',
-            'companies'
+            'users'
         ));
     }
 

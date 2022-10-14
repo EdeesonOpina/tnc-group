@@ -14,7 +14,7 @@ class Liquidation extends Model
         'cost',
         'description',
         'date',
-        'note',
+        'name',
         'image',
         'status',
     ];

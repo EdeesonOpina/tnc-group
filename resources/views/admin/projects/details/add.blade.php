@@ -64,7 +64,21 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Qty</label><br>
-                                    <input type="text" name="qty" class="form-control" placeholder="Qty" value="{{ old('qty') }}">
+                                    <input type="text" name="qty" class="form-control" placeholder="Qty" value="{{ old('qty') ?? 1 }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>USD Rate</label>
+                                    <input type="text" name="usd_rate" class="form-control" placeholder="USD Rate" value="{{ old('usd_rate') ?? $usd }}">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    &nbsp;
                                 </div>
                             </div>
                         </div>
@@ -73,13 +87,13 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Internal CE Price</label>
-                                    <input type="text" name="internal_price" class="form-control" placeholder="Internal CE Price" value="{{ old('internal_price') }}">
+                                    <input type="text" name="internal_price" class="form-control" placeholder="Internal CE Price" value="{{ old('internal_price') ?? '0.00' }}">
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label>Price</label>
-                                    <input type="text" name="price" class="form-control" placeholder="Price" value="{{ old('price') }}">
+                                    <input type="text" name="price" class="form-control" placeholder="Price" value="{{ old('price') ?? '0.00' }}">
                                 </div>
                             </div>
                         </div>

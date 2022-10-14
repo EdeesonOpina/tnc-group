@@ -1,6 +1,7 @@
 @include('layouts.auth.header')
 @php
     use Carbon\Carbon;
+    use App\Models\ProjectDetail;
     use App\Models\ProjectDetailStatus;
     use App\Models\BudgetRequestFormStatus;
 @endphp
@@ -17,11 +18,11 @@
             </nav>
             <h1 class="m-0">Manage Project</h1>
         </div>
-        <a href="{{ route('internals.exports.projects.print.ce', [$project->id]) }}">
+        <a href="{{ route('internals.exports.projects.print.ce', [$project->reference_number]) }}">
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print CE</button>
         </a>
 
-        <a href="{{ route('internals.exports.projects.print.internal-ce', [$project->id]) }}">
+        <a href="{{ route('internals.exports.projects.print.internal-ce', [$project->reference_number]) }}">
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print Internal CE</button>
         </a>
     </div>
@@ -165,56 +166,77 @@
                                 <th id="compact-table">Quantity</th>
                                 <th id="compact-table">Description</th>
                                 <th id="compact-table">Internal Price</th>
+                                <th id="compact-table">Unit Price (USD)</th>
                                 <th id="compact-table">Unit Price</th>
-                                <th id="compact-table">Total Price</th>
                                 <th id="compact-table">Internal Total Price</th>
+                                <th id="compact-table">Total Price</th>
                                 <th id="compact-table">Status</th>
                             </tr>
                         </thead>
                         <tbody class="list" id="companies">
-                            @foreach ($project_details as $project_detail)
+                            @foreach ($project_details->unique('category_id') as $project_detail)
+                            @php
+                                $pjds = ProjectDetail::where('category_id', $project_detail->category_id)
+                                                ->where('status', '!=', ProjectDetailStatus::INACTIVE)
+                                                ->get();
+                            @endphp
                                 <tr>
-                                    <td><strong>{{ $project_detail->category->name }}</strong></td>
-                                    <td>
-                                        <strong>{{ $project_detail->name }} 
-                                            @if ($project_detail->status == ProjectDetailStatus::FOR_APPROVAL)
-                                                <a href="{{ route('internals.projects.details.edit', [$project->id]) }}"><i class="material-icons icon-16pt text-success">edit</i></a>
+                                    <td colspan="1" id="compact-table"><strong>{{ $project_detail->category->name }}</strong></td>
+                                    <td colspan="9">&nbsp;</td>
+                                </tr>  
+                                @foreach ($pjds as $pjd)
+                                    <tr>
+                                        <td>
+                                            @if ($pjd->sub_category)
+                                                <strong>{{ $pjd->sub_category->name }}</strong>
                                             @endif
-                                        </strong>
-                                        <div class="d-flex">
-                                            @if ($project_detail->status == ProjectDetailStatus::FOR_APPROVAL)
-                                                <a href="#" data-href="{{ route('internals.projects.details.approve', [$project_detail->id]) }}" data-toggle="modal" data-target="#confirm-action" id="margin-right">Approve</a> | 
+                                        </td>
+                                        <td>
+                                            <strong>{{ $pjd->name }} 
+                                                @if ($pjd->status == ProjectDetailStatus::FOR_APPROVAL)
+                                                    <a href="{{ route('internals.projects.details.edit', [$project->id]) }}"><i class="material-icons icon-16pt text-success">edit</i></a>
+                                                @endif
+                                            </strong>
+                                            <div class="d-flex">
+                                                @if ($pjd->status == ProjectDetailStatus::FOR_APPROVAL)
+                                                    <a href="#" data-href="{{ route('internals.projects.details.approve', [$pjd->id]) }}" data-toggle="modal" data-target="#confirm-action" id="margin-right">Approve</a> | 
 
-                                                <a href="#" data-href="{{ route('internals.projects.details.disapprove', [$project_detail->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
+                                                    <a href="#" data-href="{{ route('internals.projects.details.disapprove', [$pjd->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
+                                                @endif
+                                            </div>
+                                        </td>
+                                        <td>{{ $pjd->qty }}</td>
+                                        <td>{!! $pjd->description !!}</td>
+                                        <td>P{{ number_format($pjd->internal_price, 2) }}</td>
+                                        <td>${{ number_format($pjd->usd_price, 2) }}</td>
+                                        <td>P{{ number_format($pjd->price, 2) }}</td>
+                                        <td>P{{ number_format($pjd->internal_total, 2) }}</td>
+                                        <td>P{{ number_format($pjd->total, 2) }}</td>
+                                        <td>
+                                            @if ($pjd->status == ProjectDetailStatus::FOR_APPROVAL)
+                                                <div class="badge badge-warning ml-2">For Approval</div>
+                                            @elseif ($pjd->status == ProjectDetailStatus::APPROVED)
+                                                <div class="badge badge-success ml-2">Approved</div>
+                                            @elseif ($pjd->status == ProjectDetailStatus::DISAPPROVED)
+                                                <div class="badge badge-danger ml-2">Disapproved</div>
                                             @endif
-                                        </div>
-                                    </td>
-                                    <td>{{ $project_detail->qty }}</td>
-                                    <td>{!! $project_detail->description !!}</td>
-                                    <td>P{{ number_format($project_detail->internal_price, 2) }}</td>
-                                    <td>P{{ number_format($project_detail->price, 2) }}</td>
-                                    <td>P{{ number_format($project_detail->total, 2) }}</td>
-                                    <td>P{{ number_format($project_detail->internal_total, 2) }}</td>
-                                    <td>
-                                        @if ($project_detail->status == ProjectDetailStatus::FOR_APPROVAL)
-                                            <div class="badge badge-warning ml-2">For Approval</div>
-                                        @elseif ($project_detail->status == ProjectDetailStatus::APPROVED)
-                                            <div class="badge badge-success ml-2">Approved</div>
-                                        @elseif ($project_detail->status == ProjectDetailStatus::DISAPPROVED)
-                                            <div class="badge badge-danger ml-2">Disapproved</div>
-                                        @endif
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @endforeach
                             <tr>
-                                <td colspan="6">&nbsp;</td>
+                                <td colspan="5">&nbsp;</td>
+                                <td id="compact-table"><strong>Total Cost (USD)</strong></td>
+                                <td id="compact-table">${{ number_format($project->usd_total, 2) }}</td>
                                 <td id="compact-table"><strong>Total Cost</strong></td>
                                 <td id="compact-table">P{{ number_format($project->total, 2) }}</td>
                                 <td>&nbsp;</td>
                             </tr>
 
                             <tr>
-                                <td colspan="6">&nbsp;</td>
+                                <td colspan="5">&nbsp;</td>
+                                <td id="compact-table"><strong>ASF (USD)</strong></td>
+                                <td id="compact-table">${{ number_format($project->usd_asf, 2) }}</td>
                                 <td id="compact-table"><strong>ASF</strong></td>
                                 <td id="compact-table">
                                     <a href="#" data-toggle="modal" data-target="#asf-{{ $project->id }}">
@@ -225,7 +247,9 @@
                             </tr>
 
                             <tr>
-                                <td colspan="6">&nbsp;</td>
+                                <td colspan="5">&nbsp;</td>
+                                <td id="compact-table"><strong>VAT (USD)</strong></td>
+                                <td id="compact-table">${{ number_format($project->usd_vat, 2) }}</td>
                                 <td id="compact-table"><strong>VAT</strong></td>
                                 <td id="compact-table">
                                     <a href="#" data-toggle="modal" data-target="#vat-{{ $project->id }}">
@@ -236,21 +260,23 @@
                             </tr>
 
                             <tr>
-                                <td colspan="6">&nbsp;</td>
+                                <td colspan="5">&nbsp;</td>
+                                <td id="compact-table"><strong>CE Grand Total (USD)</strong></td>
+                                <td id="compact-table">${{ number_format($usd_grand_total, 2) }}</td>
                                 <td id="compact-table"><strong>CE Grand Total</strong></td>
                                 <td id="compact-table">P{{ number_format($grand_total, 2) }}</td>
                                 <td>&nbsp;</td>
                             </tr>
 
                             <tr>
-                                <td colspan="6">&nbsp;</td>
+                                <td colspan="7">&nbsp;</td>
                                 <td id="compact-table"><strong>Internal CE Grand Total</strong></td>
                                 <td id="compact-table">P{{ number_format($internal_grand_total, 2) }}</td>
                                 <td>&nbsp;</td>
                             </tr>
 
                             <tr>
-                                <td colspan="6">&nbsp;</td>
+                                <td colspan="7">&nbsp;</td>
                                 <td id="compact-table"><strong>Profit</strong></td>
                                 <td id="compact-table">P{{ number_format($grand_total - $internal_grand_total, 2) }}</td>
                                 <td>&nbsp;</td>
@@ -322,7 +348,11 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <strong>Prepared By</strong>
-                            <br><br><br><br>
+                            @if ($project->prepared_by_user->signature)
+                                  <br><img src="{{ url($project->prepared_by_user->signature) }}" width="80px"><br>
+                            @else
+                                <br><br><br><br>
+                            @endif
                             {{ $project->prepared_by_user->firstname }} {{ $project->prepared_by_user->lastname }}<br>
                             {{ $project->prepared_by_user->position }}<br>
                             {{ $project->prepared_by_user->company->name }}<br>
@@ -332,7 +362,11 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <strong>Noted By</strong>
-                            <br><br><br><br>
+                            @if ($project->noted_by_user->signature)
+                                  <br><img src="{{ url($project->noted_by_user->signature) }}" width="80px"><br>
+                            @else
+                                <br><br><br><br>
+                            @endif
                             {{ $project->noted_by_user->firstname }} {{ $project->noted_by_user->lastname }}<br>
                             {{ $project->noted_by_user->position }}<br>
                             {{ $project->noted_by_user->company->name }}<br>
@@ -342,7 +376,11 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <strong>Conforme</strong>
-                            <br><br><br><br>
+                            @if ($project->conforme_signature)
+                              <br><img src="{{ url($project->conforme_signature) }}" width="80px"><br>
+                            @else
+                                <br><br><br><br>
+                            @endif
                             {{ $project->client_contact->name }}<br>
                             {{ $project->client_contact->position }}<br>
                             {{ $project->client_contact->client->name }}<br>

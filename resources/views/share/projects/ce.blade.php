@@ -33,6 +33,10 @@
         font-size: 30px;
     }
 
+    .table-black-border {
+        /*border: 2px solid #000 !important;*/
+    }
+
     .no-underline {
       text-decoration: none !important;
     }
@@ -42,6 +46,10 @@
       border-top: none !important;
       border-bottom: none !important;
       margin-bottom: 0px;
+    }
+
+    .table-color-primary {
+        color: #E74414 !important;
     }
 
     #compact-table {
@@ -57,21 +65,18 @@
 <body>
 <div class="container">
   <br><br>
-  <a href="{{ route('internals.projects.view', [$project->reference_number]) }}" class="no-underline">
-    <button class="btn btn-light">Go Back</button>
-  </a>
-  <button class="btn btn-success" onclick="printDiv('printableArea')">Print Page</button>
-  <br><br>
+  @include('layouts.partials.alerts')
   <!-- START OF PRINTABLE AREA -->
   <div id="printableArea">
-    @if ($project->company->image)
+    <!-- @if ($project->company->image)
         <img src="{{ url($project->company->image) }}" width="350px">
     @else
-        <img src="{{ url(env('APP_ICON')) }}" width="80px">
+        <img src="{{ url(env('APP_LOGO_WITH_TEXT')) }}" width="80px">
     @endif
-    
-    <br><br><br>
-    <h2 class="font-change">Internal CE</h2>
+    <br><br><br> -->
+    <img src="{{ url(env('APP_LOGO_WITH_TEXT')) }}" width="160px">
+    <br><br>
+    <h2 class="font-change table-color-primary">Cost Estimate</h2>
     <table class="table border-bottom no-border table-borderless font-change">
         <tbody>
             <tr>
@@ -119,11 +124,12 @@
         <thead>
             <tr>
                 <th id="compact-table" class="table-black-border table-color-primary"></th>
-                <th id="compact-table">Name</th>
-                <th id="compact-table">Quantity</th>
-                <th id="compact-table">Description</th>
-                <th id="compact-table">Internal Price</th>
-                <th id="compact-table">Total Price</th>
+                <th id="compact-table" class="table-black-border table-color-primary">Particulars</th>
+                <th id="compact-table" class="table-black-border table-color-primary">Quantity</th>
+                <th id="compact-table" class="table-black-border table-color-primary">Description</th>
+                <th id="compact-table" class="table-black-border table-color-primary">Unit Price (USD)</th>
+                <th id="compact-table" class="table-black-border table-color-primary">Unit Price</th>
+                <th id="compact-table" class="table-black-border table-color-primary">Total Price</th>
             </tr>
         </thead>
         <tbody class="list" id="companies">
@@ -136,7 +142,7 @@
                     <tr>
                         <td colspan="1" id="compact-table"><strong>{{ $project_detail->category->name }}</strong></td>
                         <td colspan="6" id="compact-table">&nbsp;</td>
-                    </tr>
+                    </tr>  
                 @foreach ($pjds as $pjd)
                     <tr>
                         <td class="table-black-border">
@@ -144,40 +150,55 @@
                                 <strong>{{ $pjd->sub_category->name }}</strong>
                             @endif
                         </td>
-                        <td>
+                        <td class="table-black-border">
                             <strong>{{ $pjd->name }}</strong>
                         </td>
-                        <td>{{ $pjd->qty }}</td>
-                        <td>{!! $pjd->description !!}</td>
-                        <td>P{{ number_format($pjd->price, 2) }}</td>
-                        <td>P{{ number_format($pjd->total, 2) }}</td>
+                        <td class="table-black-border">{{ $pjd->qty }}</td>
+                        <td class="table-black-border">{!! $pjd->description !!}</td>
+                        <td class="table-black-border">${{ number_format($pjd->usd_price, 2) }}</td>
+                        <td class="table-black-border">P{{ number_format($pjd->price, 2) }}</td>
+                        <td class="table-black-border">P{{ number_format($pjd->total, 2) }}</td>
                     </tr>
                 @endforeach
             @endforeach
             <tr>
-                <td colspan="4">&nbsp;</td>
-                <td id="compact-table"><strong>Total Cost</strong></td>
-                <td id="compact-table">P{{ number_format($grand_total, 2) }}</td>
+                <td colspan="3" class="table-black-border">&nbsp;</td>
+                <td id="compact-table" class="table-black-border"><strong>Total Cost (USD)</strong></td>
+                <td id="compact-table" class="table-black-border">${{ number_format($project->usd_total, 2) }}</td>
+                <td id="compact-table" class="table-black-border"><strong>Total Cost</strong></td>
+                <td id="compact-table" class="table-black-border">P{{ number_format($project->total, 2) }}</td>
             </tr>
             
             <tr>
-                <td colspan="4">&nbsp;</td>
-                <td id="compact-table"><strong>ASF</strong></td>
-                <td id="compact-table">
+                <td colspan="3" class="table-black-border">&nbsp;</td>
+                <td id="compact-table" class="table-black-border"><strong>ASF (USD)</strong></td>
+                <td id="compact-table" class="table-black-border">
+                    ${{ number_format($project->usd_asf, 2) }}
+                </td>
+                <td id="compact-table" class="table-black-border"><strong>ASF</strong></td>
+                <td id="compact-table" class="table-black-border">
                     P{{ number_format($project->asf, 2) }}
                 </td>
             </tr>
 
             <tr>
-                <td colspan="4">&nbsp;</td>
-                <td id="compact-table"><strong>Internal CE Grand Total</strong></td>
-                <td id="compact-table">P{{ number_format($internal_grand_total, 2) }}</td>
+                <td colspan="3" class="table-black-border">&nbsp;</td>
+                <td id="compact-table" class="table-black-border"><strong>VAT (USD)</strong></td>
+                <td id="compact-table" class="table-black-border">
+                    ${{ number_format($project->usd_vat, 2) }}
+                </td>
+                <td id="compact-table" class="table-black-border"><strong>VAT</strong></td>
+                <td id="compact-table" class="table-black-border">
+                    P{{ number_format($project->vat, 2) }}
+                </td>
             </tr>
 
             <tr>
-                <td colspan="4">&nbsp;</td>
-                <td id="compact-table"><strong>Profit</strong></td>
-                <td id="compact-table">P{{ number_format($grand_total - $internal_grand_total, 2) }}</td>
+                <td colspan="3" class="table-black-border">&nbsp;</td>
+                <td id="compact-table" class="table-black-border"><strong>Grand Total (USD)</strong></td>
+                <td id="compact-table" class="table-black-border">${{ number_format($project->usd_total + $project->usd_vat + $project->usd_asf, 2) }}</td>
+                <td id="compact-table" class="table-black-border"><strong>Grand Total</strong></td>
+                <td id="compact-table" class="table-black-border">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
             </tr>
         </tbody>
     </table>
@@ -186,28 +207,28 @@
     <table class="table table-bordered font-change">
         <tbody>
             <tr>
-                <td><strong>Proposal Ownership.</strong></td>
-                <td>{!! $project->proposal_ownership !!}</td>
+                <td class="table-black-border"><strong>Proposal Ownership.</strong></td>
+                <td class="table-black-border">{!! $project->proposal_ownership !!}</td>
             </tr>
 
             <tr>
-                <td><strong>Confidentiality.</strong></td>
-                <td>{!! $project->confidentiality !!}</td>
+                <td class="table-black-border"><strong>Confidentiality.</strong></td>
+                <td class="table-black-border">{!! $project->confidentiality !!}</td>
             </tr>
 
             <tr>
-                <td><strong>Project Confirmation.</strong></td>
-                <td>{!! $project->project_confirmation !!}</td>
+                <td class="table-black-border"><strong>Project Confirmation.</strong></td>
+                <td class="table-black-border">{!! $project->project_confirmation !!}</td>
             </tr>
 
             <tr>
-                <td><strong>Payment Terms</strong></td>
-                <td>{!! $project->payment_terms !!}</td>
+                <td class="table-black-border"><strong>Payment Terms</strong></td>
+                <td class="table-black-border">{!! $project->payment_terms !!}</td>
             </tr>
 
             <tr>
-                <td><strong>Validity.</strong></td>
-                <td>{!! $project->validity !!}</td>
+                <td class="table-black-border"><strong>Validity.</strong></td>
+                <td class="table-black-border">{!! $project->validity !!}</td>
             </tr>
         </tbody>
     </table>
@@ -250,7 +271,15 @@
                         @if ($project->conforme_signature)
                           <br><img src="{{ url($project->conforme_signature) }}" width="80px"><br>
                         @else
-                            <br><br><br><br>
+                          <br><br>
+                          <strong>Please Upload Signature Here</strong>
+                          <form action="{{ route('internals.projects.update.conforme-signature') }}" method="post" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="project_id" value="{{ $project->id }}">
+                            <input type="file" name="conforme_signature"><br><br>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </form>
+                          <br>
                         @endif
                         <strong>{{ $project->client_contact->name }}</strong><br>
                         {{ $project->client_contact->position }}<br>

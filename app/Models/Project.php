@@ -11,6 +11,7 @@ class Project extends Model
 
     protected $fillable = [
         'reference_number',
+        'slug',
         'company_id',
         'client_id',
         'name',
@@ -22,6 +23,8 @@ class Project extends Model
         'duration_date',
         'description',
         'asf',
+        'usd_asf',
+        'usd_vat',
         'vat',
         'proposal_ownership',
         'confidentiality',
@@ -34,6 +37,7 @@ class Project extends Model
         'created_by_user_id',
         'noted_by_user_id',
         'approved_by_user_id',
+        'conforme_signature',
         'approved_at',
         'status',
     ];

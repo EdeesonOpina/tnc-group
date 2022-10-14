@@ -472,6 +472,10 @@
     @include('layouts.modals.projects.vat')
   @endif
 
+  @if (request()->is('admin/projects/view/*'))
+    @include('layouts.modals.projects.link')
+  @endif
+
   @if (request()->is('admin/brf') || request()->is('admin/brf/*'))
     @include('layouts.modals.brf.add-from-project-list')
   @endif
