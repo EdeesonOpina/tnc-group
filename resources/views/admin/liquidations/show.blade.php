@@ -92,10 +92,11 @@
                     <table class="table mb-0 thead-border-top-0 table-striped">
                         <thead>
                             <tr>
-                                <th id="compact-table">#ID</th>
+                                <th id="compact-table">#BRF</th>
                                 <th id="compact-table">Category</th>
-                                <th id="compact-table">Cost</th>
+                                <th id="compact-table">Particulars</th>
                                 <th id="compact-table">Description</th>
+                                <th id="compact-table">Cost</th>
                                 <th id="compact-table">Note</th>
                                 <th id="compact-table">Status</th>
                                 <th id="compact-table">Created At</th>
@@ -104,7 +105,7 @@
                         <tbody class="list" id="companies">
                             @foreach($liquidations as $liquidation)
                                 <tr>
-                                    <td><div class="badge badge-light">#{{ $liquidation->id }}</div></td>
+                                    <td><strong>{{ $liquidation->budget_request_form->reference_number }}</strong></td>
                                     <td id="compact-table">
                                         <b>{{ $liquidation->category->name }}</b>
                                         <div class="d-flex">
@@ -118,8 +119,9 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <td id="compact-table">P{{ number_format($liquidation->cost, 2) }}</td>
+                                    <td id="compact-table">{{ $liquidation->name }}</td>
                                     <td id="compact-table">{{ $liquidation->description }}</td>
+                                    <td id="compact-table">P{{ number_format($liquidation->cost, 2) }}</td> 
                                     <td id="compact-table">{{ $liquidation->note }}</td>
                                     <td>
                                         @if ($liquidation->status == LiquidationStatus::ACTIVE)

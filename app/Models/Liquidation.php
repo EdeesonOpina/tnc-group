@@ -10,6 +10,7 @@ class Liquidation extends Model
     use HasFactory;
 
     protected $fillable = [
+        'budget_request_form_id',
         'category_id',
         'cost',
         'description',
@@ -22,5 +23,10 @@ class Liquidation extends Model
     public function category()
     {
         return $this->hasOne(LiquidationCategory::class, 'id', 'category_id');
+    }
+
+    public function budget_request_form()
+    {
+        return $this->hasOne(BudgetRequestForm::class, 'id', 'budget_request_form_id');
     }
 }

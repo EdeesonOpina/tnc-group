@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Auth;
 use Mail;
 use Validator;
+use App\Models\BudgetRequestForm;
+use App\Models\BudgetRequestFormStatus;
 use App\Models\Liquidation;
 use App\Models\LiquidationStatus;
 use App\Models\LiquidationCategory;
@@ -88,18 +90,22 @@ class LiquidationController extends Controller
     public function create(Request $request)
     {
         $rules = [
+            'reference_number' => 'required|exists:budget_request_forms',
             'category_id' => 'required',
             'date' => 'required',
             'cost' => 'required|numeric',
             'description' => 'required',
-            'note' => 'nullable',
-            'image' => 'nullable',
+            'name' => 'required',
+            'image' => 'nullable|image',
         ];
 
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) 
             return back()->withInput()->withErrors($validator);
+
+        $budget_request_form = BudgetRequestForm::where('reference_number', $request->reference_number)
+                                            ->first();
 
         $data = request()->all(); // get all request
 
@@ -109,11 +115,11 @@ class LiquidationController extends Controller
             $data['image'] = 'uploads/images/liquidations/' . $image_name; // save the destination of the file to the database
         }
 
+        $data['budget_request_form_id'] = $budget_request_form->id;
         $data['status'] = LiquidationStatus::ACTIVE; // if you want to insert to a specific column
         Liquidation::create($data); // create data in a model
 
         $request->session()->flash('success', 'Data has been added');
-
         return redirect()->route('accounting.liquidations');
     }
 
@@ -144,11 +150,11 @@ class LiquidationController extends Controller
         $rules = [
             'category_id' => 'required',
             'date' => 'required',
-            'company_id' => 'nullable',
             'cost' => 'required|numeric',
+            'name' => 'required',
             'description' => 'required',
             'note' => 'nullable',
-            'image' => 'nullable',
+            'image' => 'nullable|image',
         ];
 
         $validator = Validator::make($request->all(), $rules);

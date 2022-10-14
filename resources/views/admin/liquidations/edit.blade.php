@@ -31,13 +31,16 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Transaction Date</label>
-                                    <input type="date" name="date" class="form-control" data-toggle="flatpickr" value="{{ old('date') ?? $liquidation->date }}">
+                                    <label>BRF #</label>
+                                    <input type="text" class="form-control" placeholder="BRF #" value="{{ old('reference_number') ?? $liquidation->budget_request_form->reference_number }}" disabled>
                                 </div>
                             </div>
 
                             <div class="col">
-                                &nbsp;
+                                <div class="form-group">
+                                    <label>Transaction Date</label>
+                                    <input type="date" name="date" class="form-control" value="{{ old('date') ?? $liquidation->date }}">
+                                </div>
                             </div>
                         </div>
 
@@ -54,37 +57,25 @@
                                 </div>
                             </div>
                             <div class="col">
-
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
                                 <div class="form-group">
                                     <label>Cost</label>
                                     <input type="text" name="cost" class="form-control" placeholder="0.00" value="{{ old('cost') ?? $liquidation->cost }}">
                                 </div>
                             </div>
-
-                            <div class="col">
-                                &nbsp;
-                            </div>
                         </div>
 
                         <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Particulars</label>
+                                    <input type="name" name="name" class="form-control" placeholder="Particulars" value="{{ old('name') ?? $liquidation->name }}">
+                                </div>
+                            </div>
+
                             <div class="col">
                                 <div class="form-group">
                                     <label>Description</label>
                                     <input type="text" name="description" class="form-control" placeholder="Description" value="{{ old('description') ?? $liquidation->description }}">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>Note</label>
-                                    <input type="text" name="note" class="form-control" placeholder="Note" value="{{ old('note') ?? $liquidation->note }}">
                                 </div>
                             </div>
                         </div>

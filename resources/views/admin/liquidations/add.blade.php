@@ -1,7 +1,6 @@
 @include('layouts.auth.header')
 <form action="{{ route('accounting.liquidations.create') }}" method="post" id="form" enctype="multipart/form-data">
 {{ csrf_field() }}
-
 <div class="container page__heading-container">
     <div class="page__heading d-flex align-items-center">
         <div class="flex">
@@ -31,13 +30,16 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Transaction Date</label>
-                                    <input type="date" name="date" class="form-control" value="{{ old('date') ?? date('Y-m-d') }}">
+                                    <label>BRF #</label>
+                                    <input type="text" name="reference_number" class="form-control" placeholder="BRF #" value="{{ old('reference_number') }}">
                                 </div>
                             </div>
 
                             <div class="col">
-                                &nbsp;
+                                <div class="form-group">
+                                    <label>Transaction Date</label>
+                                    <input type="date" name="date" class="form-control" value="{{ old('date') ?? date('Y-m-d') }}">
+                                </div>
                             </div>
                         </div>
 
