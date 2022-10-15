@@ -124,6 +124,10 @@ class BRFDetailController extends Controller
         $budget_request_form_detail->status = BudgetRequestFormStatus::FOR_APPROVAL; // mark data as active
         $budget_request_form_detail->save();
 
+        $budget_request_form = BudgetRequestForm::find($budget_request_form_detail->budget_request_form_id);
+        $budget_request_form->total += $budget_request_form_detail->total;
+        $budget_request_form->save();
+
         $request->session()->flash('success', 'Data has been recovered');
 
         return back();
@@ -145,6 +149,10 @@ class BRFDetailController extends Controller
         $budget_request_form_detail = BudgetRequestFormDetail::find($budget_request_form_detail_id);
         $budget_request_form_detail->status = BudgetRequestFormStatus::INACTIVE; // mark data as inactive
         $budget_request_form_detail->save();
+
+        $budget_request_form = BudgetRequestForm::find($budget_request_form_detail->budget_request_form_id);
+        $budget_request_form->total -= $budget_request_form_detail->total;
+        $budget_request_form->save();
 
         $request->session()->flash('success', 'Data has been deleted');
 

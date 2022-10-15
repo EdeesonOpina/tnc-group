@@ -38,20 +38,20 @@ class ProjectController extends Controller
 
     public function search(Request $request)
     {
-        $name = $request->name ?? '*';
+        $reference_number = $request->reference_number ?? '*';
         $status = $request->status ?? '*';
         $from_date = $request->from_date ?? '*';
         $to_date = $request->to_date ?? '*';
 
-        return redirect()->route('internals.projects.filter', [$name, $status, $from_date, $to_date])->withInput();
+        return redirect()->route('internals.projects.filter', [$reference_number, $status, $from_date, $to_date])->withInput();
     }
 
-    public function filter($name, $status, $from_date, $to_date)
+    public function filter($reference_number, $status, $from_date, $to_date)
     {
         $query = Project::orderBy('created_at', 'desc');
 
-        if ($name != '*') {
-            $query->where('name', 'LIKE', '%' . $name . '%');
+        if ($reference_number != '*') {
+            $query->where('reference_number', $reference_number);
         }
 
         if ($status != '*') {

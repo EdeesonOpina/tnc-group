@@ -118,7 +118,7 @@
 
                 <div class="row">
                     <div class="col">
-                        <h4 class="card-header__title flex m-0">Budget Request Forms</h4>
+                        <h4 class="card-header__title flex m-0">BRF Details</h4>
                     </div>
                 </div>
                 <br>

@@ -115,13 +115,13 @@
 
                 <div class="row">
                     <div class="col">
-                        <h4 class="card-header__title flex m-0">Budget Request Forms</h4>
+                        <h4 class="card-header__title flex m-0">BRF Details</h4>
                     </div>
 
                     <div class="col-md-2">
-                        <!-- <a href="#" data-toggle="modal" data-target="#add-brf-{{ $budget_request_form->id }}">
+                        <a href="#" data-toggle="modal" data-target="#add-brf-{{ $budget_request_form->id }}">
                             <button type="button" class="btn btn-success form-control" id="table-letter-margin"><i class="material-icons icon-16pt mr-1 text-white">add</i> Add Details</button>
-                        </a> -->
+                        </a>
                     </div>
                 </div>
                 <br>
@@ -134,7 +134,6 @@
                                 <th id="compact-table">Quantity</th>
                                 <th id="compact-table">Unit Price</th>
                                 <th id="compact-table">Total Price</th>
-                                <th id="compact-table">Status</th>
                             </tr>
                         </thead>
                         <tbody class="list" id="companies">
@@ -142,11 +141,11 @@
                                 <tr>
                                     <td>
                                         @if ($budget_request_form_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                            <div class="badge badge-warning ml-2">For Approval</div>
+                                            <div class="badge badge-warning">For Approval</div>
                                         @elseif ($budget_request_form_detail->status == BudgetRequestFormStatus::APPROVED)
-                                            <div class="badge badge-success ml-2">Approved</div>
+                                            <div class="badge badge-success">Approved</div>
                                         @elseif ($budget_request_form_detail->status == BudgetRequestFormStatus::DISAPPROVED)
-                                            <div class="badge badge-danger ml-2">Disapproved</div>
+                                            <div class="badge badge-danger">Disapproved</div>
                                         @endif
                                         <br>
                                         <strong>{{ $budget_request_form_detail->name }}</strong>
@@ -155,6 +154,12 @@
                                                 <a href="#" data-href="{{ route('internals.brf.details.approve', [$budget_request_form_detail->id]) }}" data-toggle="modal" data-target="#confirm-action" id="margin-right">Approve</a> | 
 
                                                 <a href="#" data-href="{{ route('internals.brf.details.disapprove', [$budget_request_form_detail->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
+                                            @endif
+
+                                            @if ($budget_request_form_detail->status == BudgetRequestFormStatus::APPROVED)
+                                                @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+                                                    <a href="#" data-href="{{ route('internals.brf.details.delete', [$budget_request_form_detail->id]) }}" data-toggle="modal" data-target="#confirm-action">Delete</a>
+                                                @endif
                                             @endif
                                         </div>
                                     </td>
@@ -167,7 +172,6 @@
                                 <td colspan="2">&nbsp;</td>
                                 <td id="compact-table"><strong>Total Cost</strong></th>
                                 <td id="compact-table">P{{ number_format($budget_request_form_details_total, 2) }}</th>
-                                <td>&nbsp;</td>
                             </tr>
 
                             <!-- <tr> 

@@ -29,8 +29,8 @@ use App\Models\ProjectStatus;
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label>Name</label>
-                            <input name="name" type="text" class="form-control" placeholder="Search by name" value="{{ old('name') }}">
+                            <label>CE #</label>
+                            <input name="reference_number" type="text" class="form-control" placeholder="Search by reference number" value="{{ old('reference_number') }}">
                         </div>
                     </div>
                     <div class="col">
@@ -40,7 +40,7 @@ use App\Models\ProjectStatus;
                                 @if (old('status'))
                                     @if (old('status') != '*')
                                         @if (old('status') == ProjectStatus::FOR_APPROVAL)
-                                            <option value="{{ old('status') }}">Active</option>
+                                            <option value="{{ old('status') }}">For Approval</option>
                                         @endif
 
                                         @if (old('status') == ProjectStatus::INACTIVE)

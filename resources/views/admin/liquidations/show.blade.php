@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label>BRF#</label>
+                            <label>BRF #</label>
                             <input name="reference_number" type="text" class="form-control" placeholder="Search by reference number" value="{{ old('reference_number') }}">
                         </div>
                     </div>
@@ -50,8 +50,9 @@
                                     @endif
                                 @endif
                                 <option value="*">All</option>
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                                <option value="LiquidationStatus::FOR_APPROVAL">For Approval</option>
+                                <option value="LiquidationStatus::APPROVED">Approved</option>
+                                <option value="LiquidationStatus::DISAPPROVED">Disapproved</option>
                             </select>
                         </div>
                     </div>
@@ -111,15 +112,14 @@
                                     <td id="compact-table">
                                         <b>{{ $liquidation->category->name }}</b>
                                         <div class="d-flex">
-                                            <a href="{{ route('accounting.liquidations.edit', [$liquidation->id]) }}" id="margin-right">Edit</a> | 
-
                                             @if ($liquidation->status == LiquidationStatus::FOR_APPROVAL)
+                                                <a href="{{ route('accounting.liquidations.edit', [$liquidation->id]) }}" id="margin-right">Edit</a> | 
                                                 <a href="#" data-href="{{ route('accounting.liquidations.approve', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
                                                 <a href="#" data-href="{{ route('accounting.liquidations.disapprove', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a> | 
                                             @endif
 
                                             @if ($liquidation->status == LiquidationStatus::APPROVED || $liquidation->status == LiquidationStatus::DISAPPROVED)
-                                                <a href="#" data-href="{{ route('accounting.liquidations.delete', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
+                                                <a href="#" data-href="{{ route('accounting.liquidations.delete', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="margin-right">Delete</a>
                                             @endif
 
                                             @if ($liquidation->status == LiquidationStatus::INACTIVE)

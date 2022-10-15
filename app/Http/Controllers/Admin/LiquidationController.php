@@ -34,35 +34,37 @@ class LiquidationController extends Controller
 
     public function search(Request $request)
     {
-        $description = $request->description ?? '*';
+        $reference_number = $request->reference_number ?? '*';
         $category_id = $request->category_id ?? '*';
         $status = $request->status ?? '*';
         $from_date = $request->from_date ?? '*';
         $to_date = $request->to_date ?? '*';
 
-        return redirect()->route('accounting.liquidations.filter', [$description, $category_id, $status, $from_date, $to_date])->withInput();
+        return redirect()->route('accounting.liquidations.filter', [$reference_number, $category_id, $status, $from_date, $to_date])->withInput();
     }
 
-    public function filter($description, $category_id, $status, $from_date, $to_date)
+    public function filter($reference_number, $category_id, $status, $from_date, $to_date)
     {
-        $query = Liquidation::orderBy('date', 'desc');
+        $query = Liquidation::leftJoin('budget_request_forms', 'liquidations.budget_request_form_id', '=', 'budget_request_forms.id')
+                        ->select('liquidations.*')
+                        ->orderBy('liquidations.date', 'desc');
 
-        if ($description != '*') {
-            $query->where('description', 'LIKE', '%' . $description . '%');
+        if ($reference_number != '*') {
+            $query->where('budget_request_forms.reference_number', $reference_number);
         }
 
         if ($category_id != '*') {
-            $query->where('category_id', $category_id);
+            $query->where('liquidations.category_id', $category_id);
         }
 
         if ($status != '*') {
-            $query->where('status', $status);
+            $query->where('liquidations.status', $status);
         }
 
         /* date filter */
         // if they provided both from date and to date
         if ($from_date != '*' && $to_date != '*') {
-            $query->whereBetween('date', [$from_date, $to_date]);
+            $query->whereBetween('liquidations.date', [$from_date, $to_date]);
         }
         /* date filter */
 
@@ -116,7 +118,7 @@ class LiquidationController extends Controller
         }
 
         $data['budget_request_form_id'] = $budget_request_form->id;
-        $data['status'] = LiquidationStatus::ACTIVE; // if you want to insert to a specific column
+        $data['status'] = LiquidationStatus::FOR_APPROVAL; // if you want to insert to a specific column
         Liquidation::create($data); // create data in a model
 
         $request->session()->flash('success', 'Data has been added');
