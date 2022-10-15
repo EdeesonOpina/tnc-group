@@ -185,6 +185,12 @@ class ProjectDetailController extends Controller
         $project_detail->status = ProjectDetailStatus::FOR_APPROVAL; // mark data as active
         $project_detail->save();
 
+        $project = Project::find($project_detail->project_id);
+        $project->usd_total += $project_detail->usd_total;
+        $project->internal_total += $project_detail->internal_total;
+        $project->total += $project_detail->total;
+        $project->save();
+
         $request->session()->flash('success', 'Data has been recovered');
 
         return back();
@@ -206,6 +212,12 @@ class ProjectDetailController extends Controller
         $project_detail = ProjectDetail::find($project_detail_id);
         $project_detail->status = ProjectDetailStatus::INACTIVE; // mark data as inactive
         $project_detail->save();
+
+        $project = Project::find($project_detail->project_id);
+        $project->usd_total -= $project_detail->usd_total;
+        $project->internal_total -= $project_detail->internal_total;
+        $project->total -= $project_detail->total;
+        $project->save();
 
         $request->session()->flash('success', 'Data has been deleted');
 

@@ -11,6 +11,7 @@ class Project extends Model
 
     protected $fillable = [
         'reference_number',
+        'usd_rate',
         'slug',
         'company_id',
         'client_id',

@@ -65,7 +65,7 @@
 
                         <li class="sidebar-menu-item">
                             <a class="sidebar-menu-button" href="{{ route('internals.cv') }}">
-                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">bookmark</i>
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">monetization_on</i>
                                 <span class="sidebar-menu-text">Check Vouchers</span>
                             </a>
                         </li>

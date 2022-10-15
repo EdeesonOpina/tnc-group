@@ -1,6 +1,7 @@
 @include('layouts.auth.header')
 @php
     use Carbon\Carbon;
+    use App\Models\ProjectStatus;
     use App\Models\ProjectDetail;
     use App\Models\ProjectDetailStatus;
     use App\Models\BudgetRequestFormStatus;
@@ -170,7 +171,6 @@
                                 <th id="compact-table">Unit Price</th>
                                 <th id="compact-table">Internal Total Price</th>
                                 <th id="compact-table">Total Price</th>
-                                <th id="compact-table">Status</th>
                             </tr>
                         </thead>
                         <tbody class="list" id="companies">
@@ -191,8 +191,19 @@
                                                 <strong>{{ $pjd->sub_category->name }}</strong>
                                             @endif
                                         </td>
-                                        <td>
-                                            <strong>{{ $pjd->name }} 
+                                        <td id="compact-table">
+                                            <strong>
+                                                @if ($pjd->status == ProjectDetailStatus::FOR_APPROVAL)
+                                                    <div class="badge badge-warning">For Approval</div>
+                                                @elseif ($pjd->status == ProjectDetailStatus::APPROVED)
+                                                    <div class="badge badge-success">Approved</div>
+                                                @elseif ($pjd->status == ProjectDetailStatus::DISAPPROVED)
+                                                    <div class="badge badge-danger">Disapproved</div>
+                                                @endif
+                                                <br>
+
+                                                {{ $pjd->name }} 
+
                                                 @if ($pjd->status == ProjectDetailStatus::FOR_APPROVAL)
                                                     <a href="{{ route('internals.projects.details.edit', [$project->id]) }}"><i class="material-icons icon-16pt text-success">edit</i></a>
                                                 @endif
@@ -203,6 +214,12 @@
 
                                                     <a href="#" data-href="{{ route('internals.projects.details.disapprove', [$pjd->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
                                                 @endif
+
+                                                @if ($pjd->status == ProjectDetailStatus::APPROVED)
+                                                    @if (auth()->user()->id == $pjd->created_by_user_id || auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+                                                        <a href="#" data-href="{{ route('internals.projects.details.delete', [$pjd->id]) }}" data-toggle="modal" data-target="#confirm-action">Delete</a>
+                                                    @endif
+                                                @endif
                                             </div>
                                         </td>
                                         <td>{{ $pjd->qty }}</td>
@@ -212,25 +229,17 @@
                                         <td>P{{ number_format($pjd->price, 2) }}</td>
                                         <td>P{{ number_format($pjd->internal_total, 2) }}</td>
                                         <td>P{{ number_format($pjd->total, 2) }}</td>
-                                        <td>
-                                            @if ($pjd->status == ProjectDetailStatus::FOR_APPROVAL)
-                                                <div class="badge badge-warning ml-2">For Approval</div>
-                                            @elseif ($pjd->status == ProjectDetailStatus::APPROVED)
-                                                <div class="badge badge-success ml-2">Approved</div>
-                                            @elseif ($pjd->status == ProjectDetailStatus::DISAPPROVED)
-                                                <div class="badge badge-danger ml-2">Disapproved</div>
-                                            @endif
-                                        </td>
                                     </tr>
                                 @endforeach
                             @endforeach
                             <tr>
-                                <td colspan="5">&nbsp;</td>
+                                <td colspan="3">&nbsp;</td>
+                                <td id="compact-table"><strong>USD Rate to PHP</strong></td>
+                                <td id="compact-table">P{{ number_format($project->usd_rate, 2) }}</td>
                                 <td id="compact-table"><strong>Total Cost (USD)</strong></td>
                                 <td id="compact-table">${{ number_format($project->usd_total, 2) }}</td>
                                 <td id="compact-table"><strong>Total Cost</strong></td>
                                 <td id="compact-table">P{{ number_format($project->total, 2) }}</td>
-                                <td>&nbsp;</td>
                             </tr>
 
                             <tr>
@@ -243,7 +252,6 @@
                                         P{{ number_format($project->asf, 2) }}
                                     </a>
                                 </td>
-                                <td>&nbsp;</td>
                             </tr>
 
                             <tr>
@@ -256,7 +264,6 @@
                                         P{{ number_format($project->vat, 2) }}
                                     </a>
                                 </td>
-                                <td>&nbsp;</td>
                             </tr>
 
                             <tr>
@@ -265,21 +272,18 @@
                                 <td id="compact-table">${{ number_format($usd_grand_total, 2) }}</td>
                                 <td id="compact-table"><strong>CE Grand Total</strong></td>
                                 <td id="compact-table">P{{ number_format($grand_total, 2) }}</td>
-                                <td>&nbsp;</td>
                             </tr>
 
                             <tr>
                                 <td colspan="7">&nbsp;</td>
                                 <td id="compact-table"><strong>Internal CE Grand Total</strong></td>
                                 <td id="compact-table">P{{ number_format($internal_grand_total, 2) }}</td>
-                                <td>&nbsp;</td>
                             </tr>
 
                             <tr>
                                 <td colspan="7">&nbsp;</td>
                                 <td id="compact-table"><strong>Profit</strong></td>
                                 <td id="compact-table">P{{ number_format($grand_total - $internal_grand_total, 2) }}</td>
-                                <td>&nbsp;</td>
                             </tr>
                         </tbody>
                     </table>

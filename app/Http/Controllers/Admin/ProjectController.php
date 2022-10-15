@@ -86,7 +86,13 @@ class ProjectController extends Controller
                         ->orderBy('name', 'asc')
                         ->get();
 
+        $usd = Currency::convert()
+        ->from('USD')
+        ->to('PHP')
+        ->get();
+
         return view('admin.projects.add', compact(
+            'usd',
             'users',
             'client_contacts',
             'clients',
@@ -122,6 +128,7 @@ class ProjectController extends Controller
             $data['image'] = 'uploads/images/projects/' . $image_name; // save the destination of the file to the database
         }
 
+        $data['created_by_user_id'] = auth()->user()->id;
         $data['status'] = ProjectStatus::FOR_APPROVAL; // if you want to insert to a specific column
         $project = Project::create($data); // create data in a model
 

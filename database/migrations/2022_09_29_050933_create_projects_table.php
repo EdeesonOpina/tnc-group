@@ -20,6 +20,7 @@ class CreateProjectsTable extends Migration
             $table->integer('company_id')->unsigned();
             $table->integer('client_id')->unsigned();
             $table->string('name');
+            $table->decimal('usd_rate', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('usd_total', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('internal_total', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('total', $precision = 10, $scale = 2)->default('0.00');

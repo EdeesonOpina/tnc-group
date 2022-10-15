@@ -97,7 +97,6 @@
                                 <th id="compact-table">Particulars</th>
                                 <th id="compact-table">Description</th>
                                 <th id="compact-table">Cost</th>
-                                <th id="compact-table">Note</th>
                                 <th id="compact-table">Status</th>
                                 <th id="compact-table">Created At</th>
                             </tr>
@@ -109,7 +108,9 @@
                                     <td id="compact-table">
                                         <b>{{ $liquidation->category->name }}</b>
                                         <div class="d-flex">
-                                            <a href="{{ route('accounting.liquidations.edit', [$liquidation->id]) }}" id="table-letter-margin">Edit</a> | 
+                                            <a href="{{ route('internals.brf.view', [$liquidation->budget_request_form->reference_number]) }}" id="margin-right">View</a> | 
+
+                                            <a href="{{ route('accounting.liquidations.edit', [$liquidation->id]) }}" id="space-table">Edit</a> | 
                                             @if ($liquidation->status == LiquidationStatus::ACTIVE)
                                                 <a href="#" data-href="{{ route('accounting.liquidations.delete', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
                                             @endif
@@ -122,7 +123,6 @@
                                     <td id="compact-table">{{ $liquidation->name }}</td>
                                     <td id="compact-table">{{ $liquidation->description }}</td>
                                     <td id="compact-table">P{{ number_format($liquidation->cost, 2) }}</td> 
-                                    <td id="compact-table">{{ $liquidation->note }}</td>
                                     <td>
                                         @if ($liquidation->status == LiquidationStatus::ACTIVE)
                                             <div class="badge badge-success ml-2">Active</div>

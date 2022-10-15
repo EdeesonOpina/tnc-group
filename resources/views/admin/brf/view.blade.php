@@ -131,7 +131,6 @@
                                 <th id="compact-table">Quantity</th>
                                 <th id="compact-table">Unit Price</th>
                                 <th id="compact-table">Total Price</th>
-                                <th id="compact-table">Status</th>
                             </tr>
                         </thead>
                         <tbody class="list" id="companies">
@@ -139,26 +138,23 @@
                                 <tr>
                                     <td>
                                         <strong>{{ $budget_request_form_detail->name }}</strong>
+                                        @if ($budget_request_form_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
+                                            <div class="badge badge-warning">For Approval</div>
+                                        @elseif ($budget_request_form_detail->status == BudgetRequestFormStatus::APPROVED)
+                                            <div class="badge badge-success">Approved</div>
+                                        @elseif ($budget_request_form_detail->status == BudgetRequestFormStatus::DISAPPROVED)
+                                            <div class="badge badge-danger">Disapproved</div>
+                                        @endif
                                     </td>
                                     <td>{{ $budget_request_form_detail->qty }}</td>
                                     <td>P{{ number_format($budget_request_form_detail->price, 2) }}</td>
                                     <td>P{{ number_format($budget_request_form_detail->total, 2) }}</td>
-                                    <td>
-                                        @if ($budget_request_form_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                            <div class="badge badge-warning ml-2">For Approval</div>
-                                        @elseif ($budget_request_form_detail->status == BudgetRequestFormStatus::APPROVED)
-                                            <div class="badge badge-success ml-2">Approved</div>
-                                        @elseif ($budget_request_form_detail->status == BudgetRequestFormStatus::DISAPPROVED)
-                                            <div class="badge badge-danger ml-2">Disapproved</div>
-                                        @endif
-                                    </td>
                                 </tr>
                             @endforeach
                             <tr> 
                                 <td colspan="2">&nbsp;</td>
                                 <td id="compact-table"><strong>Total Cost</strong></th>
                                 <td id="compact-table">P{{ number_format($budget_request_form_details_total, 2) }}</th>
-                                <td>&nbsp;</td>
                             </tr>
 
                             <!-- <tr> 
@@ -201,38 +197,33 @@
                                 <th id="compact-table">Particulars</th>
                                 <th id="compact-table">Description</th>
                                 <th id="compact-table">Cost</th>
-                                <th id="compact-table">Status</th>
                             </tr>
                         </thead>
                         <tbody class="list" id="companies">
                             @foreach($liquidations as $liquidation)
                                 <tr>
-                                    <td id="compact-table"><strong>{{ $liquidation->budget_request_form->name }}</strong></td>
+                                    <td id="compact-table">
+                                        <strong>{{ $liquidation->budget_request_form->name }}</strong>
+                                        @if ($liquidation->status == LiquidationStatus::ACTIVE)
+                                            <div class="badge badge-success">Active</div>
+                                        @elseif ($liquidation->status == LiquidationStatus::INACTIVE)
+                                            <div class="badge badge-danger">Inactive</div>
+                                        @endif
+                                    </td>
                                     <td id="compact-table">
                                         <b>{{ $liquidation->category->name }}</b>
-                                        <div class="d-flex">
-                                            <a href="{{ route('accounting.liquidations.edit', [$liquidation->id]) }}" id="table-letter-margin">Edit</a> | 
-                                            @if ($liquidation->status == LiquidationStatus::ACTIVE)
-                                                <a href="#" data-href="{{ route('accounting.liquidations.delete', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
-                                            @endif
-
-                                            @if ($liquidation->status == LiquidationStatus::INACTIVE)
-                                                <a href="#" data-href="{{ route('accounting.liquidations.recover', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Recover</a>
-                                            @endif
-                                        </div>
                                     </td>
                                     <td id="compact-table">{{ $liquidation->name }}</td>
                                     <td id="compact-table">{{ $liquidation->description }}</td>
                                     <td id="compact-table">P{{ number_format($liquidation->cost, 2) }}</td> 
-                                    <td>
-                                        @if ($liquidation->status == LiquidationStatus::ACTIVE)
-                                            <div class="badge badge-success ml-2">Active</div>
-                                        @elseif ($liquidation->status == LiquidationStatus::INACTIVE)
-                                            <div class="badge badge-danger ml-2">Inactive</div>
-                                        @endif
-                                    </td>
                                 </tr>
                             @endforeach
+
+                            <tr> 
+                                <td colspan="3">&nbsp;</td>
+                                <td id="compact-table"><strong>Total Cost</strong></th>
+                                <td id="compact-table">P{{ number_format($liquidations_total, 2) }}</th>
+                            </tr>
                         </tbody>
                     </table>
 

@@ -119,9 +119,9 @@
                     </div>
 
                     <div class="col-md-2">
-                        <a href="#" data-toggle="modal" data-target="#add-brf-{{ $budget_request_form->id }}">
+                        <!-- <a href="#" data-toggle="modal" data-target="#add-brf-{{ $budget_request_form->id }}">
                             <button type="button" class="btn btn-success form-control" id="table-letter-margin"><i class="material-icons icon-16pt mr-1 text-white">add</i> Add Details</button>
-                        </a>
+                        </a> -->
                     </div>
                 </div>
                 <br>
@@ -141,6 +141,14 @@
                             @foreach ($budget_request_form_details as $budget_request_form_detail)
                                 <tr>
                                     <td>
+                                        @if ($budget_request_form_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
+                                            <div class="badge badge-warning ml-2">For Approval</div>
+                                        @elseif ($budget_request_form_detail->status == BudgetRequestFormStatus::APPROVED)
+                                            <div class="badge badge-success ml-2">Approved</div>
+                                        @elseif ($budget_request_form_detail->status == BudgetRequestFormStatus::DISAPPROVED)
+                                            <div class="badge badge-danger ml-2">Disapproved</div>
+                                        @endif
+                                        <br>
                                         <strong>{{ $budget_request_form_detail->name }}</strong>
                                         <div class="d-flex">
                                             @if ($budget_request_form_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
@@ -153,15 +161,6 @@
                                     <td>{{ $budget_request_form_detail->qty }}</td>
                                     <td>P{{ number_format($budget_request_form_detail->price, 2) }}</td>
                                     <td>P{{ number_format($budget_request_form_detail->total, 2) }}</td>
-                                    <td>
-                                        @if ($budget_request_form_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                            <div class="badge badge-warning ml-2">For Approval</div>
-                                        @elseif ($budget_request_form_detail->status == BudgetRequestFormStatus::APPROVED)
-                                            <div class="badge badge-success ml-2">Approved</div>
-                                        @elseif ($budget_request_form_detail->status == BudgetRequestFormStatus::DISAPPROVED)
-                                            <div class="badge badge-danger ml-2">Disapproved</div>
-                                        @endif
-                                    </td>
                                 </tr>
                             @endforeach
                             <tr> 
