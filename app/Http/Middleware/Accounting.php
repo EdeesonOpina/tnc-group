@@ -17,7 +17,7 @@ class Accounting
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Developer' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales' || auth()->user()->role == 'RMA' || auth()->user()->role == 'Cashier') {
+        if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Programs' || auth()->user()->role == 'Sales' || auth()->user()->role == 'Accountant') {
             return $next($request);
         }
 

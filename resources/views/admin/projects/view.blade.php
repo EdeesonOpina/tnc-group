@@ -19,7 +19,7 @@
             <h1 class="m-0">Project</h1>
         </div>
         <a href="#" data-toggle="modal" data-target="#share-project-{{ $project->id }}">
-            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-link" id="margin-right"></i>Share CE Link</button>
+            <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-link" id="margin-right"></i>Share CE Link</button>
         </a>
 
         <a href="{{ route('internals.exports.projects.print.ce', [$project->reference_number]) }}">
@@ -132,7 +132,7 @@
                                 <th id="compact-table"></th>
                                 <th id="compact-table">Particulars</th>
                                 <th id="compact-table">Quantity</th>
-                                <th id="compact-table">Description</th>
+                                <th>Description</th>
                                 <th id="compact-table">USD Price</th>
                                 <th id="compact-table">Unit Price</th>
                                 <th id="compact-table">Total Price</th>
@@ -151,19 +151,19 @@
                                 </tr>  
                                 @foreach ($pjds as $pjd)
                                     <tr>
-                                        <td>
+                                        <td id="compact-table">
                                             @if ($pjd->sub_category)
                                                 <strong>{{ $pjd->sub_category->name }}</strong>
                                             @endif
                                         </td>
-                                        <td>
+                                        <td id="compact-table">
                                             <strong>{{ $pjd->name }}</strong>
                                         </td>
-                                        <td>{{ $pjd->qty }}</td>
+                                        <td id="compact-table">{{ $pjd->qty }}</td>
                                         <td>{!! $pjd->description !!}</td>
-                                        <td>${{ number_format($pjd->usd_price, 2) }}</td>
-                                        <td>P{{ number_format($pjd->price, 2) }}</td>
-                                        <td>P{{ number_format($pjd->total, 2) }}</td>
+                                        <td id="compact-table">${{ number_format($pjd->usd_price, 2) }}</td>
+                                        <td id="compact-table">P{{ number_format($pjd->price, 2) }}</td>
+                                        <td id="compact-table">P{{ number_format($pjd->total, 2) }}</td>
                                     </tr>
                                 @endforeach
                             @endforeach
@@ -344,7 +344,7 @@
                             @foreach ($budget_request_forms as $budget_request_form)
                                 <tr>
                                     <td>
-                                        {{ $budget_request_form->reference_number }}
+                                        <strong>{{ $budget_request_form->reference_number }}</strong>
                                     </td>
                                     <td>
                                         {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}

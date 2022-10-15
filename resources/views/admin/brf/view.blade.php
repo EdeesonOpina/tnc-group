@@ -204,8 +204,12 @@
                                 <tr>
                                     <td id="compact-table">
                                         <strong>{{ $liquidation->budget_request_form->name }}</strong>
-                                        @if ($liquidation->status == LiquidationStatus::ACTIVE)
-                                            <div class="badge badge-success">Active</div>
+                                        @if ($liquidation->status == LiquidationStatus::APPROVED)
+                                            <div class="badge badge-success">Approved</div>
+                                        @elseif ($liquidation->status == LiquidationStatus::DISAPPROVED)
+                                            <div class="badge badge-danger">Disapproved</div>
+                                        @elseif ($liquidation->status == LiquidationStatus::FOR_APPROVAL)
+                                            <div class="badge badge-warning">For Approval</div>
                                         @elseif ($liquidation->status == LiquidationStatus::INACTIVE)
                                             <div class="badge badge-danger">Inactive</div>
                                         @endif

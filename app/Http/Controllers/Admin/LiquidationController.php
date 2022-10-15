@@ -178,10 +178,30 @@ class LiquidationController extends Controller
         return redirect()->route('accounting.liquidations');
     }
 
+    public function approve(Request $request, $liquidation_id)
+    {
+        $liquidation = Liquidation::find($liquidation_id);
+        $liquidation->status = LiquidationStatus::APPROVED; // mark data as for approved
+        $liquidation->save();
+
+        $request->session()->flash('success', 'Data has been approved');
+        return back();
+    }
+
+    public function disapprove(Request $request, $liquidation_id)
+    {
+        $liquidation = Liquidation::find($liquidation_id);
+        $liquidation->status = LiquidationStatus::DISAPPROVED; // mark data as for disapproved
+        $liquidation->save();
+
+        $request->session()->flash('success', 'Data has been disapproved');
+        return back();
+    }
+
     public function recover(Request $request, $liquidation_id)
     {
         $liquidation = Liquidation::find($liquidation_id);
-        $liquidation->status = LiquidationStatus::ACTIVE; // mark data as active
+        $liquidation->status = LiquidationStatus::FOR_APPROVAL; // mark data as for approval
         $liquidation->save();
 
         $request->session()->flash('success', 'Data has been recovered');

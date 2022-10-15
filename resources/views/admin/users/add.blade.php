@@ -97,10 +97,15 @@
                         <div class="form-group">
                             <label for="role">Role</label><br />
                             <select id="role" name="role" class="custom-select" data-toggle="select">
-                                <option value="Sales">Sales</option>
-                                <option value="Accountant">Accountant</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Super Admin">Super Admin</option>
+                                @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+                                    <option value="Programs">Programs</option>
+                                    <option value="Sales">Sales</option>
+                                    <option value="Accountant">Accountant</option>
+                                    <option value="Admin">Admin</option>
+                                    @if (auth()->user()->role == 'Super Admin')
+                                        <option value="Super Admin">Super Admin</option>
+                                    @endif
+                                @endif
                             </select>
                         </div>
                     </div>

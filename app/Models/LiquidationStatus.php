@@ -10,5 +10,7 @@ class LiquidationStatus extends Model
     use HasFactory;
 
     const INACTIVE = 0;
-    const ACTIVE = 1;
+    const FOR_APPROVAL = 1;
+    const APPROVED = 2;
+    const DISAPPROVED = 3;
 }

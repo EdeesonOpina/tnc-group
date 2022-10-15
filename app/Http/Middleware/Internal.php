@@ -17,7 +17,7 @@ class Internal
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Moderator' || auth()->user()->role == 'Developer' || auth()->user()->role == 'Editor' || auth()->user()->role == 'Corporate' || auth()->user()->role == 'Sales' || auth()->user()->role == 'RMA' || auth()->user()->role == 'Encoder' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Agent' || auth()->user()->role == 'Cashier' || auth()->user()->role == 'Technical' || auth()->user()->role == 'Cashier / Technical' || auth()->user()->role == 'Stockman') {
+        if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Programs' || auth()->user()->role == 'Sales' || auth()->user()->role == 'Accountant') {
             return $next($request);
         }
 

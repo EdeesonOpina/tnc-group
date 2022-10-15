@@ -1,5 +1,6 @@
 @php
     use Carbon\Carbon;
+    use App\Models\LiquidationStatus;
     use App\Models\BudgetRequestFormStatus;
 @endphp
 <!DOCTYPE html>
@@ -49,6 +50,7 @@
 
     body {
         background: #fff;
+        font-family: "Lucida Console", "Courier New", monospace;
     }
     </style>
 </head>
@@ -127,9 +129,9 @@
             </tr>
         </tbody>
     </table>
-
     <br>
 
+    <strong class="text-label">BRF Details</strong><br>
     <table class="table table-bordered font-change">
         <thead>
             <tr>
@@ -158,18 +160,53 @@
         </tbody>
     </table>
 
-    <table class="table border-bottom no-border table-borderless font-change">
-        <tbody>
+    <strong class="text-label">Liquidations</strong><br>
+    <table class="table table-bordered font-change">
+        <thead>
             <tr>
-                <td>
-                    <div class="text-label"><strong>Remarks:</strong></div>
-                </td>
-                <td>
-                    {{ $budget_request_form->remarks }}<br>
-                </td>
+                <th id="compact-table">Particulars</th>
+                <th id="compact-table">Category</th>
+                <th id="compact-table">Particulars</th>
+                <th id="compact-table">Description</th>
+                <th id="compact-table">Cost</th>
+            </tr>
+        </thead>
+        <tbody class="list" id="companies">
+            @foreach($liquidations as $liquidation)
+                <tr>
+                    <td id="compact-table">
+                        <strong>{{ $liquidation->budget_request_form->name }}</strong>
+                    </td>
+                    <td id="compact-table">
+                        <b>{{ $liquidation->category->name }}</b>
+                    </td>
+                    <td id="compact-table">{{ $liquidation->name }}</td>
+                    <td id="compact-table">{{ $liquidation->description }}</td>
+                    <td id="compact-table">P{{ number_format($liquidation->cost, 2) }}</td> 
+                </tr>
+            @endforeach
+            <tr> 
+                <td colspan="3">&nbsp;</td>
+                <td id="compact-table"><strong>Total Cost</strong></th>
+                <td id="compact-table">P{{ number_format($liquidations_total, 2) }}</th>
             </tr>
         </tbody>
     </table>
+
+    @if ($budget_request_form->remarks)
+        <table class="table border-bottom no-border table-borderless font-change">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="text-label"><strong>Remarks:</strong></div>
+                    </td>
+                    <td>
+                        {{ $budget_request_form->remarks }}<br>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    @endif
 
     <table class="table border-bottom no-border table-borderless font-change">
         <tbody>

@@ -155,11 +155,12 @@ class BRFController extends Controller
                                                         ->sum('total');
 
         $liquidations = Liquidation::where('budget_request_form_id', $budget_request_form->id)
-                                                        ->where('status', '!=', LiquidationStatus::INACTIVE)
-                                                        ->get();
+                                ->where('status', '!=', LiquidationStatus::INACTIVE)
+                                ->get();
         $liquidations_total = Liquidation::where('budget_request_form_id', $budget_request_form->id)
-                                                        ->where('status', '!=', LiquidationStatus::INACTIVE)
-                                                        ->sum('cost');                                             
+                                    ->where('status', LiquidationStatus::APPROVED)
+                                    ->where('status', '!=', LiquidationStatus::INACTIVE)
+                                    ->sum('cost');                                             
 
         return view('admin.brf.view', compact(
             'liquidations',

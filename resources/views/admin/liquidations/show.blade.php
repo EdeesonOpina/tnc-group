@@ -30,8 +30,8 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label>Description</label>
-                            <input name="description" type="text" class="form-control" placeholder="Search by description" value="{{ old('description') }}">
+                            <label>BRF#</label>
+                            <input name="reference_number" type="text" class="form-control" placeholder="Search by reference number" value="{{ old('reference_number') }}">
                         </div>
                     </div>
                     <div class="col">
@@ -40,8 +40,8 @@
                             <select name="status" class="form-control" data-toggle="select">
                                 @if (old('status'))
                                     @if (old('status') != '*')
-                                        @if (old('status') == LiquidationStatus::ACTIVE)
-                                            <option value="{{ old('status') }}">Active</option>
+                                        @if (old('status') == LiquidationStatus::FOR_APPROVAL)
+                                            <option value="{{ old('status') }}">For Approval</option>
                                         @endif
 
                                         @if (old('status') == LiquidationStatus::INACTIVE)
@@ -92,26 +92,33 @@
                     <table class="table mb-0 thead-border-top-0 table-striped">
                         <thead>
                             <tr>
-                                <th id="compact-table">#BRF</th>
+                                <th id="compact-table">BRF#</th>
                                 <th id="compact-table">Category</th>
                                 <th id="compact-table">Particulars</th>
                                 <th id="compact-table">Description</th>
                                 <th id="compact-table">Cost</th>
                                 <th id="compact-table">Status</th>
-                                <th id="compact-table">Created At</th>
+                                <th id="compact-table">Date</th>
                             </tr>
                         </thead>
                         <tbody class="list" id="companies">
                             @foreach($liquidations as $liquidation)
                                 <tr>
-                                    <td><strong>{{ $liquidation->budget_request_form->reference_number }}</strong></td>
+                                    <td><strong>
+                                        <a href="{{ route('internals.brf.view', [$liquidation->budget_request_form->reference_number]) }}" id="margin-right">{{ $liquidation->budget_request_form->reference_number }}
+                                        </a>
+                                        </strong></td>
                                     <td id="compact-table">
                                         <b>{{ $liquidation->category->name }}</b>
                                         <div class="d-flex">
-                                            <a href="{{ route('internals.brf.view', [$liquidation->budget_request_form->reference_number]) }}" id="margin-right">View</a> | 
+                                            <a href="{{ route('accounting.liquidations.edit', [$liquidation->id]) }}" id="margin-right">Edit</a> | 
 
-                                            <a href="{{ route('accounting.liquidations.edit', [$liquidation->id]) }}" id="space-table">Edit</a> | 
-                                            @if ($liquidation->status == LiquidationStatus::ACTIVE)
+                                            @if ($liquidation->status == LiquidationStatus::FOR_APPROVAL)
+                                                <a href="#" data-href="{{ route('accounting.liquidations.approve', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
+                                                <a href="#" data-href="{{ route('accounting.liquidations.disapprove', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a> | 
+                                            @endif
+
+                                            @if ($liquidation->status == LiquidationStatus::APPROVED || $liquidation->status == LiquidationStatus::DISAPPROVED)
                                                 <a href="#" data-href="{{ route('accounting.liquidations.delete', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
                                             @endif
 
@@ -124,10 +131,14 @@
                                     <td id="compact-table">{{ $liquidation->description }}</td>
                                     <td id="compact-table">P{{ number_format($liquidation->cost, 2) }}</td> 
                                     <td>
-                                        @if ($liquidation->status == LiquidationStatus::ACTIVE)
-                                            <div class="badge badge-success ml-2">Active</div>
+                                        @if ($liquidation->status == LiquidationStatus::FOR_APPROVAL)
+                                            <div class="badge badge-warning">For Approval</div>
+                                        @elseif ($liquidation->status == LiquidationStatus::APPROVED)
+                                            <div class="badge badge-success">Approved</div>
+                                        @elseif ($liquidation->status == LiquidationStatus::DISAPPROVED)
+                                            <div class="badge badge-danger">Disapproved</div>
                                         @elseif ($liquidation->status == LiquidationStatus::INACTIVE)
-                                            <div class="badge badge-danger ml-2">Inactive</div>
+                                            <div class="badge badge-danger">Inactive</div>
                                         @endif
                                     </td>
                                     <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($liquidation->date)->format('M d Y') }}</td>

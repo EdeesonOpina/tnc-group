@@ -135,7 +135,6 @@ class UserController extends Controller
         // });
 
         $request->session()->flash('success', 'Data has been added');
-
         return redirect()->route('admin.users');
     }
 

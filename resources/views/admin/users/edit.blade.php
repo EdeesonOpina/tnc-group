@@ -108,10 +108,15 @@
                             <label for="country">Role</label><br />
                             <select id="country" name="role" class="custom-select" data-toggle="select">
                                 <option value="{{ $user->role }}">{{ $user->role }}</option>
-                                <option value="Sales">Sales</option>
-                                <option value="Accountant">Accountant</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Super Admin">Super Admin</option>
+                                @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+                                    <option value="Programs">Programs</option>
+                                    <option value="Sales">Sales</option>
+                                    <option value="Accountant">Accountant</option>
+                                    <option value="Admin">Admin</option>
+                                    @if (auth()->user()->role == 'Super Admin')
+                                        <option value="Super Admin">Super Admin</option>
+                                    @endif
+                                @endif
                             </select>
                         </div>
                     </div>

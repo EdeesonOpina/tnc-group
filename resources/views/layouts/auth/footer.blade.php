@@ -27,8 +27,9 @@
                         </div>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('auth.dashboard') }}">Dashboard</a>
-                        <a class="dropdown-item" href="{{ route('auth.profile') }}">My profile</a>
-                        <a class="dropdown-item" href="{{ route('auth.profile.edit') }}">Edit account</a>
+                        <!-- <a class="dropdown-item" href="{{ route('auth.profile') }}">My profile</a> -->
+                        <!-- <a class="dropdown-item" href="{{ route('auth.profile.edit') }}">Edit account</a> -->
+                        <a class="dropdown-item" href="{{ route('admin.users.edit', [auth()->user()->id]) }}">Edit account</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                     </div>
@@ -46,7 +47,7 @@
 
                 <div class="sidebar-heading">Operations</div>
                 <div class="sidebar-block p-0">
-                    @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales')
+                    @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales' || auth()->user()->role == 'Programs')
                         <li class="sidebar-menu-item">
                             <a class="sidebar-menu-button" href="{{ route('internals.projects') }}">
                                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">beenhere</i>
@@ -55,7 +56,7 @@
                         </li>
                     @endif
 
-                    @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
+                    @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Programs')
                         <li class="sidebar-menu-item">
                             <a class="sidebar-menu-button" href="{{ route('internals.brf') }}">
                                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">bookmark</i>
