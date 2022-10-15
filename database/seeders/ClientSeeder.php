@@ -18,10 +18,5 @@ class ClientSeeder extends Seeder
         $client->name = 'Acer Philippines';
         $client->status = 1;
         $client->save();
-
-        $client = new Client;
-        $client->name = 'Predator';
-        $client->status = 1;
-        $client->save();
     }
 }

@@ -117,8 +117,8 @@
             </div>
             <div class="form-group text-center">
                 <button class="btn btn-primary mb-5" type="submit">Login</button><br>
-                <a href="{{ route('auth.forgot') }}">Forgot password?</a> <br>
-                Don't have an account? <a class="text-body text-underline" href="{{ route('register') }}">Sign up!</a>
+                <!-- <a href="{{ route('auth.forgot') }}">Forgot password?</a> <br>
+                Don't have an account? <a class="text-body text-underline" href="{{ route('register') }}">Sign up!</a> -->
             </div>
         </form>
     </div>

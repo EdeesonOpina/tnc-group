@@ -1477,12 +1477,12 @@ Route::group(['prefix' => 'auth/'], function () {
     Route::get('login', 'App\Http\Controllers\Auth\AuthController@login')->name('login');
     Route::post('login', 'App\Http\Controllers\Auth\AuthController@attempt')->name('auth.attempt');
 
-    Route::get('register', 'App\Http\Controllers\Auth\AuthController@register')->name('register');
-    Route::post('register', 'App\Http\Controllers\Auth\AuthController@create')->name('auth.create');
+    // Route::get('register', 'App\Http\Controllers\Auth\AuthController@register')->name('register');
+    // Route::post('register', 'App\Http\Controllers\Auth\AuthController@create')->name('auth.create');
 
-    Route::get('forgot', 'App\Http\Controllers\Auth\AuthController@forgot')->name('auth.forgot');
-    Route::post('reset', 'App\Http\Controllers\Auth\AuthController@reset')->name('auth.reset');
-    Route::post('change/password', 'App\Http\Controllers\Auth\AuthController@change')->name('auth.change.password');
+    // Route::get('forgot', 'App\Http\Controllers\Auth\AuthController@forgot')->name('auth.forgot');
+    // Route::post('reset', 'App\Http\Controllers\Auth\AuthController@reset')->name('auth.reset');
+    // Route::post('change/password', 'App\Http\Controllers\Auth\AuthController@change')->name('auth.change.password');
 
     Route::group(['prefix' => 'email/'], function () {
         Route::get('verify/{email}/{user_id}', 'App\Http\Controllers\Auth\MailController@verify')->name('auth.email.verify');
