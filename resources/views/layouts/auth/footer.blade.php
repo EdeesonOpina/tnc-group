@@ -30,6 +30,7 @@
                         <!-- <a class="dropdown-item" href="{{ route('auth.profile') }}">My profile</a> -->
                         <!-- <a class="dropdown-item" href="{{ route('auth.profile.edit') }}">Edit account</a> -->
                         <a class="dropdown-item" href="{{ route('admin.users.edit', [auth()->user()->id]) }}">Edit account</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#change-password">Change password</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                     </div>
@@ -556,6 +557,7 @@
   @endif
 
   @include('layouts.modals.confirm-action')
+  @include('layouts.modals.change-password')
   @include('layouts.modals.database.import')
   @include('layouts.modals.database.password')
 

@@ -1484,6 +1484,8 @@ Route::group(['prefix' => 'auth/'], function () {
     // Route::post('reset', 'App\Http\Controllers\Auth\AuthController@reset')->name('auth.reset');
     // Route::post('change/password', 'App\Http\Controllers\Auth\AuthController@change')->name('auth.change.password');
 
+    Route::post('change/password', 'App\Http\Controllers\Auth\ProfileController@change_password')->name('auth.profile.change-password');
+
     Route::group(['prefix' => 'email/'], function () {
         Route::get('verify/{email}/{user_id}', 'App\Http\Controllers\Auth\MailController@verify')->name('auth.email.verify');
         Route::get('reset/{email}/{user_id}', 'App\Http\Controllers\Auth\MailController@reset')->name('auth.email.reset');

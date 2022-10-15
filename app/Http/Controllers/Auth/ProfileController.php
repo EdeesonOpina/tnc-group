@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Validator;
 use App\Models\User;
 use App\Models\Country;
 
@@ -29,5 +30,25 @@ class ProfileController extends Controller
             'user',
             'country'
         ));
+    }
+
+    public function change_password(Request $request)
+    {
+        $rules = [
+            'password' => 'required|same:confirm_password',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);
+        }
+
+        $user = User::find(auth()->user()->id);
+        $data['password'] = bcrypt($request->password);
+        $user->fill($data)->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return back();
     }
 }
