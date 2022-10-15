@@ -136,6 +136,9 @@
                         &nbsp;
                     </div>
                 </div>
+
+                <label>Signature</label><br>
+                <input type="file" name="signature"><br><br>
                 
                 <div class="form-group m-0">
                     <button type="submit" class="btn btn-success">Submit</button>

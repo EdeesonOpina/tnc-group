@@ -149,14 +149,14 @@ use App\Models\UserStatus;
                                                     @if ($user->role == 'Corporate')
                                                         {{ $user->corporate }}
                                                     @else
-                                                        {{ $user->firstname }} {{ $user->firstname }}
+                                                        {{ $user->firstname }} {{ $user->lastname }}
                                                     @endif
                                                 @else
                                                     <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="30px" style="margin-right: 7px;">
                                                     @if ($user->role == 'Corporate')
                                                         {{ $user->corporate }}
                                                     @else
-                                                        {{ $user->firstname }} {{ $user->firstname }}
+                                                        {{ $user->firstname }} {{ $user->lastname }}
                                                     @endif
                                                 @endif
                                                 </b></a>

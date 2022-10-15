@@ -81,6 +81,14 @@
         <tbody>
             <tr>
                 <td>
+                    <div class="text-label"><strong>CE #:</strong></div>
+                </td>
+                <td>
+                    {{ $project->reference_number }}<br>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <div class="text-label"><strong>Client Name:</strong></div>
                 </td>
                 <td>

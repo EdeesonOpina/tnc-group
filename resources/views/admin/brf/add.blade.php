@@ -31,7 +31,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Reference #</label>
+                                    <label>Cost Estimate #</label>
                                     <input type="text" name="reference_number" class="form-control">
                                 </div>
                             </div>
