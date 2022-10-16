@@ -11,6 +11,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Reports</title>
     <link type="text/css" href="{{ url('auth/pdf/assets/css/app.css') }}" rel="stylesheet">
+    
+    <!-- Font Awesome FREE Icons -->
+    <link type="text/css" href="{{ url('auth/admin/assets/css/vendor-fontawesome-free.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ url('auth/admin/assets/css/vendor-fontawesome-free.rtl.css') }}" rel="stylesheet">
+    
     <style type="text/css">
     #compact-table {
         white-space:nowrap;
@@ -76,10 +81,10 @@
         <tbody>
             <tr>
                 <td>
-                    <div class="text-label"><strong>Client Name:</strong></div>
+                    <div class="text-label"><strong>CE #:</strong></div>
                 </td>
                 <td>
-                    {{ $project->client->name }}<br>
+                    {{ $project->reference_number }}<br>
                 </td>
                 <td>
                     <strong>Date</strong>
@@ -90,16 +95,24 @@
             </tr>
             <tr>
                 <td>
-                    <div class="text-label"><strong>Project Name:</strong></div>
+                    <div class="text-label"><strong>Client Name:</strong></div>
                 </td>
                 <td>
-                    {{ $project->name }}<br>
+                    {{ $project->client->name }}<br>
                 </td>
                 <td>
                     <strong>Company</strong>
                 </td>
                 <td class="text-right">
                         {{ $project->company->name }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="text-label"><strong>Project Name:</strong></div>
+                </td>
+                <td>
+                    {{ $project->name }}<br>
                 </td>
             </tr>
             <tr>
@@ -129,7 +142,8 @@
         <tbody class="list" id="companies">
             @foreach ($project_details->unique('category_id') as $project_detail)
                 @php
-                    $pjds = ProjectDetail::where('category_id', $project_detail->category_id)
+                    $pjds = ProjectDetail::where('project_id', $project->id)
+                                    ->where('category_id', $project_detail->category_id)
                                     ->where('status', '!=', ProjectDetailStatus::INACTIVE)
                                     ->get();
                 @endphp

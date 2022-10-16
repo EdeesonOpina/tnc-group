@@ -472,6 +472,8 @@
     @include('layouts.modals.projects.terms')
     @include('layouts.modals.projects.asf')
     @include('layouts.modals.projects.vat')
+    @include('layouts.modals.projects.margin')
+    @include('layouts.modals.projects.usd-rate')
   @endif
 
   @if (request()->is('admin/projects/view/*'))

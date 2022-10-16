@@ -9,8 +9,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Reports</title>
+    <title>Cost Estimate</title>
     <link type="text/css" href="{{ url('auth/pdf/assets/css/app.css') }}" rel="stylesheet">
+
+    <!-- Font Awesome FREE Icons -->
+    <link type="text/css" href="{{ url('auth/admin/assets/css/vendor-fontawesome-free.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ url('auth/admin/assets/css/vendor-fontawesome-free.rtl.css') }}" rel="stylesheet">
+
     <style type="text/css">
     #compact-table {
         white-space:nowrap;
@@ -86,14 +91,6 @@
                 <td>
                     {{ $project->reference_number }}<br>
                 </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="text-label"><strong>Client Name:</strong></div>
-                </td>
-                <td>
-                    {{ $project->client->name }}<br>
-                </td>
                 <td>
                     <strong>Date</strong>
                 </td>
@@ -103,16 +100,24 @@
             </tr>
             <tr>
                 <td>
-                    <div class="text-label"><strong>Project Name:</strong></div>
+                    <div class="text-label"><strong>Client Name:</strong></div>
                 </td>
                 <td>
-                    {{ $project->name }}<br>
+                    {{ $project->client->name }}<br>
                 </td>
                 <td>
                     <strong>Company</strong>
                 </td>
                 <td class="text-right">
                         {{ $project->company->name }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="text-label"><strong>Project Name:</strong></div>
+                </td>
+                <td>
+                    {{ $project->name }}<br>
                 </td>
             </tr>
             <tr>
@@ -135,7 +140,9 @@
                 <th id="compact-table" class="table-black-border table-color-primary">Particulars</th>
                 <th id="compact-table" class="table-black-border table-color-primary">Quantity</th>
                 <th id="compact-table" class="table-black-border table-color-primary">Description</th>
-                <th id="compact-table" class="table-black-border table-color-primary">Unit Price (USD)</th>
+                @if ($project->has_usd == 1)
+                    <th id="compact-table" class="table-black-border table-color-primary">Unit Price (USD)</th>
+                @endif
                 <th id="compact-table" class="table-black-border table-color-primary">Unit Price</th>
                 <th id="compact-table" class="table-black-border table-color-primary">Total Price</th>
             </tr>
@@ -163,51 +170,84 @@
                         </td>
                         <td class="table-black-border">{{ $pjd->qty }}</td>
                         <td class="table-black-border">{!! $pjd->description !!}</td>
-                        <td class="table-black-border">${{ number_format($pjd->usd_price, 2) }}</td>
+                        @if ($project->has_usd == 1)
+                            <td class="table-black-border">${{ number_format($pjd->usd_price, 2) }}</td>
+                        @endif
                         <td class="table-black-border">P{{ number_format($pjd->price, 2) }}</td>
                         <td class="table-black-border">P{{ number_format($pjd->total, 2) }}</td>
                     </tr>
                 @endforeach
             @endforeach
-            <tr>
-                <td colspan="3" class="table-black-border">&nbsp;</td>
-                <td id="compact-table" class="table-black-border"><strong>Total Cost (USD)</strong></td>
-                <td id="compact-table" class="table-black-border">${{ number_format($project->usd_total, 2) }}</td>
-                <td id="compact-table" class="table-black-border"><strong>Total Cost</strong></td>
-                <td id="compact-table" class="table-black-border">P{{ number_format($project->total, 2) }}</td>
-            </tr>
-            
-            <tr>
-                <td colspan="3" class="table-black-border">&nbsp;</td>
-                <td id="compact-table" class="table-black-border"><strong>ASF (USD)</strong></td>
-                <td id="compact-table" class="table-black-border">
-                    ${{ number_format($project->usd_asf, 2) }}
-                </td>
-                <td id="compact-table" class="table-black-border"><strong>ASF</strong></td>
-                <td id="compact-table" class="table-black-border">
-                    P{{ number_format($project->asf, 2) }}
-                </td>
-            </tr>
 
-            <tr>
-                <td colspan="3" class="table-black-border">&nbsp;</td>
-                <td id="compact-table" class="table-black-border"><strong>VAT (USD)</strong></td>
-                <td id="compact-table" class="table-black-border">
-                    ${{ number_format($project->usd_vat, 2) }}
-                </td>
-                <td id="compact-table" class="table-black-border"><strong>VAT</strong></td>
-                <td id="compact-table" class="table-black-border">
-                    P{{ number_format($project->vat, 2) }}
-                </td>
-            </tr>
+            @if ($project->has_usd == 1)
+                <tr>
+                    <td colspan="3" class="table-black-border">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border"><strong>Total Cost (USD)</strong></td>
+                    <td id="compact-table" class="table-black-border">${{ number_format($project->usd_total, 2) }}</td>
+                    <td id="compact-table" class="table-black-border"><strong>Total Cost</strong></td>
+                    <td id="compact-table" class="table-black-border">P{{ number_format($project->total, 2) }}</td>
+                </tr>
+                
+                <tr>
+                    <td colspan="3" class="table-black-border">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border"><strong>ASF (USD)</strong></td>
+                    <td id="compact-table" class="table-black-border">
+                        ${{ number_format($project->usd_asf, 2) }}
+                    </td>
+                    <td id="compact-table" class="table-black-border"><strong>ASF</strong></td>
+                    <td id="compact-table" class="table-black-border">
+                        P{{ number_format($project->asf, 2) }}
+                    </td>
+                </tr>
 
-            <tr>
-                <td colspan="3" class="table-black-border">&nbsp;</td>
-                <td id="compact-table" class="table-black-border"><strong>Grand Total (USD)</strong></td>
-                <td id="compact-table" class="table-black-border">${{ number_format($project->usd_total + $project->usd_vat + $project->usd_asf, 2) }}</td>
-                <td id="compact-table" class="table-black-border"><strong>Grand Total</strong></td>
-                <td id="compact-table" class="table-black-border">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
-            </tr>
+                <tr>
+                    <td colspan="3" class="table-black-border">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border"><strong>VAT (USD)</strong></td>
+                    <td id="compact-table" class="table-black-border">
+                        ${{ number_format($project->usd_vat, 2) }}
+                    </td>
+                    <td id="compact-table" class="table-black-border"><strong>VAT</strong></td>
+                    <td id="compact-table" class="table-black-border">
+                        P{{ number_format($project->vat, 2) }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="table-black-border">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border"><strong>Grand Total (USD)</strong></td>
+                    <td id="compact-table" class="table-black-border">${{ number_format($project->usd_total + $project->usd_vat + $project->usd_asf, 2) }}</td>
+                    <td id="compact-table" class="table-black-border"><strong>Grand Total</strong></td>
+                    <td id="compact-table" class="table-black-border">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
+                </tr>
+            @else
+                <tr>
+                    <td colspan="4" class="table-black-border">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border"><strong>Total Cost</strong></td>
+                    <td id="compact-table" class="table-black-border">P{{ number_format($project->total, 2) }}</td>
+                </tr>
+                
+                <tr>
+                    <td colspan="4" class="table-black-border">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border"><strong>ASF</strong></td>
+                    <td id="compact-table" class="table-black-border">
+                        P{{ number_format($project->asf, 2) }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4" class="table-black-border">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border"><strong>VAT</strong></td>
+                    <td id="compact-table" class="table-black-border">
+                        P{{ number_format($project->vat, 2) }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4" class="table-black-border">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border"><strong>Grand Total</strong></td>
+                    <td id="compact-table" class="table-black-border">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
+                </tr>
+            @endif
         </tbody>
     </table>
     <br><br>

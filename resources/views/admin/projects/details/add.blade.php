@@ -73,7 +73,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>USD Rate</label>
-                                    <input type="text" name="usd_rate" class="form-control" placeholder="USD Rate" value="{{ old('usd_rate') ?? $usd }}">
+                                    <input type="text" name="usd_rate" class="form-control" placeholder="USD Rate" value="{{ old('usd_rate') ?? $project->usd_rate }}" disabled>
                                 </div>
                             </div>
                             <div class="col">

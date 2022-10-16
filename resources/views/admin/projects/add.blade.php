@@ -50,13 +50,18 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label>USD Rate</label>
-                                    <input type="text" name="usd_rate" class="form-control" placeholder="USD Rate" value="{{ old('usd_rate') ?? $usd }}">
+                                    <label>Has USD</label>
+                                    <select name="has_usd" class="form-control">
+                                        <option value=""></option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    &nbsp;
+                                    <label>USD Rate</label>
+                                    <input type="text" name="usd_rate" class="form-control" placeholder="USD Rate" value="{{ old('usd_rate') ?? $usd }}">
                                 </div>
                             </div>
                         </div>
@@ -85,7 +90,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Start Date (optional)</label>
-                                    <input type="date" name="start_date" class="form-control" value="{{ old('start_date') }}">
+                                    <input type="date" name="start_date" class="form-control" value="{{ old('start_date') ?? date('Y-m-d') }}">
                                 </div>
                             </div>
                             <div class="col">
@@ -127,6 +132,7 @@
                                 <div class="form-group">
                                     <label for="conforme">Conforme</label><br />
                                     <select id="conforme" name="client_contact_id" class="custom-select" data-toggle="select">
+                                        <option value=""></option>
                                         @foreach($client_contacts as $client_contact)
                                             <option value="{{ $client_contact->id }}">{{ $client_contact->name }}</option>
                                         @endforeach
@@ -135,7 +141,10 @@
                             </div>
 
                             <div class="col">
-
+                                <div class="form-group">
+                                    <label>Margin Rate (%)</label>
+                                    <input type="text" name="margin" class="form-control" placeholder="Margin Rate" value="{{ old('margin') ?? '0' }}">
+                                </div>
                             </div>
                         </div>
 

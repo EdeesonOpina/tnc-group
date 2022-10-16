@@ -1,11 +1,11 @@
-<form action="{{ route('internals.projects.update.vat') }}" method="post">
+<form action="{{ route('internals.projects.update.margin') }}" method="post">
   {{ csrf_field() }}
   <input type="hidden" name="project_id" value="{{ $project->id }}">
-  <div class="modal fade" id="vat-{{ $project->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="margin-{{ $project->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
-          <h5 class="modal-title" id="exampleModalLabel">VAT</h5><br>
+          <h5 class="modal-title" id="exampleModalLabel">Margin Rate (%)</h5><br>
 
           <div class="row">
             <div class="col-md-4">
@@ -33,8 +33,8 @@
                 </div>
               </div>
               <hr>
-              <label>VAT</label><br>
-              <input type="text" name="vat" class="form-control" placeholder="VAT" value="{{ old('vat') ?? $project->vat }}"><br>
+              <label>Margin Rate (%)</label><br>
+              <input type="text" name="margin" class="form-control" placeholder="Margin (%)" value="{{ old('margin') ?? $project->margin }}"><br>
             </div>
           </div>
           

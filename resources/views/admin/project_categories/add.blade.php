@@ -31,8 +31,8 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Project Name</label>
-                                    <input type="text" name="name" class="form-control" placeholder="Project Name" value="{{ old('name') }}">
+                                    <label>Category Name</label>
+                                    <input type="text" name="name" class="form-control" placeholder="Category Name" value="{{ old('name') }}">
                                 </div>
                             </div>
                             <div class="col">
@@ -46,7 +46,7 @@
         </div>
         <div class="col">
             <div id="semi-spaced-card" class="card card-body">
-                <h3>Project Image</h3>
+                <h3>Category Image</h3>
                 <br>
                 <div class="form-group">
                     <input type="file" name="image">

@@ -19,13 +19,23 @@
             </nav>
             <h1 class="m-0">Manage Project</h1>
         </div>
-        <a href="{{ route('internals.exports.projects.print.ce', [$project->reference_number]) }}">
+        <!-- <a href="{{ route('internals.exports.projects.print.ce', [$project->reference_number]) }}">
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print CE</button>
         </a>
 
         <a href="{{ route('internals.exports.projects.print.internal-ce', [$project->reference_number]) }}">
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print Internal CE</button>
-        </a>
+        </a> -->
+
+        @if ($project->status == ProjectStatus::FOR_APPROVAL)
+            <a href="#" data-href="{{ route('internals.projects.approve', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action">
+                <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Approve</button>
+            </a>
+
+            <a href="#" data-href="{{ route('internals.projects.disapprove', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action">
+                <button type="button" class="btn btn-danger"><i class="fa fa-times" id="margin-right"></i>Disapprove</button>
+            </a>
+        @endif
     </div>
 </div>
 
@@ -45,8 +55,18 @@
                                             <strong>CE#</strong>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-7">
                                         {{ $project->reference_number }}
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <strong>Date</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            {{ $project->created_at->format('M d Y') }}
+                                        </div>
                                     </div>
                                 </div>
 
@@ -63,12 +83,16 @@
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <strong>Date</strong>
+                                            <strong>Has USD</strong>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            {{ $project->created_at->format('M d Y') }}
+                                            @if ($project->has_usd == 1)
+                                                Yes
+                                            @else
+                                                No
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +200,8 @@
                         <tbody class="list" id="companies">
                             @foreach ($project_details->unique('category_id') as $project_detail)
                             @php
-                                $pjds = ProjectDetail::where('category_id', $project_detail->category_id)
+                                $pjds = ProjectDetail::where('project_id', $project->id)
+                                                ->where('category_id', $project_detail->category_id)
                                                 ->where('status', '!=', ProjectDetailStatus::INACTIVE)
                                                 ->get();
                             @endphp
@@ -234,8 +259,12 @@
                             @endforeach
                             <tr>
                                 <td colspan="3">&nbsp;</td>
-                                <td id="compact-table"><strong>USD Rate to PHP</strong></td>
-                                <td id="compact-table">P{{ number_format($project->usd_rate, 2) }}</td>
+                                <td id="compact-table"><strong>Margin Rate (%)</strong></td>
+                                <td id="compact-table">
+                                    <a href="#" data-toggle="modal" data-target="#margin-{{ $project->id }}">
+                                        {{ $project->margin }}%
+                                    </a>
+                                </td>
                                 <td id="compact-table"><strong>Total Cost (USD)</strong></td>
                                 <td id="compact-table">${{ number_format($project->usd_total, 2) }}</td>
                                 <td id="compact-table"><strong>Total Cost</strong></td>
@@ -243,7 +272,13 @@
                             </tr>
 
                             <tr>
-                                <td colspan="5">&nbsp;</td>
+                                <td colspan="3">&nbsp;</td>
+                                <td id="compact-table"><strong>USD Rate to PHP</strong></td>
+                                <td id="compact-table">
+                                    <a href="#" data-toggle="modal" data-target="#usd-rate-{{ $project->id }}">
+                                        P{{ number_format($project->usd_rate, 2) }}
+                                    </a>
+                                </td>
                                 <td id="compact-table"><strong>ASF (USD)</strong></td>
                                 <td id="compact-table">${{ number_format($project->usd_asf, 2) }}</td>
                                 <td id="compact-table"><strong>ASF</strong></td>
@@ -357,7 +392,7 @@
                             @else
                                 <br><br><br><br>
                             @endif
-                            {{ $project->prepared_by_user->firstname }} {{ $project->prepared_by_user->lastname }}<br>
+                            <strong>{{ $project->prepared_by_user->firstname }} {{ $project->prepared_by_user->lastname }}</strong><br>
                             {{ $project->prepared_by_user->position }}<br>
                             {{ $project->prepared_by_user->company->name }}<br>
                         </div>
@@ -371,7 +406,7 @@
                             @else
                                 <br><br><br><br>
                             @endif
-                            {{ $project->noted_by_user->firstname }} {{ $project->noted_by_user->lastname }}<br>
+                            <strong>{{ $project->noted_by_user->firstname }} {{ $project->noted_by_user->lastname }}</strong><br>
                             {{ $project->noted_by_user->position }}<br>
                             {{ $project->noted_by_user->company->name }}<br>
                         </div>
@@ -385,7 +420,7 @@
                             @else
                                 <br><br><br><br>
                             @endif
-                            {{ $project->client_contact->name }}<br>
+                            <strong>{{ $project->client_contact->name }}</strong><br>
                             {{ $project->client_contact->position }}<br>
                             {{ $project->client_contact->client->name }}<br>
                         </div>
@@ -422,7 +457,7 @@
                                         {{ $budget_request_form->reference_number }}
                                         <div class="d-flex">
                                             @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                                <a href="{{ route('internals.brf.view', [$budget_request_form->id]) }}" id="margin-right">View</a> | 
+                                                <a href="{{ route('internals.brf.view', [$budget_request_form->reference_number]) }}" id="margin-right">View</a> | 
 
                                                 <a href="{{ route('internals.brf.manage', [$budget_request_form->id]) }}" id="space-table">Manage</a> | 
 

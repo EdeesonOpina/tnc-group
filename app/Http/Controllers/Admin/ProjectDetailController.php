@@ -52,7 +52,6 @@ class ProjectDetailController extends Controller
         $rules = [
             'name' => 'required',
             'category_id' => 'required',
-            'usd_rate' => 'required',
             'sub_category_id' => 'nullable',
             'qty' => 'required',
             'price' => 'required',
@@ -77,9 +76,10 @@ class ProjectDetailController extends Controller
         if ($request->sub_category_id == null)
             $data['sub_category_id'] = 0;
 
+        $project = Project::find($request->project_id);
+        $data['usd_price'] = $request->price / $project->usd_rate;
+        $data['usd_total'] = ($request->qty * $request->price) / $project->usd_rate;
         $data['total'] = $request->qty * $request->price;
-        $data['usd_price'] = $request->price / $request->usd_rate;
-        $data['usd_total'] = ($request->qty * $request->price) / $request->usd_rate;
         $data['internal_total'] = $request->qty * $request->internal_price;
         $data['status'] = ProjectDetailStatus::FOR_APPROVAL; // if you want to insert to a specific column
         $project_detail = ProjectDetail::create($data); // create data in a model
@@ -115,7 +115,6 @@ class ProjectDetailController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'usd_rate' => 'required',
             'category_id' => 'required',
             'sub_category_id' => 'nullable',
             'qty' => 'required',
@@ -142,7 +141,8 @@ class ProjectDetailController extends Controller
             $data['sub_category_id'] = 0;
 
         $project_detail = ProjectDetail::find($request->project_detail_id);
-        $data['usd_price'] = $request->price / $request->usd_rate;
+        $data['usd_price'] = $request->price / $project_detail->project->usd_rate;
+        $data['usd_total'] = ($request->qty * $request->price) / $project_detail->project->usd_rate;
         $data['internal_total'] = $request->internal_price * $request->qty;
         $data['total'] = $request->price * $request->qty;
         $project_detail->fill($data)->save();

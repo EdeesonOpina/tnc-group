@@ -20,6 +20,8 @@ class CreateProjectsTable extends Migration
             $table->integer('company_id')->unsigned();
             $table->integer('client_id')->unsigned();
             $table->string('name');
+            $table->float('margin')->default(0); // percentage of asf and vat
+            $table->integer('has_usd')->unsigned()->default(0);
             $table->decimal('usd_rate', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('usd_total', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('internal_total', $precision = 10, $scale = 2)->default('0.00');

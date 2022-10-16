@@ -401,6 +401,64 @@ class ProjectController extends Controller
         return redirect()->route('internals.projects.manage', [$project->id]);
     }
 
+    public function margin(Request $request)
+    {
+        $rules = [
+            'margin' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails())
+            return back()->withInput()->withErrors($validator);
+
+        $data = $request->all();
+        $project = Project::find($request->project_id);
+        $project->fill($data)->save();
+
+        $margin_price = ($project->total * ($project->margin / 100));
+        $project->asf = $margin_price;
+        $project->usd_asf = $margin_price / $project->usd_rate;
+        $project->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return redirect()->route('internals.projects.manage', [$project->id]);
+    }
+
+    public function usd_rate(Request $request)
+    {
+        $rules = [
+            'usd_rate' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails())
+            return back()->withInput()->withErrors($validator);
+
+        $data = $request->all();
+        $project = Project::find($request->project_id);
+        $project->fill($data)->save();
+
+        $pjds = ProjectDetail::where('project_id', $project->id)
+                        ->get();
+
+        foreach ($pjds as $pjd) {
+            $pjd = ProjectDetail::find($pjd->id);
+            $pjd->usd_price = $pjd->price / $pjd->project->usd_rate;
+            $pjd->usd_total = ($pjd->qty * $pjd->price) / $pjd->project->usd_rate;
+            $pjd->save();
+        }
+
+        $project->usd_asf = $project->asf / $project->usd_rate;
+        $project->usd_total = $project->total / $project->usd_rate;
+        $project->usd_vat = $project->vat / $project->usd_rate;
+        $project->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return redirect()->route('internals.projects.manage', [$project->id]);
+    }
+
     public function approve(Request $request, $project_id)
     {
         $project = Project::find($project_id);
@@ -408,8 +466,7 @@ class ProjectController extends Controller
         $project->save();
 
         $request->session()->flash('success', 'Data has been approved');
-
-        return back();
+        return redirect()->route('internals.projects.view', [$project->reference_number]);
     }
 
     public function disapprove(Request $request, $project_id)
@@ -419,8 +476,7 @@ class ProjectController extends Controller
         $project->save();
 
         $request->session()->flash('success', 'Data has been disapproved');
-
-        return back();
+        return redirect()->route('internals.projects.view', [$project->reference_number]);
     }
 
     public function recover(Request $request, $project_id)

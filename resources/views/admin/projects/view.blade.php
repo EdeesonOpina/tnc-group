@@ -50,8 +50,18 @@
                                             <strong>CE#</strong>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-7">
                                         {{ $project->reference_number }}
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <strong>Date</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            {{ $project->created_at->format('M d Y') }}
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -68,12 +78,16 @@
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <strong>Date</strong>
+                                            <strong>Has USD</strong>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            {{ $project->created_at->format('M d Y') }}
+                                            @if ($project->has_usd == 1)
+                                                Yes
+                                            @else
+                                                No
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -141,7 +155,8 @@
                         <tbody class="list" id="companies">
                             @foreach ($project_details->unique('category_id') as $project_detail)
                             @php
-                                $pjds = ProjectDetail::where('category_id', $project_detail->category_id)
+                                $pjds = ProjectDetail::where('project_id', $project->id)
+                                                ->where('category_id', $project_detail->category_id)
                                                 ->where('status', '!=', ProjectDetailStatus::INACTIVE)
                                                 ->get();
                             @endphp
@@ -168,21 +183,21 @@
                                 @endforeach
                             @endforeach
                             <tr>
-                                <td colspan="3">&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td id="compact-table"><strong>Margin Rate (%)</strong></td>
+                                <td id="compact-table">{{ $project->margin }}%</td>
                                 <td id="compact-table"><strong>Total Cost (USD)</strong></td>
-                                <td id="compact-table">
-                                    ${{ number_format($project->usd_total, 2) }}
-                                </td>
+                                <td id="compact-table">${{ number_format($project->usd_total, 2) }}</td>
                                 <td id="compact-table"><strong>Total Cost</strong></td>
                                 <td id="compact-table">P{{ number_format($project->total, 2) }}</td>
                             </tr>
 
                             <tr>
-                                <td colspan="3">&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td id="compact-table"><strong>USD Rate to PHP</strong></td>
+                                <td id="compact-table">P{{ number_format($project->usd_rate, 2) }}</td>
                                 <td id="compact-table"><strong>ASF (USD)</strong></td>
-                                <td id="compact-table">
-                                    ${{ number_format($project->usd_asf, 2) }}
-                                </td>
+                                <td id="compact-table">${{ number_format($project->usd_asf, 2) }}</td>
                                 <td id="compact-table"><strong>ASF</strong></td>
                                 <td id="compact-table">
                                     P{{ number_format($project->asf, 2) }}
@@ -279,7 +294,7 @@
                             @else
                                 <br><br><br><br>
                             @endif
-                            {{ $project->prepared_by_user->firstname }} {{ $project->prepared_by_user->lastname }}<br>
+                            <strong>{{ $project->prepared_by_user->firstname }} {{ $project->prepared_by_user->lastname }}</strong><br>
                             {{ $project->prepared_by_user->position }}<br>
                             {{ $project->prepared_by_user->company->name }}<br>
                         </div>
@@ -293,7 +308,7 @@
                             @else
                                 <br><br><br><br>
                             @endif
-                            {{ $project->noted_by_user->firstname }} {{ $project->noted_by_user->lastname }}<br>
+                            <strong>{{ $project->noted_by_user->firstname }} {{ $project->noted_by_user->lastname }}</strong><br>
                             {{ $project->noted_by_user->position }}<br>
                             {{ $project->noted_by_user->company->name }}<br>
                         </div>
@@ -307,7 +322,7 @@
                             @else
                                 <br><br><br><br>
                             @endif
-                            {{ $project->client_contact->name }}<br>
+                            <strong>{{ $project->client_contact->name }}</strong><br>
                             {{ $project->client_contact->position }}<br>
                             {{ $project->client_contact->client->name }}<br>
                         </div>

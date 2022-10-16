@@ -1,3 +1,7 @@
+@php
+  $margin_price = ($project->total * ($project->margin / 100));
+@endphp
+
 <form action="{{ route('internals.projects.update.asf') }}" method="post">
   {{ csrf_field() }}
   <input type="hidden" name="project_id" value="{{ $project->id }}">
@@ -18,7 +22,7 @@
             <div class="col">
               <div class="row">
                 <div class="col">
-                  <h6>Name:</h6>
+                  <strong>Name:</strong>
                 </div>
                 <div class="col">
                   {{ $project->name }}
@@ -26,7 +30,7 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <h6>Client:</h6>
+                  <strong>Client:</strong>
                 </div>
                 <div class="col">
                   {{ $project->client->name }}
@@ -34,15 +38,31 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <h6>Project Duration:</h6>
+                  <strong>Total Cost:</strong>
                 </div>
                 <div class="col">
-                  {{ $project->end_date }}
+                  P{{ number_format($project->total, 2) }}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Margin Rate (%):</strong>
+                </div>
+                <div class="col">
+                  {{ $project->margin }}%
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Suggested Rate:</strong>
+                </div>
+                <div class="col">
+                  P{{ number_format($margin_price, 2) }}
                 </div>
               </div>
               <hr>
               <label>ASF</label><br>
-              <input type="text" name="asf" class="form-control" placeholder="ASF" value="{{ old('asf') ?? $project->asf  }}"><br>
+              <input type="text" name="asf" class="form-control" placeholder="ASF" value="{{ $margin_price  }}"><br>
             </div>
           </div>
           

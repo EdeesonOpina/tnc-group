@@ -21,7 +21,7 @@ class CreateProjectDetailsTable extends Migration
             $table->string('name');
             $table->longtext('description');
             $table->integer('qty')->unsigned();
-            $table->decimal('usd_rate', $precision = 10, $scale = 2)->default('0.00');
+            // $table->decimal('usd_rate', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('usd_price', $precision = 10, $scale = 2)->default('0.00');
             $table->decimal('internal_price', $precision = 10, $scale = 2);
             $table->decimal('price', $precision = 10, $scale = 2);
