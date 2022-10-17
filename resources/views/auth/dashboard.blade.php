@@ -58,10 +58,18 @@
                                                 <a href="{{ route('auth.profile.view', [$user->id]) }}" style="text-decoration: none; color: #333;"><b>
                                                 @if ($user->avatar)
                                                     <img src="{{ url($user->avatar) }}" width="30px">
-                                                    {{ $user->firstname }} {{ $user->firstname }}
+                                                    @if ($user->role == 'Corporate')
+                                                        {{ $user->corporate }}
+                                                    @else
+                                                        {{ $user->firstname }} {{ $user->lastname }}
+                                                    @endif
                                                 @else
                                                     <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="30px" style="margin-right: 7px;">
-                                                    {{ $user->firstname }} {{ $user->lastname }}
+                                                    @if ($user->role == 'Corporate')
+                                                        {{ $user->corporate }}
+                                                    @else
+                                                        {{ $user->firstname }} {{ $user->lastname }}
+                                                    @endif
                                                 @endif
                                                 </b></a>
                                             </div>
@@ -74,18 +82,13 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="d-flex">
-                                            <!-- <a href="{{ route('auth.profile.view', [$user->id]) }}" style="margin-right: 7px">View</a> | 
-                                            <a href="{{ route('admin.users.edit', [$user->id]) }}" id="space-table">Edit</a> | 
-                                            <a href="{{ route('admin.users.resend.email', [$user->id]) }}" id="space-table">Resend Email</a> | 
-                                            @if ($user->status == UserStatus::ACTIVE || $user->status == UserStatus::PENDING)
-                                                <a href="#" data-href="{{ route('admin.users.delete', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
-                                            @endif
-
-                                            @if ($user->status == UserStatus::INACTIVE)
-                                                <a href="#" data-href="{{ route('admin.users.recover', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Recover</a>
-                                            @endif -->
-                                        </div>
+                                    </td>
+                                    <td id="compact-table">
+                                        @if ($user->company)
+                                            <i class="material-icons icon-16pt mr-1 text-muted">location_on</i> {{ $user->company->name }}
+                                        @else
+                                            Not applicable
+                                        @endif
                                     </td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $user->role }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $user->email }}</td>
@@ -98,7 +101,6 @@
                                             <i class="material-icons icon-16pt mr-1 text-muted">phone</i> {{ $user->phone }}
                                         @endif
                                     </td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">location_on</i> {{ $user->company->name }}</td>
                                     <td>
                                         @if ($user->status == UserStatus::ACTIVE)
                                             <div class="badge badge-success ml-2">Active</div>
@@ -198,9 +200,9 @@
                         <thead>
                             <tr>
                                 <th id="compact-table">#ID</th>
-                                <th id="compact-table"></th>
                                 <th id="compact-table">Name</th>
-                                <th id="compact-table">Person</th>
+                                <th id="compact-table">Company</th>
+                                <th id="compact-table">Role</th>
                                 <th id="compact-table">Email</th>
                                 <th id="compact-table">Contact</th>
                                 <th id="compact-table">Status</th>
@@ -210,54 +212,66 @@
                         <tbody class="list" id="companies">
                             @foreach($suppliers as $supplier)
                                 <tr>
-                                    <td><div class="badge badge-light">#{{ $supplier->id }}</div></td>
+                                    <td><div class="badge badge-light">#{{ $user->id }}</div></td>
                                     <td id="compact-table">
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex align-items-center">
-                                                @if ($supplier->image)
-                                                    <img src="{{ url($supplier->image) }}" width="100px">
+                                                <a href="{{ route('auth.profile.view', [$user->id]) }}" style="text-decoration: none; color: #333;"><b>
+                                                @if ($user->avatar)
+                                                    <img src="{{ url($user->avatar) }}" width="30px">
+                                                    @if ($user->role == 'Corporate')
+                                                        {{ $user->corporate }}
+                                                    @else
+                                                        {{ $user->firstname }} {{ $user->lastname }}
+                                                    @endif
                                                 @else
-                                                    <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="40px" style="margin-right: 7px;">
+                                                    <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="30px" style="margin-right: 7px;">
+                                                    @if ($user->role == 'Corporate')
+                                                        {{ $user->corporate }}
+                                                    @else
+                                                        {{ $user->firstname }} {{ $user->lastname }}
+                                                    @endif
+                                                @endif
+                                                </b></a>
+                                            </div>
+
+                                            <div class="d-flex align-items-center">
+                                                @if ($user->email_verified_at != null)
+                                                    <div class="badge badge-success ml-2">Verified</div>
+                                                @else
+                                                    <div class="badge badge-warning ml-2">Not Verified</div>
                                                 @endif
                                             </div>
                                         </div>
                                     </td>
                                     <td id="compact-table">
-                                        <b>{{ $supplier->name }}</b>
-                                        <!-- <div class="d-flex">
-                                            <a href="{{ route('admin.suppliers.view', [$supplier->id]) }}" id="table-letter-margin">View</a> | 
-                                            <a href="{{ route('admin.suppliers.manage', [$supplier->id]) }}" id="space-table">Manage</a> | 
-                                            <a href="{{ route('admin.suppliers.edit', [$supplier->id]) }}" id="space-table">Edit</a> | 
-                                            @if ($supplier->status == SupplierStatus::ACTIVE)
-                                                <a href="#" data-href="{{ route('admin.suppliers.delete', [$supplier->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
-                                            @endif
-
-                                            @if ($supplier->status == SupplierStatus::INACTIVE)
-                                                <a href="#" data-href="{{ route('admin.suppliers.recover', [$supplier->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Recover</a>
-                                            @endif
-                                        </div> -->
+                                        @if ($user->company)
+                                            <i class="material-icons icon-16pt mr-1 text-muted">location_on</i> {{ $user->company->name }}
+                                        @else
+                                            Not applicable
+                                        @endif
                                     </td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $supplier->person }}</td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $supplier->email }}</td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $user->role }}</td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $user->email }}</td>
                                     <td id="compact-table">
-                                        @if ($supplier->mobile)
-                                            <i class="material-icons icon-16pt mr-1 text-muted">phone_android</i> {{ $supplier->mobile }}<br>
+                                        @if ($user->mobile)
+                                            <i class="material-icons icon-16pt mr-1 text-muted">phone_android</i> {{ $user->mobile }}<br>
                                         @endif
                                         
-                                        @if ($supplier->phone)
-                                            <i class="material-icons icon-16pt mr-1 text-muted">phone</i> {{ $supplier->phone }}
+                                        @if ($user->phone)
+                                            <i class="material-icons icon-16pt mr-1 text-muted">phone</i> {{ $user->phone }}
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($supplier->status == SupplierStatus::ACTIVE)
+                                        @if ($user->status == UserStatus::ACTIVE)
                                             <div class="badge badge-success ml-2">Active</div>
-                                        @elseif ($supplier->status == SupplierStatus::PENDING)
+                                        @elseif ($user->status == UserStatus::PENDING)
                                             <div class="badge badge-warning ml-2">Pending</div>
-                                        @elseif ($supplier->status == SupplierStatus::INACTIVE)
+                                        @elseif ($user->status == UserStatus::INACTIVE)
                                             <div class="badge badge-danger ml-2">Inactive</div>
                                         @endif
                                     </td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ $supplier->created_at->format('M d Y') }}</td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ $user->created_at->format('M d Y') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

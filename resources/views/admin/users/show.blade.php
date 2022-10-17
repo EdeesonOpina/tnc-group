@@ -44,22 +44,10 @@ use App\Models\UserStatus;
                                     @endif
                                 @endif
                                 <option value="*">All</option>
-                                <option value="Customer">Customer</option>
-                                <option value="Agent">Agent</option>
-                                <option value="Corporate">Corporate</option>
-                                <option value="Customer">Customer</option>
-                                <option value="Stockman">Stockman</option>
-                                <option value="Cashier">Cashier</option>
-                                <option value="Technical">Technical</option>
-                                <option value="Cashier / Technical">Cashier / Technical</option>
-                                <option value="Encoder">Encoder</option>
+                                <option value="Programs">Programs</option>
                                 <option value="Sales">Sales</option>
-                                <option value="RMA">RMA</option>
-                                <option value="Moderator">Moderator</option>
-                                <option value="Editor">Editor</option>
-                                <option value="Developer">Developer</option>
+                                <option value="Accountant">Accountant</option>
                                 <option value="Admin">Admin</option>
-                                <option value="Super Admin">Super Admin</option>
                             </select>
                         </div>
                     </div>

@@ -39,10 +39,10 @@
                             <tr>
                                 <th id="compact-table">#ID</th>
                                 <th id="compact-table">Name</th>
+                                <th id="compact-table">Company</th>
                                 <th id="compact-table">Role</th>
                                 <th id="compact-table">Email</th>
                                 <th id="compact-table">Contact</th>
-                                <th id="compact-table">Company</th>
                                 <th id="compact-table">Status</th>
                                 <th id="compact-table">Created At</th>
                             </tr>
@@ -57,10 +57,18 @@
                                                 <a href="{{ route('auth.profile.view', [$user->id]) }}" style="text-decoration: none; color: #333;"><b>
                                                 @if ($user->avatar)
                                                     <img src="{{ url($user->avatar) }}" width="30px">
-                                                    {{ $user->firstname }} {{ $user->firstname }}
+                                                    @if ($user->role == 'Corporate')
+                                                        {{ $user->corporate }}
+                                                    @else
+                                                        {{ $user->firstname }} {{ $user->lastname }}
+                                                    @endif
                                                 @else
-                                                    <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="30px" style="margin-right: 7px;">
-                                                    {{ $user->firstname }} {{ $user->lastname }}
+                                                    <img src="{{ url(env('APP_ICON')) }}" width="30px" style="margin-right: 7px;">
+                                                    @if ($user->role == 'Corporate')
+                                                        {{ $user->corporate }}
+                                                    @else
+                                                        {{ $user->firstname }} {{ $user->lastname }}
+                                                    @endif
                                                 @endif
                                                 </b></a>
                                             </div>
@@ -73,18 +81,13 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="d-flex">
-                                            <!-- <a href="{{ route('auth.profile.view', [$user->id]) }}" style="margin-right: 7px">View</a> | 
-                                            <a href="{{ route('admin.users.edit', [$user->id]) }}" id="space-table">Edit</a> | 
-                                            <a href="{{ route('admin.users.resend.email', [$user->id]) }}" id="space-table">Resend Email</a> | 
-                                            @if ($user->status == UserStatus::ACTIVE || $user->status == UserStatus::PENDING)
-                                                <a href="#" data-href="{{ route('admin.users.delete', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
-                                            @endif
-
-                                            @if ($user->status == UserStatus::INACTIVE)
-                                                <a href="#" data-href="{{ route('admin.users.recover', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Recover</a>
-                                            @endif -->
-                                        </div>
+                                    </td>
+                                    <td id="compact-table">
+                                        @if ($user->company)
+                                            <i class="material-icons icon-16pt mr-1 text-muted">location_on</i> {{ $user->company->name }}
+                                        @else
+                                            Not applicable
+                                        @endif
                                     </td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $user->role }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $user->email }}</td>
@@ -97,7 +100,6 @@
                                             <i class="material-icons icon-16pt mr-1 text-muted">phone</i> {{ $user->phone }}
                                         @endif
                                     </td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">location_on</i> {{ $user->country->name }}</td>
                                     <td>
                                         @if ($user->status == UserStatus::ACTIVE)
                                             <div class="badge badge-success ml-2">Active</div>
