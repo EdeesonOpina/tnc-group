@@ -29,6 +29,7 @@ class ProjectController extends Controller
     public function show()
     {
         $projects = Project::orderBy('created_at', 'desc')
+                    ->where('status', '!=', ProjectStatus::INACTIVE)
                     ->paginate(15);
 
         return view('admin.projects.show', compact(

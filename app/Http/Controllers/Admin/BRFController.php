@@ -28,6 +28,7 @@ class BRFController extends Controller
     public function show()
     {
         $budget_request_forms = BudgetRequestForm::orderBy('created_at', 'desc')
+                    ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
                     ->paginate(15);
 
         return view('admin.brf.show', compact(

@@ -19,6 +19,7 @@ class UserController extends Controller
     public function show()
     {
         $users = User::orderBy('created_at', 'desc')
+                    ->where('status', '!=', UserStatus::INACTIVE)
                     ->paginate(15);
 
         return view('admin.users.show', compact(
@@ -39,7 +40,8 @@ class UserController extends Controller
 
     public function filter($name, $role, $status, $from_date, $to_date)
     {
-        $query = User::orderBy('created_at', 'desc');
+        $query = User::where('status', '!=', UserStatus::INACTIVE)
+                    ->orderBy('created_at', 'desc');
 
         if ($name != '*') {
             $query->whereRaw("concat(firstname, ' ', lastname) like '%" . $name . "%' ");

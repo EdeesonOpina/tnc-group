@@ -16,6 +16,7 @@ class ProjectCategoryController extends Controller
     public function show()
     {
         $categories = ProjectCategory::orderBy('created_at', 'desc')
+                    ->where('status', '!=', ProjectCategoryStatus::INACTIVE)
                     ->paginate(15);
 
         return view('admin.project_categories.show', compact(

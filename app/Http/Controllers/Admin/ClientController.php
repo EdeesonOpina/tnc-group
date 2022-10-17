@@ -18,6 +18,7 @@ class ClientController extends Controller
     public function show()
     {
         $clients = Client::orderBy('created_at', 'desc')
+                    ->where('status', '!=', ClientStatus::INACTIVE)
                     ->paginate(15);
 
         return view('admin.clients.show', compact(

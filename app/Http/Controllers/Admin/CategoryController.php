@@ -16,6 +16,7 @@ class CategoryController extends Controller
     public function show()
     {
         $categories = Category::orderBy('created_at', 'desc')
+                    ->where('status', '!=', CategoryStatus::INACTIVE)
                     ->paginate(15);
 
         return view('admin.categories.show', compact(
