@@ -49,7 +49,8 @@ class ProjectController extends Controller
 
     public function filter($reference_number, $status, $from_date, $to_date)
     {
-        $query = Project::orderBy('created_at', 'desc');
+        $query = Project::where('status', '!=', ProjectStatus::INACTIVE)
+                    ->orderBy('created_at', 'desc');
 
         if ($reference_number != '*') {
             $query->where('reference_number', $reference_number);

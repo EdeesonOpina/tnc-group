@@ -38,7 +38,8 @@ class ClientController extends Controller
 
     public function filter($name, $status, $from_date, $to_date)
     {
-        $query = Client::orderBy('created_at', 'desc');
+        $query = Client::where('status', '!=', ClientStatus::INACTIVE)
+                    ->orderBy('created_at', 'desc');
 
         if ($name != '*') {
             $query->where('name', 'LIKE', '%' . $name . '%');

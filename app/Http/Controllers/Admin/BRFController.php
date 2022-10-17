@@ -49,7 +49,8 @@ class BRFController extends Controller
 
     public function filter($reference_number, $name, $status, $from_date, $to_date)
     {
-        $query = BudgetRequestForm::orderBy('created_at', 'desc');
+        $query = BudgetRequestForm::where('status', '!=', BudgetRequestFormStatus::INACTIVE)
+                    ->orderBy('created_at', 'desc');
 
         if ($reference_number != '*') {
             $query->where('reference_number', $reference_number);
