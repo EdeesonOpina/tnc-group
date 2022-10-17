@@ -204,7 +204,7 @@ use App\Models\UserStatus;
                                     </td>
                                     <td id="compact-table">
                                         @if ($user->signature)
-                                            <img src="{{ url($user->signature) }}" width="30px">
+                                            <img src="{{ url($user->signature) }}" width="60px">
                                         @else
                                             N/A
                                         @endif
