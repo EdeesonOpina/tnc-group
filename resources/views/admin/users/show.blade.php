@@ -115,6 +115,7 @@ use App\Models\UserStatus;
                             <tr>
                                 <th id="compact-table">#ID</th>
                                 <th id="compact-table">Name</th>
+                                <th id="compact-table">Position</th>
                                 <th id="compact-table">Company</th>
                                 <th id="compact-table">Role</th>
                                 <th id="compact-table">Email</th>
@@ -174,6 +175,13 @@ use App\Models\UserStatus;
                                                 <a href="#" data-href="{{ route('admin.users.recover', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Recover</a>
                                             @endif
                                         </div>
+                                    </td>
+                                    <td id="compact-table">
+                                        @if ($user->position)
+                                            {{ $user->position }}
+                                        @else
+                                            Not applicable
+                                        @endif
                                     </td>
                                     <td id="compact-table">
                                         @if ($user->company)
