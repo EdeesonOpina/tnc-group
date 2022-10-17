@@ -553,8 +553,11 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::group(['prefix' => 'exports/'], function () {
             Route::get('print/ce/{project_id}', 'App\Http\Controllers\Export\ProjectController@print_ce')->name('internals.exports.projects.print.ce');
             Route::get('print/internal-ce/{project_id}', 'App\Http\Controllers\Export\ProjectController@print_internal_ce')->name('internals.exports.projects.print.internal-ce');
-            Route::get('excel/{project_id}', 'App\Http\Controllers\Export\ProjectController@excel')->name('internals.exports.projects.ce.excel');
-            Route::get('pdf/{project_id}', 'App\Http\Controllers\Export\ProjectController@pdf')->name('internals.exports.projects.ce.pdf');
+            Route::get('excel/{project_id}', 'App\Http\Controllers\Export\ProjectController@excel')->name('internals.exports.projects.excel');
+
+            Route::get('pdf/ce/{project_id}', 'App\Http\Controllers\Export\ProjectController@pdf_ce')->name('internals.exports.projects.pdf.ce');
+            Route::get('pdf/internal-ce/{project_id}', 'App\Http\Controllers\Export\ProjectController@pdf_internal_ce')->name('internals.exports.projects.pdf.internal-ce');
+
             Route::get('sql', 'App\Http\Controllers\Admin\Report\ProjectController@sql')->name('internals.exports.projects.sql');
         });
 

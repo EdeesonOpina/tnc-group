@@ -95,15 +95,14 @@ use App\Models\ProjectStatus;
                         <thead>
                             <tr>
                                 <th id="compact-table">CE#</th>
-                                <th id="compact-table"></th>
-                                <th id="compact-table">Company</th>
                                 <th id="compact-table">Name</th>
+                                <th id="compact-table">Company</th>
                                 <th id="compact-table">Client</th>
                                 <th id="compact-table">Cost</th>
                                 <th id="compact-table">ASF</th>
                                 <th id="compact-table">VAT</th>
                                 <th id="compact-table">Grand Total</th>
-                                <th id="compact-table">End Date</th>
+                                <th id="compact-table">Duration Date</th>
                                 <th id="compact-table">Status</th>
                             </tr>
                         </thead>
@@ -111,17 +110,6 @@ use App\Models\ProjectStatus;
                             @foreach($projects as $project)
                                 <tr>
                                     <td id="compact-table"><strong>{{ $project->reference_number }}</strong></td>
-                                    <td id="compact-table">
-                                        <div class="d-flex align-items-center">
-                                            <div class="d-flex align-items-center">
-                                                @if ($project->image)
-                                                    <img src="{{ url($project->image) }}" width="100px">
-                                                @else
-                                                    <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="40px" style="margin-right: 7px;">
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </td>
                                     <td id="compact-table">
                                         <b>{{ $project->name }}</b>
                                         <div class="d-flex">
@@ -158,7 +146,7 @@ use App\Models\ProjectStatus;
                                     <td id="compact-table">P{{ number_format($project->asf, 2) }}</td>
                                     <td id="compact-table">P{{ number_format($project->vat, 2) }}</td>
                                     <td id="compact-table">P{{ number_format($project->total + $project->asf + $project->vat, 2) }}</td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($project->end_date)->format('M d Y') }}</td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($project->duration_date)->format('M d Y') ?? null }}</td>
                                     <td>
                                         @if ($project->status == ProjectStatus::FOR_APPROVAL)
                                             <div class="badge badge-warning ml-2">For Approval</div>

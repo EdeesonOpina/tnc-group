@@ -27,6 +27,7 @@ class BRFController extends Controller
     {
         $budget_request_form = BudgetRequestForm::where('reference_number', $reference_number)->first();
         $budget_request_form_details = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form->id)
+                                                        ->where('status', BudgetRequestFormDetailStatus::APPROVED)
                                                         ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
                                                         ->get();
         $budget_request_form_details_total = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form->id)

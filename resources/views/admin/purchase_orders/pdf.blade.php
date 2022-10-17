@@ -51,7 +51,7 @@
 @endphp
 
 
-<img src="{{ url(env('BIG_FOUR_LOGO')) }}" width="150px">
+<img src="{{ url(env('APP_LOGO_WITH_TEXT')) }}" width="150px">
 <hr>
 <p class="font-change heading-text">Purchase Order Report</p>
 <table class="table border-bottom no-border table-borderless ">

@@ -9,13 +9,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cost Estimate</title>
+    <title>Reports</title>
     <link type="text/css" href="{{ url('auth/pdf/assets/css/app.css') }}" rel="stylesheet">
-
-    <!-- Font Awesome FREE Icons -->
-    <link type="text/css" href="{{ url('auth/admin/assets/css/vendor-fontawesome-free.css') }}" rel="stylesheet">
-    <link type="text/css" href="{{ url('auth/admin/assets/css/vendor-fontawesome-free.rtl.css') }}" rel="stylesheet">
-
+    
     <style type="text/css">
     #compact-table {
         white-space:nowrap;
@@ -31,7 +27,7 @@
     }
 
     .font-change {
-        font-family: "Lucida Console", "Courier New", monospace;
+        font-family: "Lucida Console", "Courier New", monospace !important;
     }
 
     .heading-text {
@@ -57,6 +53,10 @@
         color: #E74414 !important;
     }
 
+    .no-space {
+        padding: 0px !important;
+    }
+
     #compact-table {
         width:1%;
         white-space:nowrap;
@@ -64,20 +64,14 @@
 
     body {
         background: #fff;
+        font-family: "Lucida Console", "Courier New", monospace !important;
     }
+
+    @page { margin: 0px; }
     </style>
 </head>
 <body>
 <div class="container">
-  <br><br>
-  @include('layouts.partials.alerts')
-
-  @if ($project->conforme_signature)
-      <a href="{{ route('internals.exports.projects.pdf.ce', [$project->id]) }}">
-        <button type="button" class="btn btn-danger" id="margin-right"><i class="fa fa-file-pdf" id="margin-right"></i>Create PDF</button>
-      </a>
-      <br><br>
-  @endif
   <!-- START OF PRINTABLE AREA -->
   <div id="printableArea">
     <!-- @if ($project->company->image)
@@ -86,14 +80,15 @@
         <img src="{{ url(env('APP_LOGO_WITH_TEXT')) }}" width="80px">
     @endif
     <br><br><br> -->
+    <br><br>
     <img src="{{ url(env('APP_LOGO_WITH_TEXT')) }}" width="160px">
     <br><br>
-    <h2 class="font-change table-color-primary">Cost Estimate</h2>
+    <strong class="font-change table-color-primary">Cost Estimate</strong>
     <table class="table border-bottom no-border table-borderless font-change">
         <tbody>
             <tr>
                 <td>
-                    <div class="text-label"><strong>CE #:</strong></div>
+                    <div class="text-label font-change"><strong>CE #:</strong></div>
                 </td>
                 <td>
                     {{ $project->reference_number }}<br>
@@ -143,27 +138,33 @@
     <table class="table table-bordered font-change">
         <thead>
             <tr>
-                <th id="compact-table" class="table-black-border table-color-primary"></th>
-                <th id="compact-table" class="table-black-border table-color-primary">Particulars</th>
-                <th id="compact-table" class="table-black-border table-color-primary">Quantity</th>
-                <th id="compact-table" class="table-black-border table-color-primary">Description</th>
+                <th class="table-black-border table-color-primary"></th>
+                <th class="table-black-border table-color-primary">Particulars</th>
+                <th class="table-black-border table-color-primary">Qty</th>
+                <th class="table-black-border table-color-primary">Desc.</th>
                 @if ($project->has_usd == 1)
-                    <th id="compact-table" class="table-black-border table-color-primary">Unit Price (USD)</th>
+                    <th id="compact-table" class="table-black-border table-color-primary">Price (USD)</th>
                 @endif
-                <th id="compact-table" class="table-black-border table-color-primary">Unit Price</th>
-                <th id="compact-table" class="table-black-border table-color-primary">Total Price</th>
+                <th id="compact-table" class="table-black-border table-color-primary">Price</th>
+                <th id="compact-table" class="table-black-border table-color-primary">Total</th>
             </tr>
         </thead>
         <tbody class="list" id="companies">
             @foreach ($project_details->unique('category_id') as $project_detail)
                 @php
-                    $pjds = ProjectDetail::where('category_id', $project_detail->category_id)
+                    $pjds = ProjectDetail::where('project_id', $project->id)
+                                    ->where('category_id', $project_detail->category_id)
                                     ->where('status', '!=', ProjectDetailStatus::INACTIVE)
                                     ->get();
                 @endphp
                     <tr>
-                        <td colspan="1" id="compact-table"><strong>{{ $project_detail->category->name }}</strong></td>
-                        <td colspan="6" id="compact-table">&nbsp;</td>
+                        <td colspan="1"><strong>{{ $project_detail->category->name }}</strong></td>
+                        @if ($project->has_usd == 1)
+                            <td colspan="6" id="compact-table">&nbsp;</td>
+                        @else
+                            <td colspan="5" id="compact-table">&nbsp;</td>
+                        @endif
+
                     </tr>  
                 @foreach ($pjds as $pjd)
                     <tr>
@@ -188,42 +189,38 @@
 
             @if ($project->has_usd == 1)
                 <tr>
-                    <td colspan="3" class="table-black-border">&nbsp;</td>
-                    <td id="compact-table" class="table-black-border"><strong>Total Cost (USD)</strong></td>
-                    <td id="compact-table" class="table-black-border">${{ number_format($project->usd_total, 2) }}</td>
+                    <td colspan="4" class="table-black-border">&nbsp;</td>
                     <td id="compact-table" class="table-black-border"><strong>Total Cost</strong></td>
+                    <td id="compact-table" class="table-black-border">${{ number_format($project->usd_total, 2) }}</td>
                     <td id="compact-table" class="table-black-border">P{{ number_format($project->total, 2) }}</td>
                 </tr>
                 
                 <tr>
-                    <td colspan="3" class="table-black-border">&nbsp;</td>
-                    <td id="compact-table" class="table-black-border"><strong>ASF (USD)</strong></td>
+                    <td colspan="4" class="table-black-border">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border"><strong>ASF</strong></td>
                     <td id="compact-table" class="table-black-border">
                         ${{ number_format($project->usd_asf, 2) }}
                     </td>
-                    <td id="compact-table" class="table-black-border"><strong>ASF</strong></td>
                     <td id="compact-table" class="table-black-border">
                         P{{ number_format($project->asf, 2) }}
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="3" class="table-black-border">&nbsp;</td>
-                    <td id="compact-table" class="table-black-border"><strong>VAT (USD)</strong></td>
+                    <td colspan="4" class="table-black-border">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border"><strong>VAT</strong></td>
                     <td id="compact-table" class="table-black-border">
                         ${{ number_format($project->usd_vat, 2) }}
                     </td>
-                    <td id="compact-table" class="table-black-border"><strong>VAT</strong></td>
                     <td id="compact-table" class="table-black-border">
                         P{{ number_format($project->vat, 2) }}
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="3" class="table-black-border">&nbsp;</td>
-                    <td id="compact-table" class="table-black-border"><strong>Grand Total (USD)</strong></td>
-                    <td id="compact-table" class="table-black-border">${{ number_format($project->usd_total + $project->usd_vat + $project->usd_asf, 2) }}</td>
+                    <td colspan="4" class="table-black-border">&nbsp;</td>
                     <td id="compact-table" class="table-black-border"><strong>Grand Total</strong></td>
+                    <td id="compact-table" class="table-black-border">${{ number_format($project->usd_total + $project->usd_vat + $project->usd_asf, 2) }}</td>
                     <td id="compact-table" class="table-black-border">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
                 </tr>
             @else
@@ -257,8 +254,9 @@
             @endif
         </tbody>
     </table>
+    <br>
+    <strong class="font-change">TERMS AND CONDITIONS</strong>
     <br><br>
-    <h4 class="font-change">TERMS AND CONDITIONS</h4>
     <table class="table table-bordered font-change">
         <tbody>
             <tr>
@@ -326,15 +324,7 @@
                         @if ($project->conforme_signature)
                           <br><img src="{{ url($project->conforme_signature) }}" width="80px"><br>
                         @else
-                          <br><br>
-                          <strong>Please Upload Signature Here</strong>
-                          <form action="{{ route('internals.projects.update.conforme-signature') }}" method="post" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="project_id" value="{{ $project->id }}">
-                            <input type="file" name="conforme_signature"><br><br>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                          </form>
-                          <br>
+                            <br><br><br><br>
                         @endif
                         <strong>{{ $project->client_contact->name }}</strong><br>
                         {{ $project->client_contact->position }}<br>

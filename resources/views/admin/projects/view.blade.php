@@ -22,6 +22,14 @@
             <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-link" id="margin-right"></i>Share CE Link</button>
         </a>
 
+        <a href="{{ route('internals.exports.projects.excel', [$project->id]) }}">
+            <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-file-excel" id="margin-right"></i>Create Excel</button>
+        </a>
+
+        <a href="{{ route('internals.exports.projects.pdf.ce', [$project->id]) }}">
+            <button type="button" class="btn btn-danger" id="margin-right"><i class="fa fa-file-pdf" id="margin-right"></i>Create PDF</button>
+        </a>
+
         <a href="{{ route('internals.exports.projects.print.ce', [$project->reference_number]) }}">
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print CE</button>
         </a>
