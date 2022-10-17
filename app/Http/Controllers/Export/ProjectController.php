@@ -42,7 +42,7 @@ class ProjectController extends Controller
                                 ->orderBy('created_at', 'desc')
                                 ->paginate(15);
         $budget_request_forms = BudgetRequestForm::where('project_id', $project->id)
-                        ->where('status', BudgetRequestForm::APPROVED)
+                        ->where('status', BudgetRequestFormStatus::APPROVED)
                         ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
                         ->orderBy('created_at', 'desc')
                         ->paginate(15);
