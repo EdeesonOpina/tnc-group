@@ -51,7 +51,10 @@
                                 </div>
                             </div>
                             <div class="col">
-                                &nbsp;
+                                <div class="form-group">
+                                    <label>Position</label>
+                                    <input type="text" class="form-control" name="position" placeholder="Position" value="{{ old('position') }}">
+                                </div>
                             </div>
                         </div>
 

@@ -28,6 +28,8 @@
               <hr>
               <label>Name</label><br>
               <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') }}"><br>
+              <label>Position</label><br>
+              <input type="text" name="position" class="form-control" placeholder="Position" value="{{ old('position') }}"><br>
               <label>Email Address</label>
               <input type="text" class="form-control" name="email" placeholder="Email Address" value="{{ old('email') }}"><br>
               <label>Contact Person</label>

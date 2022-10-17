@@ -20,6 +20,7 @@ class ClientContactController extends Controller
         $rules = [
             'name' => 'required',
             'person' => 'required',
+            'position' => 'required',
             'mobile' => 'required',
             'email' => 'required',
             'line_address_1' => 'required',
@@ -53,6 +54,7 @@ class ClientContactController extends Controller
         $rules = [
             'name' => 'required',
             'person' => 'required',
+            'position' => 'required',
             'mobile' => 'required',
             'email' => 'required',
             'line_address_1' => 'required',

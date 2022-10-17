@@ -142,6 +142,7 @@
                                                     <i class="material-icons icon-16pt mr-1 text-danger">delete</i>
                                                 </a>
                                             </strong><br>
+                                            <strong>{{ $contact->position }}</strong><br>
                                             <i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $contact->email }} 
                                             @if ($contact->mobile)
                                                 <i class="material-icons icon-16pt mr-1 text-muted">phone_android</i> {{ $contact->mobile }} 
