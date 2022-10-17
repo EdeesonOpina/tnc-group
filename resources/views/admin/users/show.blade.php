@@ -120,6 +120,7 @@ use App\Models\UserStatus;
                                 <th id="compact-table">Role</th>
                                 <th id="compact-table">Email</th>
                                 <th id="compact-table">Contact</th>
+                                <th id="compact-table">Signature</th>
                                 <th id="compact-table">Status</th>
                                 <th id="compact-table">Created At</th>
                             </tr>
@@ -140,7 +141,7 @@ use App\Models\UserStatus;
                                                         {{ $user->firstname }} {{ $user->lastname }}
                                                     @endif
                                                 @else
-                                                    <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="30px" style="margin-right: 7px;">
+                                                    <img src="{{ url(env('APP_ICON')) }}" width="30px" style="margin-right: 7px;">
                                                     @if ($user->role == 'Corporate')
                                                         {{ $user->corporate }}
                                                     @else
@@ -199,6 +200,13 @@ use App\Models\UserStatus;
                                         
                                         @if ($user->phone)
                                             <i class="material-icons icon-16pt mr-1 text-muted">phone</i> {{ $user->phone }}
+                                        @endif
+                                    </td>
+                                    <td id="compact-table">
+                                        @if ($user->signature)
+                                            <img src="{{ url($user->signature) }}" width="30px">
+                                        @else
+                                            N/A
                                         @endif
                                     </td>
                                     <td>
