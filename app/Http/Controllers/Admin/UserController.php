@@ -117,7 +117,8 @@ class UserController extends Controller
             $data['signature'] = 'uploads/users/signatures/' . $image_name; // save the destination of the file to the database
         }
 
-        $data['status'] = UserStatus::PENDING; // if you want to insert to a specific column
+        $data['email_verified_at'] = Carbon::now();
+        $data['status'] = UserStatus::ACTIVE; // if you want to insert to a specific column
         $data['password'] = bcrypt('123123123');
         User::create($data); // create data in a model
 
@@ -161,7 +162,8 @@ class UserController extends Controller
 
         $data = request()->all(); // get all request
         $data['company_id'] = 0; // if you want to insert to a specific column
-        $data['status'] = UserStatus::PENDING; // if you want to insert to a specific column
+        $data['email_verified_at'] = Carbon::now();
+        $data['status'] = UserStatus::ACTIVE; // if you want to insert to a specific column
         $data['password'] = bcrypt('123123123');
         User::create($data); // create data in a model
 
