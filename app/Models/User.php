@@ -23,6 +23,7 @@ class User extends Authenticatable
         'biography',
         'corporate',
         'company_id',
+        'position',
         'email',
         'password',
         'birthdate',
