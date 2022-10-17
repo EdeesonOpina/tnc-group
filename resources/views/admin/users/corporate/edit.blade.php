@@ -6,11 +6,11 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('admin.users') }}"><i class="material-icons icon-20pt">home</i></a></li>
-                    <li class="breadcrumb-item">Corporate</li>
-                    <li class="breadcrumb-item active" aria-current="page">Edit Corporate</li>
+                    <li class="breadcrumb-item">Supplier</li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit Supplier</li>
                 </ol>
             </nav>
-            <h1 class="m-0">Edit Corporate</h1>
+            <h1 class="m-0">Edit Supplier</h1>
         </div>
     </div>
 </div>
@@ -21,7 +21,7 @@
     <div class="card card-form">
         <div class="row no-gutters">
             <div class="col-lg-4 card-body">
-                <p><strong class="headings-color">Edit New Corporate</strong></p>
+                <p><strong class="headings-color">Edit New Supplier</strong></p>
                 <p class="text-muted mb-0">Please enter the details needed in order for you to proceed.</p>
             </div>
             <div class="col-lg-8 card-form__body card-body">

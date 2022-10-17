@@ -16,6 +16,7 @@ class Project extends Model
         'company_id',
         'client_id',
         'name',
+        'vat_rate',
         'has_usd',
         'margin',
         'usd_total',

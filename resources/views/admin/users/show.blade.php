@@ -15,13 +15,12 @@ use App\Models\UserStatus;
             <h1 class="m-0">Users</h1>
         </div>
         <a href="{{ route('admin.users.add') }}" class="btn btn-primary" id="margin-right"><i class="material-icons">add</i> Add User</a>
-        <a href="{{ route('admin.users.corporate.add') }}" class="btn btn-primary"><i class="material-icons">add</i> Add Corporate</a>
+        <a href="{{ route('admin.users.corporate.add') }}" class="btn btn-primary"><i class="material-icons">add</i> Add Supplier</a>
     </div>
 </div>
 
 <div class="container-fluid page__container">
     @include('layouts.partials.alerts')
-    @include('layouts.partials.top-tabs')
 
     <form action="{{ route('admin.users.search') }}" method="post">
         {{ csrf_field() }}
@@ -165,7 +164,7 @@ use App\Models\UserStatus;
                                             @else
                                                 <a href="{{ route('admin.users.edit', [$user->id]) }}" id="space-table">Edit</a> | 
                                             @endif
-                                            <a href="#" data-href="{{ route('admin.users.resend.email', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Resend Email</a> | 
+                                            <!-- <a href="#" data-href="{{ route('admin.users.resend.email', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Resend Email</a> |  -->
                                             <a href="#" data-toggle="modal" data-target="#set-password-{{ $user->id }}" id="space-table">Set Password</a> | 
                                             @if ($user->status == UserStatus::ACTIVE || $user->status == UserStatus::PENDING)
                                                 <a href="#" data-href="{{ route('admin.users.delete', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>

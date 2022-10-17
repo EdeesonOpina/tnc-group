@@ -104,9 +104,12 @@ class ProjectController extends Controller
     {
         $rules = [
             'client_contact_id' => 'required',
+            'has_usd' => 'required',
             'company_id' => 'required',
             'client_id' => 'required',
             'name' => 'required',
+            'margin' => 'required',
+            'vat_rate' => 'required',
             'description' => 'nullable',
         ];
 
@@ -419,6 +422,30 @@ class ProjectController extends Controller
         $margin_price = ($project->total * ($project->margin / 100));
         $project->asf = $margin_price;
         $project->usd_asf = $margin_price / $project->usd_rate;
+        $project->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return redirect()->route('internals.projects.manage', [$project->id]);
+    }
+
+    public function vat_rate(Request $request)
+    {
+        $rules = [
+            'vat_rate' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails())
+            return back()->withInput()->withErrors($validator);
+
+        $data = $request->all();
+        $project = Project::find($request->project_id);
+        $project->fill($data)->save();
+
+        $vat_price = ($project->total * ($project->vat_rate / 100));
+        $project->vat = $vat_price;
+        $project->usd_vat = $vat_price / $project->usd_rate;
         $project->save();
 
         $request->session()->flash('success', 'Data has been updated');

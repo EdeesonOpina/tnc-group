@@ -535,6 +535,7 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::post('/update/conforme-signature', 'App\Http\Controllers\Admin\ProjectController@conforme_signature')->name('internals.projects.update.conforme-signature');
 
         Route::post('/margin', 'App\Http\Controllers\Admin\ProjectController@margin')->name('internals.projects.update.margin');
+        Route::post('/vat-rate', 'App\Http\Controllers\Admin\ProjectController@vat_rate')->name('internals.projects.update.vat-rate');
         Route::post('/usd-rate', 'App\Http\Controllers\Admin\ProjectController@usd_rate')->name('internals.projects.update.usd-rate');
         Route::post('/asf', 'App\Http\Controllers\Admin\ProjectController@asf')->name('internals.projects.update.asf');
         Route::post('/vat', 'App\Http\Controllers\Admin\ProjectController@vat')->name('internals.projects.update.vat');

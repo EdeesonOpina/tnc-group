@@ -20,7 +20,6 @@ use App\Models\BrandStatus;
 
 <div class="container-fluid page__container">
     @include('layouts.partials.alerts')
-    @include('layouts.partials.top-tabs')
 
     <form action="{{ route('admin.brands.search') }}" method="post">
         {{ csrf_field() }}

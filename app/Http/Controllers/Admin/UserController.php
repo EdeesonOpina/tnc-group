@@ -240,7 +240,7 @@ class UserController extends Controller
         if ($request->file('signature')) { // if the file is present
             $image_name = $request->name . '-' . time() . '.' . $request->file('signature')->getClientOriginalExtension(); // set unique name for that file
             $request->file('signature')->move('uploads/users/signatures', $image_name); // move the file to the laravel project
-            $data['image'] = 'uploads/users/signatures/' . $image_name; // save the destination of the file to the database
+            $data['signature'] = 'uploads/users/signatures/' . $image_name; // save the destination of the file to the database
         }
 
         $user = User::find($request->user_id);

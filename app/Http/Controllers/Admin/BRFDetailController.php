@@ -45,10 +45,10 @@ class BRFDetailController extends Controller
 
         $data['total'] = $request->qty * $request->price;
         $data['status'] = BudgetRequestFormStatus::FOR_APPROVAL; // if you want to insert to a specific column
-        BudgetRequestFormDetail::create($data); // create data in a model
+        $budget_request_form_detail = BudgetRequestFormDetail::create($data); // create data in a model
 
         $request->session()->flash('success', 'Data has been added');
-        return back();
+        return redirect()->route('internals.brf.details.approve', [$budget_request_form_detail->id]);
     }
 
     public function view($budget_request_form_detail_id)
@@ -103,8 +103,7 @@ class BRFDetailController extends Controller
         $budget_request_form->save();
 
         $request->session()->flash('success', 'Data has been approved');
-
-        return back();
+        return redirect()->route('internals.brf.manage', [$budget_request_form->id]);
     }
 
     public function disapprove(Request $request, $budget_request_form_detail_id)

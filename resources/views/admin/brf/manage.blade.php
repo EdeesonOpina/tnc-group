@@ -55,6 +55,19 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
+                            <strong>CE #</strong>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            {{ $budget_request_form->project->reference_number }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
                             <strong>Pay To</strong>
                         </div>
                     </div>
@@ -140,14 +153,6 @@
                             @foreach ($budget_request_form_details as $budget_request_form_detail)
                                 <tr>
                                     <td>
-                                        @if ($budget_request_form_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                            <div class="badge badge-warning">For Approval</div>
-                                        @elseif ($budget_request_form_detail->status == BudgetRequestFormStatus::APPROVED)
-                                            <div class="badge badge-success">Approved</div>
-                                        @elseif ($budget_request_form_detail->status == BudgetRequestFormStatus::DISAPPROVED)
-                                            <div class="badge badge-danger">Disapproved</div>
-                                        @endif
-                                        <br>
                                         <strong>{{ $budget_request_form_detail->name }}</strong>
                                         <div class="d-flex">
                                             @if ($budget_request_form_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)

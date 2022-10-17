@@ -20,7 +20,6 @@ use App\Models\ExpenseCompanyStatus;
 
 <div class="container-fluid page__container">
     @include('layouts.partials.alerts')
-    @include('layouts.partials.top-tabs')
 
     <form action="{{ route('accounting.expense-companies.search') }}" method="post">
         {{ csrf_field() }}

@@ -141,9 +141,22 @@
                             </div>
 
                             <div class="col">
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
                                 <div class="form-group">
-                                    <label>Margin Rate (%)</label>
-                                    <input type="text" name="margin" class="form-control" placeholder="Margin Rate" value="{{ old('margin') ?? '0' }}">
+                                    <label>ASF (%)</label>
+                                    <input type="text" name="margin" class="form-control" placeholder="ASF (%)" value="{{ old('margin') ?? '0' }}">
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>VAT (%)</label>
+                                    <input type="text" name="vat_rate" class="form-control" placeholder="VAT (%)" value="{{ old('vat_rate') ?? '0' }}">
                                 </div>
                             </div>
                         </div>

@@ -473,6 +473,7 @@
     @include('layouts.modals.projects.asf')
     @include('layouts.modals.projects.vat')
     @include('layouts.modals.projects.margin')
+    @include('layouts.modals.projects.vat-rate')
     @include('layouts.modals.projects.usd-rate')
   @endif
 
@@ -485,7 +486,9 @@
   @endif
 
   @if (request()->is('admin/clients') || request()->is('admin/clients/*'))
-    @if(!str_contains(url()->current(), '/edit'))
+    @if(str_contains(url()->current(), '/edit') || str_contains(url()->current(), '/add'))
+
+    @else
         @include('layouts.modals.clients.contact.add')
     @endif
   @endif

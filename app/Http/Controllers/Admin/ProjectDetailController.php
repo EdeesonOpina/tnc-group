@@ -85,7 +85,7 @@ class ProjectDetailController extends Controller
         $project_detail = ProjectDetail::create($data); // create data in a model
 
         $request->session()->flash('success', 'Data has been added');
-        return redirect()->route('internals.projects.manage', [$project_detail->project->id]);
+        return redirect()->route('internals.projects.details.approve', [$project_detail->id]);
     }
 
     public function edit($project_detail_id)
@@ -141,14 +141,41 @@ class ProjectDetailController extends Controller
             $data['sub_category_id'] = 0;
 
         $project_detail = ProjectDetail::find($request->project_detail_id);
+        $project = Project::find($project_detail->project->id);
+
+        /* deduct the total */
+        $project->usd_total -= $project_detail->usd_total;
+        $project->internal_total -= $project_detail->internal_total;
+        $project->total -= $project_detail->total;
+        $project->save();
+
         $data['usd_price'] = $request->price / $project_detail->project->usd_rate;
         $data['usd_total'] = ($request->qty * $request->price) / $project_detail->project->usd_rate;
         $data['internal_total'] = $request->internal_price * $request->qty;
         $data['total'] = $request->price * $request->qty;
         $project_detail->fill($data)->save();
 
+        /* add the total */
+        $project->usd_total += $project_detail->usd_total;
+        $project->internal_total += $project_detail->internal_total;
+        $project->total += $project_detail->total;
+        $project->save();
+
+        /* update the asf */
+        $margin_price = ($project->total * ($project->margin / 100));
+        $project->asf = $margin_price;
+        $project->usd_asf = $margin_price / $project->usd_rate;
+        $project->save();
+
+        /* update the vat */
+        $vat_price = ($project->total * ($project->vat_rate / 100));
+        $project->vat = $vat_price;
+        $project->usd_vat = $vat_price / $project->usd_rate;
+        $project->save();
+
         $request->session()->flash('success', 'Data has been updated');
         return redirect()->route('internals.projects.manage', [$project_detail->project->id]);
+        // return redirect()->route('internals.projects.details.approve', [$project_detail->id]);
     }
 
     public function approve(Request $request, $project_detail_id)
@@ -163,9 +190,20 @@ class ProjectDetailController extends Controller
         $project->total += $project_detail->total;
         $project->save();
 
-        $request->session()->flash('success', 'Data has been approved');
+        /* update the asf */
+        $margin_price = ($project->total * ($project->margin / 100));
+        $project->asf = $margin_price;
+        $project->usd_asf = $margin_price / $project->usd_rate;
+        $project->save();
 
-        return back();
+        /* update the vat */
+        $vat_price = ($project->total * ($project->vat_rate / 100));
+        $project->vat = $vat_price;
+        $project->usd_vat = $vat_price / $project->usd_rate;
+        $project->save();
+
+        $request->session()->flash('success', 'Data has been approved');
+        return redirect()->route('internals.projects.manage', [$project_detail->project->id]);
     }
 
     public function disapprove(Request $request, $project_detail_id)
@@ -217,6 +255,18 @@ class ProjectDetailController extends Controller
         $project->usd_total -= $project_detail->usd_total;
         $project->internal_total -= $project_detail->internal_total;
         $project->total -= $project_detail->total;
+        $project->save();
+
+        /* update the asf */
+        $margin_price = ($project->total * ($project->margin / 100));
+        $project->asf = $margin_price;
+        $project->usd_asf = $margin_price / $project->usd_rate;
+        $project->save();
+
+        /* update the vat */
+        $vat_price = ($project->total * ($project->vat_rate / 100));
+        $project->vat = $vat_price;
+        $project->usd_vat = $vat_price / $project->usd_rate;
         $project->save();
 
         $request->session()->flash('success', 'Data has been deleted');

@@ -96,8 +96,8 @@ use App\Models\ProjectDetailStatus;
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label>Price</label>
-                                        <input type="text" name="price" class="form-control" placeholder="Price" value="{{ old('price') ?? $curr_project_detail->price }}">
+                                        <label>Client Price</label>
+                                        <input type="text" name="price" class="form-control" placeholder="Client Price" value="{{ old('price') ?? $curr_project_detail->price }}">
                                     </div>
                                 </div>
                             </div>

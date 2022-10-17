@@ -21,7 +21,6 @@
 
 <div class="container-fluid page__container">
     @include('layouts.partials.alerts')
-    @include('layouts.partials.top-tabs')
 
     <form action="{{ route('accounting.expenses.search') }}" method="post">
         {{ csrf_field() }}

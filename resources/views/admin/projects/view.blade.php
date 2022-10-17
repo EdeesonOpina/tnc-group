@@ -192,8 +192,10 @@
                             @endforeach
                             <tr>
                                 <td>&nbsp;</td>
-                                <td id="compact-table"><strong>Margin Rate (%)</strong></td>
-                                <td id="compact-table">{{ $project->margin }}%</td>
+                                <td id="compact-table"><strong>ASF Rate (%)</strong></td>
+                                <td id="compact-table">
+                                    {{ $project->margin }}%
+                                </td>
                                 <td id="compact-table"><strong>Total Cost (USD)</strong></td>
                                 <td id="compact-table">${{ number_format($project->usd_total, 2) }}</td>
                                 <td id="compact-table"><strong>Total Cost</strong></td>
@@ -202,8 +204,10 @@
 
                             <tr>
                                 <td>&nbsp;</td>
-                                <td id="compact-table"><strong>USD Rate to PHP</strong></td>
-                                <td id="compact-table">P{{ number_format($project->usd_rate, 2) }}</td>
+                                <td id="compact-table"><strong>VAT Rate (%)</strong></td>
+                                <td id="compact-table">
+                                    {{ $project->vat_rate }}%
+                                </td>
                                 <td id="compact-table"><strong>ASF (USD)</strong></td>
                                 <td id="compact-table">${{ number_format($project->usd_asf, 2) }}</td>
                                 <td id="compact-table"><strong>ASF</strong></td>
@@ -213,7 +217,11 @@
                             </tr>
 
                             <tr>
-                                <td colspan="3">&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td id="compact-table"><strong>USD Rate to PHP</strong></td>
+                                <td id="compact-table">
+                                    P{{ number_format($project->usd_rate, 2) }}
+                                </td>
                                 <td id="compact-table"><strong>VAT (USD)</strong></td>
                                 <td id="compact-table">
                                     ${{ number_format($project->usd_vat, 2) }}

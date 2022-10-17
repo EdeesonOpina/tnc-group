@@ -218,19 +218,19 @@
                                         </td>
                                         <td id="compact-table">
                                             <strong>
-                                                @if ($pjd->status == ProjectDetailStatus::FOR_APPROVAL)
+                                                <!-- @if ($pjd->status == ProjectDetailStatus::FOR_APPROVAL)
                                                     <div class="badge badge-warning">For Approval</div>
                                                 @elseif ($pjd->status == ProjectDetailStatus::APPROVED)
                                                     <div class="badge badge-success">Approved</div>
                                                 @elseif ($pjd->status == ProjectDetailStatus::DISAPPROVED)
                                                     <div class="badge badge-danger">Disapproved</div>
                                                 @endif
-                                                <br>
+                                                <br> -->
 
                                                 {{ $pjd->name }} 
 
-                                                @if ($pjd->status == ProjectDetailStatus::FOR_APPROVAL)
-                                                    <a href="{{ route('internals.projects.details.edit', [$project->id]) }}"><i class="material-icons icon-16pt text-success">edit</i></a>
+                                                @if ($pjd->status == ProjectDetailStatus::FOR_APPROVAL || $pjd->status == ProjectDetailStatus::APPROVED)
+                                                    <a href="{{ route('internals.projects.details.edit', [$pjd->id]) }}"><i class="material-icons icon-16pt text-success">edit</i></a>
                                                 @endif
                                             </strong>
                                             <div class="d-flex">
@@ -259,7 +259,7 @@
                             @endforeach
                             <tr>
                                 <td colspan="3">&nbsp;</td>
-                                <td id="compact-table"><strong>Margin Rate (%)</strong></td>
+                                <td id="compact-table"><strong>ASF Rate (%)</strong></td>
                                 <td id="compact-table">
                                     <a href="#" data-toggle="modal" data-target="#margin-{{ $project->id }}">
                                         {{ $project->margin }}%
@@ -273,10 +273,10 @@
 
                             <tr>
                                 <td colspan="3">&nbsp;</td>
-                                <td id="compact-table"><strong>USD Rate to PHP</strong></td>
+                                <td id="compact-table"><strong>VAT Rate (%)</strong></td>
                                 <td id="compact-table">
-                                    <a href="#" data-toggle="modal" data-target="#usd-rate-{{ $project->id }}">
-                                        P{{ number_format($project->usd_rate, 2) }}
+                                    <a href="#" data-toggle="modal" data-target="#vat-rate-{{ $project->id }}">
+                                        {{ $project->vat_rate }}%
                                     </a>
                                 </td>
                                 <td id="compact-table"><strong>ASF (USD)</strong></td>
@@ -290,7 +290,13 @@
                             </tr>
 
                             <tr>
-                                <td colspan="5">&nbsp;</td>
+                                <td colspan="3">&nbsp;</td>
+                                <td id="compact-table"><strong>USD Rate to PHP</strong></td>
+                                <td id="compact-table">
+                                    <a href="#" data-toggle="modal" data-target="#usd-rate-{{ $project->id }}">
+                                        P{{ number_format($project->usd_rate, 2) }}
+                                    </a>
+                                </td>
                                 <td id="compact-table"><strong>VAT (USD)</strong></td>
                                 <td id="compact-table">${{ number_format($project->usd_vat, 2) }}</td>
                                 <td id="compact-table"><strong>VAT</strong></td>

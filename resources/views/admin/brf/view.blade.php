@@ -58,6 +58,19 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
+                            <strong>CE #</strong>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            {{ $budget_request_form->project->reference_number }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
                             <strong>Pay To</strong>
                         </div>
                     </div>
