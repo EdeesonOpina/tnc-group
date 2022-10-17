@@ -321,11 +321,11 @@
                                 <td id="compact-table">P{{ number_format($internal_grand_total, 2) }}</td>
                             </tr>
 
-                            <tr>
+                            <!-- <tr>
                                 <td colspan="7">&nbsp;</td>
                                 <td id="compact-table"><strong>Profit</strong></td>
                                 <td id="compact-table">P{{ number_format($grand_total - $internal_grand_total, 2) }}</td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
 
