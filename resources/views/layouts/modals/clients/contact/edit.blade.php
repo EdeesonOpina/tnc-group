@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="col">
                       <strong>Client Name</strong>
-                    </div>
+                    </div>s
                     <div class="col">
                       {{ $client_contact->name }}
                     </div>
