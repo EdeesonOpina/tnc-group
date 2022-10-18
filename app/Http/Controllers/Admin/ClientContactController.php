@@ -19,7 +19,6 @@ class ClientContactController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'person' => 'required',
             'position' => 'required',
             'mobile' => 'required',
             'email' => 'required',
@@ -53,32 +52,25 @@ class ClientContactController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'person' => 'required',
             'position' => 'required',
             'mobile' => 'required',
             'email' => 'required',
             'line_address_1' => 'required',
             'line_address_2' => 'required',
         ];
+
         $validator = Validator::make($request->all(), $rules);
 
-        if ($validator->fails()) {
+        if ($validator->fails())
             return back()->withInput()->withErrors($validator);
-        }
 
         $data = $request->all();
-
-        if ($request->file('image')) { // if the file is present
-            $image_name = $request->name . '-' . time() . '.' . $request->file('image')->getClientOriginalExtension(); // set unique name for that file
-            $request->file('image')->move('uploads/images/clients', $image_name); // move the file to the laravel project
-            $data['image'] = 'uploads/images/clients/' . $image_name; // save the destination of the file to the database
-        }
-
         $client_contact = ClientContact::find($request->client_contact_id);
         $client_contact->fill($data)->save();
 
         $request->session()->flash('success', 'Data has been updated');
-        return redirect()->route('admin.clients');
+        // return redirect()->route('admin.clients');
+        return back();
     }
 
     public function recover(Request $request, $client_contact_id)

@@ -490,6 +490,7 @@
 
     @else
         @include('layouts.modals.clients.contact.add')
+        @include('layouts.modals.clients.contact.edit')
     @endif
   @endif
 

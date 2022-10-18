@@ -6,7 +6,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
-          <h5 class="modal-title" id="exampleModalLabel">Add Sub Category</h5><br>
+          <h5 class="modal-title" id="exampleModalLabel">Add Contact</h5><br>
 
           <div class="row">
             <div class="col-md-4">
@@ -32,8 +32,6 @@
               <input type="text" name="position" class="form-control" placeholder="Position" value="{{ old('position') }}"><br>
               <label>Email Address</label>
               <input type="text" class="form-control" name="email" placeholder="Email Address" value="{{ old('email') }}"><br>
-              <label>Contact Person</label>
-              <input type="text" class="form-control" name="person" placeholder="Contact Person" value="{{ old('person') }}"><br>
               <label>Phone <i>(optional)</i></label>
               <input type="text" name="phone" class="form-control" placeholder="Phone" value="{{ old('phone') }}"><br>
               <label>Mobile</label>
@@ -41,9 +39,7 @@
               <label>Line Address 1</label>
               <input type="text" name="line_address_1" class="form-control" placeholder="Line Address 1" value="{{ old('line_address_1') }}"><br>
               <label>Line Address 2</label>
-              <input type="text" name="line_address_2" class="form-control" placeholder="Line Address 2" value="{{ old('line_address_2') }}"><br>
-              <label for="description">Description</label>
-              <textarea name="description" class="form-control" placeholder="Enter your description here">{{ old('description') }}</textarea>
+              <input type="text" name="line_address_2" class="form-control" placeholder="Line Address 2" value="{{ old('line_address_2') }}">
             </div>
           </div>
           

@@ -138,8 +138,11 @@
                                         @foreach ($contacts as $contact)
                                             <i class="material-icons icon-16pt mr-1 text-muted">face</i> <strong>
                                                 {{ $contact->name }} 
+                                                <a href="#" data-toggle="modal" data-target="#edit-contact-{{ $contact->id }}">
+                                                    <i class="material-icons icon-16pt text-success">edit</i>
+                                                </a>
                                                 <a href="#" data-href="{{ route('admin.clients.contact.delete', [$contact->id]) }}" data-toggle="modal" data-target="#confirm-action">
-                                                    <i class="material-icons icon-16pt mr-1 text-danger">delete</i>
+                                                    <i class="material-icons icon-16pt text-danger">delete</i>
                                                 </a>
                                             </strong><br>
                                             <strong>{{ $contact->position }}</strong><br>
