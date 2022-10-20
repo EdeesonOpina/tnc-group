@@ -204,6 +204,26 @@
                     </div>
                 @endif
 
+                @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+                    <div class="sidebar-heading">Data</div>
+                    <div class="sidebar-block p-0">
+                        <ul class="sidebar-menu" id="components_menu">
+                            <li class="sidebar-menu-item">
+                                <a class="sidebar-menu-button" href="{{ route('admin.suppliers') }}">
+                                    <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">directions_car</i>
+                                    <span class="sidebar-menu-text">Suppliers</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <a class="sidebar-menu-button" href="{{ route('admin.items') }}">
+                                    <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">add_shopping_cart</i>
+                                    <span class="sidebar-menu-text">Items</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                @endif
+
                 @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
                     <div class="sidebar-heading">Settings</div>
                     <div class="sidebar-block p-0">

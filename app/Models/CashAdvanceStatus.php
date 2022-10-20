@@ -11,7 +11,10 @@ class CashAdvanceStatus extends Model
 
     const INACTIVE = 0;
     const CANCELLED = 9;
-    const UNPAID = 1;
-    const PARTIALLY_PAID = 2;
-    const FULLY_PAID = 3;
+    const DISAPPROVED = 8;
+    const FOR_APPROVAL = 1;
+    const FOR_FINAL_APPROVAL = 2;
+    const UNPAID = 3;
+    const PARTIALLY_PAID = 4;
+    const FULLY_PAID = 5;
 }

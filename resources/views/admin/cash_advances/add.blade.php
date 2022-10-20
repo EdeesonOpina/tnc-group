@@ -29,7 +29,7 @@
                         <h3>Cash Advance</h3>
                         <br>
                         <div class="row">
-                            <div class="col">
+                            <!-- <div class="col">
                                 <div class="form-group">
                                     <label>Employee</label>
                                     <select id="user" name="user_id" class="custom-select" data-toggle="select">
@@ -39,24 +39,18 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col">
                                 <div class="form-group">
                                     <label>Amount to be borrowed</label>
                                     <input type="text" name="price" class="form-control" placeholder="Enter amount to be borrowed" value="{{ old('price') }}">
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <label>Date Borrowed</label>
-                                    <input type="date" name="date_borrowed" class="form-control" value="{{ old('date_borrowed') }}">
+                                    <input type="date" name="date_borrowed" class="form-control" value="{{ old('date_borrowed') ?? date('Y-m-d') }}">
                                 </div>
-                            </div>
-                            <div class="col">
-                                &nbsp;
                             </div>
                         </div>
 

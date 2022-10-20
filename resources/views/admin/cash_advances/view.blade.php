@@ -1,5 +1,6 @@
 @include('layouts.auth.header')
 @php
+    use Carbon\Carbon;
     use App\Models\CashAdvanceStatus;
     use App\Models\CashAdvancePaymentStatus;
 @endphp
@@ -15,8 +16,15 @@
             </nav>
             <h1 class="m-0">Cash Advance Payments</h1>
         </div>
-        @if ($cash_advance->status == CashAdvanceStatus::PARTIALLY_PAID || $cash_advance->status == CashAdvanceStatus::UNPAID)
-            <a href="#" data-toggle="modal" data-target="#cash-advance-payment-{{ $cash_advance->id }}" id="space-table"><button class="btn btn-success">Pay</button></a>
+
+        <a href="{{ route('accounting.cash-advances.print', [$cash_advance->id]) }}">
+            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print</button>
+        </a>
+
+        @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
+            @if ($cash_advance->status == CashAdvanceStatus::PARTIALLY_PAID || $cash_advance->status == CashAdvanceStatus::UNPAID)
+                <a href="#" data-toggle="modal" data-target="#cash-advance-payment-{{ $cash_advance->id }}" id="space-table"><button class="btn btn-success">Pay</button></a>
+            @endif
         @endif
     </div>
 </div>
@@ -37,6 +45,7 @@
                     <table class="table mb-0 thead-border-top-0 table-striped">
                         <thead>
                             <tr>
+                                <th id="compact-table"></th>
                                 <th id="compact-table">Price</th>
                                 <th id="compact-table">Status</th>
                                 <th id="compact-table">Paid At</th>
@@ -46,11 +55,20 @@
                             @foreach($cash_advance_payments as $cash_advance_payment)
                                 <tr>
                                     <td id="compact-table">
+                                        @if ($cash_advance_payment->image)
+                                            <a href="{{ url($cash_advance_payment->image) }}" target="_blank">
+                                                <img src="{{ url($cash_advance_payment->image) }}" width="100px">
+                                            </a>
+                                        @else
+                                            <img src="{{ url(env('APP_ICON')) }}" width="40px" style="margin-right: 7px;">
+                                        @endif
+                                    </td>
+                                    <td id="compact-table">
                                         <b>P{{ number_format($cash_advance_payment->price, 2) }}</b>
                                         <div class="d-flex">
                                             @if ($cash_advance_payment->status == CashAdvancePaymentStatus::PENDING)
-                                                <a href="#" id="margin-right" data-href="{{ route('accounting.cash-advances.approve', [$cash_advance_payment->id, $cash_advance_payment->id]) }}" data-toggle="modal" data-target="#confirm-action">Approve</a> | 
-                                                <a href="#" id="space-table" data-href="{{ route('accounting.cash-advances.disapprove', [$cash_advance_payment->id, $cash_advance_payment->id]) }}" data-toggle="modal" data-target="#confirm-action">Disapprove</a>
+                                                <a href="#" id="margin-right" data-href="{{ route('accounting.cash-advance-payments.approve', [$cash_advance_payment->id, $cash_advance_payment->id]) }}" data-toggle="modal" data-target="#confirm-action">Approve</a> | 
+                                                <a href="#" id="space-table" data-href="{{ route('accounting.cash-advance-payments.disapprove', [$cash_advance_payment->id, $cash_advance_payment->id]) }}" data-toggle="modal" data-target="#confirm-action">Disapprove</a>
                                             @endif
                                         </div>
                                     </td>
@@ -63,7 +81,7 @@
                                             <div class="badge badge-danger ml-2">DISAPPROVED</div>
                                         @endif
                                     </td>
-                                    <td id="compact-table">{{ $cash_advance_payment->created_at->format('M d Y') }}</td>
+                                    <td id="compact-table">{{ Carbon::parse($cash_advance_payment->date_paid)->format('M d Y') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -100,15 +118,21 @@
                         <div class="form-group">
                             <h6>Status</h6>
                             @if ($cash_advance->status == CashAdvanceStatus::PARTIALLY_PAID)
-                              <div class="badge badge-warning">PARTIALLY PAID</div>
+                                <div class="badge badge-warning">PARTIALLY PAID</div>
                             @elseif ($cash_advance->status == CashAdvanceStatus::UNPAID)
-                              <div class="badge badge-info">UNPAID</div>
+                                <div class="badge badge-info">UNPAID</div>
                             @elseif ($cash_advance->status == CashAdvanceStatus::FULLY_PAID)
-                              <div class="badge badge-success">FULLY PAID</div>
+                                <div class="badge badge-success">FULLY PAID</div>
+                            @elseif ($cash_advance->status == CashAdvanceStatus::FOR_APPROVAL)
+                                <div class="badge badge-warning">FOR APPROVAL</div>
+                            @elseif ($cash_advance->status == CashAdvanceStatus::FOR_FINAL_APPROVAL)
+                                <div class="badge badge-warning">FOR FINAL APPROVAL</div>
+                            @elseif ($cash_advance->status == CashAdvanceStatus::DISAPPROVED)
+                                <div class="badge badge-danger">DISAPPROVED</div>
                             @endif
 
                             @if ($cash_advance->status == CashAdvanceStatus::CANCELLED)
-                                <div class="badge badge-danger ml-2">CANCELLED</div>
+                                <div class="badge badge-danger">CANCELLED</div>
                             @endif
                         </div>
                     </div>
@@ -127,7 +151,7 @@
                     <div class="col">
                         <div class="form-group">
                             <h6>Date Borrowed</h6>
-                            {{ $cash_advance->reason }}
+                            {{ Carbon::parse($cash_advance->date_borrowed)->format('M d Y') }}
                         </div>
                     </div>
                 </div>

@@ -48,6 +48,9 @@
                                 <option value="*">All</option>
                                 <option value="{{ CashAdvanceStatus::UNPAID }}">UNPAID</option>
                                 <option value="{{ CashAdvanceStatus::PARTIALLY_PAID }}">PARTIALLY PAID</option>
+                                <option value="{{ CashAdvanceStatus::DISAPPROVED }}">DISAPPROVED</option>
+                                <option value="{{ CashAdvanceStatus::FOR_APPROVAL }}">FOR APPROVAL</option>
+                                <option value="{{ CashAdvanceStatus::FOR_FINAL_APPROVAL }}">FOR FINAL APPROVAL</option>
                                 <option value="{{ CashAdvanceStatus::FULLY_PAID }}">FULLY PAID</option>
                             </select>
                         </div>
@@ -117,6 +120,23 @@
 
                                             @if ($cash_advance->status != CashAdvanceStatus::CANCELLED)
                                                 <a href="{{ route('accounting.cash-advances.view', [$cash_advance->reference_number]) }}" id="margin-right">View</a> |  
+
+                                                @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
+                                                    @if ($cash_advance->status == CashAdvanceStatus::FOR_APPROVAL)
+                                                        <a href="#" data-href="{{ route('accounting.cash-advances.approve', [$cash_advance->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
+
+                                                        <a href="#" data-href="{{ route('accounting.cash-advances.disapprove', [$cash_advance->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
+                                                    @endif
+
+                                                    <!-- FINAL APPROVAL SUPER ADMIN ONLY -->
+                                                    @if (auth()->user()->role == 'Super Admin')
+                                                        @if ($cash_advance->status == CashAdvanceStatus::FOR_FINAL_APPROVAL)
+                                                            <a href="#" data-href="{{ route('accounting.cash-advances.final-approve', [$cash_advance->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
+
+                                                            <a href="#" data-href="{{ route('accounting.cash-advances.disapprove', [$cash_advance->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
+                                                        @endif
+                                                    @endif
+                                                @endif
                                             @endif
                                         </div>
                                     </td>
@@ -126,10 +146,16 @@
                                     <td>P{{ number_format($paid_balance, 2) }}</td>
                                     <td>P{{ number_format($remaining_balance, 2) }}</td>
                                     <td>
-                                        @if ($cash_advance->status == CashAdvanceStatus::PARTIALLY_PAID)
-                                          <div class="badge badge-warning">PARTIALLY PAID</div>
+                                        @if ($cash_advance->status == CashAdvanceStatus::FOR_APPROVAL)
+                                          <div class="badge badge-warning">FOR APPROVAL</div>
+                                        @elseif ($cash_advance->status == CashAdvanceStatus::FOR_FINAL_APPROVAL)
+                                          <div class="badge badge-warning">FOR FINAL APPROVAL</div>
+                                        @elseif ($cash_advance->status == CashAdvanceStatus::DISAPPROVED)
+                                          <div class="badge badge-danger">DISAPPROVED</div>
                                         @elseif ($cash_advance->status == CashAdvanceStatus::UNPAID)
                                           <div class="badge badge-info">UNPAID</div>
+                                        @elseif ($cash_advance->status == CashAdvanceStatus::PARTIALLY_PAID)
+                                          <div class="badge badge-warning">PARTIALLY PAID</div>
                                         @elseif ($cash_advance->status == CashAdvanceStatus::FULLY_PAID)
                                           <div class="badge badge-success">FULLY PAID</div>
                                         @endif

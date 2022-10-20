@@ -135,11 +135,15 @@ Route::group(['prefix' => 'accounting/', 'middleware' => ['auth', 'accounting']]
         Route::get('/add', 'App\Http\Controllers\Admin\CashAdvanceController@add')->name('accounting.cash-advances.add');
         Route::post('/create', 'App\Http\Controllers\Admin\CashAdvanceController@create')->name('accounting.cash-advances.create');
 
+        Route::get('/approve/{cash_advance_id}', 'App\Http\Controllers\Admin\CashAdvanceController@approve')->name('accounting.cash-advances.approve');
+        Route::get('/disapprove/{cash_advance_id}', 'App\Http\Controllers\Admin\CashAdvanceController@disapprove')->name('accounting.cash-advances.disapprove');
+        Route::get('/final-approve/{cash_advance_id}', 'App\Http\Controllers\Admin\CashAdvanceController@final_approve')->name('accounting.cash-advances.final-approve');
+
         // cash advance payment
         Route::group(['prefix' => 'view/{ca_number}'], function () {
             Route::get('/', 'App\Http\Controllers\Admin\CashAdvanceController@view')->name('accounting.cash-advances.view');
-            Route::get('/approve/{cash_advance_id}', 'App\Http\Controllers\Admin\CashAdvancePaymentController@approve')->name('accounting.cash-advances.approve');
-            Route::get('/disapprove/{cash_advance_id}', 'App\Http\Controllers\Admin\CashAdvancePaymentController@disapprove')->name('accounting.cash-advances.disapprove');
+            Route::get('/approve/{cash_advance_payment_id}', 'App\Http\Controllers\Admin\CashAdvancePaymentController@approve')->name('accounting.cash-advance-payments.approve');
+            Route::get('/disapprove/{cash_advance_payment_id}', 'App\Http\Controllers\Admin\CashAdvancePaymentController@disapprove')->name('accounting.cash-advance-payments.disapprove');
         });
 
         Route::post('/assign/invoice-number', 'App\Http\Controllers\Admin\CashAdvanceController@invoiceNumber')->name('accounting.cash-advances.assign.invoice-number');
