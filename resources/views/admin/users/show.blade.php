@@ -132,7 +132,7 @@ use App\Models\UserStatus;
                                     <td id="compact-table">
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex align-items-center">
-                                                <a href="{{ route('auth.profile.view', [$user->id]) }}" style="text-decoration: none; color: #333;"><b>
+                                                <a href="{{ route('admin.users.view', [$user->id]) }}" style="text-decoration: none; color: #333;"><b>
                                                 @if ($user->avatar)
                                                     <img src="{{ url($user->avatar) }}" width="30px">
                                                     @if ($user->role == 'Corporate')

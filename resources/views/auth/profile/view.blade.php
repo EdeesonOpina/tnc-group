@@ -34,10 +34,6 @@
                     <i class="material-icons mr-1">email</i>
                     <div class="flex">{{ $user->email }}</div>
                 </div>
-                <div class="d-flex align-items-center">
-                    <i class="material-icons mr-1">location_on</i>
-                    <div class="flex">{{ $user->country->name }}</div>
-                </div>
             </div>
             <div class="col-lg-9">
                 <div class="tab-content">
