@@ -506,7 +506,7 @@
   @endif
 
   @if (request()->is('admin/clients') || request()->is('admin/clients/*'))
-    @if(str_contains(url()->current(), '/edit') || str_contains(url()->current(), '/add'))
+    @if(str_contains(url()->current(), '/edit') || str_contains(url()->current(), '/add') || str_contains(url()->current(), '/view'))
 
     @else
         @include('layouts.modals.clients.contact.add')

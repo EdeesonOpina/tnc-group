@@ -38,14 +38,14 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <h6>Client Name</h6>
+                                            <strong>Client Name</strong><br>
                                             {{ $client->name }}
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <h6>Email Address</h6>
-                                            {{ $client->email }}
+                                            <strong>Email Address</strong>
+                                            {{ $contact->email }}
                                         </div>
                                     </div>
                                 </div>
@@ -53,8 +53,8 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <h6>Contact Person</h6>
-                                            {{ $client->person }}
+                                            <strong>Contact Person</strong><br>
+                                            {{ $contact->person }}
                                         </div>
                                     </div>
                                     <div class="col">
@@ -65,14 +65,14 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <h6>Phone</h6>
-                                            {{ $client->phone }}
+                                            <strong>Phone</strong><br>
+                                            {{ $contact->phone }}
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <h6>Mobile</h6>
-                                            {{ $client->mobile }}
+                                            <strong>Mobile</strong><br>
+                                            {{ $contact->mobile }}
                                         </div>
                                     </div>
                                 </div>
@@ -80,14 +80,14 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <h6>Line Address 1</h6>
-                                            {{ $client->line_address_1 }}
+                                            <strong>Line Address 1</strong><br>
+                                            {{ $contact->line_address_1 }}
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <h6>Line Address 2</h6>
-                                            {{ $client->line_address_2 }}
+                                            <strong>Line Address 2</strong><br>
+                                            {{ $contact->line_address_2 }}
                                         </div>
                                     </div>
                                 </div>
@@ -96,9 +96,6 @@
 
                     </div>
                 </div>
-                <hr>
-                <h6>Description</h6>
-                {!! $client->description !!}
             </div>
         </div>
         <div class="col">

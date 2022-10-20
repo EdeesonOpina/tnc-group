@@ -111,9 +111,13 @@ class ClientController extends Controller
     public function view($client_id)
     {
         $client = Client::find($client_id);
+        $contact = ClientContact::where('status', ClientContactStatus::ACTIVE)
+                            ->latest()
+                            ->first();
 
         return view('admin.clients.view', compact(
-            'client'
+            'client',
+            'contact',
         ));
     }
 
