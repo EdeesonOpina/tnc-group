@@ -474,7 +474,13 @@
                                         </div>
                                     </td>
                                     <td>
-                                        {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                                        @if ($budget_request_form->payment_for_user)
+                                            {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                                        @endif
+
+                                        @if ($budget_request_form->payment_for_supplier)
+                                            {{ $budget_request_form->payment_for_supplier->name }}
+                                        @endif
                                     </td>
                                     <td id="compact-table">{{ $budget_request_form->project->name }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}</td>

@@ -18,7 +18,8 @@ class CreateBudgetRequestFormsTable extends Migration
             $table->string('reference_number');
             $table->string('name'); // in payment for
             $table->integer('project_id')->unsigned();
-            $table->integer('payment_for_user_id')->unsigned();
+            $table->integer('payment_for_user_id')->unsigned()->default(0);
+            $table->integer('payment_for_supplier_id')->unsigned()->default(0);
             $table->date('needed_date');
             $table->decimal('total', $precision = 10, $scale = 2);
             $table->longtext('remarks')->nullable();

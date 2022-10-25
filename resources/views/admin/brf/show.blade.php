@@ -17,7 +17,8 @@ use App\Models\BudgetRequestFormStatus;
             </nav>
             <h1 class="m-0">BRF</h1>
         </div>
-        <a href="{{ route('internals.brf.add') }}" class="btn btn-primary"><i class="material-icons">add</i> Add</a>
+        <a href="{{ route('internals.brf.users.add') }}" class="btn btn-primary" id="margin-right"><i class="material-icons">add</i> Add User Payment</a>
+        <a href="{{ route('internals.brf.suppliers.add') }}" class="btn btn-primary"><i class="material-icons">add</i> Add Supplier Payment</a>
     </div>
 </div>
 
@@ -130,7 +131,13 @@ use App\Models\BudgetRequestFormStatus;
                                         </div>
                                     </td>
                                     <td id="compact-table">
-                                        {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                                        @if ($budget_request_form->payment_for_user)
+                                            {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                                        @endif
+
+                                        @if ($budget_request_form->payment_for_supplier)
+                                            {{ $budget_request_form->payment_for_supplier->name }}
+                                        @endif
                                     </td>
                                     <td id="compact-table">{{ $budget_request_form->name }}</td>
                                     <td id="compact-table">{{ $budget_request_form->project->name }}</td>

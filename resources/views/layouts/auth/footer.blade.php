@@ -171,6 +171,12 @@
                                 </a>
                             </li>
                             <li class="sidebar-menu-item">
+                                <a class="sidebar-menu-button" href="{{ route('admin.brands') }}">
+                                    <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">branding_watermark</i>
+                                    <span class="sidebar-menu-text">Brands</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
                                 <a class="sidebar-menu-button" href="{{ route('admin.companies') }}">
                                     <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">store_mall_directory</i>
                                     <span class="sidebar-menu-text">Companies</span>
@@ -470,8 +476,12 @@
   @endif
 
   @if (request()->is('admin/categories') || request()->is('admin/categories/*'))
-    @include('layouts.modals.categories.sub-categories.add')
-    @include('layouts.modals.categories.sub-categories.edit')
+    @if(str_contains(url()->current(), '/add') || str_contains(url()->current(), '/edit'))
+
+    @else
+        @include('layouts.modals.categories.sub-categories.add')
+        @include('layouts.modals.categories.sub-categories.edit')
+    @endif
   @endif
 
   @if (request()->is('admin/project-categories') || request()->is('admin/project-categories/*'))
@@ -502,7 +512,11 @@
   @endif
 
   @if (request()->is('admin/brf') || request()->is('admin/brf/*'))
-    @include('layouts.modals.brf.add-from-project-list')
+    @if(str_contains(url()->current(), '/edit') || str_contains(url()->current(), '/add') || str_contains(url()->current(), '/view'))
+
+    @else
+        {{-- @include('layouts.modals.brf.add-from-project-list') --}}
+    @endif
   @endif
 
   @if (request()->is('admin/clients') || request()->is('admin/clients/*'))

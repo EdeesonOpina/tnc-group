@@ -15,6 +15,7 @@ class BudgetRequestForm extends Model
         'name',
         'remarks',
         'payment_for_user_id',
+        'payment_for_supplier_id',
         'project_id',
         'description',
         'price',
@@ -29,5 +30,10 @@ class BudgetRequestForm extends Model
     public function payment_for_user()
     {
         return $this->hasOne(User::class, 'id', 'payment_for_user_id');
+    }
+
+    public function payment_for_supplier()
+    {
+        return $this->hasOne(Supplier::class, 'id', 'payment_for_supplier_id');
     }
 }

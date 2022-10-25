@@ -60,7 +60,9 @@
                     </div>
                     <div class="col">
                         <div class="form-group">
-                            {{ $budget_request_form->project->reference_number }}
+                            <a href="{{ route('internals.projects.view', [$budget_request_form->project->reference_number]) }}">
+                                {{ $budget_request_form->project->reference_number }}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -72,10 +74,12 @@
                         </div>
                     </div>
                     <div class="col">
-                        @if ($budget_request_form->payment_for_user->role == 'Corporate')
-                            {{ $budget_request_form->payment_for_user->corporate }}
-                        @else
+                        @if ($budget_request_form->payment_for_user)
                             {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                        @endif
+
+                        @if ($budget_request_form->payment_for_supplier)
+                            {{ $budget_request_form->payment_for_supplier->name }}
                         @endif
                     </div>
                 </div>

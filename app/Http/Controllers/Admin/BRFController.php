@@ -22,6 +22,8 @@ use App\Models\Company;
 use App\Models\CompanyStatus;
 use App\Models\User;
 use App\Models\UserStatus;
+use App\Models\Supplier;
+use App\Models\SupplierStatus;
 
 class BRFController extends Controller
 {
@@ -78,14 +80,25 @@ class BRFController extends Controller
         ));
     }
 
-    public function add()
+    public function add_user()
     {
         $users = User::where('status', '!=', UserStatus::INACTIVE)
                     ->orderBy('created_at', 'desc')
                     ->get();
 
-        return view('admin.brf.add', compact(
+        return view('admin.brf.users.add', compact(
             'users'
+        ));
+    }
+
+    public function add_supplier()
+    {
+        $suppliers = Supplier::where('status', '!=', SupplierStatus::INACTIVE)
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+
+        return view('admin.brf.suppliers.add', compact(
+            'suppliers'
         ));
     }
 
@@ -106,13 +119,53 @@ class BRFController extends Controller
         ));
     }
 
-    public function create(Request $request)
+    public function create_user(Request $request)
     {
         $rules = [
             'reference_number' => 'required|exists:projects',
             'needed_date' => 'required',
             'remarks' => 'nullable',
             'payment_for_user_id' => 'required',
+            'name' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);
+        }
+
+        $project = Project::where('reference_number', $request->reference_number)
+                        ->where('status', '!=', ProjectStatus::INACTIVE)
+                        ->first();
+
+        $brf_count = str_replace('BRF-', '', BudgetRequestForm::orderBy('created_at', 'desc')->first()->reference_number ?? 0) + 1; // get the latest brf sequence then add 1
+
+        $data = request()->all(); // get all request
+        $data['reference_number'] = 'BRF-' . str_pad($brf_count, 8, '0', STR_PAD_LEFT);
+        $data['project_id'] = $project->id;
+
+        if ($request->file('image')) { // if the file is present
+            $image_name = $request->name . '-' . time() . '.' . $request->file('image')->getClientOriginalExtension(); // set unique name for that file
+            $request->file('image')->move('uploads/images/brf', $image_name); // move the file to the laravel project
+            $data['image'] = 'uploads/images/brf/' . $image_name; // save the destination of the file to the database
+        }
+
+        $data['total'] = 0;
+        $data['status'] = BudgetRequestFormStatus::FOR_APPROVAL; // if you want to insert to a specific column
+        $brf = BudgetRequestForm::create($data); // create data in a model
+
+        $request->session()->flash('success', 'Data has been added');
+        return redirect()->route('internals.brf.manage', [$brf->id]);
+    }
+
+    public function create_supplier(Request $request)
+    {
+        $rules = [
+            'reference_number' => 'required|exists:projects',
+            'needed_date' => 'required',
+            'remarks' => 'nullable',
+            'payment_for_supplier_id' => 'required',
             'name' => 'required',
         ];
 

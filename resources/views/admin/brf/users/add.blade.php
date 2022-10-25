@@ -1,5 +1,5 @@
 @include('layouts.auth.header')
-<form action="{{ route('internals.brf.create') }}" method="post" id="form" enctype="multipart/form-data">
+<form action="{{ route('internals.brf.users.create') }}" method="post" id="form" enctype="multipart/form-data">
 {{ csrf_field() }}
 
 <div class="container page__heading-container">

@@ -15,7 +15,7 @@ use App\Models\UserStatus;
             <h1 class="m-0">Users</h1>
         </div>
         <a href="{{ route('admin.users.add') }}" class="btn btn-primary" id="margin-right"><i class="material-icons">add</i> Add User</a>
-        <a href="{{ route('admin.users.corporate.add') }}" class="btn btn-primary"><i class="material-icons">add</i> Add Supplier</a>
+        <!-- <a href="{{ route('admin.users.corporate.add') }}" class="btn btn-primary"><i class="material-icons">add</i> Add Supplier</a> -->
     </div>
 </div>
 
