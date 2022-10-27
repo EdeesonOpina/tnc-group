@@ -210,7 +210,7 @@
                     </div>
                 @endif
 
-                @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+                @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin'  || auth()->user()->role == 'Programs')
                     <div class="sidebar-heading">Data</div>
                     <div class="sidebar-block p-0">
                         <ul class="sidebar-menu" id="components_menu">
