@@ -138,10 +138,6 @@
                                         {{ $inventory->item->brand->name }}<br>
                                         {{ $inventory->item->category->name }}
                                         <div class="d-flex">
-                                            <!-- @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
-                                                <a href="#" data-toggle="modal" data-target="#set-price-{{ $inventory->item->id }}" style="margin-right: 7px">Set Price</a> | 
-                                                <a href="#" data-toggle="modal" data-target="#set-discount-{{ $inventory->item->id }}" id="space-table">Set Discount</a> | 
-                                            @endif -->
                                             <a href="#" data-toggle="modal" data-target="#set-barcode-{{ $inventory->item->id }}" id="margin-right">Set Barcode</a> | 
                                             <a href="{{ route('internals.inventories.items.serial-numbers', [$inventory->item->id]) }}" id="space-table">S/N</a>
                                         </div>
