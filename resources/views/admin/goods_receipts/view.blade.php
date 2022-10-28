@@ -23,7 +23,7 @@
             </nav>
             <h1 class="m-0">Goods Receipt</h1>
         </div>
-        @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales' || auth()->user()->role == 'Stockman')
+        @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales' || auth()->user()->role == 'Stockman' || auth()->user()->role == 'Programs')
             @if ($goods_receipt->status == GoodsReceiptStatus::CLEARED)
                 <a href="{{ route('internals.exports.goods-receipts.print', [$goods_receipt->id]) }}">
                     <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print</button>
