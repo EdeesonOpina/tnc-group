@@ -129,8 +129,6 @@
                                             @else
                                                 <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="40px" style="margin-right: 7px;">
                                             @endif
-                                            <a href="#" data-toggle="modal" data-target="#set-barcode-{{ $inventory->item->id }}" id="margin-right">Set Barcode</a> | 
-                                            <a href="{{ route('internals.inventories.items.serial-numbers', [$inventory->item->id]) }}" id="space-table">S/N</a>
                                         </div>
                                     </td>
                                     <td id="compact-table">
@@ -139,14 +137,14 @@
                                         <strong>{{ $inventory->item->name }}</strong><br>
                                         {{ $inventory->item->brand->name }}<br>
                                         {{ $inventory->item->category->name }}
-                                        <!-- <div class="d-flex">
-                                            @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
+                                        <div class="d-flex">
+                                            <!-- @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
                                                 <a href="#" data-toggle="modal" data-target="#set-price-{{ $inventory->item->id }}" style="margin-right: 7px">Set Price</a> | 
                                                 <a href="#" data-toggle="modal" data-target="#set-discount-{{ $inventory->item->id }}" id="space-table">Set Discount</a> | 
-                                            @endif
+                                            @endif -->
                                             <a href="#" data-toggle="modal" data-target="#set-barcode-{{ $inventory->item->id }}" id="space-table">Set Barcode</a> | 
                                             <a href="{{ route('internals.inventories.items.serial-numbers', [$inventory->item->id]) }}" id="space-table">S/N</a>
-                                        </div> -->
+                                        </div>
                                     </td>
                                     <!-- <td id="compact-table">
                                         <a href="#" data-toggle="modal" data-target="#set-price-{{ $inventory->item->id }}">
