@@ -77,6 +77,8 @@ class ProjectDetailController extends Controller
             $data['sub_category_id'] = 0;
 
         $project = Project::find($request->project_id);
+        $data['price'] = str_replace(',', '', $request->price);
+        $data['internal_price'] = str_replace(',', '', $request->internal_price);
         $data['usd_price'] = $request->price / $project->usd_rate;
         $data['usd_total'] = ($request->qty * $request->price) / $project->usd_rate;
         $data['total'] = $request->qty * $request->price;
@@ -149,10 +151,13 @@ class ProjectDetailController extends Controller
         $project->total -= $project_detail->total;
         $project->save();
 
-        $data['usd_price'] = $request->price / $project_detail->project->usd_rate;
-        $data['usd_total'] = ($request->qty * $request->price) / $project_detail->project->usd_rate;
+        $data['price'] = str_replace(',', '', $request->price);
+        $data['internal_price'] = str_replace(',', '', $request->internal_price);
+        
+        $data['usd_price'] = str_replace(',', '', $request->price) / $project_detail->project->usd_rate;
+        $data['usd_total'] = ($request->qty * str_replace(',', '', $request->price)) / $project_detail->project->usd_rate;
         $data['internal_total'] = $request->internal_price * $request->qty;
-        $data['total'] = $request->price * $request->qty;
+        $data['total'] = str_replace(',', '', $request->price) * $request->qty;
         $project_detail->fill($data)->save();
 
         /* add the total */

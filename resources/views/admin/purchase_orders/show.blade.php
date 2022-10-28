@@ -173,15 +173,7 @@
                                             @endif
 
                                             @if ($purchase_order->status == PurchaseOrderStatus::FOR_APPROVAL)
-                                                @if (auth()->user()->role == 'Super Admin')
-                                                    <a href="#" data-href="{{ route('internals.purchase-orders.approve', [$purchase_order->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
-
-                                                    <a href="#" data-href="{{ route('internals.purchase-orders.disapprove', [$purchase_order->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a> | 
-
-                                                    <a href="#" data-href="{{ route('internals.purchase-orders.cancel', [$purchase_order->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Cancel</a>
-                                                @endif
-
-                                                @if ($purchase_order->created_by_user_id != auth()->user()->id)
+                                                @if (auth()->user()->role == 'Super Admin' || $purchase_order->created_by_user_id != auth()->user()->id))
                                                     <a href="#" data-href="{{ route('internals.purchase-orders.approve', [$purchase_order->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
 
                                                     <a href="#" data-href="{{ route('internals.purchase-orders.disapprove', [$purchase_order->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a> | 

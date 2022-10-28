@@ -73,7 +73,7 @@
                         </li>
                     @endif
 
-                    @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales')
+                    @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales' || auth()->user()->role == 'Programs')
                         <li class="sidebar-menu-item">
                             <a class="sidebar-menu-button" href="{{ route('internals.purchase-orders') }}">
                                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">playlist_add</i>
@@ -82,7 +82,7 @@
                         </li>
                     @endif
 
-                    @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Stockman')
+                    @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Programs')
                         <li class="sidebar-menu-item">
                             <a class="sidebar-menu-button" href="{{ route('internals.goods-receipts') }}">
                                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">playlist_add_check</i>
@@ -210,7 +210,7 @@
                     </div>
                 @endif
 
-                @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin'  || auth()->user()->role == 'Programs')
+                @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Programs')
                     <div class="sidebar-heading">Data</div>
                     <div class="sidebar-block p-0">
                         <ul class="sidebar-menu" id="components_menu">
