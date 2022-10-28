@@ -42,7 +42,7 @@
             @endif
             <!-- END APPROVAL -->
 
-            @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales')
+            @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales' || auth()->user()->role == 'Programs')
                 @if ($purchase_order->status == PurchaseOrderStatus::APPROVED)
                     @if (count($orders) > 0)
                         <form action="{{ route('internals.goods-receipts.create') }}" method="post">
