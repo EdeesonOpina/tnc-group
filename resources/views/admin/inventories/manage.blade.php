@@ -129,6 +129,8 @@
                                             @else
                                                 <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="40px" style="margin-right: 7px;">
                                             @endif
+                                            <a href="#" data-toggle="modal" data-target="#set-barcode-{{ $inventory->item->id }}" id="margin-right">Set Barcode</a> | 
+                                            <a href="{{ route('internals.inventories.items.serial-numbers', [$inventory->item->id]) }}" id="space-table">S/N</a>
                                         </div>
                                     </td>
                                     <td id="compact-table">
