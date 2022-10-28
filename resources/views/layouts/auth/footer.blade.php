@@ -403,10 +403,10 @@
   @endif
 
   @if (request()->is('admin/inventories/manage/*'))
-    <!-- @include('layouts.modals.inventories.items.set-price')
-    @include('layouts.modals.inventories.items.set-discount')
+    {{-- @include('layouts.modals.inventories.items.set-price') --}}
+    {{-- @include('layouts.modals.inventories.items.set-discount') --}}
     @include('layouts.modals.inventories.items.set-barcode')
-    @include('layouts.modals.inventories.items.add-landing-price') -->
+    {{-- @include('layouts.modals.inventories.items.add-landing-price') --}}
   @endif
 
   @if (request()->is('admin/inventories/serial-numbers/items/*'))
