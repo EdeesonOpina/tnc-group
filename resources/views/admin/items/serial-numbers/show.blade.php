@@ -157,15 +157,6 @@
                                         @endif
                                     </td>
                                     <td id="compact-table">{{ $item_serial_number->delivery_receipt->goods_receipt->purchase_order->supplier->name ?? null }}</td>
-                                    <td id="compact-table">
-                                        @if ($item_serial_number->payment)
-                                            <i class="material-icons icon-16pt mr-1 text-muted">receipt</i> <a href="{{ route('accounting.payments.view', [$item_serial_number->payment->so_number]) }}">{{ $item_serial_number->payment->so_number }}</a>
-                                            <br>
-                                            <i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $item_serial_number->payment->user->firstname }} {{ $item_serial_number->payment->user->lastname }}
-                                        @else
-                                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#assign-so-{{ $item_serial_number->id }}"><i class="material-icons">add</i> Assign SO</button>
-                                        @endif
-                                    </td>
                                     <td>
                                         @if ($item_serial_number->status == ItemSerialNumberStatus::AVAILABLE)
                                             <div class="badge badge-success ml-2">AVAILABLE</div>
