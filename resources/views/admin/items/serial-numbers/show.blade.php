@@ -7,9 +7,9 @@
         <div class="flex">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('internals.inventories.manage', [auth()->user()->branch->id]) }}"><i class="material-icons icon-20pt">home</i></a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('internals.inventories.manage', [auth()->user()->branch->id]) }}">Inventories</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('internals.inventories.manage', [auth()->user()->branch->id]) }}">Item</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('internals.inventories') }}"><i class="material-icons icon-20pt">home</i></a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('internals.inventories') }}">Inventories</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('internals.inventories') }}">Item</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Serial Number/s</li>
                 </ol>
             </nav>
@@ -113,7 +113,6 @@
                                 <th id="compact-table">DR#</th>
                                 <th id="compact-table">GRPO#</th>
                                 <th id="compact-table">Supplier</th>
-                                <th id="compact-table">Sold To</th>
                                 <th id="compact-table">Status</th>
                                 <th id="compact-table">Created At</th>
                             </tr>
@@ -127,8 +126,6 @@
                                         <a href="#" data-toggle="modal" data-target="#edit-serial-number-{{ $item_serial_number->id }}">Edit</a> | 
 
                                         @if ($item_serial_number->status == ItemSerialNumberStatus::AVAILABLE)
-                                            <a href="#" data-href="{{ route('internals.inventories.items.serial-numbers.sold', [$item->id, $item_serial_number->id]) }}" data-toggle="modal" data-target="#confirm-action">Sold</a> | 
-
                                             <a href="#" data-href="{{ route('internals.inventories.items.serial-numbers.delete', [$item->id, $item_serial_number->id]) }}" data-toggle="modal" data-target="#confirm-action">Delete</a>
                                         @endif
 
