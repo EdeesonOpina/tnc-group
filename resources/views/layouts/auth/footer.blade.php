@@ -170,24 +170,14 @@
                                     <span class="sidebar-menu-text">Accounts</span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item">
-                                <a class="sidebar-menu-button" href="{{ route('admin.brands') }}">
-                                    <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">branding_watermark</i>
-                                    <span class="sidebar-menu-text">Brands</span>
-                                </a>
-                            </li>
+                            
                             <li class="sidebar-menu-item">
                                 <a class="sidebar-menu-button" href="{{ route('admin.companies') }}">
                                     <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">store_mall_directory</i>
                                     <span class="sidebar-menu-text">Companies</span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item">
-                                <a class="sidebar-menu-button" href="{{ route('admin.categories') }}">
-                                    <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">art_track</i>
-                                    <span class="sidebar-menu-text">Categories</span>
-                                </a>
-                            </li>
+                            
                             <li class="sidebar-menu-item">
                                 <a class="sidebar-menu-button" href="{{ route('accounting.expense-companies') }}">
                                     <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">business</i>
@@ -224,6 +214,18 @@
                                 <a class="sidebar-menu-button" href="{{ route('admin.items') }}">
                                     <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">add_shopping_cart</i>
                                     <span class="sidebar-menu-text">Items</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <a class="sidebar-menu-button" href="{{ route('admin.brands') }}">
+                                    <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">branding_watermark</i>
+                                    <span class="sidebar-menu-text">Brands</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <a class="sidebar-menu-button" href="{{ route('admin.categories') }}">
+                                    <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">art_track</i>
+                                    <span class="sidebar-menu-text">Categories</span>
                                 </a>
                             </li>
                         </ul>
