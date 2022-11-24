@@ -20,7 +20,7 @@ class TestController extends Controller
         $project = Project::find(1);
         $name = auth()->user()->name;
         $email = 'edeesonopinav4@gmail.com';
-        $subject = 'Created a project';
+        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . 'Created a project';
 
         // send mail to user
         Mail::send('emails.projects.create', [
