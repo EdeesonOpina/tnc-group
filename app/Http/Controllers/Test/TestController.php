@@ -27,7 +27,7 @@ class TestController extends Controller
             'project' => $project
         ], function ($message) use ($name, $email, $subject) {
             $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'))
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
             ->subject($subject);
         });
     }
