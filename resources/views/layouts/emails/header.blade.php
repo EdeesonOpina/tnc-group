@@ -77,18 +77,18 @@
         text-decoration: none !important;
       }
       .btn-primary table td:hover {
-        background-color: #{{ env('BUTTON_COLOR') }} !important;
+        background-color: #FF6F11 !important;
       }
       .btn-primary a:hover {
-        background-color: #{{ env('BUTTON_COLOR') }} !important;
-        border-color: #{{ env('BUTTON_COLOR') }} !important;
+        background-color: #FF6F11 !important;
+        border-color: #FF6F11 !important;
       }
     }
     </style>
   </head>
-  <body class="" style="background-color: #{{ env('PRIMARY_COLOR') }}; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
+  <body class="" style="background-color: #FF6F11; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
 
-    <table border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background-color: #{{ env('PRIMARY_COLOR') }};">
+    <table border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background-color: #FF6F11;">
       <tr>
         <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">&nbsp;</td>
         <td class="container" style="font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; padding: 10px; width: 580px;">
