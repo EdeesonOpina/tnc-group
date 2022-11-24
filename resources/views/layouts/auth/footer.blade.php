@@ -507,6 +507,7 @@
     @include('layouts.modals.projects.margin')
     @include('layouts.modals.projects.vat-rate')
     @include('layouts.modals.projects.usd-rate')
+    @include('layouts.modals.projects.has-usd')
   @endif
 
   @if (request()->is('admin/projects/view/*'))

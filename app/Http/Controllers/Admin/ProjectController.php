@@ -299,6 +299,25 @@ class ProjectController extends Controller
         return redirect()->route('internals.projects.manage', [$project->id]);
     }
 
+    public function has_usd(Request $request)
+    {
+        $rules = [
+            'has_usd' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails())
+            return back()->withInput()->withErrors($validator);
+
+        $data = $request->all();
+        $project = Project::find($request->project_id);
+        $project->fill($data)->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return redirect()->route('internals.projects.manage', [$project->id]);
+    }
+
     public function asf(Request $request)
     {
         $rules = [

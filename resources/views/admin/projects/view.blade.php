@@ -155,7 +155,9 @@
                                 <th id="compact-table">Particulars</th>
                                 <th id="compact-table">Quantity</th>
                                 <th>Description</th>
-                                <th id="compact-table">USD Price</th>
+                                @if ($project->has_usd == 1)
+                                    <th id="compact-table">USD Price</th>
+                                @endif
                                 <th id="compact-table">Unit Price</th>
                                 <th id="compact-table">Total Price</th>
                             </tr>
@@ -184,63 +186,84 @@
                                         </td>
                                         <td id="compact-table">{{ $pjd->qty }}</td>
                                         <td>{!! $pjd->description !!}</td>
-                                        <td id="compact-table">${{ number_format($pjd->usd_price, 2) }}</td>
+                                        @if ($project->has_usd == 1)
+                                            <td id="compact-table">${{ number_format($pjd->usd_price, 2) }}</td>
+                                        @endif
                                         <td id="compact-table">P{{ number_format($pjd->price, 2) }}</td>
                                         <td id="compact-table">P{{ number_format($pjd->total, 2) }}</td>
                                     </tr>
                                 @endforeach
                             @endforeach
                             <tr>
-                                <td>&nbsp;</td>
+                                <td colspan="1">&nbsp;</td>
+                                @if ($project->has_usd == 0)
+                                    <td>&nbsp;</td>
+                                @endif
                                 <td id="compact-table"><strong>ASF Rate (%)</strong></td>
-                                <td id="compact-table">
-                                    {{ $project->margin }}%
-                                </td>
-                                <td id="compact-table"><strong>Total Cost (USD)</strong></td>
-                                <td id="compact-table">${{ number_format($project->usd_total, 2) }}</td>
+                                <td id="compact-table">{{ $project->margin }}%</td>
+                                @if ($project->has_usd == 1)
+                                    <td id="compact-table"><strong>Total Cost (USD)</strong></td>
+                                    <td id="compact-table">${{ number_format($project->usd_total, 2) }}</td>
+                                @endif
                                 <td id="compact-table"><strong>Total Cost</strong></td>
                                 <td id="compact-table">P{{ number_format($project->total, 2) }}</td>
                             </tr>
 
                             <tr>
-                                <td>&nbsp;</td>
+                                <td colspan="1">&nbsp;</td>
+                                @if ($project->has_usd == 0)
+                                    <td>&nbsp;</td>
+                                @endif
                                 <td id="compact-table"><strong>VAT Rate (%)</strong></td>
-                                <td id="compact-table">
-                                    {{ $project->vat_rate }}%
-                                </td>
-                                <td id="compact-table"><strong>ASF (USD)</strong></td>
-                                <td id="compact-table">${{ number_format($project->usd_asf, 2) }}</td>
+                                <td id="compact-table">{{ $project->vat_rate }}%</td>
+                                @if ($project->has_usd == 1)
+                                    <td id="compact-table"><strong>ASF (USD)</strong></td>
+                                    <td id="compact-table">${{ number_format($project->usd_asf, 2) }}</td>
+                                @endif
                                 <td id="compact-table"><strong>ASF</strong></td>
-                                <td id="compact-table">
-                                    P{{ number_format($project->asf, 2) }}
+                                <td id="compact-table">P{{ number_format($project->asf, 2) }}
                                 </td>
                             </tr>
 
                             <tr>
-                                <td>&nbsp;</td>
-                                <td id="compact-table"><strong>USD Rate to PHP</strong></td>
-                                <td id="compact-table">
-                                    P{{ number_format($project->usd_rate, 2) }}
-                                </td>
-                                <td id="compact-table"><strong>VAT (USD)</strong></td>
-                                <td id="compact-table">
-                                    ${{ number_format($project->usd_vat, 2) }}
-                                </td>
+                                <td colspan="1">&nbsp;</td>
+                                @if ($project->has_usd == 0)
+                                    <td colspan="3">&nbsp;</td>
+                                @endif
+
+                                @if ($project->has_usd == 1)
+                                    <td id="compact-table"><strong>USD Rate to PHP</strong></td>
+                                    <td id="compact-table">P{{ number_format($project->usd_rate, 2) }}</td>
+                                    <td id="compact-table"><strong>VAT (USD)</strong></td>
+                                    <td id="compact-table">${{ number_format($project->usd_vat, 2) }}</td>
+                                @endif
                                 <td id="compact-table"><strong>VAT</strong></td>
-                                <td id="compact-table">
-                                    P{{ number_format($project->vat, 2) }}
-                                </td>
+                                <td id="compact-table">P{{ number_format($project->vat, 2) }}</td>
                             </tr>
 
                             <tr>
                                 <td colspan="3">&nbsp;</td>
-                                <td id="compact-table"><strong>CE Grand Total (USD)</strong></td>
-                                <td id="compact-table">
-                                    ${{ number_format($project->usd_grand_total, 2) }}
-                                </td>
+                                @if ($project->has_usd == 0)
+                                    <td>&nbsp;</td>
+                                @endif
+
+                                @if ($project->has_usd == 1)
+                                    <td id="compact-table"><strong>CE Grand Total (USD)</strong></td>
+                                    <td id="compact-table">${{ number_format($usd_grand_total, 2) }}</td>
+                                @endif
                                 <td id="compact-table"><strong>CE Grand Total</strong></td>
                                 <td id="compact-table">P{{ number_format($grand_total, 2) }}</td>
-                            </tr> 
+                            </tr>
+
+                            <tr>
+                                @if ($project->has_usd == 1)
+                                    <td colspan="5">&nbsp;</td>
+                                @else
+                                    <td colspan="4">&nbsp;</td>
+                                @endif
+                                <td id="compact-table"><strong>Internal CE Grand Total</strong></td>
+                                <td id="compact-table">P{{ number_format($internal_grand_total, 2) }}</td>
+                            </tr>
                         </tbody>
                     </table>
 
@@ -306,7 +329,7 @@
                         <div class="form-group">
                             <strong>Prepared By</strong>
                             @if ($project->prepared_by_user->signature)
-                                  <br><img src="{{ url($project->prepared_by_user->signature) }}" width="80px"><br>
+                                  <br><img src="{{ url($project->prepared_by_user->signature) }}" width="120px" height="120px"><br>
                             @else
                                 <br><br><br><br>
                             @endif

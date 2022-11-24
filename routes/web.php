@@ -541,6 +541,7 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::post('/margin', 'App\Http\Controllers\Admin\ProjectController@margin')->name('internals.projects.update.margin');
         Route::post('/vat-rate', 'App\Http\Controllers\Admin\ProjectController@vat_rate')->name('internals.projects.update.vat-rate');
         Route::post('/usd-rate', 'App\Http\Controllers\Admin\ProjectController@usd_rate')->name('internals.projects.update.usd-rate');
+        Route::post('/has-usd', 'App\Http\Controllers\Admin\ProjectController@has_usd')->name('internals.projects.update.has-usd');
         Route::post('/asf', 'App\Http\Controllers\Admin\ProjectController@asf')->name('internals.projects.update.asf');
         Route::post('/vat', 'App\Http\Controllers\Admin\ProjectController@vat')->name('internals.projects.update.vat');
         Route::post('/terms', 'App\Http\Controllers\Admin\ProjectController@terms')->name('internals.projects.update.terms');
