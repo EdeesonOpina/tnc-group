@@ -464,7 +464,7 @@ class ProjectController extends Controller
         $project = Project::find($request->project_id);
         $project->fill($data)->save();
 
-        $vat_price = ($project->total * ($project->vat_rate / 100));
+        $vat_price = (($project->total + $project->asf) * ($project->vat_rate / 100));
         $project->vat = $vat_price;
         $project->usd_vat = $vat_price / $project->usd_rate;
         $project->save();
