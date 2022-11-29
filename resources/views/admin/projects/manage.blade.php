@@ -250,7 +250,7 @@
                                             </div>
                                         </td>
                                         <td>{{ $pjd->qty }}</td>
-                                        <td>{!! $pjd->description !!}</td>
+                                        <td id="compact-table">{!! $pjd->description !!}</td>
                                         <td>P{{ number_format($pjd->internal_price, 2) }}</td>
                                         @if ($project->has_usd == 1)
                                             <td>${{ number_format($pjd->usd_price, 2) }}</td>
@@ -261,6 +261,7 @@
                                     </tr>
                                 @endforeach
                             @endforeach
+
                             <tr>
                                 <td colspan="3">&nbsp;</td>
                                 @if ($project->has_usd == 0)

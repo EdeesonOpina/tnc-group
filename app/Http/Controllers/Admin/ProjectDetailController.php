@@ -79,10 +79,10 @@ class ProjectDetailController extends Controller
         $project = Project::find($request->project_id);
         $data['price'] = str_replace(',', '', $request->price);
         $data['internal_price'] = str_replace(',', '', $request->internal_price);
-        $data['usd_price'] = $request->price / $project->usd_rate;
-        $data['usd_total'] = ($request->qty * $request->price) / $project->usd_rate;
-        $data['total'] = $request->qty * $request->price;
-        $data['internal_total'] = $request->qty * $request->internal_price;
+        $data['usd_price'] = str_replace(',', '', $request->price) / $project->usd_rate;
+        $data['usd_total'] = ($request->qty * str_replace(',', '', $request->price)) / $project->usd_rate;
+        $data['total'] = $request->qty * str_replace(',', '', $request->price);
+        $data['internal_total'] = $request->qty * str_replace(',', '', $request->internal_price);
         $data['status'] = ProjectDetailStatus::FOR_APPROVAL; // if you want to insert to a specific column
         $project_detail = ProjectDetail::create($data); // create data in a model
 
@@ -154,9 +154,9 @@ class ProjectDetailController extends Controller
         $data['price'] = str_replace(',', '', $request->price);
         $data['internal_price'] = str_replace(',', '', $request->internal_price);
         
-        $data['usd_price'] = str_replace(',', '', $request->price) / $project_detail->project->usd_rate;
+        $data['usd_price'] = str_replace(',', '', str_replace(',', '', $request->price)) / $project_detail->project->usd_rate;
         $data['usd_total'] = ($request->qty * str_replace(',', '', $request->price)) / $project_detail->project->usd_rate;
-        $data['internal_total'] = $request->internal_price * $request->qty;
+        $data['internal_total'] = str_replace(',', '', $request->internal_price) * $request->qty;
         $data['total'] = str_replace(',', '', $request->price) * $request->qty;
         $project_detail->fill($data)->save();
 
