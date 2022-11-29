@@ -329,7 +329,7 @@
                         <div class="form-group">
                             <strong>Prepared By</strong>
                             @if ($project->prepared_by_user->signature)
-                                  <br><img src="{{ url($project->prepared_by_user->signature) }}" width="120px" height="120px"><br>
+                                  <br><img src="{{ url($project->prepared_by_user->signature) }}" width="120px" height="60px"><br>
                             @else
                                 <br><br><br><br>
                             @endif
@@ -343,7 +343,7 @@
                         <div class="form-group">
                             <strong>Noted By</strong>
                             @if ($project->noted_by_user->signature)
-                                  <br><img src="{{ url($project->noted_by_user->signature) }}" width="80px"><br>
+                                  <br><img src="{{ url($project->noted_by_user->signature) }}" width="80px" height="60px"><br>
                             @else
                                 <br><br><br><br>
                             @endif
@@ -357,7 +357,7 @@
                         <div class="form-group">
                             <strong>Conforme</strong>
                             @if ($project->conforme_signature)
-                              <br><img src="{{ url($project->conforme_signature) }}" width="80px"><br>
+                              <br><img src="{{ url($project->conforme_signature) }}" width="80px" height="60px"><br>
                             @else
                                 <br><br><br><br>
                             @endif
