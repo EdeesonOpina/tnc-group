@@ -173,7 +173,7 @@ class ProjectDetailController extends Controller
         $project->save();
 
         /* update the vat */
-        $vat_price = ($project->total * ($project->vat_rate / 100));
+        $vat_price = (($project->total + $project->asf) * ($project->vat_rate / 100));
         $project->vat = $vat_price;
         $project->usd_vat = $vat_price / $project->usd_rate;
         $project->save();
@@ -202,7 +202,7 @@ class ProjectDetailController extends Controller
         $project->save();
 
         /* update the vat */
-        $vat_price = ($project->total * ($project->vat_rate / 100));
+        $vat_price = (($project->total + $project->asf) * ($project->vat_rate / 100));
         $project->vat = $vat_price;
         $project->usd_vat = $vat_price / $project->usd_rate;
         $project->save();
@@ -269,7 +269,7 @@ class ProjectDetailController extends Controller
         $project->save();
 
         /* update the vat */
-        $vat_price = ($project->total * ($project->vat_rate / 100));
+        $vat_price = (($project->total + $project->asf) * ($project->vat_rate / 100));
         $project->vat = $vat_price;
         $project->usd_vat = $vat_price / $project->usd_rate;
         $project->save();
