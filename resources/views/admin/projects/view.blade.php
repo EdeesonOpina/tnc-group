@@ -195,12 +195,10 @@
                                 @endforeach
                             @endforeach
                             <tr>
-                                <td colspan="1">&nbsp;</td>
+                                <td colspan="3">&nbsp;</td>
                                 @if ($project->has_usd == 0)
                                     <td>&nbsp;</td>
                                 @endif
-                                <td id="compact-table"><strong>ASF Rate (%)</strong></td>
-                                <td id="compact-table">{{ $project->margin }}%</td>
                                 @if ($project->has_usd == 1)
                                     <td id="compact-table"><strong>Total Cost (USD)</strong></td>
                                     <td id="compact-table">${{ number_format($project->usd_total, 2) }}</td>
@@ -210,39 +208,59 @@
                             </tr>
 
                             <tr>
-                                <td colspan="1">&nbsp;</td>
+                                <td colspan="">&nbsp;</td>
                                 @if ($project->has_usd == 0)
                                     <td>&nbsp;</td>
                                 @endif
-                                <td id="compact-table"><strong>VAT Rate (%)</strong></td>
-                                <td id="compact-table">{{ $project->vat_rate }}%</td>
+                                <td id="compact-table"><strong>ASF Rate (%)</strong></td>
+                                <td id="compact-table">
+                                    {{ $project->margin }}%
+                                </td>
                                 @if ($project->has_usd == 1)
                                     <td id="compact-table"><strong>ASF (USD)</strong></td>
                                     <td id="compact-table">${{ number_format($project->usd_asf, 2) }}</td>
                                 @endif
                                 <td id="compact-table"><strong>ASF</strong></td>
-                                <td id="compact-table">P{{ number_format($project->asf, 2) }}
+                                <td id="compact-table">
+                                    P{{ number_format($project->asf, 2) }}
                                 </td>
                             </tr>
 
                             <tr>
-                                <td colspan="1">&nbsp;</td>
+                                <td colspan="">&nbsp;</td>
                                 @if ($project->has_usd == 0)
+                                    <td colspan="">&nbsp;</td>
+                                @endif
+
+                                <td id="compact-table"><strong>VAT Rate (%)</strong></td>
+                                <td id="compact-table">
+                                    {{ $project->vat_rate }}%
+                                </td>
+
+                                @if ($project->has_usd == 1)
+                                    <td id="compact-table"><strong>VAT (USD)</strong></td>
+                                    <td id="compact-table">${{ number_format($project->usd_vat, 2) }}</td>
+                                @endif
+                                <td id="compact-table"><strong>VAT</strong></td>
+                                <td id="compact-table">
+                                    P{{ number_format($project->vat, 2) }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                @if ($project->has_usd == 1)
+                                    <td colspan="1">&nbsp;</td>
+                                @else
                                     <td colspan="3">&nbsp;</td>
                                 @endif
 
                                 @if ($project->has_usd == 1)
                                     <td id="compact-table"><strong>USD Rate to PHP</strong></td>
-                                    <td id="compact-table">P{{ number_format($project->usd_rate, 2) }}</td>
-                                    <td id="compact-table"><strong>VAT (USD)</strong></td>
-                                    <td id="compact-table">${{ number_format($project->usd_vat, 2) }}</td>
+                                    <td id="compact-table">
+                                        P{{ number_format($project->usd_rate, 2) }}
+                                    </td>
                                 @endif
-                                <td id="compact-table"><strong>VAT</strong></td>
-                                <td id="compact-table">P{{ number_format($project->vat, 2) }}</td>
-                            </tr>
 
-                            <tr>
-                                <td colspan="3">&nbsp;</td>
                                 @if ($project->has_usd == 0)
                                     <td>&nbsp;</td>
                                 @endif
@@ -253,16 +271,6 @@
                                 @endif
                                 <td id="compact-table"><strong>CE Grand Total</strong></td>
                                 <td id="compact-table">P{{ number_format($grand_total, 2) }}</td>
-                            </tr>
-
-                            <tr>
-                                @if ($project->has_usd == 1)
-                                    <td colspan="5">&nbsp;</td>
-                                @else
-                                    <td colspan="4">&nbsp;</td>
-                                @endif
-                                <td id="compact-table"><strong>Internal CE Grand Total</strong></td>
-                                <td id="compact-table">P{{ number_format($internal_grand_total, 2) }}</td>
                             </tr>
                         </tbody>
                     </table>

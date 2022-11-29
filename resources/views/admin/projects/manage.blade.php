@@ -263,16 +263,10 @@
                             @endforeach
 
                             <tr>
-                                <td colspan="3">&nbsp;</td>
+                                <td colspan="5">&nbsp;</td>
                                 @if ($project->has_usd == 0)
                                     <td>&nbsp;</td>
                                 @endif
-                                <td id="compact-table"><strong>ASF Rate (%)</strong></td>
-                                <td id="compact-table">
-                                    <a href="#" data-toggle="modal" data-target="#margin-{{ $project->id }}">
-                                        {{ $project->margin }}%
-                                    </a>
-                                </td>
                                 @if ($project->has_usd == 1)
                                     <td id="compact-table"><strong>Total Cost (USD)</strong></td>
                                     <td id="compact-table">${{ number_format($project->usd_total, 2) }}</td>
@@ -286,10 +280,10 @@
                                 @if ($project->has_usd == 0)
                                     <td>&nbsp;</td>
                                 @endif
-                                <td id="compact-table"><strong>VAT Rate (%)</strong></td>
+                                <td id="compact-table"><strong>ASF Rate (%)</strong></td>
                                 <td id="compact-table">
-                                    <a href="#" data-toggle="modal" data-target="#vat-rate-{{ $project->id }}">
-                                        {{ $project->vat_rate }}%
+                                    <a href="#" data-toggle="modal" data-target="#margin-{{ $project->id }}">
+                                        {{ $project->margin }}%
                                     </a>
                                 </td>
                                 @if ($project->has_usd == 1)
@@ -307,16 +301,17 @@
                             <tr>
                                 <td colspan="3">&nbsp;</td>
                                 @if ($project->has_usd == 0)
-                                    <td colspan="3">&nbsp;</td>
+                                    <td colspan="">&nbsp;</td>
                                 @endif
 
+                                <td id="compact-table"><strong>VAT Rate (%)</strong></td>
+                                <td id="compact-table">
+                                    <a href="#" data-toggle="modal" data-target="#vat-rate-{{ $project->id }}">
+                                        {{ $project->vat_rate }}%
+                                    </a>
+                                </td>
+
                                 @if ($project->has_usd == 1)
-                                    <td id="compact-table"><strong>USD Rate to PHP</strong></td>
-                                    <td id="compact-table">
-                                        <a href="#" data-toggle="modal" data-target="#usd-rate-{{ $project->id }}">
-                                            P{{ number_format($project->usd_rate, 2) }}
-                                        </a>
-                                    </td>
                                     <td id="compact-table"><strong>VAT (USD)</strong></td>
                                     <td id="compact-table">${{ number_format($project->usd_vat, 2) }}</td>
                                 @endif
@@ -329,7 +324,21 @@
                             </tr>
 
                             <tr>
-                                <td colspan="5">&nbsp;</td>
+                                @if ($project->has_usd == 1)
+                                    <td colspan="3">&nbsp;</td>
+                                @else
+                                    <td colspan="5">&nbsp;</td>
+                                @endif
+
+                                @if ($project->has_usd == 1)
+                                    <td id="compact-table"><strong>USD Rate to PHP</strong></td>
+                                    <td id="compact-table">
+                                        <a href="#" data-toggle="modal" data-target="#usd-rate-{{ $project->id }}">
+                                            P{{ number_format($project->usd_rate, 2) }}
+                                        </a>
+                                    </td>
+                                @endif
+
                                 @if ($project->has_usd == 0)
                                     <td>&nbsp;</td>
                                 @endif
