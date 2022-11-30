@@ -23,7 +23,22 @@ class TaskController extends Controller
                     ->where('status', '!=', ProjectTaskStatus::INACTIVE)
                     ->paginate(15);
 
+        $total = ProjectTask::where('project_id', $project_id)
+                        ->where('status', '!=', ProjectTaskStatus::INACTIVE)
+                        ->count();
+        $completed = ProjectTask::where('project_id', $project_id)
+                        ->where('status', ProjectTaskStatus::DONE)
+                        ->count();
+        if (count($project_tasks) > 0) {
+            $percentage = ($completed / $total) * 100;
+        } else {
+            $percentage = 0; 
+        }
+
         return view('admin.projects.tasks.show', compact(
+            'percentage',
+            'total',
+            'completed',
             'project_tasks',
             'project'
         ));
@@ -43,6 +58,7 @@ class TaskController extends Controller
         $rules = [
             'name' => 'required',
             'priority' => 'required',
+            'assigned_to_user_id' => 'required',
             'status' => 'required',
             'description' => 'nullable',
             'file' => 'nullable|image',
@@ -85,6 +101,7 @@ class TaskController extends Controller
         $rules = [
             'name' => 'required',
             'priority' => 'required',
+            'assigned_to_user_id' => 'required',
             'status' => 'required',
             'description' => 'nullable',
             'file' => 'nullable',
@@ -109,5 +126,25 @@ class TaskController extends Controller
 
         $request->session()->flash('success', 'Data has been updated');
         return redirect()->route('internals.projects.tasks', [$project_task->project->id]);
+    }
+
+    public function recover(Request $request, $project_id, $project_task_id)
+    {
+        $project_task = ProjectTask::find($project_task_id);
+        $project_task->status = ProjectTaskStatus::PENDING; // mark data as active
+        $project_task->save();
+
+        $request->session()->flash('success', 'Data has been recovered');
+        return back();
+    }
+
+    public function delete(Request $request, $project_id, $project_task_id)
+    {
+        $project_task = ProjectTask::find($project_task_id);
+        $project_task->status = ProjectTaskStatus::INACTIVE; // mark data as inactive
+        $project_task->save();
+
+        $request->session()->flash('success', 'Data has been deleted');
+        return back();
     }
 }

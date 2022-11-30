@@ -19,23 +19,8 @@
             </nav>
             <h1 class="m-0">Manage Project</h1>
         </div>
-        <!-- <a href="{{ route('internals.exports.projects.print.ce', [$project->reference_number]) }}">
-            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print CE</button>
-        </a>
 
-        <a href="{{ route('internals.exports.projects.print.internal-ce', [$project->reference_number]) }}">
-            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print Internal CE</button>
-        </a> -->
 
-        @if ($project->status == ProjectStatus::FOR_APPROVAL)
-            <a href="#" data-href="{{ route('internals.projects.approve', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action">
-                <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Approve</button>
-            </a>
-
-            <a href="#" data-href="{{ route('internals.projects.disapprove', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action">
-                <button type="button" class="btn btn-danger"><i class="fa fa-times" id="margin-right"></i>Disapprove</button>
-            </a>
-        @endif
     </div>
 </div>
 
@@ -60,17 +45,18 @@
                     </div>
 
                     <div class="col-md-2">
-                        <!-- <a href="#" data-toggle="modal" data-target="#add-project-details-{{ $project->id }}">
-                            <button type="button" class="btn btn-success form-control" id="table-letter-margin"><i class="material-icons">add</i> Add Details</button>
-                        </a> -->
-                        
                         <a href="#" data-toggle="modal" data-target="#add-task-{{ $project->id }}">
                             <button type="button" class="btn btn-success form-control" id="table-letter-margin"><i class="material-icons">add</i> Add Task</button>
                         </a>
                     </div>
                 </div>
                 <br>
-
+                <strong>{{ $completed }} out of {{ $total }} tasks completed</strong>
+                {{ $percentage }}% progress
+                <div class="progress">
+                  <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="width: {{ $percentage }}%" aria-valuenow="{{ $percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <br>
                 <div class="table-responsive">
                     <table class="table mb-0 thead-border-top-0 table-striped">
                         <thead>
@@ -88,7 +74,11 @@
                         <tbody class="list" id="companies">
                             @foreach ($project_tasks as $project_task)  
                                 <tr>
-                                    <td id="compact-table"><a href="#" data-toggle="modal" data-target="#edit-task-{{ $project_task->id }}" id="table-clickable">{{ $project_task->name }}</a></td>
+                                    <td id="compact-table"><a href="#" data-toggle="modal" data-target="#edit-task-{{ $project_task->id }}" id="table-clickable">{{ $project_task->name }}</a> 
+                                        @if ($project_task->created_by_user_id == auth()->user()->id)
+                                            <a href="#" data-href="{{ route('internals.projects.tasks.delete', [$project->id, $project_task->id]) }}" class="text-danger" data-toggle="modal" data-target="#confirm-action" ><i class="fa fa-trash"></i></a>
+                                        @endif
+                                    </td>
                                     <td id="compact-table"><a href="#" data-toggle="modal" data-target="#edit-task-{{ $project_task->id }}" id="table-clickable">{{ $project_task->description }}</a></td>
                                     <td id="compact-table">
                                         @if ($project_task->file)
