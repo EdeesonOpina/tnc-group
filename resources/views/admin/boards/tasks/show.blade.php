@@ -1,9 +1,83 @@
 @include('layouts.auth.header')
 @php
     use Carbon\Carbon;
-    use App\Models\ProjectTask;
-    use App\Models\ProjectTaskStatus;
+    use App\Models\BoardTask;
+    use App\Models\BoardTaskStatus;
 @endphp
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+google.charts.load('current', {'packages':['gantt']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'Task ID');
+  data.addColumn('string', 'Task Name');
+  data.addColumn('string', 'Status');
+  data.addColumn('date', 'Start Date');
+  data.addColumn('date', 'End Date');
+  data.addColumn('number', 'Duration');
+  data.addColumn('number', 'Percent Complete');
+  data.addColumn('string', 'Dependencies');
+
+  @foreach ($board_tasks as $board_task)
+      @php
+        $start = $board_task->created_at;
+        $end = $board_task->deadline_date;
+        $date = Carbon::now();
+
+        $startDate = new DateTime($start);
+        $endDate = new DateTime($end);
+        $currentDate = new DateTime($date);
+
+        $totalTime = $endDate->getTimestamp() - $startDate->getTimestamp();
+        $elapsedTime = $currentDate->getTimestamp() - $startDate->getTimestamp();
+
+        $percentage = round(($elapsedTime / $totalTime) * 100.0, 2);
+
+        $totalTime = $endDate->getTimestamp() - $startDate->getTimestamp();
+        $elapsedTime = $currentDate->getTimestamp() - $startDate->getTimestamp();
+
+        $g_status = 1;
+
+        if ($board_task->status == BoardTaskStatus::PENDING)
+            $g_status = 'PENDING';
+
+        if ($board_task->status == BoardTaskStatus::ON_PROGRESS)
+            $g_status = 'ON PROGRESS';
+
+        if ($board_task->status == BoardTaskStatus::NEED_MORE_INFO)
+            $g_status = 'NEED MORE INFO';
+
+        if ($board_task->status == BoardTaskStatus::TBD)
+            $g_status = 'TBD';
+
+        if ($board_task->status == BoardTaskStatus::CANCELLED)
+            $g_status = 'CANCELLED';
+
+        if ($board_task->status == BoardTaskStatus::DONE)
+            $g_status = 'DONE';
+      @endphp
+
+      data.addRows([
+        ['{{ $board_task->id }}', '{{ $board_task->name }}', '{{ $g_status }}',
+         new Date({{ Carbon::parse($board_task->created_at)->format('Y') }}, {{ Carbon::parse($board_task->created_at)->format('m') }}, {{ Carbon::parse($board_task->created_at)->format('d') }}), new Date({{ Carbon::parse($board_task->deadline_date)->format('Y') }}, {{ Carbon::parse($board_task->deadline_date)->format('m') }}, {{ Carbon::parse($board_task->deadline_date)->format('d') }}), null, {{ $percentage }}, null],
+        ]);
+  @endforeach
+
+  var options = {
+    gantt: {
+        trackHeight: 30
+    }
+  };
+
+  var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+  chart.draw(data, options);
+}
+</script>
 
 <div class="container page__heading-container">
     <div class="page__heading d-flex align-items-center">
@@ -26,6 +100,10 @@
 
 <div class="container-fluid page__container">
     @include('layouts.partials.alerts')
+
+    <div id="chart_div"></div>
+
+    <br>
 
     <div class="row">
         <div class="col-md-12">
@@ -85,17 +163,17 @@
                                     <td id="compact-table"><a href="#" data-toggle="modal" data-target="#edit-task-{{ $board_task->id }}" id="table-clickable">{{ $board_task->created_by_user->firstname }} {{ $board_task->created_by_user->lastname }}</a></td>
                                     <td id="compact-table">
                                         <a href="#" data-toggle="modal" data-target="#edit-task-{{ $board_task->id }}" id="table-clickable">
-                                            @if ($board_task->status == ProjectTaskStatus::PENDING)
+                                            @if ($board_task->status == BoardTaskStatus::PENDING)
                                                 <div class="badge badge-warning ml-2">PENDING</div>
-                                            @elseif ($board_task->status == ProjectTaskStatus::ON_PROGRESS)
+                                            @elseif ($board_task->status == BoardTaskStatus::ON_PROGRESS)
                                                 <div class="badge badge-primary ml-2">ON PROGRESS</div>
-                                            @elseif ($board_task->status == ProjectTaskStatus::NEED_MORE_INFO)
+                                            @elseif ($board_task->status == BoardTaskStatus::NEED_MORE_INFO)
                                                 <div class="badge badge-info ml-2">NEED MORE INFO</div>
-                                            @elseif ($board_task->status == ProjectTaskStatus::DONE)
+                                            @elseif ($board_task->status == BoardTaskStatus::DONE)
                                                 <div class="badge badge-success ml-2">DONE</div>
-                                            @elseif ($board_task->status == ProjectTaskStatus::CANCELLED)
+                                            @elseif ($board_task->status == BoardTaskStatus::CANCELLED)
                                                 <div class="badge badge-danger ml-2">CANCELLED</div>
-                                            @elseif ($board_task->status == ProjectTaskStatus::TBD)
+                                            @elseif ($board_task->status == BoardTaskStatus::TBD)
                                                 <div class="badge badge-info ml-2">TBD</div>
                                             @endif
                                         </a>

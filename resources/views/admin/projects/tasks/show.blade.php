@@ -7,6 +7,80 @@
     use App\Models\BudgetRequestFormStatus;
 @endphp
 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+google.charts.load('current', {'packages':['gantt']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'Task ID');
+  data.addColumn('string', 'Task Name');
+  data.addColumn('string', 'Status');
+  data.addColumn('date', 'Start Date');
+  data.addColumn('date', 'End Date');
+  data.addColumn('number', 'Duration');
+  data.addColumn('number', 'Percent Complete');
+  data.addColumn('string', 'Dependencies');
+
+  @foreach ($project_tasks as $project_task)
+      @php
+        $start = $project_task->created_at;
+        $end = $project_task->deadline_date;
+        $date = Carbon::now();
+
+        $startDate = new DateTime($start);
+        $endDate = new DateTime($end);
+        $currentDate = new DateTime($date);
+
+        $totalTime = $endDate->getTimestamp() - $startDate->getTimestamp();
+        $elapsedTime = $currentDate->getTimestamp() - $startDate->getTimestamp();
+
+        $percentage = round(($elapsedTime / $totalTime) * 100.0, 2);
+
+        $totalTime = $endDate->getTimestamp() - $startDate->getTimestamp();
+        $elapsedTime = $currentDate->getTimestamp() - $startDate->getTimestamp();
+
+        $g_status = 1;
+
+        if ($project_task->status == ProjectTaskStatus::PENDING)
+            $g_status = 'PENDING';
+
+        if ($project_task->status == ProjectTaskStatus::ON_PROGRESS)
+            $g_status = 'ON PROGRESS';
+
+        if ($project_task->status == ProjectTaskStatus::NEED_MORE_INFO)
+            $g_status = 'NEED MORE INFO';
+
+        if ($project_task->status == ProjectTaskStatus::TBD)
+            $g_status = 'TBD';
+
+        if ($project_task->status == ProjectTaskStatus::CANCELLED)
+            $g_status = 'CANCELLED';
+
+        if ($project_task->status == ProjectTaskStatus::DONE)
+            $g_status = 'DONE';
+      @endphp
+
+      data.addRows([
+        ['{{ $project_task->id }}', '{{ $project_task->name }}', '{{ $g_status }}',
+         new Date({{ Carbon::parse($project_task->created_at)->format('Y') }}, {{ Carbon::parse($project_task->created_at)->format('m') }}, {{ Carbon::parse($project_task->created_at)->format('d') }}), new Date({{ Carbon::parse($project_task->deadline_date)->format('Y') }}, {{ Carbon::parse($project_task->deadline_date)->format('m') }}, {{ Carbon::parse($project_task->deadline_date)->format('d') }}), null, {{ $percentage }}, null],
+        ]);
+  @endforeach
+
+  var options = {
+    gantt: {
+        trackHeight: 30
+    }
+  };
+
+  var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+  chart.draw(data, options);
+}
+</script>
+
 <div class="container page__heading-container">
     <div class="page__heading d-flex align-items-center">
         <div class="flex">
@@ -136,8 +210,10 @@
                         </div>
                     @endif
                 </div>
-                
             </div>
+
+            <br><br>
+            <div id="chart_div"></div>
 
         </div>
         <div class="col">
