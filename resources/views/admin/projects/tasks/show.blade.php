@@ -70,6 +70,7 @@
                                 <th id="compact-table">Assigned To</th>
                                 <th id="compact-table">Created By</th>
                                 <th id="compact-table">Status</th>
+                                <th id="compact-table">Completed At</th>
                                 <th id="compact-table">Created At</th>
                                 <th id="compact-table">Last Updated At</th>
                             </tr>
@@ -108,6 +109,11 @@
                                                 <div class="badge badge-info ml-2">TBD</div>
                                             @endif
                                         </a>
+                                    </td>
+                                    <td id="compact-table">
+                                        @if ($project_task->completed_at)
+                                            <a href="#" data-toggle="modal" data-target="#edit-task-{{ $project_task->id }}" id="table-clickable">{{ Carbon::parse($project_task->completed_at)->format('M d Y') }}</a>
+                                        @endif
                                     </td>
                                     <td id="compact-table"><a href="#" data-toggle="modal" data-target="#edit-task-{{ $project_task->id }}" id="table-clickable">{{ $project_task->created_at->format('M d Y') }}</a></td>
                                     <td id="compact-table"><a href="#" data-toggle="modal" data-target="#edit-task-{{ $project_task->id }}" id="table-clickable">{{ $project_task->updated_at->diffForHumans() }}</a></td>
