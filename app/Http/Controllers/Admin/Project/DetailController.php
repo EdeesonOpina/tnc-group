@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Project;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ use App\Models\ClientStatus;
 use App\Models\Company;
 use App\Models\CompanyStatus;
 
-class ProjectDetailController extends Controller
+class DetailController extends Controller
 {
     public function add($project_id)
     {

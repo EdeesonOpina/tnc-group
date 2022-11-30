@@ -171,6 +171,11 @@
     #force-uppercase {
         text-transform: uppercase;
     }
+
+    #table-clickable {
+        color: #333;
+        text-decoration: none;
+    }
     </style>
 
 

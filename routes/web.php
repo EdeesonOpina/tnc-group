@@ -525,34 +525,47 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
     // projects
     Route::group(['prefix' => 'projects/'], function () {
-        Route::get('/', 'App\Http\Controllers\Admin\ProjectController@show')->name('internals.projects');
-        Route::get('/add', 'App\Http\Controllers\Admin\ProjectController@add')->name('internals.projects.add');
-        Route::post('/create', 'App\Http\Controllers\Admin\ProjectController@create')->name('internals.projects.create');
-        Route::get('/view/{project_id}', 'App\Http\Controllers\Admin\ProjectController@view')->name('internals.projects.view');
-        Route::get('/edit/{project_id}', 'App\Http\Controllers\Admin\ProjectController@edit')->name('internals.projects.edit');
-        Route::post('/edit', 'App\Http\Controllers\Admin\ProjectController@update')->name('internals.projects.update');
-        Route::get('/approve/{project_id}', 'App\Http\Controllers\Admin\ProjectController@approve')->name('internals.projects.approve');
-        Route::get('/disapprove/{project_id}', 'App\Http\Controllers\Admin\ProjectController@disapprove')->name('internals.projects.disapprove');
-        Route::get('/done/{project_id}', 'App\Http\Controllers\Admin\ProjectController@done')->name('internals.projects.done');
-        Route::get('/delete/{project_id}', 'App\Http\Controllers\Admin\ProjectController@delete')->name('internals.projects.delete');
-        Route::get('/recover/{project_id}', 'App\Http\Controllers\Admin\ProjectController@recover')->name('internals.projects.recover');
-        Route::post('/update/conforme-signature', 'App\Http\Controllers\Admin\ProjectController@conforme_signature')->name('internals.projects.update.conforme-signature');
+        Route::get('/', 'App\Http\Controllers\Admin\Project\ProjectController@show')->name('internals.projects');
+        Route::get('/add', 'App\Http\Controllers\Admin\Project\ProjectController@add')->name('internals.projects.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\Project\ProjectController@create')->name('internals.projects.create');
+        Route::get('/view/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@view')->name('internals.projects.view');
+        Route::get('/edit/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@edit')->name('internals.projects.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\Project\ProjectController@update')->name('internals.projects.update');
+        Route::get('/approve/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@approve')->name('internals.projects.approve');
+        Route::get('/disapprove/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@disapprove')->name('internals.projects.disapprove');
+        Route::get('/done/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@done')->name('internals.projects.done');
+        Route::get('/delete/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@delete')->name('internals.projects.delete');
+        Route::get('/recover/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@recover')->name('internals.projects.recover');
+        Route::post('/update/conforme-signature', 'App\Http\Controllers\Admin\Project\ProjectController@conforme_signature')->name('internals.projects.update.conforme-signature');
 
-        Route::post('/margin', 'App\Http\Controllers\Admin\ProjectController@margin')->name('internals.projects.update.margin');
-        Route::post('/vat-rate', 'App\Http\Controllers\Admin\ProjectController@vat_rate')->name('internals.projects.update.vat-rate');
-        Route::post('/usd-rate', 'App\Http\Controllers\Admin\ProjectController@usd_rate')->name('internals.projects.update.usd-rate');
-        Route::post('/has-usd', 'App\Http\Controllers\Admin\ProjectController@has_usd')->name('internals.projects.update.has-usd');
-        Route::post('/asf', 'App\Http\Controllers\Admin\ProjectController@asf')->name('internals.projects.update.asf');
-        Route::post('/vat', 'App\Http\Controllers\Admin\ProjectController@vat')->name('internals.projects.update.vat');
-        Route::post('/terms', 'App\Http\Controllers\Admin\ProjectController@terms')->name('internals.projects.update.terms');
-        Route::post('/duration-date', 'App\Http\Controllers\Admin\ProjectController@duration_date')->name('internals.projects.update.duration-date');
-        Route::post('/start-date', 'App\Http\Controllers\Admin\ProjectController@start_date')->name('internals.projects.update.start-date');
-        Route::post('/end-date', 'App\Http\Controllers\Admin\ProjectController@end_date')->name('internals.projects.update.end-date');
+        Route::post('/margin', 'App\Http\Controllers\Admin\Project\ProjectController@margin')->name('internals.projects.update.margin');
+        Route::post('/vat-rate', 'App\Http\Controllers\Admin\Project\ProjectController@vat_rate')->name('internals.projects.update.vat-rate');
+        Route::post('/usd-rate', 'App\Http\Controllers\Admin\Project\ProjectController@usd_rate')->name('internals.projects.update.usd-rate');
+        Route::post('/has-usd', 'App\Http\Controllers\Admin\Project\ProjectController@has_usd')->name('internals.projects.update.has-usd');
+        Route::post('/asf', 'App\Http\Controllers\Admin\Project\ProjectController@asf')->name('internals.projects.update.asf');
+        Route::post('/vat', 'App\Http\Controllers\Admin\Project\ProjectController@vat')->name('internals.projects.update.vat');
+        Route::post('/terms', 'App\Http\Controllers\Admin\Project\ProjectController@terms')->name('internals.projects.update.terms');
+        Route::post('/duration-date', 'App\Http\Controllers\Admin\Project\ProjectController@duration_date')->name('internals.projects.update.duration-date');
+        Route::post('/start-date', 'App\Http\Controllers\Admin\Project\ProjectController@start_date')->name('internals.projects.update.start-date');
+        Route::post('/end-date', 'App\Http\Controllers\Admin\Project\ProjectController@end_date')->name('internals.projects.update.end-date');
 
         // manage
         Route::group(['prefix' => 'manage/{project_id}'], function () {
-            Route::get('/', 'App\Http\Controllers\Admin\ProjectController@manage')->name('internals.projects.manage');
+            Route::get('/', 'App\Http\Controllers\Admin\Project\ProjectController@manage')->name('internals.projects.manage');
             Route::get('/items/masterlist', 'App\Http\Controllers\Admin\SupplyController@masterlist')->name('internals.projects.items.masterlist');
+
+            // tasks
+            Route::group(['prefix' => 'tasks/'], function () {
+                Route::get('/', 'App\Http\Controllers\Admin\Project\TaskController@show')->name('internals.projects.tasks');
+                Route::post('/create', 'App\Http\Controllers\Admin\Project\TaskController@create')->name('internals.projects.tasks.create');
+                Route::get('/view/{task_id}', 'App\Http\Controllers\Admin\Project\TaskController@view')->name('internals.projects.tasks.view');
+                Route::get('/edit/{task_id}', 'App\Http\Controllers\Admin\Project\TaskController@edit')->name('internals.projects.tasks.edit');
+                Route::post('/edit', 'App\Http\Controllers\Admin\Project\TaskController@update')->name('internals.projects.tasks.update');
+                Route::get('/done/{task_id}', 'App\Http\Controllers\Admin\Project\TaskController@done')->name('internals.projects.tasks.done');
+                Route::get('/not-done/{task_id}', 'App\Http\Controllers\Admin\Project\TaskController@not_done')->name('internals.projects.tasks.not-done');
+                Route::get('/delete/{task_id}', 'App\Http\Controllers\Admin\Project\TaskController@delete')->name('internals.projects.tasks.delete');
+                Route::get('/recover/{task_id}', 'App\Http\Controllers\Admin\Project\TaskController@recover')->name('internals.projects.tasks.recover');
+            });
         });
 
         // exports
@@ -576,23 +589,23 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
     // details
     Route::group(['prefix' => 'details'], function () {
-        Route::get('/add/{project_id}', 'App\Http\Controllers\Admin\ProjectDetailController@add')->name('internals.projects.details.add');
-        Route::get('/edit/{project_id}', 'App\Http\Controllers\Admin\ProjectDetailController@edit')->name('internals.projects.details.edit');
-        Route::post('/create', 'App\Http\Controllers\Admin\ProjectDetailController@create')->name('internals.projects.details.create');
-        Route::post('/update', 'App\Http\Controllers\Admin\ProjectDetailController@update')->name('internals.projects.details.update');
-        Route::post('/update/price', 'App\Http\Controllers\Admin\ProjectDetailController@price')->name('internals.projects.details.update.price');
+        Route::get('/add/{project_id}', 'App\Http\Controllers\Admin\Project\DetailController@add')->name('internals.projects.details.add');
+        Route::get('/edit/{project_id}', 'App\Http\Controllers\Admin\Project\DetailController@edit')->name('internals.projects.details.edit');
+        Route::post('/create', 'App\Http\Controllers\Admin\Project\DetailController@create')->name('internals.projects.details.create');
+        Route::post('/update', 'App\Http\Controllers\Admin\Project\DetailController@update')->name('internals.projects.details.update');
+        Route::post('/update/price', 'App\Http\Controllers\Admin\Project\DetailController@price')->name('internals.projects.details.update.price');
 
-        Route::get('/approve/{id}','App\Http\Controllers\Admin\ProjectDetailController@approve')->name('internals.projects.details.approve');
-        Route::get('/disapprove/{id}','App\Http\Controllers\Admin\ProjectDetailController@disapprove')->name('internals.projects.details.disapprove');
-        Route::get('/activate/{id}','App\Http\Controllers\Admin\ProjectDetailController@activate')->name('internals.projects.details.activate');
-        Route::get('/deactivate/{id}','App\Http\Controllers\Admin\ProjectDetailController@deactivate')->name('internals.projects.details.deactivate');
-        Route::get('/recover/{project_detail_id}', 'App\Http\Controllers\Admin\ProjectDetailController@recover')->name('internals.projects.details.recover');
-        Route::get('/delete/{project_detail_id}', 'App\Http\Controllers\Admin\ProjectDetailController@delete')->name('internals.projects.details.delete');
+        Route::get('/approve/{id}','App\Http\Controllers\Admin\Project\DetailController@approve')->name('internals.projects.details.approve');
+        Route::get('/disapprove/{id}','App\Http\Controllers\Admin\Project\DetailController@disapprove')->name('internals.projects.details.disapprove');
+        Route::get('/activate/{id}','App\Http\Controllers\Admin\Project\DetailController@activate')->name('internals.projects.details.activate');
+        Route::get('/deactivate/{id}','App\Http\Controllers\Admin\Project\DetailController@deactivate')->name('internals.projects.details.deactivate');
+        Route::get('/recover/{project_detail_id}', 'App\Http\Controllers\Admin\Project\DetailController@recover')->name('internals.projects.details.recover');
+        Route::get('/delete/{project_detail_id}', 'App\Http\Controllers\Admin\Project\DetailController@delete')->name('internals.projects.details.delete');
 
         // for searching project
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\ProjectDetailController@search')->name('internals.projects.details.search');
-            Route::get('/{name}', 'App\Http\Controllers\Admin\ProjectDetailController@filter')->name('internals.projects.details.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\Project\DetailController@search')->name('internals.projects.details.search');
+            Route::get('/{name}', 'App\Http\Controllers\Admin\Project\DetailController@filter')->name('internals.projects.details.filter');
         });
     });
 

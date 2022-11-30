@@ -44,6 +44,15 @@
 
     <div class="row">
         <div class="col-md-12">
+            <a href="{{ route('internals.projects.manage', [$project->id]) }}" class="no-underline">
+                <button class="btn btn-primary">Project</button>
+            </a>
+
+            <a href="{{ route('internals.projects.tasks', [$project->id]) }}" class="no-underline">
+                <button class="btn btn-light">Tasks</button>
+            </a>
+            <br><br>
+
             <div id="spaced-card" class="card card-body">
                 <div class="row">
                     <div class="col">
@@ -474,78 +483,81 @@
                 </div>
             </div>
 
-            <br>
 
-            <div id="spaced-card" class="card card-body">
-                <div class="row">
-                    <div class="col">
-                        <h4 class="card-header__title flex m-0">Budget Request Forms</h4>
+
+            @if (count($budget_request_forms) > 0)
+                <br>
+                <div id="spaced-card" class="card card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="card-header__title flex m-0">Budget Request Forms</h4>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="table-responsive">
+                        <table class="table mb-0 thead-border-top-0 table-striped">
+                            <thead>
+                                <tr>
+                                    <th id="compact-table">#BRF</th>
+                                    <th id="compact-table">Payment For</th>
+                                    <th id="compact-table">Project</th>
+                                    <th id="compact-table">Needed Date</th>
+                                    <th id="compact-table">Total Price</th>
+                                    <th id="compact-table">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list" id="companies">
+                                @foreach ($budget_request_forms as $budget_request_form)
+                                    <tr>
+                                        <td>
+                                            {{ $budget_request_form->reference_number }}
+                                            <div class="d-flex">
+                                                @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
+                                                    <a href="{{ route('internals.brf.view', [$budget_request_form->reference_number]) }}" id="margin-right">View</a> | 
+
+                                                    <a href="{{ route('internals.brf.manage', [$budget_request_form->id]) }}" id="space-table">Manage</a> | 
+
+                                                    <a href="#" data-href="{{ route('internals.brf.approve', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
+
+                                                    <a href="#" data-href="{{ route('internals.brf.disapprove', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
+                                                @endif
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @if ($budget_request_form->payment_for_user)
+                                                {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                                            @endif
+
+                                            @if ($budget_request_form->payment_for_supplier)
+                                                {{ $budget_request_form->payment_for_supplier->name }}
+                                            @endif
+                                        </td>
+                                        <td id="compact-table">{{ $budget_request_form->project->name }}</td>
+                                        <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}</td>
+                                        <td>P{{ number_format($budget_request_form->total, 2) }}</td>
+                                        <td>
+                                            @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
+                                                <div class="badge badge-warning ml-2">For Approval</div>
+                                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
+                                                <div class="badge badge-success ml-2">Approved</div>
+                                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
+                                                <div class="badge badge-danger ml-2">Disapproved</div>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        @if (count($budget_request_forms) <= 0)
+                            <div style="padding: 20px">
+                                <center><i class="material-icons icon-16pt mr-1 text-muted">assignment</i> No record/s found</center>
+                            </div>
+                        @endif
                     </div>
                 </div>
-                <br>
-
-                <div class="table-responsive">
-                    <table class="table mb-0 thead-border-top-0 table-striped">
-                        <thead>
-                            <tr>
-                                <th id="compact-table">#BRF</th>
-                                <th id="compact-table">Payment For</th>
-                                <th id="compact-table">Project</th>
-                                <th id="compact-table">Needed Date</th>
-                                <th id="compact-table">Total Price</th>
-                                <th id="compact-table">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody class="list" id="companies">
-                            @foreach ($budget_request_forms as $budget_request_form)
-                                <tr>
-                                    <td>
-                                        {{ $budget_request_form->reference_number }}
-                                        <div class="d-flex">
-                                            @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                                <a href="{{ route('internals.brf.view', [$budget_request_form->reference_number]) }}" id="margin-right">View</a> | 
-
-                                                <a href="{{ route('internals.brf.manage', [$budget_request_form->id]) }}" id="space-table">Manage</a> | 
-
-                                                <a href="#" data-href="{{ route('internals.brf.approve', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
-
-                                                <a href="#" data-href="{{ route('internals.brf.disapprove', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
-                                            @endif
-                                        </div>
-                                    </td>
-                                    <td>
-                                        @if ($budget_request_form->payment_for_user)
-                                            {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
-                                        @endif
-
-                                        @if ($budget_request_form->payment_for_supplier)
-                                            {{ $budget_request_form->payment_for_supplier->name }}
-                                        @endif
-                                    </td>
-                                    <td id="compact-table">{{ $budget_request_form->project->name }}</td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}</td>
-                                    <td>P{{ number_format($budget_request_form->total, 2) }}</td>
-                                    <td>
-                                        @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                            <div class="badge badge-warning ml-2">For Approval</div>
-                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
-                                            <div class="badge badge-success ml-2">Approved</div>
-                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
-                                            <div class="badge badge-danger ml-2">Disapproved</div>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
-                    @if (count($budget_request_forms) <= 0)
-                        <div style="padding: 20px">
-                            <center><i class="material-icons icon-16pt mr-1 text-muted">assignment</i> No record/s found</center>
-                        </div>
-                    @endif
-                </div>
-            </div>
+            @endif
         </div>
         <div class="col">
             <!-- <div id="semi-spaced-card" class="card card-body">

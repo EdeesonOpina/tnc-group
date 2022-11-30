@@ -496,18 +496,23 @@
   @endif
 
   @if (request()->is('admin/projects/manage/*'))
-    @include('layouts.modals.projects.details.add')
-    @include('layouts.modals.projects.details.edit')
-    @include('layouts.modals.projects.start-date')
-    @include('layouts.modals.projects.end-date')
-    @include('layouts.modals.projects.duration-date')
-    @include('layouts.modals.projects.terms')
-    @include('layouts.modals.projects.asf')
-    @include('layouts.modals.projects.vat')
-    @include('layouts.modals.projects.margin')
-    @include('layouts.modals.projects.vat-rate')
-    @include('layouts.modals.projects.usd-rate')
-    @include('layouts.modals.projects.has-usd')
+    @if(str_contains(url()->current(), '/tasks'))
+        @include('layouts.modals.projects.tasks.add')
+        @include('layouts.modals.projects.tasks.edit')
+    @else
+        @include('layouts.modals.projects.details.add')
+        @include('layouts.modals.projects.details.edit')
+        @include('layouts.modals.projects.start-date')
+        @include('layouts.modals.projects.end-date')
+        @include('layouts.modals.projects.duration-date')
+        @include('layouts.modals.projects.terms')
+        @include('layouts.modals.projects.asf')
+        @include('layouts.modals.projects.vat')
+        @include('layouts.modals.projects.margin')
+        @include('layouts.modals.projects.vat-rate')
+        @include('layouts.modals.projects.usd-rate')
+        @include('layouts.modals.projects.has-usd')
+    @endif
   @endif
 
   @if (request()->is('admin/projects/view/*'))
