@@ -71,7 +71,7 @@ function drawChart() {
       @else
             data.addRows([
             ['{{ $project_task->id }}', '{{ $project_task->name }}', '{{ $g_status }}',
-             new Date({{ Carbon::parse($project_task->created_at)->format('Y') }}, {{ Carbon::parse($project_task->created_at)->format('m') }}, {{ Carbon::parse($project_task->created_at)->format('d') }}), new Date({{ Carbon::parse($project_task->created_at)->format('Y') }}, {{ Carbon::parse($project_task->created_at)->format('m') }}, {{ Carbon::parse($project_task->created_at)->format('d') }}), null, {{ $percentage }}, null],
+             new Date({{ Carbon::parse($project_task->created_at)->format('Y') }}, {{ Carbon::parse($project_task->created_at)->format('m') }}, {{ Carbon::parse($project_task->created_at)->format('d') }}), new Date({{ Carbon::parse($project_task->created_at)->format('Y') }}, {{ Carbon::parse($project_task->created_at)->format('m') }}, {{ Carbon::parse($project_task->created_at)->format('d') }}), null, null, null],
             ]);
       @endif
   @endforeach
