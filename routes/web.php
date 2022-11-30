@@ -523,6 +523,17 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         });
     });
 
+    // boards
+    Route::group(['prefix' => 'boards/tasks'], function () {
+        Route::get('/', 'App\Http\Controllers\Admin\Board\TaskController@show')->name('internals.boards.tasks');
+        Route::post('/create', 'App\Http\Controllers\Admin\Board\TaskController@create')->name('internals.boards.tasks.create');
+        Route::get('/view/{task_id}', 'App\Http\Controllers\Admin\Board\TaskController@view')->name('internals.boards.tasks.view');
+        Route::get('/edit/{task_id}', 'App\Http\Controllers\Admin\Board\TaskController@edit')->name('internals.boards.tasks.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\Board\TaskController@update')->name('internals.boards.tasks.update');
+        Route::get('/delete/{task_id}', 'App\Http\Controllers\Admin\Board\TaskController@delete')->name('internals.boards.tasks.delete');
+        Route::get('/recover/{task_id}', 'App\Http\Controllers\Admin\Board\TaskController@recover')->name('internals.boards.tasks.recover');
+    });
+
     // projects
     Route::group(['prefix' => 'projects/'], function () {
         Route::get('/', 'App\Http\Controllers\Admin\Project\ProjectController@show')->name('internals.projects');

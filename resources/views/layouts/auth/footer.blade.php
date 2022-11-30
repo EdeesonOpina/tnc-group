@@ -46,6 +46,13 @@
                     </a>
                 </li>
 
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" href="{{ route('internals.boards.tasks') }}">
+                        <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">view_week</i>
+                        <span class="sidebar-menu-text">Boards</span>
+                    </a>
+                </li>
+
                 <div class="sidebar-heading">Operations</div>
                 <div class="sidebar-block p-0">
                     @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Sales' || auth()->user()->role == 'Programs')
@@ -372,6 +379,12 @@
 
   @if (request()->is('accounting/payables/*') || request()->is('accounting/payables'))
     @include('layouts.modals.payables.date-released')
+  @endif
+
+  @if (request()->is('admin/boards/tasks/*') || request()->is('admin/boards/tasks'))
+    @include('layouts.modals.boards.tasks.add')
+    @include('layouts.modals.boards.tasks.edit')
+    @include('layouts.modals.boards.tasks.graph-activities')
   @endif
 
   @if (request()->is('admin/purchase-orders/manage/*'))

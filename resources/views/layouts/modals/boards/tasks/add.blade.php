@@ -8,10 +8,9 @@
               ->get();
 @endphp
 
-<form action="{{ route('internals.projects.tasks.create', [$project->id]) }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('internals.boards.tasks.create') }}" method="post" enctype="multipart/form-data">
   {{ csrf_field() }}
-  <input type="hidden" name="project_id" value="{{ $project->id }}">
-  <div class="modal fade" id="add-task-{{ $project->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="add-task" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
@@ -19,22 +18,9 @@
 
           <div class="row">
             <div class="col-md-4">
-                @if ($project->image)
-                    <img src="{{ url($project->image) }}" width="100%">
-                @else
-                    <img src="{{ url(env('APP_ICON')) }}" width="100%" style="padding: 5%;">
-                @endif
+              <img src="{{ url(env('APP_ICON')) }}" width="100%" style="padding: 5%;">
             </div>
             <div class="col">
-              <div class="row">
-                <div class="col">
-                  <strong>Name:</strong>
-                </div>
-                <div class="col">
-                  {{ $project->name }}
-                </div>
-              </div>
-              <hr>
               <label>Task</label><br>
               <input type="text" name="name" class="form-control" placeholder="Task" value="{{ old('name') }}"><br>
               <label>Description (optional)</label><br>

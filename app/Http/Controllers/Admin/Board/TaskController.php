@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Project;
+namespace App\Http\Controllers\Admin\Board;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,36 +8,29 @@ use Carbon\Carbon;
 use Auth;
 use Mail;
 use Validator;
-use App\Models\Project;
-use App\Models\ProjectTask;
-use App\Models\ProjectStatus;
-use App\Models\ProjectTaskStatus;
+use App\Models\BoardTask;
+use App\Models\BoardTaskStatus;
 
 class TaskController extends Controller
 {
-    public function show($project_id)
+    public function show()
     {
-        $project = Project::find($project_id);
-        $project_tasks = ProjectTask::where('project_id', $project_id)
-                    ->orderBy('created_at', 'desc')
-                    ->where('status', '!=', ProjectTaskStatus::INACTIVE)
+        $board_tasks = BoardTask::orderBy('created_at', 'desc')
+                    ->where('status', '!=', BoardTaskStatus::INACTIVE)
                     ->paginate(15);
 
-        $total = ProjectTask::where('project_id', $project_id)
-                        ->where('status', '!=', ProjectTaskStatus::INACTIVE)
+        $total = BoardTask::where('status', '!=', BoardTaskStatus::INACTIVE)
                         ->count();
-        $completed = ProjectTask::where('project_id', $project_id)
-                        ->where('status', ProjectTaskStatus::DONE)
+        $completed = BoardTask::where('status', BoardTaskStatus::DONE)
                         ->count();
-        if (count($project_tasks) > 0) {
+        if (count($board_tasks) > 0) {
             $percentage = ($completed / $total) * 100;
         } else {
             $percentage = 0; 
         }
 
         /* last 30 days */
-        $last_30_records = ProjectTask::select(\DB::raw("COUNT(*) as count"), \DB::raw("DAYNAME(updated_at) as day_name"), \DB::raw("DAY(updated_at) as day"))
-                    ->where('project_id', $project_id)
+        $last_30_records = BoardTask::select(\DB::raw("COUNT(*) as count"), \DB::raw("DAYNAME(updated_at) as day_name"), \DB::raw("DAY(updated_at) as day"))
                     ->where('created_at', '>', Carbon::today()->subDay(30))
                     ->groupBy('day_name','day')
                     ->orderBy('day')
@@ -53,21 +46,20 @@ class TaskController extends Controller
         /* set as json */
         $last_30_days_chart['chart_data'] = json_encode($last_30_days);
 
-        return view('admin.projects.tasks.show', compact(
+        return view('admin.boards.tasks.show', compact(
             'last_30_days_chart',
             'percentage',
             'total',
             'completed',
-            'project_tasks',
-            'project'
+            'board_tasks',
         ));
     }
 
-    public function add($project_id)
+    public function add($board_id)
     {
-        $project = Project::find($project_id);
+        $board = Project::find($board_id);
 
-        return view('admin.projects.tasks.details.add', compact(
+        return view('admin.boards.tasks.details.add', compact(
             'project',
         ));
     }
@@ -98,7 +90,7 @@ class TaskController extends Controller
         }
 
         /* check if completed */
-        if ($request->status == ProjectTaskStatus::DONE) {
+        if ($request->status == BoardTaskStatus::DONE) {
             $data['completed_at'] = Carbon::now();
             $data['is_completed'] = 1;
         } else {
@@ -107,20 +99,18 @@ class TaskController extends Controller
         }
 
         $data['created_by_user_id'] = auth()->user()->id;
-        $project_task = ProjectTask::create($data); // create data in a model
+        $board_task = BoardTask::create($data); // create data in a model
 
         $request->session()->flash('success', 'Data has been added');
-        return redirect()->route('internals.projects.tasks', [$project_task->project->id]);
+        return back();
     }
 
-    public function edit($project_id, $project_task_id)
+    public function edit($board_task_id)
     {
-        $project = Project::find($project_id);
-        $project_tasks = ProjectTask::find($project_task_id);
+        $board_tasks = BoardTask::find($board_task_id);
 
-        return view('admin.projects.tasks.details.edit', compact(
-            'project',
-            'project_tasks',
+        return view('admin.boards.tasks.details.edit', compact(
+            'board_tasks',
         ));
     }
 
@@ -150,11 +140,11 @@ class TaskController extends Controller
         }
 
         /* update new data */
-        $project_task = ProjectTask::find($request->project_task_id);
-        $project_task->fill($data)->save();
+        $board_task = BoardTask::find($request->board_task_id);
+        $board_task->fill($data)->save();
 
         /* check if completed */
-        if ($project_task->status == ProjectTaskStatus::DONE) {
+        if ($board_task->status == BoardTaskStatus::DONE) {
             $data['completed_at'] = Carbon::now();
             $data['is_completed'] = 1;
         } else {
@@ -163,27 +153,27 @@ class TaskController extends Controller
         }
 
         /* update data with correct status */
-        $project_task->fill($data)->save();
+        $board_task->fill($data)->save();
 
         $request->session()->flash('success', 'Data has been updated');
-        return redirect()->route('internals.projects.tasks', [$project_task->project->id]);
+        return back();
     }
 
-    public function recover(Request $request, $project_id, $project_task_id)
+    public function recover(Request $request, $board_task_id)
     {
-        $project_task = ProjectTask::find($project_task_id);
-        $project_task->status = ProjectTaskStatus::PENDING; // mark data as active
-        $project_task->save();
+        $board_task = BoardTask::find($board_task_id);
+        $board_task->status = BoardTaskStatus::PENDING; // mark data as active
+        $board_task->save();
 
         $request->session()->flash('success', 'Data has been recovered');
         return back();
     }
 
-    public function delete(Request $request, $project_id, $project_task_id)
+    public function delete(Request $request, $board_task_id)
     {
-        $project_task = ProjectTask::find($project_task_id);
-        $project_task->status = ProjectTaskStatus::INACTIVE; // mark data as inactive
-        $project_task->save();
+        $board_task = BoardTask::find($board_task_id);
+        $board_task->status = BoardTaskStatus::INACTIVE; // mark data as inactive
+        $board_task->save();
 
         $request->session()->flash('success', 'Data has been deleted');
         return back();

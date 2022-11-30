@@ -8,11 +8,11 @@
               ->get();
 @endphp
 
-@foreach ($project_tasks as $project_task)
-  <form action="{{ route('internals.projects.tasks.update', [$project->id]) }}" method="post" enctype="multipart/form-data">
+@foreach ($board_tasks as $board_task)
+  <form action="{{ route('internals.boards.tasks.update') }}" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
-    <input type="hidden" name="project_task_id" value="{{ $project_task->id }}">
-    <div class="modal fade" id="edit-task-{{ $project_task->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <input type="hidden" name="board_task_id" value="{{ $board_task->id }}">
+    <div class="modal fade" id="edit-task-{{ $board_task->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
@@ -20,31 +20,18 @@
 
               <div class="row">
               <div class="col-md-4">
-                  @if ($project->image)
-                      <img src="{{ url($project->image) }}" width="100%">
-                  @else
-                      <img src="{{ url(env('APP_ICON')) }}" width="100%" style="padding: 5%;">
-                  @endif
+                <img src="{{ url(env('APP_ICON')) }}" width="100%" style="padding: 5%;">
               </div>
               <div class="col">
-                <div class="row">
-                  <div class="col">
-                    <strong>Name:</strong>
-                  </div>
-                  <div class="col">
-                    {{ $project->name }}
-                  </div>
-                </div>
-                <hr>
                 <label>Task</label><br>
-                <input type="text" name="name" class="form-control" placeholder="Task" value="{{ old('name') ?? $project_task->name }}"><br>
+                <input type="text" name="name" class="form-control" placeholder="Task" value="{{ old('name') ?? $board_task->name }}"><br>
                 <label>Description (optional)</label><br>
-                <input type="text" name="description" class="form-control" placeholder="Description" value="{{ old('description') ?? $project_task->description }}"><br>
+                <input type="text" name="description" class="form-control" placeholder="Description" value="{{ old('description') ?? $board_task->description }}"><br>
                 <label>Deadline Date</label><br>
-              <input type="date" name="deadline_date" class="form-control" value="{{ old('deadline_date') ?? $project_task->deadline_date }}"><br>
+                <input type="date" name="deadline_date" class="form-control" value="{{ old('deadline_date') ?? $board_task->deadline_date }}"><br>
                 <label>Priority</label><br>
                 <select name="priority" class="custom-select" data-toggle="select">
-                    <option value="{{ $project_task->priority }}">{{ $project_task->priority }}</option>
+                    <option value="{{ $board_task->priority }}">{{ $board_task->priority }}</option>
                     <option value="Low">Low</option>
                     <option value="Normal">Normal</option>
                     <option value="High">High</option>
@@ -53,7 +40,7 @@
                 <br><br>
                 <label>Assigned To</label><br>
                 <select name="assigned_to_user_id" class="custom-select" data-toggle="select">
-                    <option value="{{ $project_task->assigned_to_user->id }}">{{ $project_task->assigned_to_user->firstname }} {{ $project_task->assigned_to_user->lastname }}</option>
+                    <option value="{{ $board_task->assigned_to_user->id }}">{{ $board_task->assigned_to_user->firstname }} {{ $board_task->assigned_to_user->lastname }}</option>
                     @foreach($users as $user)
                         <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
                     @endforeach
@@ -61,28 +48,28 @@
                 <br><br>
                 <label>Status</label><br>
                 <select name="status" class="custom-select" data-toggle="select">
-                    <option value="{{ $project_task->status }}">
-                      @if ($project_task->status == ProjectTaskStatus::PENDING)
+                    <option value="{{ $board_task->status }}">
+                      @if ($board_task->status == ProjectTaskStatus::PENDING)
                         Pending
                       @endif
 
-                      @if ($project_task->status == ProjectTaskStatus::ON_PROGRESS)
+                      @if ($board_task->status == ProjectTaskStatus::ON_PROGRESS)
                         On Progress
                       @endif
 
-                      @if ($project_task->status == ProjectTaskStatus::NEED_MORE_INFO)
+                      @if ($board_task->status == ProjectTaskStatus::NEED_MORE_INFO)
                         Need More Info
                       @endif
 
-                      @if ($project_task->status == ProjectTaskStatus::DONE)
+                      @if ($board_task->status == ProjectTaskStatus::DONE)
                         Done
                       @endif
 
-                      @if ($project_task->status == ProjectTaskStatus::CANCELLED)
+                      @if ($board_task->status == ProjectTaskStatus::CANCELLED)
                         Cancelled
                       @endif
 
-                      @if ($project_task->status == ProjectTaskStatus::TBD)
+                      @if ($board_task->status == ProjectTaskStatus::TBD)
                         TBD
                       @endif
                     </option>
