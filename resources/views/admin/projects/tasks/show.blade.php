@@ -20,6 +20,9 @@
             <h1 class="m-0">Manage Project</h1>
         </div>
 
+        <a href="#" data-toggle="modal" data-target="#graph-activities-{{ $project->id }}">
+            <button type="button" class="btn btn-light" id="margin-right">Activity Graph</button>
+        </a>
 
     </div>
 </div>
@@ -134,3 +137,55 @@
 </div>
 
 @include('layouts.auth.footer')
+
+<script>
+  $(function(){
+      //get the line chart canvas
+      var cData = JSON.parse(`<?php echo $last_30_days_chart['chart_data']; ?>`);
+      var ctx = $("#line-chart-30-days");
+ 
+      //pie chart data
+      var data = {
+        labels: cData.label,
+        datasets: [
+          {
+            label: "Task Management",
+            data: cData.data,
+            backgroundColor: [
+               "#51D016", 
+            ],
+            borderColor: [
+              "#51D016",
+            ],
+            borderWidth: [1]
+          }
+        ]
+      };
+ 
+      //options
+      var options = {
+        responsive: true,
+        title: {
+          display: true,
+          position: "top",
+          text: "Last 30 Days",
+          fontColor: "#111"
+        },
+        legend: {
+          display: true,
+          position: "bottom",
+          labels: {
+            fontColor: "#333"
+          }
+        }
+      };
+ 
+      //create Pie Chart class object
+      var chart1 = new Chart(ctx, {
+        type: "line",
+        data: data,
+        options: options
+      });
+ 
+  });
+</script>

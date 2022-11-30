@@ -499,6 +499,7 @@
     @if(str_contains(url()->current(), '/tasks'))
         @include('layouts.modals.projects.tasks.add')
         @include('layouts.modals.projects.tasks.edit')
+        @include('layouts.modals.projects.tasks.graph-activities')
     @else
         @include('layouts.modals.projects.details.add')
         @include('layouts.modals.projects.details.edit')

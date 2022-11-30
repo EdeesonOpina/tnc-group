@@ -18,6 +18,7 @@ class ProjectTask extends Model
         'file',
         'priority',
         'is_completed',
+        'completed_at',
         'status',
     ];
 

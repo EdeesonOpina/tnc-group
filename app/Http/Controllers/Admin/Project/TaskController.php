@@ -35,7 +35,26 @@ class TaskController extends Controller
             $percentage = 0; 
         }
 
+        /* last 30 days */
+        $last_30_records = ProjectTask::select(\DB::raw("COUNT(*) as count"), \DB::raw("DAYNAME(updated_at) as day_name"), \DB::raw("DAY(updated_at) as day"))
+                    ->where('project_id', $project_id)
+                    ->where('created_at', '>', Carbon::today()->subDay(30))
+                    ->groupBy('day_name','day')
+                    ->orderBy('day')
+                    ->get();
+          
+        $last_30_days = [];
+     
+        foreach($last_30_records as $last_30_row) {
+            $last_30_days['label'][] = $last_30_row->day_name;
+            $last_30_days['data'][] = (int) $last_30_row->count;
+        }
+
+        /* set as json */
+        $last_30_days_chart['chart_data'] = json_encode($last_30_days);
+
         return view('admin.projects.tasks.show', compact(
+            'last_30_days_chart',
             'percentage',
             'total',
             'completed',
@@ -76,6 +95,15 @@ class TaskController extends Controller
             $image_name = $request->name . '-' . time() . '.' . $request->file('file')->getClientOriginalExtension(); // set unique name for that file
             $request->file('file')->move('uploads/images/project/tasks', $image_name); // move the file to the laravel project
             $data['file'] = 'uploads/images/project/tasks/' . $image_name; // save the destination of the file to the database
+        }
+
+        /* check if completed */
+        if ($request->status == ProjectTaskStatus::DONE) {
+            $data['completed_at'] = Carbon::now();
+            $data['is_completed'] = 1;
+        } else {
+            $data['completed_at'] = null;
+            $data['is_completed'] = 0;
         }
 
         $data['created_by_user_id'] = auth()->user()->id;
@@ -121,7 +149,20 @@ class TaskController extends Controller
             $data['file'] = 'uploads/images/projects/tasks/' . $image_name; // save the destination of the file to the database
         }
 
+        /* update new data */
         $project_task = ProjectTask::find($request->project_task_id);
+        $project_task->fill($data)->save();
+
+        /* check if completed */
+        if ($project_task->status == ProjectTaskStatus::DONE) {
+            $data['completed_at'] = Carbon::now();
+            $data['is_completed'] = 1;
+        } else {
+            $data['completed_at'] = null;
+            $data['is_completed'] = 0;
+        }
+
+        /* update data with correct status */
         $project_task->fill($data)->save();
 
         $request->session()->flash('success', 'Data has been updated');
