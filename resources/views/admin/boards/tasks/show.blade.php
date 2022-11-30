@@ -35,7 +35,7 @@ function drawChart() {
         $totalTime = $endDate->getTimestamp() - $startDate->getTimestamp();
         $elapsedTime = $currentDate->getTimestamp() - $startDate->getTimestamp();
 
-        $percentage = round(($elapsedTime / $totalTime) * 100.0, 2);
+        $g_percentage = round(($elapsedTime / $totalTime) * 100.0, 2);
 
         $totalTime = $endDate->getTimestamp() - $startDate->getTimestamp();
         $elapsedTime = $currentDate->getTimestamp() - $startDate->getTimestamp();
@@ -63,7 +63,7 @@ function drawChart() {
 
       data.addRows([
         ['{{ $board_task->id }}', '{{ $board_task->name }}', '{{ $g_status }}',
-         new Date({{ Carbon::parse($board_task->created_at)->format('Y') }}, {{ Carbon::parse($board_task->created_at)->format('m') }}, {{ Carbon::parse($board_task->created_at)->format('d') }}), new Date({{ Carbon::parse($board_task->deadline_date)->format('Y') }}, {{ Carbon::parse($board_task->deadline_date)->format('m') }}, {{ Carbon::parse($board_task->deadline_date)->format('d') }}), null, {{ $percentage }}, null],
+         new Date({{ Carbon::parse($board_task->created_at)->format('Y') }}, {{ Carbon::parse($board_task->created_at)->format('m') }}, {{ Carbon::parse($board_task->created_at)->format('d') }}), new Date({{ Carbon::parse($board_task->deadline_date)->format('Y') }}, {{ Carbon::parse($board_task->deadline_date)->format('m') }}, {{ Carbon::parse($board_task->deadline_date)->format('d') }}), null, {{ $g_percentage }}, null],
         ]);
   @endforeach
 
