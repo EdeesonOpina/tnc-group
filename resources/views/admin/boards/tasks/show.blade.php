@@ -101,9 +101,10 @@ function drawChart() {
 <div class="container-fluid page__container">
     @include('layouts.partials.alerts')
 
-    <div id="chart_div"></div>
-
-    <br>
+    @if (count($board_tasks) > 0)
+        <div id="chart_div"></div>
+        <br>
+    @endif
 
     <div class="row">
         <div class="col-md-12">

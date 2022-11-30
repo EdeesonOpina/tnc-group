@@ -212,8 +212,10 @@ function drawChart() {
                 </div>
             </div>
 
-            <br><br>
-            <div id="chart_div"></div>
+            @if (count($project_tasks) > 0)
+                <br><br>
+                <div id="chart_div"></div>
+            @endif
 
         </div>
         <div class="col">
