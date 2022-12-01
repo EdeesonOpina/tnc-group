@@ -91,7 +91,7 @@
     <h2 class="font-change table-color-primary">Cost Estimate</h2>
     <table class="table border-bottom no-border table-borderless font-change">
         <tbody>
-            <tr>
+            <!-- <tr>
                 <td>
                     <div class="text-label"><strong>CE #:</strong></div>
                 </td>
@@ -104,7 +104,7 @@
                 <td class="text-right">
                         {{ $project->created_at->format('M d Y') }}
                 </td>
-            </tr>
+            </tr> -->
             <tr>
                 <td>
                     <div class="text-label"><strong>Client Name:</strong></div>
