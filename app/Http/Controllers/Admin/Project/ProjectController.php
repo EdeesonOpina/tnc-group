@@ -263,8 +263,6 @@ class ProjectController extends Controller
 
         $data = $request->all();
 
-        return $request->project_id;
-
         if ($request->file('conforme_signature')) { // if the file is present
             $image_name = $request->name . '-' . time() . '.' . $request->file('conforme_signature')->getClientOriginalExtension(); // set unique name for that file
             $request->file('conforme_signature')->move('uploads/images/projects/conforme-signature', $image_name); // move the file to the laravel project
