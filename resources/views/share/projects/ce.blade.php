@@ -301,7 +301,7 @@
                         <br><br><br>
                       @endif
                       <strong>{{ $project->prepared_by_user->firstname }} {{ $project->prepared_by_user->lastname }}</strong><br>
-                      {{ $project->prepared_by_user->role }}<br>
+                      <!-- {{ $project->prepared_by_user->role }}<br> -->
                       {{ $project->prepared_by_user->position }}<br>
                       {{ $project->prepared_by_user->company->name }}
                     </p>
@@ -315,7 +315,7 @@
                         <br><br><br>
                       @endif
                       <strong>{{ $project->noted_by_user->firstname }} {{ $project->noted_by_user->lastname }}</strong><br>
-                      {{ $project->noted_by_user->role }}<br>
+                      <!-- {{ $project->noted_by_user->role }}<br> -->
                       {{ $project->noted_by_user->position }}<br>
                       {{ $project->noted_by_user->company->name }}
                     </p>
