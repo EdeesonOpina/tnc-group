@@ -263,7 +263,7 @@ class ProjectController extends Controller
 
         $data = $request->all();
 
-        return $project->id;
+        return $request->project_id;
 
         if ($request->file('conforme_signature')) { // if the file is present
             $image_name = $request->name . '-' . time() . '.' . $request->file('conforme_signature')->getClientOriginalExtension(); // set unique name for that file
