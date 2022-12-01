@@ -81,7 +81,7 @@ class ProjectController extends Controller
         $clients = Client::where('status', ClientStatus::ACTIVE)
                         ->orderBy('name', 'asc')
                         ->get();
-        $client_contacts = ClientContact::where('status', ClientStatus::ACTIVE)
+        $client_contacts = ClientContact::where('status', ClientContactStatus::ACTIVE)
                                     ->orderBy('name', 'asc')
                                     ->get();
         $companies = Company::where('status', CompanyStatus::ACTIVE)
