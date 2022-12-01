@@ -110,7 +110,7 @@
                     <div class="text-label"><strong>Client Name:</strong></div>
                 </td>
                 <td>
-                    {{ $project->client->name }}<br>
+                    {{ $project->client->name }} {{ $project->id }}<br>
                 </td>
 
                 <td>
