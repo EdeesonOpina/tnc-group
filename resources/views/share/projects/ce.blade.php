@@ -112,11 +112,12 @@
                 <td>
                     {{ $project->client->name }}<br>
                 </td>
+
                 <td>
-                    <strong>Company</strong>
+                    <strong>Date</strong>
                 </td>
                 <td class="text-right">
-                        {{ $project->company->name }}
+                        {{ $project->created_at->format('M d Y') }}
                 </td>
             </tr>
             <tr>
@@ -125,6 +126,12 @@
                 </td>
                 <td>
                     {{ $project->name }}<br>
+                </td>
+                <td>
+                    <strong>Company</strong>
+                </td>
+                <td class="text-right">
+                        {{ $project->company->name }}
                 </td>
             </tr>
             <tr>
