@@ -117,7 +117,7 @@ use App\Models\ProjectStatus;
 
                                             <!-- <a href="{{ route('internals.projects.edit', [$project->id]) }}" id="space-table">Edit</a> |  -->
 
-                                            @if ($project->status == ProjectStatus::FOR_APPROVAL)
+                                            @if ($project->status == ProjectStatus::FOR_APPROVAL || $project->status == ProjectStatus::APPROVED)
                                                 <a href="{{ route('internals.projects.manage', [$project->id]) }}" id="space-table">Manage</a> | 
                                             @endif
 
