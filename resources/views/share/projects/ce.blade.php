@@ -68,7 +68,7 @@
     </style>
 </head>
 <body>
-<div class="container">
+<div>
   <br><br>
   @include('layouts.partials.alerts')
 
