@@ -177,7 +177,7 @@
                             <strong>{{ $pjd->name }}</strong>
                         </td>
                         <td class="table-black-border">{{ $pjd->qty }}</td>
-                        <td class="table-black-border">{!! $pjd->description !!}</td>
+                        <td id="compact-table" class="table-black-border">{!! $pjd->description !!}</td>
                         @if ($project->has_usd == 1)
                             <td class="table-black-border">${{ number_format($pjd->usd_price, 2) }}</td>
                         @endif
