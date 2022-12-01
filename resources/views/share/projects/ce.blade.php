@@ -68,7 +68,7 @@
     </style>
 </head>
 <body>
-<div style="margin-left: 100px; margin-right: 100px;">
+<div style="margin-left: 130px; margin-right: 130px;">
   <br><br>
   @include('layouts.partials.alerts')
 
