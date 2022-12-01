@@ -157,7 +157,8 @@
         <tbody class="list" id="companies">
             @foreach ($project_details->unique('category_id') as $project_detail)
                 @php
-                    $pjds = ProjectDetail::where('category_id', $project_detail->category_id)
+                    $pjds = ProjectDetail::where('project_id', $project->id)
+                                    ->where('category_id', $project_detail->category_id)
                                     ->where('status', '!=', ProjectDetailStatus::INACTIVE)
                                     ->get();
                 @endphp
