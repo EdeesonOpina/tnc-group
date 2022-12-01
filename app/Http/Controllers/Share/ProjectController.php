@@ -29,7 +29,6 @@ class ProjectController extends Controller
         $project_details = ProjectDetail::where('project_id', $project->id)
                                 ->where('status', ProjectDetailStatus::APPROVED)
                                 ->where('status', '!=', ProjectDetailStatus::INACTIVE)
-                                ->orderBy('created_at', 'desc')
                                 ->paginate(15);
         $budget_request_forms = BudgetRequestForm::where('project_id', $project->id)
                         ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
