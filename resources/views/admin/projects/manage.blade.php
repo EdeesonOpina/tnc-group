@@ -27,14 +27,16 @@
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print Internal CE</button>
         </a> -->
 
-        @if ($project->status == ProjectStatus::FOR_APPROVAL)
-            <a href="#" data-href="{{ route('internals.projects.approve', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action">
-                <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Approve</button>
-            </a>
+        @if (auth()->user()->id == $project->noted_by_user->id)
+            @if ($project->status == ProjectStatus::FOR_APPROVAL)
+                <a href="#" data-href="{{ route('internals.projects.approve', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action">
+                    <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Approve</button>
+                </a>
 
-            <a href="#" data-href="{{ route('internals.projects.disapprove', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action">
-                <button type="button" class="btn btn-danger"><i class="fa fa-times" id="margin-right"></i>Disapprove</button>
-            </a>
+                <a href="#" data-href="{{ route('internals.projects.disapprove', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action">
+                    <button type="button" class="btn btn-danger"><i class="fa fa-times" id="margin-right"></i>Disapprove</button>
+                </a>
+            @endif
         @endif
     </div>
 </div>
@@ -457,8 +459,12 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <strong>Noted By</strong>
-                            @if ($project->noted_by_user->signature)
-                                  <br><img src="{{ url($project->noted_by_user->signature) }}" width="80px" height="60px"><br>
+                            @if ($project->status == ProjectStatus::APPROVED || $project->status == ProjectStatus::DONE)
+                                @if ($project->noted_by_user->signature)
+                                      <br><img src="{{ url($project->noted_by_user->signature) }}" width="80px" height="60px"><br>
+                                @else
+                                    <br><br><br><br>
+                                @endif
                             @else
                                 <br><br><br><br>
                             @endif

@@ -1,6 +1,7 @@
 @include('layouts.auth.header')
 @php
     use Carbon\Carbon;
+    use App\Models\ProjectStatus;
     use App\Models\ProjectDetail;
     use App\Models\ProjectDetailStatus;
     use App\Models\BudgetRequestFormStatus;
@@ -351,8 +352,12 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <strong>Noted By</strong>
-                            @if ($project->noted_by_user->signature)
-                                  <br><img src="{{ url($project->noted_by_user->signature) }}" width="80px" height="60px"><br>
+                            @if ($project->status == ProjectStatus::APPROVED || $project->status == ProjectStatus::DONE)
+                                @if ($project->noted_by_user->signature)
+                                      <br><img src="{{ url($project->noted_by_user->signature) }}" width="80px" height="60px"><br>
+                                @else
+                                    <br><br><br><br>
+                                @endif
                             @else
                                 <br><br><br><br>
                             @endif

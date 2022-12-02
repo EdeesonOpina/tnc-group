@@ -1,5 +1,6 @@
 @php
     use Carbon\Carbon;
+    use App\Models\ProjectStatus;
     use App\Models\ProjectDetail;
     use App\Models\ProjectDetailStatus;
     use App\Models\BudgetRequestFormStatus;
@@ -306,11 +307,15 @@
                 <td>
                     <p class="font-change">
                       <strong>Noted By:</strong><br>
-                      @if ($project->noted_by_user->signature)
-                          <br><img src="{{ url($project->noted_by_user->signature) }}" width="80px" height="60px"><br>
-                      @else
-                        <br><br><br>
-                      @endif
+                      @if ($project->status == ProjectStatus::APPROVED || $project->status == ProjectStatus::DONE)
+                            @if ($project->noted_by_user->signature)
+                                  <br><img src="{{ url($project->noted_by_user->signature) }}" width="80px" height="60px"><br>
+                            @else
+                                <br><br><br>
+                            @endif
+                        @else
+                            <br><br><br>
+                        @endif
                       <strong>{{ $project->noted_by_user->firstname }} {{ $project->noted_by_user->lastname }}</strong><br>
                       {{ $project->noted_by_user->role }}<br>
                       {{ $project->noted_by_user->position }}<br>
