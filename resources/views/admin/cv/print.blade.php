@@ -86,11 +86,14 @@
                     <div class="text-label"><strong>Pay To:</strong></div>
                 </td>
                 <td>
-                    @if ($budget_request_form->payment_for_user->role == 'Corporate')
-                        {{ $budget_request_form->payment_for_user->corporate }}
-                    @else
+                    @if ($budget_request_form->payment_for_user)
                         {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
-                    @endif<br>
+                    @endif
+
+                    @if ($budget_request_form->payment_for_supplier)
+                        {{ $budget_request_form->payment_for_supplier->name }}
+                    @endif
+                    <br>
                 </td>
             </tr>
             <tr>
@@ -182,28 +185,36 @@
                 <td>
                     <p class="font-change">
                       <strong>Noted By:</strong><br>
-                      @if ($budget_request_form->payment_for_user->signature)
-                          <img src="{{ url($budget_request_form->payment_for_user->signature) }}" width="80px"><br>
+                      @if ($budget_request_form->payment_for_user)
+                          @if ($budget_request_form->payment_for_user->signature)
+                              <img src="{{ url($budget_request_form->payment_for_user->signature) }}" width="80px"><br>
+                          @else
+                            <br><br><br>
+                          @endif
                       @else
                         <br><br><br>
                       @endif
                       <strong>
-                        @if ($budget_request_form->payment_for_user->role == 'Corporate')
-                            {{ $budget_request_form->payment_for_user->corporate }}
-                        @else
+                        @if ($budget_request_form->payment_for_user)
                             {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
                         @endif
+
+                        @if ($budget_request_form->payment_for_supplier)
+                            {{ $budget_request_form->payment_for_supplier->name }}
+                        @endif
                       </strong><br>
-                      @if ($budget_request_form->payment_for_user->role)
-                        {{ $budget_request_form->payment_for_user->role }}<br>
-                      @endif
+                      @if ($budget_request_form->payment_for_user)
+                          @if ($budget_request_form->payment_for_user->role)
+                            {{ $budget_request_form->payment_for_user->role }}<br>
+                          @endif
 
-                      @if ($budget_request_form->payment_for_user->position)
-                        {{ $budget_request_form->payment_for_user->position }}<br>
-                      @endif
+                          @if ($budget_request_form->payment_for_user->position)
+                            {{ $budget_request_form->payment_for_user->position }}<br>
+                          @endif
 
-                      @if ($budget_request_form->payment_for_user->company)
-                        {{ $budget_request_form->payment_for_user->company->name }}
+                          @if ($budget_request_form->payment_for_user->company)
+                            {{ $budget_request_form->payment_for_user->company->name }}
+                          @endif
                       @endif
                     </p>
                 </td>

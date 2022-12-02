@@ -109,7 +109,13 @@ use App\Models\CheckVoucherStatus;
                                         </div>
                                     </td>
                                     <td id="compact-table">
-                                        {{ $cv->budget_request_form->payment_for_user->firstname }} {{ $cv->budget_request_form->payment_for_user->lastname }}
+                                        @if ($cv->budget_request_form->payment_for_user)
+                                            {{ $cv->budget_request_form->payment_for_user->firstname }} {{ $cv->budget_request_form->payment_for_user->lastname }}
+                                        @endif
+
+                                        @if ($cv->budget_request_form->payment_for_supplier)
+                                            {{ $cv->budget_request_form->payment_for_supplier->name }}
+                                        @endif
                                     </td>
                                     <td id="compact-table">{{ $cv->budget_request_form->name }}</td>
                                     <td id="compact-table">{{ $cv->budget_request_form->project->name }}</td>
