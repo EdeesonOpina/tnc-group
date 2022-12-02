@@ -381,7 +381,7 @@
 
                             <tr>
                                 <td colspan="7">&nbsp;</td>
-                                <td id="compact-table"><strong>Product Margin</strong></td>
+                                <td id="compact-table"><strong>Project Margin</strong></td>
                                 <td id="compact-table">P{{ number_format($grand_total - $internal_grand_total, 2) }}</td>
                             </tr>
 
