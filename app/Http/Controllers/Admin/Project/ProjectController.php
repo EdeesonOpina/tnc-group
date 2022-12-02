@@ -144,7 +144,7 @@ class ProjectController extends Controller
         $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' created a project';
 
         /* send mail to user */
-        Mail::send('emails.projects.create', [
+        Mail::send('emails.projects.create-for-approver', [
             'project' => $project
         ], function ($message) use ($name, $email, $subject) {
             $message->to($email, $name)
