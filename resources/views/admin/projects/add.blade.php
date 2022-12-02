@@ -106,7 +106,7 @@
                                 <div class="form-group">
                                     <label for="client">Prepared By</label><br />
                                     <select id="prepared_by_user" name="prepared_by_user_id" class="custom-select" data-toggle="select">
-                                        <option value=""></option>
+                                        <option value="{{ auth()->user()->id }}">{{ auth()->user()->firstname }} {{ auth()->user()->lastname }}</option>
                                         @foreach($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
                                         @endforeach

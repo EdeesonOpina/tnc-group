@@ -138,12 +138,12 @@ class ProjectController extends Controller
         $data['status'] = ProjectStatus::FOR_APPROVAL; // if you want to insert to a specific column
         $project = Project::create($data); // create data in a model
 
-        // noted by user
+        /* noted by user */
         $name = $project->noted_by_user->firstname . ' ' . $project->noted_by_user->lastname;
         $email = $project->noted_by_user->email;
         $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' created a project';
 
-        // send mail to user
+        /* send mail to user */
         Mail::send('emails.projects.create', [
             'project' => $project
         ], function ($message) use ($name, $email, $subject) {
@@ -152,24 +152,11 @@ class ProjectController extends Controller
             ->subject($subject);
         });
 
-        // prepared by user
+        /* prepared by user */
         $name = $project->prepared_by_user->firstname . ' ' . $project->prepared_by_user->lastname;
         $email = $project->prepared_by_user->email;
 
-        // send mail to user
-        Mail::send('emails.projects.create', [
-            'project' => $project
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
-
-        // auth
-        $name = auth()->user()->firstname . ' ' . auth()->user()->lastname;
-        $email = auth()->user()->email;
-
-        // send mail to user
+        /* send mail to user */
         Mail::send('emails.projects.create', [
             'project' => $project
         ], function ($message) use ($name, $email, $subject) {
