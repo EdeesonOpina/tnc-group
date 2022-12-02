@@ -110,9 +110,9 @@ class ProjectController extends Controller
             'company_id' => 'required',
             'client_id' => 'required',
             'name' => 'required',
-            'margin' => 'required',
+            'margin' => 'required|not_in:0',
             'usd_rate' => 'required|not_in:0',
-            'vat_rate' => 'required',
+            'vat_rate' => 'required|not_in:0',
             'description' => 'nullable',
         ];
 
@@ -224,6 +224,9 @@ class ProjectController extends Controller
             'company_id' => 'required',
             'client_id' => 'required',
             'name' => 'required',
+            'margin' => 'required|not_in:0',
+            'usd_rate' => 'required|not_in:0',
+            'vat_rate' => 'required|not_in:0',
             'end_date' => 'required',
             'description' => 'nullable',
         ];

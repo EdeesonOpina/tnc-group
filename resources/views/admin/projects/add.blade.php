@@ -149,14 +149,14 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>ASF (%)</label>
-                                    <input type="text" name="margin" class="form-control" placeholder="ASF (%)" value="{{ old('margin') ?? '0' }}">
+                                    <input type="text" name="margin" class="form-control" placeholder="ASF (%)" value="{{ old('margin') ?? '1' }}" min="1">
                                 </div>
                             </div>
 
                             <div class="col">
                                 <div class="form-group">
                                     <label>VAT (%)</label>
-                                    <input type="text" name="vat_rate" class="form-control" placeholder="VAT (%)" value="{{ old('vat_rate') ?? '0' }}">
+                                    <input type="text" name="vat_rate" class="form-control" placeholder="VAT (%)" value="{{ old('vat_rate') ?? '1' }}" min="1">
                                 </div>
                             </div>
                         </div>
