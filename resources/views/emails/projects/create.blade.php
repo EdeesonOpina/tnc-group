@@ -18,7 +18,7 @@
   <br>
   <strong>Duration Date:</strong> {{ Carbon::parse($project->duration_date)->format('M d Y') }}
   <br> -->
-  <strong>Company:</strong> {{ $project->name }}
+  <strong>Company:</strong> {{ $project->company->name }}
   <br>
   <strong>Client:</strong> {{ $project->client->name }}
 </p>
