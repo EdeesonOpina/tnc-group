@@ -111,6 +111,7 @@ class ProjectController extends Controller
             'client_id' => 'required',
             'name' => 'required',
             'margin' => 'required',
+            'usd_rate' => 'required|not_in:0',
             'vat_rate' => 'required',
             'description' => 'nullable',
         ];
