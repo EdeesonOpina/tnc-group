@@ -239,17 +239,19 @@
                     </div>
                 @endif
 
-                @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
+                @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->role == 'Programs')
                     <div class="sidebar-heading">Settings</div>
                     <div class="sidebar-block p-0">
                         <ul class="sidebar-menu" id="components_menu">
                             
-                            <li class="sidebar-menu-item">
-                                <a class="sidebar-menu-button" href="{{ route('admin.users') }}">
-                                    <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">account_circle</i>
-                                    <span class="sidebar-menu-text">Users</span>
-                                </a>
-                            </li>
+                            @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
+                                <li class="sidebar-menu-item">
+                                    <a class="sidebar-menu-button" href="{{ route('admin.users') }}">
+                                        <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">account_circle</i>
+                                        <span class="sidebar-menu-text">Users</span>
+                                    </a>
+                                </li>
+                            @endif
 
                             <li class="sidebar-menu-item">
                                 <a class="sidebar-menu-button" href="{{ route('admin.clients') }}">
