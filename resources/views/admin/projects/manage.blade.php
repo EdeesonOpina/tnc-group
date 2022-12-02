@@ -380,9 +380,9 @@
                             </tr>
 
                             <tr>
-                                <td colspan="7">&nbsp;</td>
+                                <td colspan="6">&nbsp;</td>
                                 <td id="compact-table"><strong>Project Margin</strong></td>
-                                <td id="compact-table">P{{ number_format($grand_total - $internal_grand_total, 2) }}</td>
+                                <td id="compact-table">P{{ number_format(($grand_total - $internal_grand_total) + $project->asf, 2) }}</td>
                             </tr>
 
                             <!-- <tr>
