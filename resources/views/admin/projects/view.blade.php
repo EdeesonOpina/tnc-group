@@ -274,6 +274,12 @@
                                 <td id="compact-table"><strong>CE Grand Total</strong></td>
                                 <td id="compact-table">P{{ number_format($grand_total, 2) }}</td>
                             </tr>
+
+                            <tr>
+                                <td colspan="4">&nbsp;</td>
+                                <td id="compact-table"><strong>Product Margin</strong></td>
+                                <td id="compact-table">P{{ number_format($grand_total - $internal_grand_total, 2) }}</td>
+                            </tr>
                         </tbody>
                     </table>
 
