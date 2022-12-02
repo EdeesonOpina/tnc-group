@@ -27,6 +27,12 @@
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print Internal CE</button>
         </a> -->
 
+        @if ($project->status == ProjectStatus::ON_PROCESS)
+            <a href="{{ route('internals.projects.for-approval', [$project->id]) }}">
+                <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Submit For Approval</button>
+            </a>
+        @endif
+
         @if (auth()->user()->id == $project->noted_by_user->id)
             @if ($project->status == ProjectStatus::FOR_APPROVAL)
                 <a href="#" data-href="{{ route('internals.projects.approve', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action">

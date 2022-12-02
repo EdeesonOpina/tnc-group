@@ -135,26 +135,13 @@ class ProjectController extends Controller
         }
 
         $data['created_by_user_id'] = auth()->user()->id;
-        $data['status'] = ProjectStatus::FOR_APPROVAL; // if you want to insert to a specific column
+        $data['status'] = ProjectStatus::ON_PROCESS; // if you want to insert to a specific column
         $project = Project::create($data); // create data in a model
-
-        /* noted by user */
-        $name = $project->noted_by_user->firstname . ' ' . $project->noted_by_user->lastname;
-        $email = $project->noted_by_user->email;
-        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' created a project';
-
-        /* send mail to user */
-        Mail::send('emails.projects.create-for-approver', [
-            'project' => $project
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
 
         /* prepared by user */
         $name = $project->prepared_by_user->firstname . ' ' . $project->prepared_by_user->lastname;
         $email = $project->prepared_by_user->email;
+        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' created a project';
 
         /* send mail to user */
         Mail::send('emails.projects.create', [
@@ -558,10 +545,34 @@ class ProjectController extends Controller
         return redirect()->route('internals.projects.view', [$project->reference_number]);
     }
 
+    public function for_approval(Request $request, $project_id)
+    {
+        $project = Project::find($project_id);
+        $project->status = ProjectStatus::FOR_APPROVAL; // mark data as for approval
+        $project->save();
+
+        /* noted by user */
+        $name = $project->noted_by_user->firstname . ' ' . $project->noted_by_user->lastname;
+        $email = $project->noted_by_user->email;
+        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' sent a project for approval';
+
+        /* send mail to user */
+        Mail::send('emails.projects.create-for-approver', [
+            'project' => $project
+        ], function ($message) use ($name, $email, $subject) {
+            $message->to($email, $name)
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+            ->subject($subject);
+        });
+
+        $request->session()->flash('success', 'Data has been sent for approval');
+        return back();
+    }
+
     public function recover(Request $request, $project_id)
     {
         $project = Project::find($project_id);
-        $project->status = ProjectStatus::FOR_APPROVAL; // mark data as active
+        $project->status = ProjectStatus::ON_PROCESS; // mark data as active
         $project->save();
 
         $request->session()->flash('success', 'Data has been recovered');
