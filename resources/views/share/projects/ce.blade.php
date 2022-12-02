@@ -110,7 +110,7 @@
                     <div class="text-label"><strong>Client Name:</strong></div>
                 </td>
                 <td>
-                    {{ $project->client->name }} {{ $project->id }}<br>
+                    {{ $project->client->name }}<br>
                 </td>
 
                 <td>
@@ -303,7 +303,7 @@
                     <p class="font-change">
                       <strong>Prepared By:</strong><br>
                       @if ($project->prepared_by_user->signature)
-                          <br><img src="{{ url($project->prepared_by_user->signature) }}" width="80px"><br>
+                          <br><img src="{{ url($project->prepared_by_user->signature) }}" width="80px" height="60px"><br>
                       @else
                         <br><br><br>
                       @endif
@@ -317,7 +317,7 @@
                     <p class="font-change">
                       <strong>Noted By:</strong><br>
                       @if ($project->noted_by_user->signature)
-                          <br><img src="{{ url($project->noted_by_user->signature) }}" width="80px"><br>
+                          <br><img src="{{ url($project->noted_by_user->signature) }}" width="80px" height="60px"><br>
                       @else
                         <br><br><br>
                       @endif
@@ -332,7 +332,7 @@
                     <p class="font-change">
                       <strong>Conforme</strong>
                         @if ($project->conforme_signature)
-                          <br><img src="{{ url($project->conforme_signature) }}" width="80px"><br>
+                          <br><img src="{{ url($project->conforme_signature) }}" width="80px" height="60px"><br>
                         @else
                           <br><br>
                           <strong>Please Upload Signature Here</strong>
