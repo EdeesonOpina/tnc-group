@@ -26,7 +26,7 @@
 </p>
 
 <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
-  <a href="{{ route('internals.projects.view', [$project->reference_number]) }}" target="_blank" style="display: inline-block; color: #ffffff; background-color: #FF6F11; border: solid 1px #FF6F11; border-radius: 0px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #FF6F11;">Click here to view and approve</a> 
+  <a href="{{ route('internals.projects.manage', [$project->id]) }}" target="_blank" style="display: inline-block; color: #ffffff; background-color: #FF6F11; border: solid 1px #FF6F11; border-radius: 0px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #FF6F11;">Click here to view and approve</a> 
 </p>
 
 <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><small>&copy; {{ str_replace('_', ' ', env('APP_NAME')) }} {{ date('Y') }}</small>
