@@ -135,6 +135,11 @@ class BRFController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
+        if ($project->status != ProjectStatus::APPROVED) {
+            $request->session()->flash('success', 'Selected CE is still not approved');
+            return back();
+        }
+
         $project = Project::where('reference_number', $request->reference_number)
                         ->where('status', '!=', ProjectStatus::INACTIVE)
                         ->first();
