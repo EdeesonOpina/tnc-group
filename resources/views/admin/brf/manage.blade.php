@@ -17,7 +17,11 @@
             </nav>
             <h1 class="m-0">Manage BRF</h1>
         </div>
-        
+        @if ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS || $budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
+            <a href="{{ route('internals.brf.for-approval', [$budget_request_form->id]) }}">
+                <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Submit For Approval</button>
+            </a>
+        @endif
     </div>
 </div>
 
@@ -220,7 +224,7 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <strong>Noted By</strong>
+                            <strong>Checked By</strong>
                             @if ($budget_request_form->status == BudgetRequestFormStatus::APPROVED || $budget_request_form->status == BudgetRequestFormStatus::DONE)
                                 @if ($budget_request_form->checked_by_user->signature)
                                       <br><img src="{{ url($budget_request_form->checked_by_user->signature) }}" width="80px" height="60px"><br>

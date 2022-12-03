@@ -10,9 +10,10 @@ class BudgetRequestFormStatus extends Model
     use HasFactory;
 
     const INACTIVE = 0;
-    const FOR_APPROVAL = 1;
-    const APPROVED = 2;
-    const DONE = 3;
-    const DISAPPROVED = 4;
+    const ON_PROCESS = 1;
+    const FOR_APPROVAL = 2;
+    const APPROVED = 3;
+    const DONE = 4;
+    const DISAPPROVED = 5;
     const CANCELLED = 9;
 }

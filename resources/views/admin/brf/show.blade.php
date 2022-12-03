@@ -113,13 +113,17 @@ use App\Models\BudgetRequestFormStatus;
                                         <div class="d-flex">
                                             <a href="{{ route('internals.brf.view', [$budget_request_form->reference_number]) }}" id="margin-right">View</a> | 
 
-                                            @if ($budget_request_form->payment_for_user)
-                                                <a href="{{ route('internals.brf.users.edit', [$budget_request_form->reference_number]) }}" id="space-table">Edit</a> | 
-                                            @else
-                                                <a href="{{ route('internals.brf.suppliers.edit', [$budget_request_form->reference_number]) }}" id="space-table">Edit</a> | 
+                                            @if ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS || $budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL || $budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
+
+                                                @if ($budget_request_form->payment_for_user)
+                                                    <a href="{{ route('internals.brf.users.edit', [$budget_request_form->reference_number]) }}" id="space-table">Edit</a> | 
+                                                @else
+                                                    <a href="{{ route('internals.brf.suppliers.edit', [$budget_request_form->reference_number]) }}" id="space-table">Edit</a> | 
+                                                @endif
+
                                             @endif
 
-                                            @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
+                                            @if ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS || $budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL || $budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
                                                 <a href="{{ route('internals.brf.manage', [$budget_request_form->id]) }}" id="space-table">Manage</a> | 
                                             
 
@@ -151,7 +155,9 @@ use App\Models\BudgetRequestFormStatus;
                                     <td>P{{ number_format($budget_request_form->total, 2) }}</td>
                                     <td>
                                         @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                            <div class="badge badge-warning ml-2">For Approval</div>
+                                            <div class="badge badge-info ml-2">For Approval</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS)
+                                            <div class="badge badge-warning ml-2">On Process</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
                                             <div class="badge badge-success ml-2">Approved</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)

@@ -157,7 +157,7 @@ class BRFController extends Controller
     public function create_user(Request $request)
     {
         $rules = [
-            'reference_number' => 'required|exists:budget_request_forms',
+            'reference_number' => 'required|exists:projects',
             'needed_date' => 'required',
             'remarks' => 'nullable',
             'payment_for_user_id' => 'required',
@@ -198,6 +198,20 @@ class BRFController extends Controller
         $data['status'] = BudgetRequestFormStatus::FOR_APPROVAL; // if you want to insert to a specific column
         $brf = BudgetRequestForm::create($data); // create data in a model
 
+        /* requested by user */
+        $name = $brf->requested_by_user->firstname . ' ' . $brf->requested_by_user->lastname;
+        $email = $brf->requested_by_user->email;
+        $subject = $brf->requested_by_user->firstname . ' ' . $brf->requested_by_user->lastname . ' created a BRF';
+
+        /* send mail to user */
+        Mail::send('emails.brf.create', [
+            'brf' => $brf
+        ], function ($message) use ($name, $email, $subject) {
+            $message->to($email, $name)
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+            ->subject($subject);
+        });
+
         $request->session()->flash('success', 'Data has been added');
         return redirect()->route('internals.brf.manage', [$brf->id]);
     }
@@ -205,7 +219,7 @@ class BRFController extends Controller
     public function create_supplier(Request $request)
     {
         $rules = [
-            'reference_number' => 'required|exists:budget_request_forms',
+            'reference_number' => 'required|exists:projects',
             'needed_date' => 'required',
             'remarks' => 'nullable',
             'payment_for_supplier_id' => 'required',
@@ -245,6 +259,20 @@ class BRFController extends Controller
         $data['total'] = 0;
         $data['status'] = BudgetRequestFormStatus::FOR_APPROVAL; // if you want to insert to a specific column
         $brf = BudgetRequestForm::create($data); // create data in a model
+
+        /* requested by user */
+        $name = $brf->requested_by_user->firstname . ' ' . $brf->requested_by_user->lastname;
+        $email = $brf->requested_by_user->email;
+        $subject = $brf->requested_by_user->firstname . ' ' . $brf->requested_by_user->lastname . ' created a BRF';
+
+        /* send mail to user */
+        Mail::send('emails.brf.create', [
+            'brf' => $brf
+        ], function ($message) use ($name, $email, $subject) {
+            $message->to($email, $name)
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+            ->subject($subject);
+        });
 
         $request->session()->flash('success', 'Data has been added');
         return redirect()->route('internals.brf.manage', [$brf->id]);
@@ -295,7 +323,7 @@ class BRFController extends Controller
     public function update_user(Request $request)
     {
         $rules = [
-            'reference_number' => 'required|exists:budget_request_forms',
+            'reference_number' => 'required|exists:projects',
             'needed_date' => 'required',
             'remarks' => 'nullable',
             'payment_for_user_id' => 'required',
@@ -329,7 +357,7 @@ class BRFController extends Controller
     public function update_supplier(Request $request)
     {
         $rules = [
-            'reference_number' => 'required|exists:budget_request_forms',
+            'reference_number' => 'required|exists:projects',
             'needed_date' => 'required',
             'remarks' => 'nullable',
             'payment_for_supplier_id' => 'required',
@@ -358,6 +386,30 @@ class BRFController extends Controller
 
         $request->session()->flash('success', 'Data has been updated');
         return redirect()->route('internals.brf.manage', [$budget_request_form->id]);
+    }
+
+    public function for_approval(Request $request, $brf_id)
+    {
+        $brf = BudgetRequestForm::find($brf_id);
+        $brf->status = BudgetRequestFormStatus::FOR_APPROVAL; // mark data as for approval
+        $brf->save();
+
+        /* checked by user */
+        $name = $brf->checked_by_user->firstname . ' ' . $brf->checked_by_user->lastname;
+        $email = $brf->checked_by_user->email;
+        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' sent a BRF for approval';
+
+        /* send mail to user */
+        Mail::send('emails.brf.create-for-approver', [
+            'brf' => $brf
+        ], function ($message) use ($name, $email, $subject) {
+            $message->to($email, $name)
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+            ->subject($subject);
+        });
+
+        $request->session()->flash('success', 'Data has been sent for approval');
+        return back();
     }
 
     public function approve(Request $request, $budget_request_form_id)

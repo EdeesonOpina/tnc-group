@@ -662,6 +662,8 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::get('/deactivate/{id}','App\Http\Controllers\Admin\BRFController@deactivate')->name('internals.brf.deactivate');
         Route::get('/delete/{brf_id}', 'App\Http\Controllers\Admin\BRFController@delete')->name('internals.brf.delete');
 
+        Route::get('/for-approval/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@for_approval')->name('internals.brf.for-approval');
+
         // manage
         Route::group(['prefix' => 'manage/{brf_id}'], function () {
             Route::get('/', 'App\Http\Controllers\Admin\BRFController@manage')->name('internals.brf.manage');
