@@ -531,15 +531,44 @@ class ProjectController extends Controller
         $project->status = ProjectStatus::APPROVED; // mark data as cancelled
         $project->save();
 
+        /* prepared by user */
+        $name = $project->prepared_by_user->firstname . ' ' . $project->prepared_by_user->lastname;
+        $email = $project->prepared_by_user->email;
+        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' approved your project';
+
+        /* send mail to user */
+        Mail::send('emails.projects.approve', [
+            'project' => $project
+        ], function ($message) use ($name, $email, $subject) {
+            $message->to($email, $name)
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+            ->subject($subject);
+        });
+
         $request->session()->flash('success', 'Data has been approved');
         return redirect()->route('internals.projects.view', [$project->reference_number]);
     }
 
-    public function disapprove(Request $request, $project_id)
+    public function disapprove(Request $request)
     {
-        $project = Project::find($project_id);
+        $project = Project::find($request->project_id);
+        $project->remarks = $request->remarks;
         $project->status = ProjectStatus::DISAPPROVED; // mark data as cancelled
         $project->save();
+
+        /* prepared by user */
+        $name = $project->prepared_by_user->firstname . ' ' . $project->prepared_by_user->lastname;
+        $email = $project->prepared_by_user->email;
+        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' disapproved your project';
+
+        /* send mail to user */
+        Mail::send('emails.projects.disapprove', [
+            'project' => $project
+        ], function ($message) use ($name, $email, $subject) {
+            $message->to($email, $name)
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+            ->subject($subject);
+        });
 
         $request->session()->flash('success', 'Data has been disapproved');
         return redirect()->route('internals.projects.view', [$project->reference_number]);

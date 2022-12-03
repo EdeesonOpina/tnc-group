@@ -41,6 +41,7 @@ class Project extends Model
         'created_by_user_id',
         'noted_by_user_id',
         'approved_by_user_id',
+        'remarks',
         'conforme_signature',
         'approved_at',
         'status',

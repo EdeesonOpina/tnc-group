@@ -528,6 +528,7 @@
         @include('layouts.modals.projects.vat-rate')
         @include('layouts.modals.projects.usd-rate')
         @include('layouts.modals.projects.has-usd')
+        @include('layouts.modals.projects.disapprove')
     @endif
   @endif
 

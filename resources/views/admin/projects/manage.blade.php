@@ -27,7 +27,7 @@
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print Internal CE</button>
         </a> -->
 
-        @if ($project->status == ProjectStatus::ON_PROCESS)
+        @if ($project->status == ProjectStatus::ON_PROCESS || $project->status == ProjectStatus::DISAPPROVED)
             <a href="{{ route('internals.projects.for-approval', [$project->id]) }}">
                 <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Submit For Approval</button>
             </a>
@@ -39,7 +39,7 @@
                     <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Approve</button>
                 </a>
 
-                <a href="#" data-href="{{ route('internals.projects.disapprove', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action">
+                <a href="#" data-toggle="modal" data-target="#disapprove-{{ $project->id }}">
                     <button type="button" class="btn btn-danger"><i class="fa fa-times" id="margin-right"></i>Disapprove</button>
                 </a>
             @endif

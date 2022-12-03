@@ -117,8 +117,10 @@ use App\Models\ProjectStatus;
 
                                             <!-- <a href="{{ route('internals.projects.edit', [$project->id]) }}" id="space-table">Edit</a> |  -->
 
-                                            @if ($project->status == ProjectStatus::ON_PROCESS || $project->status == ProjectStatus::FOR_APPROVAL || $project->status == ProjectStatus::APPROVED)
-                                                <a href="{{ route('internals.projects.manage', [$project->id]) }}" id="space-table">Manage</a> | 
+                                            @if ($project->created_by_user_id == auth()->user()->id || auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+                                                @if ($project->status == ProjectStatus::ON_PROCESS || $project->status == ProjectStatus::FOR_APPROVAL || $project->status == ProjectStatus::APPROVED || $project->status == ProjectStatus::DISAPPROVED)
+                                                    <a href="{{ route('internals.projects.manage', [$project->id]) }}" id="space-table">Manage</a> | 
+                                                @endif
                                             @endif
 
                                             @if ($project->status == ProjectStatus::APPROVED)
