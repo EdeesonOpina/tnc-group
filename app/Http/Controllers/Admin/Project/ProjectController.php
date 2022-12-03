@@ -290,6 +290,20 @@ class ProjectController extends Controller
         $project = Project::find($request->project_id);
         $project->fill($data)->save();
 
+        /* prepared by user */
+        $name = $project->prepared_by_user->firstname . ' ' . $project->prepared_by_user->lastname;
+        $email = $project->prepared_by_user->email;
+        $subject = $project->prepared_by_user->name . ' has signed the project';
+
+        /* send mail to user */
+        Mail::send('emails.projects.upload-conforme', [
+            'project' => $project
+        ], function ($message) use ($name, $email, $subject) {
+            $message->to($email, $name)
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+            ->subject($subject);
+        });
+
         $request->session()->flash('success', 'Data has been updated');
         return back();
     }
