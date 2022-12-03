@@ -1,4 +1,4 @@
-<form action="{{ route('internals.brf.details.create') }}" method="post">
+<form action="{{ route('internals.brf.details.create') }}" method="post" enctype="multipart/form-data">
   {{ csrf_field() }}
   <input type="hidden" name="budget_request_form_id" value="{{ $budget_request_form->id }}">
   <div class="modal fade" id="add-brf-{{ $budget_request_form->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -18,7 +18,7 @@
             <div class="col">
               <div class="row">
                 <div class="col">
-                  <h6>Name:</h6>
+                  <label>Name:</label>
                 </div>
                 <div class="col">
                   {{ $budget_request_form->project->name }}
@@ -26,7 +26,7 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <h6>Client:</h6>
+                  <label>Client:</label>
                 </div>
                 <div class="col">
                   {{ $budget_request_form->project->client->name }}
@@ -34,7 +34,7 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <h6>Project Duration:</h6>
+                  <label>Project Duration:</label>
                 </div>
                 <div class="col">
                   {{ $budget_request_form->project->end_date }}
@@ -53,6 +53,11 @@
                   <input type="text" name="price" class="form-control" placeholder="Price" value="{{ old('price') ?? '0.00' }}">
                 </div>
               </div>
+              <br>
+              <label>Description</label><br>
+              <input type="text" name="description" class="form-control" placeholder="Description" value="{{ old('description') }}"><br>
+              <label>File</label><br>
+              <input type="file" name="file"><br>
             </div>
           </div>
           

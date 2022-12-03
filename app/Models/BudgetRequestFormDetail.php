@@ -14,7 +14,9 @@ class BudgetRequestFormDetail extends Model
         'name',
         'qty',
         'description',
+        'remarks',
         'price',
+        'file',
         'total',
     ];
 

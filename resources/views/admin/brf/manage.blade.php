@@ -148,6 +148,7 @@
                         <thead>
                             <tr>
                                 <th id="compact-table">Particulars</th>
+                                <th id="compact-table">Description</th>
                                 <th id="compact-table">Quantity</th>
                                 <th id="compact-table">Unit Price</th>
                                 <th id="compact-table">Total Price</th>
@@ -172,6 +173,7 @@
                                             @endif
                                         </div>
                                     </td>
+                                    <td>{{ $budget_request_form_detail->description }}</td>
                                     <td>{{ $budget_request_form_detail->qty }}</td>
                                     <td>P{{ number_format($budget_request_form_detail->price, 2) }}</td>
                                     <td>P{{ number_format($budget_request_form_detail->total, 2) }}</td>

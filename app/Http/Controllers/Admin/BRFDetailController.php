@@ -37,10 +37,10 @@ class BRFDetailController extends Controller
 
         $data = request()->all(); // get all request
 
-        if ($request->file('image')) { // if the file is present
-            $image_name = $request->name . '-' . time() . '.' . $request->file('image')->getClientOriginalExtension(); // set unique name for that file
-            $request->file('image')->move('uploads/images/brf', $image_name); // move the file to the laravel project
-            $data['image'] = 'uploads/images/brf/' . $image_name; // save the destination of the file to the database
+        if ($request->file('file')) { // if the file is present
+            $image_name = $request->name . '-' . time() . '.' . $request->file('file')->getClientOriginalExtension(); // set unique name for that file
+            $request->file('file')->move('uploads/images/brf', $image_name); // move the file to the laravel project
+            $data['file'] = 'uploads/images/brf/' . $image_name; // save the destination of the file to the database
         }
 
         $data['price'] = str_replace(',', '', $request->price);
@@ -79,10 +79,10 @@ class BRFDetailController extends Controller
 
         $data = $request->all();
 
-        if ($request->file('image')) { // if the file is present
-            $image_name = $request->name . '-' . time() . '.' . $request->file('image')->getClientOriginalExtension(); // set unique name for that file
-            $request->file('image')->move('uploads/images/brf', $image_name); // move the file to the laravel project
-            $data['image'] = 'uploads/images/brf/' . $image_name; // save the destination of the file to the database
+        if ($request->file('file')) { // if the file is present
+            $image_name = $request->name . '-' . time() . '.' . $request->file('file')->getClientOriginalExtension(); // set unique name for that file
+            $request->file('file')->move('uploads/images/brf', $image_name); // move the file to the laravel project
+            $data['file'] = 'uploads/images/brf/' . $image_name; // save the destination of the file to the database
         }
 
         $budget_request_form_detail = BudgetRequestFormDetail::find($request->budget_request_form_detail_id);
