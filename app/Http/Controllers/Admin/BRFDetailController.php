@@ -43,6 +43,7 @@ class BRFDetailController extends Controller
             $data['image'] = 'uploads/images/brf/' . $image_name; // save the destination of the file to the database
         }
 
+        $data['price'] = str_replace(',', '', $request->price);
         $data['total'] = $request->qty * $request->price;
         $data['status'] = BudgetRequestFormStatus::FOR_APPROVAL; // if you want to insert to a specific column
         $budget_request_form_detail = BudgetRequestFormDetail::create($data); // create data in a model

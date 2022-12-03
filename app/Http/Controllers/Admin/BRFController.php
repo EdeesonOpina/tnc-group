@@ -91,6 +91,36 @@ class BRFController extends Controller
         ));
     }
 
+    public function edit_user($reference_number)
+    {
+        $budget_request_form = BudgetRequestForm::where('reference_number', $reference_number)->first();
+        $users = User::where('status', '!=', UserStatus::INACTIVE)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
+        return view('admin.brf.users.edit', compact(
+            'budget_request_form',
+            'users'
+        ));
+    }
+
+    public function edit_supplier($reference_number)
+    {
+        $budget_request_form = BudgetRequestForm::where('reference_number', $reference_number)->first();
+        $users = User::where('status', '!=', UserStatus::INACTIVE)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+        $suppliers = Supplier::where('status', '!=', SupplierStatus::INACTIVE)
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+
+        return view('admin.brf.suppliers.edit', compact(
+            'budget_request_form',
+            'suppliers',
+            'users'
+        ));
+    }
+
     public function add_supplier()
     {
         $suppliers = Supplier::where('status', '!=', SupplierStatus::INACTIVE)
@@ -127,11 +157,14 @@ class BRFController extends Controller
     public function create_user(Request $request)
     {
         $rules = [
-            'reference_number' => 'required|exists:projects',
+            'reference_number' => 'required|exists:budget_request_forms',
             'needed_date' => 'required',
             'remarks' => 'nullable',
             'payment_for_user_id' => 'required',
             'name' => 'required',
+            'requested_by_user_id' => 'required',
+            'checked_by_user_id' => 'required',
+            'noted_by_user_id' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -172,11 +205,14 @@ class BRFController extends Controller
     public function create_supplier(Request $request)
     {
         $rules = [
-            'reference_number' => 'required|exists:projects',
+            'reference_number' => 'required|exists:budget_request_forms',
             'needed_date' => 'required',
             'remarks' => 'nullable',
             'payment_for_supplier_id' => 'required',
             'name' => 'required',
+            'requested_by_user_id' => 'required',
+            'checked_by_user_id' => 'required',
+            'noted_by_user_id' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -256,14 +292,17 @@ class BRFController extends Controller
         ));
     }
 
-    public function update(Request $request)
+    public function update_user(Request $request)
     {
         $rules = [
-            'company_id' => 'required',
-            'client_id' => 'required',
+            'reference_number' => 'required|exists:budget_request_forms',
+            'needed_date' => 'required',
+            'remarks' => 'nullable',
+            'payment_for_user_id' => 'required',
             'name' => 'required',
-            'end_date' => 'required',
-            'description' => 'required',
+            'requested_by_user_id' => 'required',
+            'checked_by_user_id' => 'required',
+            'noted_by_user_id' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -284,8 +323,41 @@ class BRFController extends Controller
         $budget_request_form->fill($data)->save();
 
         $request->session()->flash('success', 'Data has been updated');
+        return redirect()->route('internals.brf.manage', [$budget_request_form->id]);
+    }
 
-        return redirect()->route('internals.brf');
+    public function update_supplier(Request $request)
+    {
+        $rules = [
+            'reference_number' => 'required|exists:budget_request_forms',
+            'needed_date' => 'required',
+            'remarks' => 'nullable',
+            'payment_for_supplier_id' => 'required',
+            'name' => 'required',
+            'requested_by_user_id' => 'required',
+            'checked_by_user_id' => 'required',
+            'noted_by_user_id' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);
+        }
+
+        $data = $request->all();
+
+        if ($request->file('image')) { // if the file is present
+            $image_name = $request->name . '-' . time() . '.' . $request->file('image')->getClientOriginalExtension(); // set unique name for that file
+            $request->file('image')->move('uploads/images/brf', $image_name); // move the file to the laravel project
+            $data['image'] = 'uploads/images/brf/' . $image_name; // save the destination of the file to the database
+        }
+
+        $budget_request_form = BudgetRequestForm::find($request->budget_request_form_id);
+        $budget_request_form->fill($data)->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return redirect()->route('internals.brf.manage', [$budget_request_form->id]);
     }
 
     public function approve(Request $request, $budget_request_form_id)

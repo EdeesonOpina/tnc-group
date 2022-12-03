@@ -648,9 +648,13 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
         Route::get('/view/{id}','App\Http\Controllers\Admin\BRFController@view')->name('internals.brf.view');
         Route::get('/add/users','App\Http\Controllers\Admin\BRFController@add_user')->name('internals.brf.users.add');
+        Route::get('/edit/users/{id}','App\Http\Controllers\Admin\BRFController@edit_user')->name('internals.brf.users.edit');
         Route::get('/add/suppliers','App\Http\Controllers\Admin\BRFController@add_supplier')->name('internals.brf.suppliers.add');
+        Route::get('/edit/suppliers/{id}','App\Http\Controllers\Admin\BRFController@edit_supplier')->name('internals.brf.suppliers.edit');
         Route::post('/create/users','App\Http\Controllers\Admin\BRFController@create_user')->name('internals.brf.users.create');
+        Route::post('/update/users','App\Http\Controllers\Admin\BRFController@update_user')->name('internals.brf.users.update');
         Route::post('/create/suppliers','App\Http\Controllers\Admin\BRFController@create_supplier')->name('internals.brf.suppliers.create');
+        Route::post('/update/suppliers','App\Http\Controllers\Admin\BRFController@update_supplier')->name('internals.brf.suppliers.update');
         Route::post('/update','App\Http\Controllers\Admin\BRFController@update')->name('internals.brf.update');
         Route::get('/approve/{id}','App\Http\Controllers\Admin\BRFController@approve')->name('internals.brf.approve');
         Route::get('/disapprove/{id}','App\Http\Controllers\Admin\BRFController@disapprove')->name('internals.brf.disapprove');
