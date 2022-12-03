@@ -135,9 +135,7 @@ use App\Models\ProjectStatus;
                                                 @endif
                                             @endif
 
-                                            @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
-                                                <a href="#" data-href="{{ route('internals.projects.delete', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
-                                            @endif
+                                            <a href="#" data-href="{{ route('internals.projects.delete', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
 
                                             @if ($project->status == ProjectStatus::INACTIVE)
                                                 <a href="#" data-href="{{ route('internals.projects.recover', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Recover</a>
