@@ -36,7 +36,10 @@
                                 </div>
                             </div>
                             <div class="col">
-                                
+                                <div class="form-group">
+                                    <label>Needed Date</label>
+                                    <input type="date" name="needed_date" class="form-control" value="{{ old('needed_date') ?? date('Y-m-d') }}">
+                                </div>
                             </div>
                         </div>
                         
@@ -53,22 +56,52 @@
                                 </div>
                             </div>
                             <div class="col">
-                                &nbsp;
+                                <div class="form-group">
+                                    <label>In Payment For</label>
+                                    <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+                                </div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label>In Payment For</label>
-                                    <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+                                    <label>Requested By</label>
+                                    <select class="form-control" name="requested_by_user_id">
+                                        <option value="{{ auth()->user()->id }}">{{ auth()->user()->firstname }} {{ auth()->user()->lastname }}</option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Needed Date</label>
-                                    <input type="date" name="needed_date" class="form-control" value="{{ old('needed_date') ?? date('Y-m-d') }}">
+                                    <label>Checked By</label>
+                                    <select class="form-control" name="checked_by_user_id">
+                                        <option value=""></option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Noted By</label>
+                                    <select class="form-control" name="noted_by_user_id">
+                                        <option value=""></option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                &nbsp;
                             </div>
                         </div>
 

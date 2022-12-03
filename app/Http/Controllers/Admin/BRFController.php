@@ -97,7 +97,12 @@ class BRFController extends Controller
                         ->orderBy('created_at', 'desc')
                         ->get();
 
+        $users = User::where('status', '!=', UserStatus::INACTIVE)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
         return view('admin.brf.suppliers.add', compact(
+            'users',
             'suppliers'
         ));
     }
@@ -135,14 +140,14 @@ class BRFController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
-        if ($project->status != ProjectStatus::APPROVED) {
-            $request->session()->flash('success', 'Selected CE is still not approved');
-            return back();
-        }
-
         $project = Project::where('reference_number', $request->reference_number)
                         ->where('status', '!=', ProjectStatus::INACTIVE)
                         ->first();
+
+        if ($project->status != ProjectStatus::APPROVED) {
+            $request->session()->flash('error', 'Selected CE is still not approved');
+            return back();
+        }
 
         $brf_count = str_replace('BRF-', '', BudgetRequestForm::orderBy('created_at', 'desc')->first()->reference_number ?? 0) + 1; // get the latest brf sequence then add 1
 
@@ -183,6 +188,11 @@ class BRFController extends Controller
         $project = Project::where('reference_number', $request->reference_number)
                         ->where('status', '!=', ProjectStatus::INACTIVE)
                         ->first();
+
+        if ($project->status != ProjectStatus::APPROVED) {
+            $request->session()->flash('error', 'Selected CE is still not approved');
+            return back();
+        }
 
         $brf_count = str_replace('BRF-', '', BudgetRequestForm::orderBy('created_at', 'desc')->first()->reference_number ?? 0) + 1; // get the latest brf sequence then add 1
 
