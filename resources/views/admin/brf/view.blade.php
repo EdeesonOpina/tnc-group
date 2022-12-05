@@ -166,6 +166,13 @@
                                         @endif
                                     </td>
                                     <td>{{ $budget_request_form_detail->description }}</td>
+                                    <td id="compact-table">
+                                        @if ($budget_request_form_detail->file)
+                                            <a href="{{ url($budget_request_form_detail->file) }}" download>
+                                                <button class="btn btn-sm btn-primary">Download File</button>
+                                            </a>
+                                        @endif
+                                    </td>
                                     <td>{{ $budget_request_form_detail->qty }}</td>
                                     <td>P{{ number_format($budget_request_form_detail->price, 2) }}</td>
                                     <td>P{{ number_format($budget_request_form_detail->total, 2) }}</td>
