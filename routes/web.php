@@ -657,12 +657,13 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::post('/update/suppliers','App\Http\Controllers\Admin\BRFController@update_supplier')->name('internals.brf.suppliers.update');
         Route::post('/update','App\Http\Controllers\Admin\BRFController@update')->name('internals.brf.update');
         Route::get('/approve/{id}','App\Http\Controllers\Admin\BRFController@approve')->name('internals.brf.approve');
-        Route::get('/disapprove/{id}','App\Http\Controllers\Admin\BRFController@disapprove')->name('internals.brf.disapprove');
+        Route::post('/disapprove','App\Http\Controllers\Admin\BRFController@disapprove')->name('internals.brf.disapprove');
         Route::get('/activate/{id}','App\Http\Controllers\Admin\BRFController@activate')->name('internals.brf.activate');
         Route::get('/deactivate/{id}','App\Http\Controllers\Admin\BRFController@deactivate')->name('internals.brf.deactivate');
         Route::get('/delete/{brf_id}', 'App\Http\Controllers\Admin\BRFController@delete')->name('internals.brf.delete');
 
-        Route::get('/for-approval/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@for_approval')->name('internals.brf.for-approval');
+        Route::get('/for-approval/{project_id}', 'App\Http\Controllers\Admin\BRFController@for_approval')->name('internals.brf.for-approval');
+        Route::get('/for-final-approval/{project_id}', 'App\Http\Controllers\Admin\BRFController@for_final_approval')->name('internals.brf.for-final-approval');
 
         // manage
         Route::group(['prefix' => 'manage/{brf_id}'], function () {

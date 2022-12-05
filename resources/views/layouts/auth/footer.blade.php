@@ -541,6 +541,10 @@
 
     @else
         {{-- @include('layouts.modals.brf.add-from-project-list') --}}
+
+        @if(str_contains(url()->current(), '/manage'))
+            @include('layouts.modals.brf.disapprove')
+        @endif
     @endif
   @endif
 

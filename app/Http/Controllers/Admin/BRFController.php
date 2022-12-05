@@ -412,26 +412,79 @@ class BRFController extends Controller
         return back();
     }
 
-    public function approve(Request $request, $budget_request_form_id)
+    public function for_final_approval(Request $request, $budget_request_form_id)
     {
-        $budget_request_form = BudgetRequestForm::find($budget_request_form_id);
-        $budget_request_form->status = BudgetRequestFormStatus::APPROVED; // mark data as cancelled
-        $budget_request_form->save();
+        $brf = BudgetRequestForm::find($budget_request_form_id);
+        $brf->status = BudgetRequestFormStatus::FOR_FINAL_APPROVAL; // mark data as for final approval
+        $brf->save();
+
+        /* noted by user */
+        $name = $brf->noted_by_user->firstname . ' ' . $brf->noted_by_user->lastname;
+        $email = $brf->noted_by_user->email;
+        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' sent a BRF for final approval';
+
+        /* send mail to user */
+        Mail::send('emails.brf.for-final-approval', [
+            'brf' => $brf
+        ], function ($message) use ($name, $email, $subject) {
+            $message->to($email, $name)
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+            ->subject($subject);
+        });
 
         $request->session()->flash('success', 'Data has been approved');
 
         return back();
     }
 
-    public function disapprove(Request $request, $budget_request_form_id)
+    public function approve(Request $request, $budget_request_form_id)
     {
         $budget_request_form = BudgetRequestForm::find($budget_request_form_id);
+        $budget_request_form->status = BudgetRequestFormStatus::APPROVED; // mark data as cancelled
+        $budget_request_form->save();
+
+        /* requested by user */
+        $name = $budget_request_form->requested_by_user->firstname . ' ' . $budget_request_form->requested_by_user->lastname;
+        $email = $budget_request_form->requested_by_user->email;
+        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' disapproved your BRF';
+
+        /* send mail to user */
+        Mail::send('emails.brf.approve', [
+            'brf' => $budget_request_form
+        ], function ($message) use ($name, $email, $subject) {
+            $message->to($email, $name)
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+            ->subject($subject);
+        });
+
+        $request->session()->flash('success', 'Data has been approved');
+
+        return back();
+    }
+
+    public function disapprove(Request $request)
+    {
+        $budget_request_form = BudgetRequestForm::find($request->budget_request_form_id);
+        $budget_request_form->remarks = $request->remarks;
         $budget_request_form->status = BudgetRequestFormStatus::DISAPPROVED; // mark data as cancelled
         $budget_request_form->save();
 
-        $request->session()->flash('success', 'Data has been disapproved');
+        /* requested by user */
+        $name = $budget_request_form->requested_by_user->firstname . ' ' . $budget_request_form->requested_by_user->lastname;
+        $email = $budget_request_form->requested_by_user->email;
+        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' disapproved your BRF';
 
-        return back();
+        /* send mail to user */
+        Mail::send('emails.brf.disapprove', [
+            'brf' => $budget_request_form
+        ], function ($message) use ($name, $email, $subject) {
+            $message->to($email, $name)
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+            ->subject($subject);
+        });
+
+        $request->session()->flash('success', 'Data has been disapproved');
+        return redirect()->route('internals.brf.view', [$budget_request_form->reference_number]);
     }
 
     public function recover(Request $request, $budget_request_form_id)
