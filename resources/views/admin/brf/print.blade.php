@@ -138,6 +138,7 @@
         <thead>
             <tr>
                 <th id="compact-table">Particulars</th>
+                <th id="compact-table">Description</th>
                 <th id="compact-table">Quantity</th>
                 <th id="compact-table">Unit Price</th>
                 <th id="compact-table">Total Price</th>
@@ -146,23 +147,22 @@
         <tbody class="list" id="companies">
             @foreach ($budget_request_form_details as $budget_request_form_detail)
                 <tr>
-                    <td>
-                        {{ $budget_request_form_detail->name }}
-                    </td>
+                    <td>{{ $budget_request_form_detail->name }}</td>
+                    <td>{{ $budget_request_form_detail->description }}</td>
                     <td>{{ $budget_request_form_detail->qty }}</td>
                     <td>P{{ number_format($budget_request_form_detail->price, 2) }}</td>
                     <td>P{{ number_format($budget_request_form_detail->total, 2) }}</td>
                 </tr>
             @endforeach
             <tr> 
-                <td colspan="2">&nbsp;</td>
+                <td colspan="3">&nbsp;</td>
                 <td id="compact-table"><strong>Total Cost</strong></th>
                 <td id="compact-table">P{{ number_format($budget_request_form_details_total, 2) }}</th>
             </tr>
         </tbody>
     </table>
 
-    <strong class="text-label">Liquidations</strong><br>
+    <!-- <strong class="text-label">Liquidations</strong><br>
     <table class="table table-bordered font-change">
         <thead>
             <tr>
@@ -193,7 +193,7 @@
                 <td id="compact-table">P{{ number_format($liquidations_total, 2) }}</th>
             </tr>
         </tbody>
-    </table>
+    </table> -->
 
     @if ($budget_request_form->remarks)
         <table class="table border-bottom no-border table-borderless font-change">
@@ -226,19 +226,6 @@
                         {{ $budget_request_form->requested_by_user->company->name }}<br>
                     </p>
                 </td>
-                <td>
-                    <p class="font-change">
-                      <strong>Noted By:</strong><br>
-                        @if ($budget_request_form->noted_by_user->signature)
-                              <br><img src="{{ url($budget_request_form->noted_by_user->signature) }}" width="80px" height="60px"><br>
-                        @else
-                            <br><br><br><br>
-                        @endif
-                        <strong>{{ $budget_request_form->noted_by_user->firstname }} {{ $budget_request_form->noted_by_user->lastname }}</strong><br>
-                        {{ $budget_request_form->noted_by_user->position }}<br>
-                        {{ $budget_request_form->noted_by_user->company->name }}<br>
-                    </p>
-                </td>
 
                 <td>
                     <p class="font-change">
@@ -251,6 +238,20 @@
                         <strong>{{ $budget_request_form->checked_by_user->firstname }} {{ $budget_request_form->checked_by_user->lastname }}</strong><br>
                         {{ $budget_request_form->checked_by_user->position }}<br>
                         {{ $budget_request_form->checked_by_user->company->name }}<br>
+                    </p>
+                </td>
+
+                <td>
+                    <p class="font-change">
+                      <strong>Noted By:</strong><br>
+                        @if ($budget_request_form->noted_by_user->signature)
+                              <br><img src="{{ url($budget_request_form->noted_by_user->signature) }}" width="80px" height="60px"><br>
+                        @else
+                            <br><br><br><br>
+                        @endif
+                        <strong>{{ $budget_request_form->noted_by_user->firstname }} {{ $budget_request_form->noted_by_user->lastname }}</strong><br>
+                        {{ $budget_request_form->noted_by_user->position }}<br>
+                        {{ $budget_request_form->noted_by_user->company->name }}<br>
                     </p>
                 </td>
 

@@ -16,5 +16,7 @@ class BudgetRequestFormStatus extends Model
     const APPROVED = 4;
     const DONE = 5;
     const DISAPPROVED = 6;
+    const FOR_LIQUIDATION = 7;
+    const LIQUIDATED = 8;
     const CANCELLED = 9;
 }

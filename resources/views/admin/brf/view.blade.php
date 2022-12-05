@@ -145,6 +145,8 @@
                         <thead>
                             <tr>
                                 <th id="compact-table">Particulars</th>
+                                <th id="compact-table">Description</th>
+                                <th id="compact-table">A. File</th>
                                 <th id="compact-table">Quantity</th>
                                 <th id="compact-table">Unit Price</th>
                                 <th id="compact-table">Total Price</th>
@@ -163,6 +165,7 @@
                                             <div class="badge badge-danger">Disapproved</div>
                                         @endif
                                     </td>
+                                    <td>{{ $budget_request_form_detail->description }}</td>
                                     <td>{{ $budget_request_form_detail->qty }}</td>
                                     <td>P{{ number_format($budget_request_form_detail->price, 2) }}</td>
                                     <td>P{{ number_format($budget_request_form_detail->total, 2) }}</td>
@@ -248,7 +251,7 @@
 
             <br>
 
-            <div id="spaced-card" class="card card-body">
+            <!-- <div id="spaced-card" class="card card-body">
                 <div class="row">
                     <div class="col">
                         <h4 class="card-header__title flex m-0">Liquidations</h4>
@@ -365,7 +368,7 @@
                 </div>
                 
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 
