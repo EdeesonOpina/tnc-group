@@ -179,7 +179,7 @@
                                 </tr>
                             @endforeach
                             <tr> 
-                                <td colspan="2">&nbsp;</td>
+                                <td colspan="4">&nbsp;</td>
                                 <td id="compact-table"><strong>Total Cost</strong></th>
                                 <td id="compact-table">P{{ number_format($budget_request_form_details_total, 2) }}</th>
                             </tr>
