@@ -446,7 +446,7 @@ class BRFController extends Controller
         /* requested by user */
         $name = $budget_request_form->requested_by_user->firstname . ' ' . $budget_request_form->requested_by_user->lastname;
         $email = $budget_request_form->requested_by_user->email;
-        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' disapproved your BRF';
+        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' approved your BRF';
 
         /* send mail to user */
         Mail::send('emails.brf.approve', [
