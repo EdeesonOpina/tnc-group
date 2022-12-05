@@ -2,7 +2,7 @@
 <form action="{{ route('internals.brf.details.update') }}" method="post" enctype="multipart/form-data">
   {{ csrf_field() }}
   <input type="hidden" name="budget_request_form_detail_id" value="{{ $budget_request_form_detail->id }}">
-    <div class="modal fade" id="edit-brf-{{ $budget_request_form->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="edit-brf-detail-{{ $budget_request_form_detail->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">

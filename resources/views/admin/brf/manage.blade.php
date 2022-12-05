@@ -201,7 +201,7 @@
                                             @endif
 
                                             @if ($budget_request_form_detail->status != BudgetRequestFormDetailStatus::INACTIVE)
-                                                <a href="#" data-toggle="modal" data-target="#edit-brf-{{ $budget_request_form->id }}" id="margin-right">Edit</a>| 
+                                                <a href="#" data-toggle="modal" data-target="#edit-brf-detail-{{ $budget_request_form_detail->id }}" id="margin-right">Edit</a>| 
 
                                                 <a href="#" data-href="{{ route('internals.brf.details.delete', [$budget_request_form_detail->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
                                             @endif
