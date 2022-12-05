@@ -144,7 +144,7 @@ class BRFController extends Controller
                                                         ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
                                                         ->get();
         $budget_request_form_details_total = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form_id)
-                                                        ->where('status', BudgetRequestFormDetailStatus::APPROVED)
+                                                        ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
                                                         ->sum('total');
 
         return view('admin.brf.manage', compact(
@@ -285,7 +285,7 @@ class BRFController extends Controller
                                                         ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
                                                         ->get();
         $budget_request_form_details_total = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form->id)
-                                                        ->where('status', BudgetRequestFormDetailStatus::APPROVED)
+                                                        ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
                                                         ->sum('total');
 
         $liquidations = Liquidation::where('budget_request_form_id', $budget_request_form->id)

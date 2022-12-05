@@ -27,6 +27,8 @@ class BRFDetailController extends Controller
             'name' => 'required',
             'qty' => 'required',
             'price' => 'required',
+            'description' => 'nullable',
+            'file' => 'nullable',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -39,14 +41,21 @@ class BRFDetailController extends Controller
 
         if ($request->file('file')) { // if the file is present
             $image_name = $request->name . '-' . time() . '.' . $request->file('file')->getClientOriginalExtension(); // set unique name for that file
-            $request->file('file')->move('uploads/images/brf', $image_name); // move the file to the laravel project
-            $data['file'] = 'uploads/images/brf/' . $image_name; // save the destination of the file to the database
+            $request->file('file')->move('uploads/files/brf', $image_name); // move the file to the laravel project
+            $data['file'] = 'uploads/files/brf/' . $image_name; // save the destination of the file to the database
         }
 
         $data['price'] = str_replace(',', '', $request->price);
-        $data['total'] = $request->qty * $request->price;
+        $data['total'] = $request->qty * str_replace(',', '', $request->price);
         $data['status'] = BudgetRequestFormStatus::FOR_APPROVAL; // if you want to insert to a specific column
         $budget_request_form_detail = BudgetRequestFormDetail::create($data); // create data in a model
+
+        $budget_request_form = BudgetRequestForm::find($budget_request_form_detail->budget_request_form_id);
+        $budget_request_form_details_total = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form->id)
+                                                        ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
+                                                        ->sum('total');
+        $budget_request_form->total = $budget_request_form_details_total;
+        $budget_request_form->save();
 
         $request->session()->flash('success', 'Data has been added');
         return redirect()->route('internals.brf.details.approve', [$budget_request_form_detail->id]);
@@ -64,11 +73,11 @@ class BRFDetailController extends Controller
     public function update(Request $request)
     {
         $rules = [
-            'company_id' => 'required',
-            'client_id' => 'required',
             'name' => 'required',
-            'end_date' => 'required',
-            'description' => 'required',
+            'qty' => 'required',
+            'price' => 'required',
+            'description' => 'nullable',
+            'file' => 'nullable',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -81,16 +90,24 @@ class BRFDetailController extends Controller
 
         if ($request->file('file')) { // if the file is present
             $image_name = $request->name . '-' . time() . '.' . $request->file('file')->getClientOriginalExtension(); // set unique name for that file
-            $request->file('file')->move('uploads/images/brf', $image_name); // move the file to the laravel project
-            $data['file'] = 'uploads/images/brf/' . $image_name; // save the destination of the file to the database
+            $request->file('file')->move('uploads/files/brf', $image_name); // move the file to the laravel project
+            $data['file'] = 'uploads/files/brf/' . $image_name; // save the destination of the file to the database
         }
 
         $budget_request_form_detail = BudgetRequestFormDetail::find($request->budget_request_form_detail_id);
+        $data['price'] = str_replace(',', '', $request->price);
+        $data['total'] = $request->qty * str_replace(',', '', $request->price);
         $budget_request_form_detail->fill($data)->save();
 
-        $request->session()->flash('success', 'Data has been updated');
+        $budget_request_form = BudgetRequestForm::find($budget_request_form_detail->budget_request_form_id);
+        $budget_request_form_details_total = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form->id)
+                                                        ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
+                                                        ->sum('total');
+        $budget_request_form->total = $budget_request_form_details_total;
+        $budget_request_form->save();
 
-        return redirect()->route('internals.brf');
+        $request->session()->flash('success', 'Data has been updated');
+        return back();
     }
 
     public function approve(Request $request, $budget_request_form_detail_id)

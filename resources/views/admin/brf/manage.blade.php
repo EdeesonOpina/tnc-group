@@ -3,6 +3,7 @@
     use Carbon\Carbon;
     use App\Models\ProjectDetailStatus;
     use App\Models\BudgetRequestFormStatus;
+    use App\Models\BudgetRequestFormDetailStatus;
 @endphp
 
 <div class="container page__heading-container">
@@ -181,6 +182,7 @@
                             <tr>
                                 <th id="compact-table">Particulars</th>
                                 <th id="compact-table">Description</th>
+                                <th id="compact-table">A. File</th>
                                 <th id="compact-table">Quantity</th>
                                 <th id="compact-table">Unit Price</th>
                                 <th id="compact-table">Total Price</th>
@@ -198,21 +200,28 @@
                                                 <a href="#" data-href="{{ route('internals.brf.details.disapprove', [$budget_request_form_detail->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
                                             @endif
 
-                                            @if ($budget_request_form_detail->status == BudgetRequestFormStatus::APPROVED)
-                                                @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
-                                                    <a href="#" data-href="{{ route('internals.brf.details.delete', [$budget_request_form_detail->id]) }}" data-toggle="modal" data-target="#confirm-action">Delete</a>
-                                                @endif
+                                            @if ($budget_request_form_detail->status != BudgetRequestFormDetailStatus::INACTIVE)
+                                                <a href="#" data-toggle="modal" data-target="#edit-brf-{{ $budget_request_form->id }}" id="margin-right">Edit</a>| 
+
+                                                <a href="#" data-href="{{ route('internals.brf.details.delete', [$budget_request_form_detail->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
                                             @endif
                                         </div>
                                     </td>
                                     <td>{{ $budget_request_form_detail->description }}</td>
+                                    <td id="compact-table">
+                                        @if ($budget_request_form_detail->file)
+                                            <a href="{{ url($budget_request_form_detail->file) }}" download>
+                                                <button class="btn btn-sm btn-primary">Download File</button>
+                                            </a>
+                                        @endif
+                                    </td>
                                     <td>{{ $budget_request_form_detail->qty }}</td>
                                     <td>P{{ number_format($budget_request_form_detail->price, 2) }}</td>
                                     <td>P{{ number_format($budget_request_form_detail->total, 2) }}</td>
                                 </tr>
                             @endforeach
                             <tr> 
-                                <td colspan="2">&nbsp;</td>
+                                <td colspan="4">&nbsp;</td>
                                 <td id="compact-table"><strong>Total Cost</strong></th>
                                 <td id="compact-table">P{{ number_format($budget_request_form_details_total, 2) }}</th>
                             </tr>
