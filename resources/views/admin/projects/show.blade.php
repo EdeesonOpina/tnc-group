@@ -51,7 +51,7 @@ use App\Models\ProjectStatus;
                                 <option value="*">All</option>
                                 <option value="{{ ProjectStatus::DONE }}">Done</option>
                                 <option value="{{ ProjectStatus::FOR_APPROVAL }}">For Approval</option>
-                                <option value="{{ ProjectStatus::INACTIVE }}">Inactive</option>
+                                <option value="{{ ProjectStatus::OPEN_FOR_EDITING }}">Open For Editing</option>
                                 <option value="{{ ProjectStatus::APPROVED }}">Approved</option>
                                 <option value="{{ ProjectStatus::DISAPPROVED }}">Disapproved</option>
                             </select>
