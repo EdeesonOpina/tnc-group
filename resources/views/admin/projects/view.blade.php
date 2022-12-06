@@ -434,7 +434,7 @@
                             @foreach ($budget_request_forms as $budget_request_form)
                                 <tr>
                                     <td>
-                                        <strong>{{ $budget_request_form->reference_number }}</strong>
+                                        <strong><a href="{{ route('internals.brf.view', [$budget_request_form->reference_number]) }}" id="margin-right">{{ $budget_request_form->reference_number }}</a></strong>
                                     </td>
                                     <td>
                                         @if ($budget_request_form->payment_for_user)
