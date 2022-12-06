@@ -31,10 +31,10 @@
                         <br>
                         <div class="row">
                             <div class="col">
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label>Cost Estimate #</label>
                                     <input type="text" name="reference_number" class="form-control" value="{{ old('reference_number') ?? $budget_request_form->reference_number }}">
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col">
                                 <div class="form-group">

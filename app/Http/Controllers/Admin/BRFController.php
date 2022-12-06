@@ -323,7 +323,6 @@ class BRFController extends Controller
     public function update_user(Request $request)
     {
         $rules = [
-            'reference_number' => 'required|exists:projects',
             'needed_date' => 'required',
             'remarks' => 'nullable',
             'payment_for_user_id' => 'required',
@@ -357,7 +356,6 @@ class BRFController extends Controller
     public function update_supplier(Request $request)
     {
         $rules = [
-            'reference_number' => 'required|exists:projects',
             'needed_date' => 'required',
             'remarks' => 'nullable',
             'payment_for_supplier_id' => 'required',
