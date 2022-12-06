@@ -120,8 +120,30 @@
                                             <strong>Company <a href="{{ route('internals.projects.edit', [$project->id]) }}"><i class="material-icons icon-16pt text-success">edit</i></a></strong>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-7">
                                         {{ $project->company->name }}
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <strong>Status</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            @if ($project->status == ProjectStatus::FOR_APPROVAL)
+                                                <div class="badge badge-info">For Approval</div>
+                                            @elseif ($project->status == ProjectStatus::APPROVED)
+                                                <div class="badge badge-success">Approved</div>
+                                            @elseif ($project->status == ProjectStatus::DONE)
+                                                <div class="badge badge-success">Done</div>
+                                            @elseif ($project->status == ProjectStatus::ON_PROCESS)
+                                                <div class="badge badge-warning">On Process</div>
+                                            @elseif ($project->status == ProjectStatus::DISAPPROVED)
+                                                <div class="badge badge-danger">Disapproved</div>
+                                            @elseif ($project->status == ProjectStatus::INACTIVE)
+                                                <div class="badge badge-danger">Inactive</div>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
 
