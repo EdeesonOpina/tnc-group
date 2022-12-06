@@ -143,9 +143,7 @@
                                         </div>
                                     </div>
                                     <div class="col">
-                                        @if ($project->start_date)
-                                            {{ Carbon::parse($project->start_date)->format('M d Y') }}
-                                        @endif
+                                        {{ Carbon::parse($project->start_date)->format('M d Y') ?? null }}
                                     </div>
                                 </div>
 
@@ -156,9 +154,7 @@
                                         </div>
                                     </div>
                                     <div class="col">
-                                        @if ($project->end_date)
-                                            {{ Carbon::parse($project->end_date)->format('M d Y') }}
-                                        @endif
+                                        {{ Carbon::parse($project->end_date)->format('M d Y') ?? null }}
                                     </div>
                                 </div>
 
@@ -170,7 +166,7 @@
                                     </div>
                                     <div class="col">
                                         {{-- Carbon::parse($project->duration_date)->format('M d Y') --}}
-                                        {{ Carbon::parse($project->start_date)->format('M d Y') }} - {{ Carbon::parse($project->end_date)->format('M d Y') }}
+                                        {{ Carbon::parse($project->start_date)->format('M d Y') ?? null }} - {{ Carbon::parse($project->end_date)->format('M d Y') ?? null }}
                                     </div>
                                 </div>
 
