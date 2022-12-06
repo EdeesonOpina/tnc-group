@@ -157,8 +157,8 @@
                             <tr>
                                 <th id="compact-table"></th>
                                 <th id="compact-table">Particulars</th>
-                                <th id="compact-table">Quantity</th>
                                 <th>Description</th>
+                                <th id="compact-table">Quantity</th>
                                 @if ($project->has_usd == 1)
                                     <th id="compact-table">USD Price</th>
                                 @endif
@@ -188,8 +188,8 @@
                                         <td id="compact-table">
                                             <strong>{{ $pjd->name }}</strong>
                                         </td>
-                                        <td id="compact-table">{{ $pjd->qty }}</td>
                                         <td id="compact-table">{!! $pjd->description !!}</td>
+                                        <td id="compact-table">{{ $pjd->qty }}</td>
                                         @if ($project->has_usd == 1)
                                             <td id="compact-table">${{ number_format($pjd->usd_price, 2) }}</td>
                                         @endif

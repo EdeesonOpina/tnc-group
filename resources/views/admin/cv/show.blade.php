@@ -102,7 +102,7 @@ use App\Models\CheckVoucherStatus;
                         <tbody class="list" id="companies">
                             @foreach ($cvs as $cv)
                                 <tr>
-                                    <td>
+                                    <td id="compact-table">
                                         <strong>{{ $cv->reference_number }}</strong>
                                         <div class="d-flex">
                                             <a href="{{ route('internals.exports.cv.print', [$cv->reference_number]) }}" id="margin-right">Print</a>

@@ -200,8 +200,8 @@
                             <tr>
                                 <th id="compact-table"></th>
                                 <th id="compact-table">Particulars</th>
-                                <th id="compact-table">Quantity</th>
                                 <th id="compact-table">Description</th>
+                                <th id="compact-table">Quantity</th>
                                 <th id="compact-table">Internal Price</th>
                                 @if ($project->has_usd == 1)
                                     <th id="compact-table">Unit Price (USD)</th>
@@ -261,8 +261,8 @@
                                                 @endif
                                             </div>
                                         </td>
-                                        <td>{{ $pjd->qty }}</td>
                                         <td id="compact-table">{!! $pjd->description !!}</td>
+                                        <td>{{ $pjd->qty }}</td>
                                         <td>P{{ number_format($pjd->internal_price, 2) }}</td>
                                         @if ($project->has_usd == 1)
                                             <td>${{ number_format($pjd->usd_price, 2) }}</td>
