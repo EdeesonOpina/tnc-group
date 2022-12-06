@@ -165,7 +165,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <strong>Project Duration <a href="#" data-toggle="modal" data-target="#duration-date-{{ $project->id }}"><i class="material-icons icon-16pt text-success">edit</i></a></strong>
+                                            <strong>Project Duration</strong>
                                         </div>
                                     </div>
                                     <div class="col">
