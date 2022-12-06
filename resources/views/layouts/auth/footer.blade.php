@@ -545,9 +545,10 @@
         @if(str_contains(url()->current(), '/manage'))
             @include('layouts.modals.brf.edit')
             @include('layouts.modals.brf.disapprove')
+        @else
+            @include('layouts.modals.brf.disapprove')
         @endif
 
-        @include('layouts.modals.brf.disapprove-from-show')
     @endif 
   @endif
 

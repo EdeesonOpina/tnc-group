@@ -183,13 +183,13 @@
                                 <tr>
                                     <td>
                                         <strong>{{ $budget_request_form_detail->name }}</strong>
-                                        @if ($budget_request_form_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
+                                        <!-- @if ($budget_request_form_detail->status == BudgetRequestFormStatus::FOR_APPROVAL)
                                             <div class="badge badge-warning">For Approval</div>
                                         @elseif ($budget_request_form_detail->status == BudgetRequestFormStatus::APPROVED)
                                             <div class="badge badge-success">Approved</div>
                                         @elseif ($budget_request_form_detail->status == BudgetRequestFormStatus::DISAPPROVED)
                                             <div class="badge badge-danger">Disapproved</div>
-                                        @endif
+                                        @endif -->
                                     </td>
                                     <td>{{ $budget_request_form_detail->description }}</td>
                                     <td id="compact-table">
