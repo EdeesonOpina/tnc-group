@@ -19,8 +19,8 @@
             <h1 class="m-0">View BRF</h1>
         </div>
         @if ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
-            <a href="{{ route('internals.exports.brf.print', [$budget_request_form->reference_number]) }}">
-                <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Send To Finance</button>
+            <a href="{{ route('internals.brf.send-to-finance', [$budget_request_form->id]) }}">
+                <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-envelope" id="margin-right"></i>Send To Finance</button>
             </a>
 
             <a href="{{ route('internals.exports.brf.print', [$budget_request_form->reference_number]) }}">

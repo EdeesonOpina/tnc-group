@@ -182,7 +182,7 @@ class BRFController extends Controller
             return back();
         }
 
-        $brf_count = str_replace('BRF-', '', BudgetRequestForm::orderBy('created_at', 'desc')->first()->reference_number ?? 0) + 1; // get the latest brf sequence then add 1
+        $brf_count = str_replace('BRF-', '', BudgetRequestForm::latest()->first()->reference_number ?? 0) + 1; // get the latest brf sequence then add 1
 
         $data = request()->all(); // get all request
         $data['reference_number'] = 'BRF-' . str_pad($brf_count, 8, '0', STR_PAD_LEFT);
@@ -459,6 +459,28 @@ class BRFController extends Controller
 
         $request->session()->flash('success', 'Data has been approved');
 
+        return back();
+    }
+
+    public function send_to_finance(Request $request, $budget_request_form_id)
+    {
+        $budget_request_form = BudgetRequestForm::find($budget_request_form_id);
+
+        /* dan mar user */
+        $name = 'Dan Mar Dumawin';
+        $email = 'mdumawin@tnc.com.ph';
+        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' sent a BRF for finance checking';
+
+        /* send mail to user */
+        Mail::send('emails.brf.send-to-finance', [
+            'brf' => $budget_request_form
+        ], function ($message) use ($name, $email, $subject) {
+            $message->to($email, $name)
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+            ->subject($subject);
+        });
+
+        $request->session()->flash('success', 'Data has been sent to finance');
         return back();
     }
 

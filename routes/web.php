@@ -664,6 +664,7 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
         Route::get('/for-approval/{project_id}', 'App\Http\Controllers\Admin\BRFController@for_approval')->name('internals.brf.for-approval');
         Route::get('/for-final-approval/{project_id}', 'App\Http\Controllers\Admin\BRFController@for_final_approval')->name('internals.brf.for-final-approval');
+        Route::get('/send-to-finance/{project_id}', 'App\Http\Controllers\Admin\BRFController@send_to_finance')->name('internals.brf.send-to-finance');
 
         // manage
         Route::group(['prefix' => 'manage/{brf_id}'], function () {
