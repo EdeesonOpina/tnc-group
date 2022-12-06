@@ -69,7 +69,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <strong>CE# <a href="{{ route('internals.projects.edit', [$project->id]) }}"><i class="material-icons icon-16pt text-success">edit</i></a></strong>
+                                            <strong>CE#</strong>
                                         </div>
                                     </div>
                                     <div class="col-md-7">
