@@ -662,9 +662,9 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::get('/deactivate/{id}','App\Http\Controllers\Admin\BRFController@deactivate')->name('internals.brf.deactivate');
         Route::get('/delete/{brf_id}', 'App\Http\Controllers\Admin\BRFController@delete')->name('internals.brf.delete');
 
-        Route::get('/for-approval/{project_id}', 'App\Http\Controllers\Admin\BRFController@for_approval')->name('internals.brf.for-approval');
-        Route::get('/for-final-approval/{project_id}', 'App\Http\Controllers\Admin\BRFController@for_final_approval')->name('internals.brf.for-final-approval');
-        Route::get('/send-to-finance/{project_id}', 'App\Http\Controllers\Admin\BRFController@send_to_finance')->name('internals.brf.send-to-finance');
+        Route::get('/for-approval/{brf_id}', 'App\Http\Controllers\Admin\BRFController@for_approval')->name('internals.brf.for-approval');
+        Route::get('/for-final-approval/{brf_id}', 'App\Http\Controllers\Admin\BRFController@for_final_approval')->name('internals.brf.for-final-approval');
+        Route::get('/send-to-finance/{brf_id}', 'App\Http\Controllers\Admin\BRFController@send_to_finance')->name('internals.brf.send-to-finance');
 
         // manage
         Route::group(['prefix' => 'manage/{brf_id}'], function () {
