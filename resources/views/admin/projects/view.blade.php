@@ -278,13 +278,21 @@
                             </tr>
 
                             <tr>
-                                <td colspan="4">&nbsp;</td>
+                                @if ($project->has_usd == 1)
+                                    <td colspan="5">&nbsp;</td>
+                                @else
+                                    <td colspan="4">&nbsp;</td>
+                                @endif
                                 <td id="compact-table"><strong>Internal CE Grand Total</strong></td>
                                 <td id="compact-table">P{{ number_format($internal_grand_total, 2) }}</td>
                             </tr>
 
                             <tr>
-                                <td colspan="4">&nbsp;</td>
+                                @if ($project->has_usd == 1)
+                                    <td colspan="5">&nbsp;</td>
+                                @else
+                                    <td colspan="4">&nbsp;</td>
+                                @endif
                                 <td id="compact-table"><strong>Project Margin</strong></td>
                                 <td id="compact-table">P{{ number_format(($project->total - $internal_grand_total) + $project->asf, 2) }}</td>
                             </tr>

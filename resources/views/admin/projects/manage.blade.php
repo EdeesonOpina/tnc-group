@@ -380,7 +380,11 @@
                             </tr>
 
                             <tr>
-                                <td colspan="6">&nbsp;</td>
+                                @if ($project->has_usd == 1)
+                                    <td colspan="7">&nbsp;</td>
+                                @else
+                                    <td colspan="6">&nbsp;</td>
+                                @endif
                                 <td id="compact-table"><strong>Project Margin</strong></td>
                                 <td id="compact-table">P{{ number_format(($project->total - $internal_grand_total) + $project->asf, 2) }}</td>
                             </tr>
