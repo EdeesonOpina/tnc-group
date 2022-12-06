@@ -182,7 +182,7 @@ class BRFController extends Controller
             return back();
         }
 
-        return str_replace('BRF-', '', BudgetRequestForm::latest()->first()->reference_number ?? 0) + 1;
+        return str_replace('BRF-', '', BudgetRequestForm::latest()->first()->reference_number) + 1;
 
         $brf_count = str_replace('BRF-', '', BudgetRequestForm::latest()->first()->reference_number ?? 0) + 1; // get the latest brf sequence then add 1
 
