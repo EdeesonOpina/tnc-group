@@ -124,19 +124,24 @@ use App\Models\BudgetRequestFormStatus;
 
                                             @endif
 
-                                            @if ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS || $budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL || $budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL || $budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
-                                                <a href="{{ route('internals.brf.manage', [$budget_request_form->id]) }}" id="space-table">Manage</a> | 
-                                            
 
-                                                @if (BudgetRequestFormStatus::FOR_FINAL_APPROVAL)
-                                                    <a href="#" data-href="{{ route('internals.brf.approve', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
+                                            @if ($budget_request_form->requested_by_user_id == auth()->user()->id || auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
 
-                                                    <a href="#" data-toggle="modal" data-target="#disapprove-{{ $budget_request_form->id }}" id="space-table">Disapprove</a>
-                                                @else
-                                                    <a href="#" data-href="{{ route('internals.brf.for-final-approval', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
+                                                @if ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS || $budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL || $budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL || $budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
+                                                    <a href="{{ route('internals.brf.manage', [$budget_request_form->id]) }}" id="space-table">Manage</a> | 
+                                                
 
-                                                    <a href="#" data-toggle="modal" data-target="#disapprove-{{ $budget_request_form->id }}" id="space-table">Disapprove</a>
+                                                    @if (BudgetRequestFormStatus::FOR_FINAL_APPROVAL)
+                                                        <a href="#" data-href="{{ route('internals.brf.approve', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
+
+                                                        <a href="#" data-toggle="modal" data-target="#disapprove-{{ $budget_request_form->id }}" id="space-table">Disapprove</a>
+                                                    @else
+                                                        <a href="#" data-href="{{ route('internals.brf.for-final-approval', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
+
+                                                        <a href="#" data-toggle="modal" data-target="#disapprove-{{ $budget_request_form->id }}" id="space-table">Disapprove</a>
+                                                    @endif
                                                 @endif
+                                                
                                             @endif
 
                                             @if ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
