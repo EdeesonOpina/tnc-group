@@ -603,11 +603,21 @@ class ProjectController extends Controller
     public function done(Request $request, $project_id)
     {
         $project = Project::find($project_id);
-        $project->status = ProjectStatus::DONE; // mark data as active
+        $project->status = ProjectStatus::DONE; // mark data as done
         $project->save();
 
         $request->session()->flash('success', 'Data has been recovered');
 
+        return back();
+    }
+
+    public function open_for_editing(Request $request, $project_id)
+    {
+        $project = Project::find($project_id);
+        $project->status = ProjectStatus::OPEN_FOR_EDITING; // mark data as open for editing
+        $project->save();
+
+        $request->session()->flash('success', 'Data has been marked as open for editing');
         return back();
     }
 

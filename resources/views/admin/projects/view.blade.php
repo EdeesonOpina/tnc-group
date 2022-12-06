@@ -125,6 +125,8 @@
                                                 <div class="badge badge-success">Approved</div>
                                             @elseif ($project->status == ProjectStatus::DONE)
                                                 <div class="badge badge-success">Done</div>
+                                            @elseif ($project->status == ProjectStatus::OPEN_FOR_EDITING)
+                                            <div class="badge badge-info">Open For Editing</div>
                                             @elseif ($project->status == ProjectStatus::ON_PROCESS)
                                                 <div class="badge badge-warning">On Process</div>
                                             @elseif ($project->status == ProjectStatus::DISAPPROVED)

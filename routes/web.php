@@ -545,6 +545,7 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::get('/approve/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@approve')->name('internals.projects.approve');
         Route::post('/disapprove', 'App\Http\Controllers\Admin\Project\ProjectController@disapprove')->name('internals.projects.disapprove');
         Route::get('/done/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@done')->name('internals.projects.done');
+        Route::get('/open-for-editing/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@open_for_editing')->name('internals.projects.open-for-editing');
         Route::get('/delete/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@delete')->name('internals.projects.delete');
         Route::get('/recover/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@recover')->name('internals.projects.recover');
         Route::get('/for-approval/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@for_approval')->name('internals.projects.for-approval');

@@ -118,13 +118,13 @@ use App\Models\ProjectStatus;
                                             <!-- <a href="{{ route('internals.projects.edit', [$project->id]) }}" id="space-table">Edit</a> |  -->
 
                                             @if ($project->created_by_user_id == auth()->user()->id || auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
-                                                @if ($project->status == ProjectStatus::ON_PROCESS || $project->status == ProjectStatus::FOR_APPROVAL || $project->status == ProjectStatus::APPROVED || $project->status == ProjectStatus::DISAPPROVED)
+                                                @if ($project->status == ProjectStatus::ON_PROCESS || $project->status == ProjectStatus::FOR_APPROVAL || $project->status == ProjectStatus::DISAPPROVED || $project->status == ProjectStatus::OPEN_FOR_EDITING)
                                                     <a href="{{ route('internals.projects.manage', [$project->id]) }}" id="space-table">Manage</a> | 
                                                 @endif
                                             @endif
 
                                             @if ($project->status == ProjectStatus::APPROVED)
-                                                <a href="#" data-href="{{ route('internals.projects.done', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Mark as Done</a> | 
+                                                <a href="#" data-href="{{ route('internals.projects.done', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Mark as Done</a> | <a href="#" data-href="{{ route('internals.projects.open-for-editing', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Open For Editing</a> | 
                                             @endif
 
                                             @if (auth()->user()->id == $project->noted_by_user->id)
@@ -154,6 +154,8 @@ use App\Models\ProjectStatus;
                                             <div class="badge badge-info ml-2">For Approval</div>
                                         @elseif ($project->status == ProjectStatus::APPROVED)
                                             <div class="badge badge-success ml-2">Approved</div>
+                                        @elseif ($project->status == ProjectStatus::OPEN_FOR_EDITING)
+                                            <div class="badge badge-info ml-2">Open For Editing</div>
                                         @elseif ($project->status == ProjectStatus::DONE)
                                             <div class="badge badge-success ml-2">Done</div>
                                         @elseif ($project->status == ProjectStatus::ON_PROCESS)
