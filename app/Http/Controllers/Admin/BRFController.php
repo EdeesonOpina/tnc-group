@@ -466,7 +466,7 @@ class BRFController extends Controller
 
         /* dan mar user */
         $name = 'Dan Mar Dumawin';
-        $email = 'edeesonopinav4@gmail.com';
+        $email = 'mdumawin@tnc.com.ph';
         $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' sent a BRF for finance checking';
 
         /* send mail to user */
