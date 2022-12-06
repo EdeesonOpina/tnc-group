@@ -141,8 +141,8 @@
             <tr>
                 <th class="table-black-border table-color-primary"></th>
                 <th class="table-black-border table-color-primary">Particulars</th>
-                <th class="table-black-border table-color-primary">Qty</th>
                 <th class="table-black-border table-color-primary">Desc.</th>
+                <th class="table-black-border table-color-primary">Qty</th>
                 @if ($project->has_usd == 1)
                     <th id="compact-table" class="table-black-border table-color-primary">Price (USD)</th>
                 @endif
@@ -177,8 +177,8 @@
                         <td class="table-black-border">
                             <strong>{{ $pjd->name }}</strong>
                         </td>
-                        <td class="table-black-border">{{ $pjd->qty }}</td>
                         <td class="table-black-border">{!! $pjd->description !!}</td>
+                        <td class="table-black-border">{{ $pjd->qty }}</td>
                         @if ($project->has_usd == 1)
                             <td class="table-black-border">${{ number_format($pjd->usd_price, 2) }}</td>
                         @endif

@@ -135,8 +135,8 @@
             <tr>
                 <th id="compact-table" class="table-black-border table-color-primary"></th>
                 <th id="compact-table">Name</th>
-                <th id="compact-table">Quantity</th>
                 <th id="compact-table">Description</th>
+                <th id="compact-table">Quantity</th>
                 <th id="compact-table">Internal Price</th>
                 <th id="compact-table">Total Price</th>
             </tr>
@@ -163,8 +163,8 @@
                         <td>
                             <strong>{{ $pjd->name }}</strong>
                         </td>
-                        <td>{{ $pjd->qty }}</td>
                         <td>{!! $pjd->description !!}</td>
+                        <td>{{ $pjd->qty }}</td>
                         <td>P{{ number_format($pjd->price, 2) }}</td>
                         <td>P{{ number_format($pjd->total, 2) }}</td>
                     </tr>
