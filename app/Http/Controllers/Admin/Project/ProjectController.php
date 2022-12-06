@@ -175,8 +175,10 @@ class ProjectController extends Controller
         $grand_total = $project->total + $project->vat + $project->asf;
         $usd_grand_total = $project->usd_total + $project->usd_vat + $project->usd_asf;
         $internal_grand_total = $project->internal_total + $project->asf;
+        $project_margin = ($project->total - $internal_grand_total) + $project->asf;
 
         return view('admin.projects.view', compact(
+            'project_margin',
             'grand_total',
             'usd_grand_total',
             'internal_grand_total',
@@ -205,8 +207,10 @@ class ProjectController extends Controller
         $grand_total = $project->total + $project->vat + $project->asf;
         $usd_grand_total = $project->usd_total + $project->usd_vat + $project->usd_asf;
         $internal_grand_total = $project->internal_total + $project->asf;
+        $project_margin = ($project->total - $internal_grand_total) + $project->asf;
 
         return view('admin.projects.manage', compact(
+            'project_margin',
             'grand_total',
             'usd_grand_total',
             'internal_grand_total',
