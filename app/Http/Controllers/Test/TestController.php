@@ -16,15 +16,16 @@ class TestController extends Controller
 
     public function email()
     {
-        // email variables for use function
-        $project = Project::find(1);
-        $name = auth()->user()->name;
-        $email = 'mdumawin@tnc.com.ph';
-        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' test email';
+        $budget_request_form = BudgetRequestForm::find(5);
 
-        // send mail to user
-        Mail::send('emails.test', [
-            'project' => $project
+        /* dan mar user */
+        $name = 'Dan Mar Dumawin';
+        $email = 'mdumawin@tnc.com.ph';
+        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' sent a BRF for finance checking';
+
+        /* send mail to user */
+        Mail::send('emails.brf.send-to-finance', [
+            'brf' => $budget_request_form
         ], function ($message) use ($name, $email, $subject) {
             $message->to($email, $name)
             ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
