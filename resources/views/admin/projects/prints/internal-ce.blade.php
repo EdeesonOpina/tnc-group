@@ -121,7 +121,8 @@
                     <div class="text-label"><strong>Project Duration:</strong></div>
                 </td>
                 <td>
-                    {{ Carbon::parse($project->duration_date)->format('M d Y') }}<br>
+                    <!-- {{ Carbon::parse($project->duration_date)->format('M d Y') }}<br> -->
+                    {{ Carbon::parse($project->start_date)->format('M d Y') }} - {{ Carbon::parse($project->end_date)->format('M d Y') }}
                 </td>
             </tr>
         </tbody>
