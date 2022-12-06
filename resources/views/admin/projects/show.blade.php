@@ -131,7 +131,7 @@ use App\Models\ProjectStatus;
                                                 @if ($project->status == ProjectStatus::FOR_APPROVAL)
                                                     <a href="#" data-href="{{ route('internals.projects.approve', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
 
-                                                    <a href="#" data-href="{{ route('internals.projects.disapprove', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a> | 
+                                                    <a href="#" data-toggle="modal" data-target="#disapprove-{{ $project->id }}" id="space-table">Disapprove</a> | 
                                                 @endif
                                             @endif
 

@@ -1,13 +1,13 @@
 @foreach ($projects as $project)
-  <form action="{{ route('internals.brf.disapprove') }}" method="post">
+  <form action="{{ route('internals.projects.disapprove') }}" method="post">
     {{ csrf_field() }}
-    <input type="hidden" name="budget_request_form_id" value="{{ $project->id }}">
+    <input type="hidden" name="project_id" value="{{ $project->id }}">
 
     <div class="modal fade" id="disapprove-{{ $project->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
-            <h5 class="modal-title" id="exampleModalLabel">BRF Disapproval</h5><br>
+            <h5 class="modal-title" id="exampleModalLabel">Project Disapproval</h5><br>
 
             <div class="row">
               <div class="col-md-4">

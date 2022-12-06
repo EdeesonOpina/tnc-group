@@ -532,6 +532,14 @@
     @endif
   @endif
 
+  @if (request()->is('admin/projects/*') || request()->is('admin/projects'))
+    @if(str_contains(url()->current(), '/manage') || str_contains(url()->current(), '/tasks') || str_contains(url()->current(), '/edit') || str_contains(url()->current(), '/add') || str_contains(url()->current(), '/view'))
+        
+    @else
+        @include('layouts.modals.projects.disapprove-from-show')
+    @endif
+  @endif
+
   @if (request()->is('admin/projects/view/*'))
     @include('layouts.modals.projects.link')
   @endif
