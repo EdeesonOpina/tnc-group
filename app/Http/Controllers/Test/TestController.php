@@ -19,11 +19,11 @@ class TestController extends Controller
         // email variables for use function
         $project = Project::find(1);
         $name = auth()->user()->name;
-        $email = 'edeesonopinav4@gmail.com';
-        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' created a project';
+        $email = 'kencluna@tnc.com.ph';
+        $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' test email';
 
         // send mail to user
-        Mail::send('emails.projects.create', [
+        Mail::send('emails.test', [
             'project' => $project
         ], function ($message) use ($name, $email, $subject) {
             $message->to($email, $name)

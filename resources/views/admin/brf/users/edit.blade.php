@@ -48,7 +48,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Payment To</label>
-                                    <select class="form-control" name="payment_for_user_id">
+                                    <select id="payment_for_user_id" class="custom-select" data-toggle="select" name="payment_for_user_id">
                                         <option value="{{ $budget_request_form->payment_for_user->id }}">{{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}</option>
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
@@ -68,7 +68,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Requested By</label>
-                                    <select class="form-control" name="requested_by_user_id">
+                                    <select id="requested_by_user_id" name="requested_by_user_id" class="custom-select" data-toggle="select">
                                         <option value="{{ $budget_request_form->requested_by_user->id }}">{{ $budget_request_form->requested_by_user->firstname }} {{ $budget_request_form->requested_by_user->lastname }}</option>
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
@@ -79,7 +79,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Checked By</label>
-                                    <select class="form-control" name="checked_by_user_id">
+                                    <select id="checked_by_user_id" class="custom-select" data-toggle="select" name="checked_by_user_id">
                                         <option value="{{ $budget_request_form->checked_by_user->id }}">{{ $budget_request_form->checked_by_user->firstname }} {{ $budget_request_form->checked_by_user->lastname }}</option>
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
@@ -93,7 +93,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Noted By</label>
-                                    <select class="form-control" name="noted_by_user_id">
+                                    <select id="noted_by_user_id" class="custom-select" data-toggle="select" name="noted_by_user_id">
                                         <option value="{{ $budget_request_form->noted_by_user->id }}">{{ $budget_request_form->noted_by_user->firstname }} {{ $budget_request_form->noted_by_user->lastname }}</option>
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
