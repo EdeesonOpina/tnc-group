@@ -74,10 +74,10 @@
   @include('layouts.partials.alerts')
 
   @if ($project->conforme_signature)
-      <a href="{{ route('internals.exports.projects.pdf.ce', [$project->id]) }}">
+      <!-- <a href="{{ route('internals.exports.projects.pdf.ce', [$project->id]) }}">
         <button type="button" class="btn btn-danger" id="margin-right"><i class="fa fa-file-pdf" id="margin-right"></i>Create PDF</button>
       </a>
-      <br><br>
+      <br><br> -->
   @endif
   <!-- START OF PRINTABLE AREA -->
   <div id="printableArea">
