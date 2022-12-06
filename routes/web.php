@@ -547,7 +547,7 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::get('/done/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@done')->name('internals.projects.done');
         Route::get('/delete/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@delete')->name('internals.projects.delete');
         Route::get('/recover/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@recover')->name('internals.projects.recover');
-        Route::post('/update/conforme-signature', 'App\Http\Controllers\Admin\Project\ProjectController@conforme_signature')->name('internals.projects.update.conforme-signature');
+        Route::post('/update/conforme-signature', 'App\Http\Controllers\Admin\Share\ProjectController@conforme_signature')->name('internals.projects.update.conforme-signature');
         Route::get('/for-approval/{project_id}', 'App\Http\Controllers\Admin\Project\ProjectController@for_approval')->name('internals.projects.for-approval');
 
         Route::post('/margin', 'App\Http\Controllers\Admin\Project\ProjectController@margin')->name('internals.projects.update.margin');
