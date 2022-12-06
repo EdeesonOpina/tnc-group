@@ -31,7 +31,7 @@
         @endif -->
 
         @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
-            @if (auth()->user()->id == $budget_request_form->noted_by_user->id || auth()->user()->id == $budget_request_form->checked_by_user->id)
+            @if (auth()->user()->id == $budget_request_form->noted_by_user->id || auth()->user()->id == $budget_request_form->checked_by_user->id || auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
                 <a href="#" data-href="{{ route('internals.brf.for-final-approval', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action">
                     <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Approve</button>
                 </a>
@@ -43,7 +43,7 @@
         @endif
 
         @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL)
-            @if (auth()->user()->id == $budget_request_form->noted_by_user->id)
+            @if (auth()->user()->id == $budget_request_form->noted_by_user->id || auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
                 <a href="#" data-href="{{ route('internals.brf.approve', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action">
                     <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Approve</button>
                 </a>

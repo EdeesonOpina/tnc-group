@@ -5,7 +5,7 @@
 
 <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><img src="{{ url(env('APP_LOGO_WITH_TEXT')) }}" width="150px"></p>
 
-<h3 style="font-family: sans-serif; font-weight: bold; margin: 0; Margin-bottom: 15px;">You have successfully finished preparing a cost estimate for:</h3>
+<h3 style="font-family: sans-serif; font-weight: bold; margin: 0; Margin-bottom: 15px;">You have successfully finished preparing a BRF for:</h3>
 
 <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
   <strong>BRF #:</strong> {{ $brf->reference_number }}
