@@ -124,7 +124,10 @@ use App\Models\ProjectStatus;
                                             @endif
 
                                             @if ($project->status == ProjectStatus::APPROVED)
-                                                <a href="#" data-href="{{ route('internals.projects.done', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Mark as Done</a> | <a href="#" data-href="{{ route('internals.projects.open-for-editing', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Open For Editing</a> | 
+                                                <a href="#" data-href="{{ route('internals.projects.done', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Mark as Done</a> | 
+                                                @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+                                                    <a href="#" data-href="{{ route('internals.projects.open-for-editing', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Open For Editing</a> | 
+                                                @endif
                                             @endif
 
                                             @if (auth()->user()->id == $project->noted_by_user->id)
