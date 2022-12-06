@@ -93,11 +93,31 @@
                             <strong>CE #</strong>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-md-7">
                         <div class="form-group">
                             <a href="{{ route('internals.projects.view', [$budget_request_form->project->reference_number]) }}">
                                 {{ $budget_request_form->project->reference_number }}
                             </a>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <strong>Status</strong>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
+                                <div class="badge badge-info">For Approval</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL)
+                                <div class="badge badge-info">For Final Approval</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS)
+                                <div class="badge badge-warning">On Process</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
+                                <div class="badge badge-success">Approved</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
+                                <div class="badge badge-danger">Disapproved</div>
+                            @endif
                         </div>
                     </div>
                 </div>

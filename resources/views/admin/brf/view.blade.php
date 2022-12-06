@@ -18,9 +18,15 @@
             </nav>
             <h1 class="m-0">View BRF</h1>
         </div>
-        <a href="{{ route('internals.exports.brf.print', [$budget_request_form->reference_number]) }}">
-            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print</button>
-        </a>
+        @if ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
+            <a href="{{ route('internals.exports.brf.print', [$budget_request_form->reference_number]) }}">
+                <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Send To Finance</button>
+            </a>
+
+            <a href="{{ route('internals.exports.brf.print', [$budget_request_form->reference_number]) }}">
+                <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print</button>
+            </a>
+        @endif
     </div>
 </div>
 
@@ -61,11 +67,31 @@
                             <strong>CE #</strong>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-md-7">
                         <div class="form-group">
                             <a href="{{ route('internals.projects.view', [$budget_request_form->project->reference_number]) }}">
-                                <strong>{{ $budget_request_form->project->reference_number }}</strong>
+                                {{ $budget_request_form->project->reference_number }}
                             </a>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <strong>Status</strong>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
+                                <div class="badge badge-info">For Approval</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL)
+                                <div class="badge badge-info">For Final Approval</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS)
+                                <div class="badge badge-warning">On Process</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
+                                <div class="badge badge-success">Approved</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
+                                <div class="badge badge-danger">Disapproved</div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -180,8 +206,8 @@
                             @endforeach
                             <tr> 
                                 <td colspan="4">&nbsp;</td>
-                                <td id="compact-table"><strong>Total Cost</strong></th>
-                                <td id="compact-table">P{{ number_format($budget_request_form_details_total, 2) }}</th>
+                                <td id="compact-table"><strong>Total Cost</strong></td>
+                                <td id="compact-table">P{{ number_format($budget_request_form_details_total, 2) }}</td>
                             </tr>
 
                             <!-- <tr> 
@@ -253,129 +279,8 @@
                         </div>
                     </div>
                 </div>
-                
             </div>
-
-            <br>
-
-            <!-- <div id="spaced-card" class="card card-body">
-                <div class="row">
-                    <div class="col">
-                        <h4 class="card-header__title flex m-0">Liquidations</h4>
-                    </div>
-
-                    <div class="col-md-2">
-                        
-                    </div>
-                </div>
-                <br>
-
-                <div class="table-responsive">
-                    <table class="table mb-0 thead-border-top-0 table-striped">
-                        <thead>
-                            <tr>
-                                <th id="compact-table">Particulars</th>
-                                <th id="compact-table">Category</th>
-                                <th id="compact-table">Particulars</th>
-                                <th id="compact-table">Description</th>
-                                <th id="compact-table">Cost</th>
-                            </tr>
-                        </thead>
-                        <tbody class="list" id="companies">
-                            @foreach($liquidations as $liquidation)
-                                <tr>
-                                    <td id="compact-table">
-                                        <strong>{{ $liquidation->budget_request_form->name }}</strong>
-                                        @if ($liquidation->status == LiquidationStatus::APPROVED)
-                                            <div class="badge badge-success">Approved</div>
-                                        @elseif ($liquidation->status == LiquidationStatus::DISAPPROVED)
-                                            <div class="badge badge-danger">Disapproved</div>
-                                        @elseif ($liquidation->status == LiquidationStatus::FOR_APPROVAL)
-                                            <div class="badge badge-warning">For Approval</div>
-                                        @elseif ($liquidation->status == LiquidationStatus::INACTIVE)
-                                            <div class="badge badge-danger">Inactive</div>
-                                        @endif
-                                    </td>
-                                    <td id="compact-table">
-                                        <b>{{ $liquidation->category->name }}</b>
-                                    </td>
-                                    <td id="compact-table">{{ $liquidation->name }}</td>
-                                    <td id="compact-table">{{ $liquidation->description }}</td>
-                                    <td id="compact-table">P{{ number_format($liquidation->cost, 2) }}</td> 
-                                </tr>
-                            @endforeach
-
-                            <tr> 
-                                <td colspan="3">&nbsp;</td>
-                                <td id="compact-table"><strong>Total Cost</strong></th>
-                                <td id="compact-table">P{{ number_format($liquidations_total, 2) }}</th>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    @if (count($liquidations) <= 0)
-                        <div style="padding: 20px">
-                            <center><i class="material-icons icon-16pt mr-1 text-muted">assignment</i> No record/s found</center>
-                        </div>
-                    @endif
-                </div>
-
-                <br><br>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <strong>Requested By</strong>
-                            @if ($budget_request_form->checked_by_user->signature)
-                                  <br><img src="{{ url($budget_request_form->requested_by_user->signature) }}" width="80px" height="60px"><br>
-                            @else
-                                <br><br><br><br>
-                            @endif
-                            <strong>{{ $budget_request_form->requested_by_user->firstname }} {{ $budget_request_form->requested_by_user->lastname }}</strong><br>
-                            {{ $budget_request_form->requested_by_user->position }}<br>
-                            {{ $budget_request_form->requested_by_user->company->name }}<br>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <strong>Checked By</strong>
-                            @if ($budget_request_form->status == BudgetRequestFormStatus::APPROVED || $budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL || $budget_request_form->status == BudgetRequestFormStatus::DONE)
-                                @if ($budget_request_form->checked_by_user->signature)
-                                      <br><img src="{{ url($budget_request_form->checked_by_user->signature) }}" width="80px" height="60px"><br>
-                                @else
-                                    <br><br><br><br>
-                                @endif
-                            @else
-                                <br><br><br><br>
-                            @endif
-                            <strong>{{ $budget_request_form->checked_by_user->firstname }} {{ $budget_request_form->checked_by_user->lastname }}</strong><br>
-                            {{ $budget_request_form->checked_by_user->position }}<br>
-                            {{ $budget_request_form->checked_by_user->company->name }}<br>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <strong>Noted By</strong>
-                            @if ($budget_request_form->status == BudgetRequestFormStatus::APPROVED || $budget_request_form->status == BudgetRequestFormStatus::DONE)
-                                @if ($budget_request_form->noted_by_user->signature)
-                                      <br><img src="{{ url($budget_request_form->noted_by_user->signature) }}" width="80px" height="60px"><br>
-                                @else
-                                    <br><br><br><br>
-                                @endif
-                            @else
-                                <br><br><br><br>
-                            @endif
-                            <strong>{{ $budget_request_form->noted_by_user->firstname }} {{ $budget_request_form->noted_by_user->lastname }}</strong><br>
-                            {{ $budget_request_form->noted_by_user->position }}<br>
-                            {{ $budget_request_form->noted_by_user->company->name }}<br>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        </div> -->
+        </div>
     </div>
 </div>
 

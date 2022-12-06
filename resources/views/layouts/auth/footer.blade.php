@@ -546,7 +546,9 @@
             @include('layouts.modals.brf.edit')
             @include('layouts.modals.brf.disapprove')
         @endif
-    @endif
+
+        @include('layouts.modals.brf.disapprove-from-show')
+    @endif 
   @endif
 
   @if (request()->is('admin/clients') || request()->is('admin/clients/*'))

@@ -131,11 +131,11 @@ use App\Models\BudgetRequestFormStatus;
                                                 @if (BudgetRequestFormStatus::FOR_FINAL_APPROVAL)
                                                     <a href="#" data-href="{{ route('internals.brf.approve', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
 
-                                                    <a href="#" data-href="{{ route('internals.brf.disapprove', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
+                                                    <a href="#" data-toggle="modal" data-target="#disapprove-{{ $budget_request_form->id }}" id="space-table">Disapprove</a>
                                                 @else
                                                     <a href="#" data-href="{{ route('internals.brf.for-final-approval', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
 
-                                                    <a href="#" data-href="{{ route('internals.brf.disapprove', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
+                                                    <a href="#" data-toggle="modal" data-target="#disapprove-{{ $budget_request_form->id }}" id="space-table">Disapprove</a>
                                                 @endif
                                             @endif
 
