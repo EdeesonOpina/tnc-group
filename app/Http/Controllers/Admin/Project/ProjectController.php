@@ -108,6 +108,8 @@ class ProjectController extends Controller
             'client_contact_id' => 'required',
             'has_usd' => 'required',
             'company_id' => 'required',
+            'prepared_by_user_id' => 'required',
+            'noted_by_user_id' => 'required',
             'client_id' => 'required',
             'name' => 'required',
             'margin' => 'required|not_in:0',
@@ -226,12 +228,27 @@ class ProjectController extends Controller
     public function edit($project_id)
     {
         $project = Project::find($project_id);
-        $clients = Client::where('status', ClientStatus::ACTIVE)
+        $users = User::where('status', UserStatus::ACTIVE)
                         ->get();
+        $clients = Client::where('status', ClientStatus::ACTIVE)
+                        ->orderBy('name', 'asc')
+                        ->get();
+        $client_contacts = ClientContact::where('status', ClientContactStatus::ACTIVE)
+                                    ->orderBy('name', 'asc')
+                                    ->get();
         $companies = Company::where('status', CompanyStatus::ACTIVE)
+                        ->orderBy('name', 'asc')
                         ->get();
 
+        $usd = Currency::convert()
+        ->from('USD')
+        ->to('PHP')
+        ->get();
+
         return view('admin.projects.edit', compact(
+            'usd',
+            'users',
+            'client_contacts',
             'clients',
             'companies',
             'project'
@@ -244,10 +261,9 @@ class ProjectController extends Controller
             'company_id' => 'required',
             'client_id' => 'required',
             'name' => 'required',
-            'margin' => 'required|not_in:0',
-            'usd_rate' => 'required|not_in:0',
-            'vat_rate' => 'required|not_in:0',
-            'end_date' => 'required',
+            'prepared_by_user_id' => 'required',
+            'noted_by_user_id' => 'required',
+            'client_contact_id' => 'required',
             'description' => 'nullable',
         ];
 
@@ -269,8 +285,7 @@ class ProjectController extends Controller
         $project->fill($data)->save();
 
         $request->session()->flash('success', 'Data has been updated');
-
-        return redirect()->route('internals.projects');
+        return redirect()->route('internals.projects.manage', [$project->id]);
     }
 
     public function conforme_signature(Request $request)

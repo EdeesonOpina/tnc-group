@@ -69,7 +69,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <strong>CE#</strong>
+                                            <strong>CE# <a href="{{ route('internals.projects.edit', [$project->id]) }}"><i class="material-icons icon-16pt text-success">edit</i></a></strong>
                                         </div>
                                     </div>
                                     <div class="col-md-7">
@@ -90,7 +90,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <strong>Client Name</strong>
+                                            <strong>Client Name <a href="{{ route('internals.projects.edit', [$project->id]) }}"><i class="material-icons icon-16pt text-success">edit</i></a></strong>
                                         </div>
                                     </div>
                                     <div class="col-md-7">
@@ -117,7 +117,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <strong>Company</strong>
+                                            <strong>Company <a href="{{ route('internals.projects.edit', [$project->id]) }}"><i class="material-icons icon-16pt text-success">edit</i></a></strong>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -128,7 +128,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <strong>Project Name</strong>
+                                            <strong>Project Name <a href="{{ route('internals.projects.edit', [$project->id]) }}"><i class="material-icons icon-16pt text-success">edit</i></a></strong>
                                         </div>
                                     </div>
                                     <div class="col">

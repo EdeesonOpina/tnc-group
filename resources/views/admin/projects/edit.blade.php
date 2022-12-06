@@ -14,7 +14,7 @@
             </nav>
             <h1 class="m-0">Edit Project</h1>
         </div>
-        <button type="submit" class="btn btn-success">Update</button>
+        <button type="submit" class="btn btn-success">Submit</button>
     </div>
 </div>
 
@@ -61,27 +61,56 @@
                                 </div>
                             </div>
                             <div class="col">
-                                &nbsp;
+                                
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Cost</label>
-                                    <input type="text" name="cost" class="form-control" placeholder="Cost" value="{{ old('cost') ?? $project->cost }}">
+                                    <label for="client">Prepared By</label><br />
+                                    <select id="prepared_by_user" name="prepared_by_user_id" class="custom-select" data-toggle="select">
+                                        <option value="{{ $project->prepared_by_user->id }}">{{ $project->prepared_by_user->firstname }} {{ $project->prepared_by_user->lastname }}</option>
+                                        @foreach($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
+
                             <div class="col">
                                 <div class="form-group">
-                                    <label>End Date</label>
-                                    <input type="date" name="end_date" class="form-control" value="{{ old('end_date') ?? $project->end_date }}">
+                                    <label for="client">Noted By</label><br />
+                                    <select id="noted_by_user" name="noted_by_user_id" class="custom-select" data-toggle="select">
+                                        <option value="{{ $project->noted_by_user->id }}">{{ $project->noted_by_user->firstname }} {{ $project->noted_by_user->lastname }}</option>
+                                        @foreach($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="conforme">Conforme</label><br />
+                                    <select id="conforme" name="client_contact_id" class="custom-select" data-toggle="select">
+                                        <option value="{{ $project->client_contact->id }}">{{ $project->client_contact->name }}</option>
+                                        @foreach($client_contacts as $client_contact)
+                                            <option value="{{ $client_contact->id }}">{{ $client_contact->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col">
+
+                            </div>
+                        </div>
+
                         <div class="form-group">
-                            <label for="description">Description</label>
+                            <label for="description">Description (optional)</label>
                             <textarea id="tiny" name="description" placeholder="Enter your description here">{{ old('description') ?? $project->description }}</textarea>
                         </div>
                     </div>
@@ -94,6 +123,37 @@
                 <br>
                 <div class="form-group">
                     <input type="file" name="image">
+                </div>
+            </div>
+
+            <br>
+
+            <div id="semi-spaced-card" class="card card-body">
+                <h3>Terms</h3>
+                <br>
+                <div class="form-group">
+                    <label for="proposal_ownership">Proposal Ownership</label>
+                    <textarea name="proposal_ownership" class="form-control">{{ old('proposal_ownership') ?? $project->proposal_ownership }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="confidentiality">Confidentiality</label>
+                    <textarea name="confidentiality" class="form-control">{{ old('confidentiality') ?? $project->confidentiality }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="project_confirmation">Project Confirmation</label>
+                    <textarea name="project_confirmation" class="form-control">{{ old('project_confirmation') ?? $project->project_confirmation }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="payment_terms">Payment Terms</label>
+                    <textarea name="payment_terms" class="form-control">{{ old('payment_terms') ?? $project->payment_terms }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="validity">Validity</label>
+                    <textarea name="validity" class="form-control">{{ old('validity') ?? $project->validity }}</textarea>
                 </div>
             </div>
         </div>
