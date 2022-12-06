@@ -460,9 +460,9 @@ class BRFController extends Controller
         return back();
     }
 
-    public function send_to_finance(Request $request, $budget_request_form_id)
+    public function send_to_finance(Request $request, $reference_number)
     {
-        $budget_request_form = BudgetRequestForm::find($budget_request_form_id);
+        $budget_request_form = BudgetRequestForm::where('reference_number', $reference_number)->first();
 
         /* dan mar user */
         $name = 'Dan Mar Dumawin';
