@@ -50,6 +50,7 @@
     tinymce.init({
     selector:'#tiny',
     height: 400,
+    toolbar: 'formatselect bold underline italic numlist bullist alignjustify alignleft aligncenter alignright ',
     plugins: [
       'advlist autolink lists link image charmap print preview hr anchor pagebreak',
       'searchreplace wordcount visualblocks visualchars code fullscreen',
