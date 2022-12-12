@@ -69,6 +69,10 @@
         white-space:nowrap;
     }
 
+    .page-break {
+        page-break-after: always;
+    }
+
     table {
         font-size: 10px !important;
     }
@@ -258,7 +262,8 @@
             @endif
         </tbody>
     </table>
-    <br>
+    <div class="page-break"></div>
+    <br><br>
     <strong class="font-change">TERMS AND CONDITIONS</strong>
     <br><br>
     <table class="table table-bordered font-change">
@@ -328,7 +333,7 @@
                         @if ($project->conforme_signature)
                           <br><img src="{{ url($project->conforme_signature) }}" width="80px" height="60px"><br>
                         @else
-                            <br><br><br><br>
+                            <br><br><br><br><br><br>
                         @endif
                         <strong>{{ $project->client_contact->name }}</strong><br>
                         {{ $project->client_contact->position }}<br>
