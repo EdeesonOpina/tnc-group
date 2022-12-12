@@ -5,6 +5,7 @@
     use App\Models\ProjectDetail;
     use App\Models\ProjectDetailStatus;
     use App\Models\BudgetRequestFormStatus;
+    use App\Models\BudgetRequestFormDetailStatus;
 @endphp
 
 <div class="container page__heading-container">
