@@ -92,9 +92,9 @@
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
                                 <div class="badge badge-danger">Disapproved</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_RELEASE)
-                                            <div class="badge badge-info ml-2">For Release</div>
-                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::RELEASED)
-                                            <div class="badge badge-success ml-2">Released</div>
+                                <div class="badge badge-info">For Release</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::RELEASED)
+                                <div class="badge badge-success">Released</div>
                             @endif
                         </div>
                     </div>

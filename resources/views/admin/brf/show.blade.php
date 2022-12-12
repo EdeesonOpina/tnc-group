@@ -147,16 +147,23 @@ use App\Models\BudgetRequestFormStatus;
                                             @endif
 
                                             @if ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
-                                                <a href="#" data-href="{{ route('internals.brf.for-release', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">For Release</a> | 
+                                                @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
+                                                    <a href="#" data-href="{{ route('internals.brf.for-release', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">For Release</a> | 
 
-                                                <!-- @if (! CheckVoucher::where('budget_request_form_id', $budget_request_form->id)->where('status', CheckVoucherStatus::DONE)->exists())
-                                                    <a href="#" data-href="{{ route('internals.cv.create', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Create CV</a>
-                                                @endif -->
+                                                @endif
                                             @endif
 
                                             @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_RELEASE)
                                                 @if (auth()->user()->role == 'Super Admin')
                                                     <a href="#" data-href="{{ route('internals.brf.released', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Mark As Released</a>
+                                                @endif
+                                            @endif
+
+                                            @if ($budget_request_form->status == BudgetRequestFormStatus::RELEASED)
+                                                @if (! CheckVoucher::where('budget_request_form_id', $budget_request_form->id)->where('status', CheckVoucherStatus::DONE)->exists())
+                                                    @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
+                                                        <a href="#" data-href="{{ route('internals.cv.create', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Create CV</a>
+                                                    @endif
                                                 @endif
                                             @endif
                                         </div>
