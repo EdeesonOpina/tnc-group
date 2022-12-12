@@ -470,6 +470,11 @@
                         </thead>
                         <tbody class="list" id="companies">
                             @foreach ($budget_request_forms as $budget_request_form)
+                            @php
+                                $total = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form->id)
+                                                        ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
+                                                        ->sum('total');
+                            @endphp
                                 <tr>
                                     <td>
                                         <strong><a href="{{ route('internals.brf.view', [$budget_request_form->reference_number]) }}" id="margin-right">{{ $budget_request_form->reference_number }}</a></strong>
@@ -485,7 +490,7 @@
                                     </td>
                                     <td id="compact-table">{{ $budget_request_form->project->name }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}</td>
-                                    <td>P{{ number_format($budget_request_form->total, 2) }}</td>
+                                    <td>P{{ number_format($total, 2) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
