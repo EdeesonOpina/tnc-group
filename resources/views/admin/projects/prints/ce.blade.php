@@ -32,7 +32,7 @@
     }
 
     .font-change {
-        font-family: "Lucida Console", "Courier New", monospace;
+        font-family: "Lucida Console", "Courier New", monospace !important;
     }
 
     .heading-text {
@@ -54,8 +54,20 @@
       margin-bottom: 0px;
     }
 
+    .no-border-right {
+      border-right: none !important;
+    }
+
     .table-color-primary {
         color: #E74414 !important;
+    }
+
+    .no-space {
+        padding: 0px !important;
+    }
+
+    .min-space {
+        padding: 5px !important;
     }
 
     #compact-table {
@@ -63,8 +75,17 @@
         white-space:nowrap;
     }
 
+    .page-break {
+        page-break-after: always;
+    }
+
+    table {
+        font-size: 10px !important;
+    }
+
     body {
         background: #fff;
+        font-family: "Lucida Console", "Courier New", monospace !important;
     }
     </style>
 </head>
@@ -90,46 +111,46 @@
     <table class="table border-bottom no-border table-borderless font-change">
         <tbody>
             <tr>
-                <td>
+                <td class="no-space">
                     <div class="text-label"><strong>CE #:</strong></div>
                 </td>
-                <td>
+                <td class="no-space">
                     {{ $project->reference_number }}<br>
                 </td>
-                <td>
+                <td class="no-space">
                     <strong>Date</strong>
                 </td>
-                <td class="text-right">
+                <td class="text-right no-space">
                     {{ $project->created_at->format('M d Y') }}
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="no-space">
                     <div class="text-label"><strong>Client Name:</strong></div>
                 </td>
-                <td>
+                <td class="no-space">
                     {{ $project->client->name }}<br>
                 </td>
-                <td>
+                <td class="no-space">
                     <strong>Company</strong>
                 </td>
-                <td class="text-right">
+                <td class="text-right no-space">
                         {{ $project->company->name }}
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="no-space">
                     <div class="text-label"><strong>Project Name:</strong></div>
                 </td>
-                <td>
+                <td class="no-space">
                     {{ $project->name }}<br>
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="no-space">
                     <div class="text-label"><strong>Project Duration:</strong></div>
                 </td>
-                <td>
+                <td class="no-space">
                     <!-- {{ Carbon::parse($project->duration_date)->format('M d Y') }}<br> -->
                     {{ Carbon::parse($project->start_date)->format('M d Y') ?? null }} - {{ Carbon::parse($project->end_date)->format('M d Y') ?? null }}
                 </td>
@@ -142,15 +163,15 @@
     <table class="table table-bordered font-change">
         <thead>
             <tr>
-                <th id="compact-table" class="table-black-border table-color-primary"></th>
-                <th id="compact-table" class="table-black-border table-color-primary">Particulars</th>
-                <th id="compact-table" class="table-black-border table-color-primary">Description</th>
-                <th id="compact-table" class="table-black-border table-color-primary">Quantity</th>
+                <th id="compact-table" class="table-black-border table-color-primary min-space"></th>
+                <th id="compact-table" class="table-black-border table-color-primary min-space">Particulars</th>
+                <th id="compact-table" class="table-black-border table-color-primary min-space">Description</th>
+                <th id="compact-table" class="table-black-border table-color-primary min-space">Quantity</th>
                 @if ($project->has_usd == 1)
-                    <th id="compact-table" class="table-black-border table-color-primary">Unit Price (USD)</th>
+                    <th id="compact-table" class="table-black-border table-color-primary min-space">Unit Price (USD)</th>
                 @endif
-                <th id="compact-table" class="table-black-border table-color-primary">Unit Price</th>
-                <th id="compact-table" class="table-black-border table-color-primary">Total Price</th>
+                <th id="compact-table" class="table-black-border table-color-primary min-space">Unit Price</th>
+                <th id="compact-table" class="table-black-border table-color-primary min-space">Total Price</th>
             </tr>
         </thead>
         <tbody class="list" id="companies">
@@ -162,97 +183,97 @@
                                     ->get();
                 @endphp
                     <tr>
-                        <td colspan="1" id="compact-table"><strong>{{ $project_detail->category->name }}</strong></td>
-                        <td colspan="6" id="compact-table">&nbsp;</td>
+                        <td colspan="1" id="compact-table" class="no-border min-space"><strong>{{ $project_detail->category->name }}</strong></td>
+                        <td colspan="6" id="compact-table" class="no-border min-space">&nbsp;</td>
                     </tr>  
                 @foreach ($pjds as $pjd)
                     <tr>
-                        <td class="table-black-border">
+                        <td class="table-black-border min-space">
                             @if ($pjd->sub_category)
                                 <strong>{{ $pjd->sub_category->name }}</strong>
                             @endif
                         </td>
-                        <td class="table-black-border">
+                        <td class="table-black-border min-space">
                             <strong>{{ $pjd->name }}</strong>
                         </td>
-                        <td class="table-black-border">{!! $pjd->description !!}</td>
-                        <td class="table-black-border">{{ $pjd->qty }}</td>
+                        <td class="table-black-border min-space">{!! $pjd->description !!}</td>
+                        <td class="table-black-border min-space">{{ $pjd->qty }}</td>
                         @if ($project->has_usd == 1)
-                            <td class="table-black-border">${{ number_format($pjd->usd_price, 2) }}</td>
+                            <td class="table-black-border min-space">${{ number_format($pjd->usd_price, 2) }}</td>
                         @endif
-                        <td class="table-black-border">P{{ number_format($pjd->price, 2) }}</td>
-                        <td class="table-black-border">P{{ number_format($pjd->total, 2) }}</td>
+                        <td class="table-black-border min-space">P{{ number_format($pjd->price, 2) }}</td>
+                        <td class="table-black-border min-space">P{{ number_format($pjd->total, 2) }}</td>
                     </tr>
                 @endforeach
             @endforeach
 
             @if ($project->has_usd == 1)
                 <tr>
-                    <td colspan="3" class="table-black-border">&nbsp;</td>
-                    <td id="compact-table" class="table-black-border"><strong>Total Cost (USD)</strong></td>
-                    <td id="compact-table" class="table-black-border">${{ number_format($project->usd_total, 2) }}</td>
-                    <td id="compact-table" class="table-black-border"><strong>Total Cost</strong></td>
-                    <td id="compact-table" class="table-black-border">P{{ number_format($project->total, 2) }}</td>
+                    <td colspan="3" class="table-black-border min-space">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border min-space"><strong>Total Cost (USD)</strong></td>
+                    <td id="compact-table" class="table-black-border min-space">${{ number_format($project->usd_total, 2) }}</td>
+                    <td id="compact-table" class="table-black-border min-space"><strong>Total Cost</strong></td>
+                    <td id="compact-table" class="table-black-border min-space">P{{ number_format($project->total, 2) }}</td>
                 </tr>
                 
                 <tr>
-                    <td colspan="3" class="table-black-border">&nbsp;</td>
-                    <td id="compact-table" class="table-black-border"><strong>ASF (USD)</strong></td>
-                    <td id="compact-table" class="table-black-border">
+                    <td colspan="3" class="table-black-border min-space">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border min-space"><strong>ASF (USD)</strong></td>
+                    <td id="compact-table" class="table-black-border min-space">
                         ${{ number_format($project->usd_asf, 2) }}
                     </td>
-                    <td id="compact-table" class="table-black-border"><strong>ASF</strong></td>
-                    <td id="compact-table" class="table-black-border">
+                    <td id="compact-table" class="table-black-border min-space"><strong>ASF</strong></td>
+                    <td id="compact-table" class="table-black-border min-space">
                         P{{ number_format($project->asf, 2) }}
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="3" class="table-black-border">&nbsp;</td>
-                    <td id="compact-table" class="table-black-border"><strong>VAT (USD)</strong></td>
-                    <td id="compact-table" class="table-black-border">
+                    <td colspan="3" class="table-black-border min-space">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border min-space"><strong>VAT (USD)</strong></td>
+                    <td id="compact-table" class="table-black-border min-space">
                         ${{ number_format($project->usd_vat, 2) }}
                     </td>
-                    <td id="compact-table" class="table-black-border"><strong>VAT</strong></td>
-                    <td id="compact-table" class="table-black-border">
+                    <td id="compact-table" class="table-black-border min-space"><strong>VAT</strong></td>
+                    <td id="compact-table" class="table-black-border min-space">
                         P{{ number_format($project->vat, 2) }}
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="3" class="table-black-border">&nbsp;</td>
-                    <td id="compact-table" class="table-black-border"><strong>Grand Total (USD)</strong></td>
-                    <td id="compact-table" class="table-black-border">${{ number_format($project->usd_total + $project->usd_vat + $project->usd_asf, 2) }}</td>
-                    <td id="compact-table" class="table-black-border"><strong>Grand Total</strong></td>
-                    <td id="compact-table" class="table-black-border">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
+                    <td colspan="3" class="table-black-border min-space">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border min-space"><strong>Grand Total (USD)</strong></td>
+                    <td id="compact-table" class="table-black-border min-space">${{ number_format($project->usd_total + $project->usd_vat + $project->usd_asf, 2) }}</td>
+                    <td id="compact-table" class="table-black-border min-space"><strong>Grand Total</strong></td>
+                    <td id="compact-table" class="table-black-border min-space">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
                 </tr>
             @else
                 <tr>
-                    <td colspan="4" class="table-black-border">&nbsp;</td>
-                    <td id="compact-table" class="table-black-border"><strong>Total Cost</strong></td>
-                    <td id="compact-table" class="table-black-border">P{{ number_format($project->total, 2) }}</td>
+                    <td colspan="4" class="table-black-border min-space">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border min-space"><strong>Total Cost</strong></td>
+                    <td id="compact-table" class="table-black-border min-space">P{{ number_format($project->total, 2) }}</td>
                 </tr>
                 
                 <tr>
-                    <td colspan="4" class="table-black-border">&nbsp;</td>
-                    <td id="compact-table" class="table-black-border"><strong>ASF</strong></td>
-                    <td id="compact-table" class="table-black-border">
+                    <td colspan="4" class="table-black-border min-space">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border min-space"><strong>ASF</strong></td>
+                    <td id="compact-table" class="table-black-border min-space">
                         P{{ number_format($project->asf, 2) }}
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="4" class="table-black-border">&nbsp;</td>
-                    <td id="compact-table" class="table-black-border"><strong>VAT</strong></td>
-                    <td id="compact-table" class="table-black-border">
+                    <td colspan="4" class="table-black-border min-space">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border min-space"><strong>VAT</strong></td>
+                    <td id="compact-table" class="table-black-border min-space">
                         P{{ number_format($project->vat, 2) }}
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="4" class="table-black-border">&nbsp;</td>
-                    <td id="compact-table" class="table-black-border"><strong>Grand Total</strong></td>
-                    <td id="compact-table" class="table-black-border">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
+                    <td colspan="4" class="table-black-border min-space">&nbsp;</td>
+                    <td id="compact-table" class="table-black-border min-space"><strong>Grand Total</strong></td>
+                    <td id="compact-table" class="table-black-border min-space">P{{ number_format($project->total + $project->vat + $project->asf, 2) }}</td>
                 </tr>
             @endif
         </tbody>
@@ -262,28 +283,28 @@
     <table class="table table-bordered font-change">
         <tbody>
             <tr>
-                <td class="table-black-border"><strong>Proposal Ownership.</strong></td>
-                <td class="table-black-border">{!! $project->proposal_ownership !!}</td>
+                <td class="table-black-border min-space"><strong>Proposal Ownership.</strong></td>
+                <td class="table-black-border min-space">{!! $project->proposal_ownership !!}</td>
             </tr>
 
             <tr>
-                <td class="table-black-border"><strong>Confidentiality.</strong></td>
-                <td class="table-black-border">{!! $project->confidentiality !!}</td>
+                <td class="table-black-border min-space"><strong>Confidentiality.</strong></td>
+                <td class="table-black-border min-space">{!! $project->confidentiality !!}</td>
             </tr>
 
             <tr>
-                <td class="table-black-border"><strong>Project Confirmation.</strong></td>
-                <td class="table-black-border">{!! $project->project_confirmation !!}</td>
+                <td class="table-black-border min-space"><strong>Project Confirmation.</strong></td>
+                <td class="table-black-border min-space">{!! $project->project_confirmation !!}</td>
             </tr>
 
             <tr>
-                <td class="table-black-border"><strong>Payment Terms</strong></td>
-                <td class="table-black-border">{!! $project->payment_terms !!}</td>
+                <td class="table-black-border min-space"><strong>Payment Terms</strong></td>
+                <td class="table-black-border min-space">{!! $project->payment_terms !!}</td>
             </tr>
 
             <tr>
-                <td class="table-black-border"><strong>Validity.</strong></td>
-                <td class="table-black-border">{!! $project->validity !!}</td>
+                <td class="table-black-border min-space"><strong>Validity.</strong></td>
+                <td class="table-black-border min-space">{!! $project->validity !!}</td>
             </tr>
         </tbody>
     </table>
@@ -297,7 +318,7 @@
                       @if ($project->prepared_by_user->signature)
                           <br><img src="{{ url($project->prepared_by_user->signature) }}" width="80px" height="60px"><br>
                       @else
-                        <br><br><br>
+                        <br><br><br><br><br>
                       @endif
                       <strong>{{ $project->prepared_by_user->firstname }} {{ $project->prepared_by_user->lastname }}</strong><br>
                       {{ $project->prepared_by_user->role }}<br>
@@ -312,10 +333,10 @@
                             @if ($project->noted_by_user->signature)
                                   <br><img src="{{ url($project->noted_by_user->signature) }}" width="80px" height="60px"><br>
                             @else
-                                <br><br><br>
+                                <br><br><br><br><br>
                             @endif
                         @else
-                            <br><br><br>
+                            <br><br><br><br><br>
                         @endif
                       <strong>{{ $project->noted_by_user->firstname }} {{ $project->noted_by_user->lastname }}</strong><br>
                       {{ $project->noted_by_user->role }}<br>
@@ -330,7 +351,7 @@
                         @if ($project->conforme_signature)
                           <br><img src="{{ url($project->conforme_signature) }}" width="80px" height="60px"><br>
                         @else
-                            <br><br><br><br>
+                            <br><br><br><br><br><br>
                         @endif
                         <strong>{{ $project->client_contact->name }}</strong><br>
                         {{ $project->client_contact->position }}<br>

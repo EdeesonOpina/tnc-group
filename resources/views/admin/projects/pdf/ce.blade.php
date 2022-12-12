@@ -304,7 +304,7 @@
                       @if ($project->prepared_by_user->signature)
                           <br><img src="{{ url($project->prepared_by_user->signature) }}" width="80px" height="60px"><br>
                       @else
-                        <br><br><br>
+                        <br><br><br><br><br>
                       @endif
                       <strong>{{ $project->prepared_by_user->firstname }} {{ $project->prepared_by_user->lastname }}</strong><br>
                       {{ $project->prepared_by_user->role }}<br>
@@ -318,7 +318,7 @@
                       @if ($project->noted_by_user->signature)
                           <br><img src="{{ url($project->noted_by_user->signature) }}" width="80px" height="60px"><br>
                       @else
-                        <br><br><br>
+                        <br><br><br><br><br>
                       @endif
                       <strong>{{ $project->noted_by_user->firstname }} {{ $project->noted_by_user->lastname }}</strong><br>
                       {{ $project->noted_by_user->role }}<br>
