@@ -3,7 +3,8 @@
 use Carbon\Carbon;
 use App\Models\CheckVoucher;
 use App\Models\CheckVoucherStatus;
-use App\Models\BudgetRequestFormStatus;
+use App\Models\BudgetRequestFormDetail;
+use App\Models\BudgetRequestFormDetailStatus;
 @endphp
 
 <div class="container-fluid page__heading-container">
@@ -110,6 +111,11 @@ use App\Models\BudgetRequestFormStatus;
                         </thead>
                         <tbody class="list" id="companies">
                             @foreach ($budget_request_forms as $budget_request_form)
+                            @php
+                                $total = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form->id)
+                                                        ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
+                                                        ->sum('total');
+                            @endphp
                                 <tr>
                                     <td>
                                         <strong>{{ $budget_request_form->reference_number }}</strong>
@@ -180,7 +186,7 @@ use App\Models\BudgetRequestFormStatus;
                                     <td id="compact-table">{{ $budget_request_form->name }}</td>
                                     <td id="compact-table">{{ $budget_request_form->project->name }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}</td>
-                                    <td>P{{ number_format($budget_request_form->total, 2) }}</td>
+                                    <td>P{{ number_format($total, 2) }}</td>
                                     <td>
                                         @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
                                             <div class="badge badge-info ml-2">For Approval</div>
