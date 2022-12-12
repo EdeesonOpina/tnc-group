@@ -87,6 +87,8 @@
         background: #fff;
         font-family: "Lucida Console", "Courier New", monospace !important;
     }
+
+    @page { margin: 0px; }
     </style>
 </head>
 <body>
@@ -278,6 +280,7 @@
             @endif
         </tbody>
     </table>
+    <div class="page-break"></div>
     <br><br>
     <h4 class="font-change">TERMS AND CONDITIONS</h4>
     <table class="table table-bordered font-change">
