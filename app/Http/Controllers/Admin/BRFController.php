@@ -507,6 +507,26 @@ class BRFController extends Controller
         return redirect()->route('internals.brf.view', [$budget_request_form->reference_number]);
     }
 
+    public function for_release(Request $request, $budget_request_form_id)
+    {
+        $budget_request_form = BudgetRequestForm::find($budget_request_form_id);
+        $budget_request_form->status = BudgetRequestFormStatus::FOR_RELEASE; // mark data as active
+        $budget_request_form->save();
+
+        $request->session()->flash('success', 'Data has been marked for release');
+        return back();
+    }
+
+    public function released(Request $request, $budget_request_form_id)
+    {
+        $budget_request_form = BudgetRequestForm::find($budget_request_form_id);
+        $budget_request_form->status = BudgetRequestFormStatus::RELEASED; // mark data as active
+        $budget_request_form->save();
+
+        $request->session()->flash('success', 'Data has been released');
+        return back();
+    }
+
     public function recover(Request $request, $budget_request_form_id)
     {
         $budget_request_form = BudgetRequestForm::find($budget_request_form_id);

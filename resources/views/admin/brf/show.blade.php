@@ -63,6 +63,8 @@ use App\Models\BudgetRequestFormStatus;
                                 <option value="{{ BudgetRequestFormStatus::INACTIVE }}">Inactive</option>
                                 <option value="{{ BudgetRequestFormStatus::APPROVED }}">Approved</option>
                                 <option value="{{ BudgetRequestFormStatus::DISAPPROVED }}">Disapproved</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_RELEASE }}">For Release</option>
+                                <option value="{{ BudgetRequestFormStatus::RELEASED }}">Released</option>
                             </select>
                         </div>
                     </div>
@@ -145,8 +147,16 @@ use App\Models\BudgetRequestFormStatus;
                                             @endif
 
                                             @if ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
-                                                @if (! CheckVoucher::where('budget_request_form_id', $budget_request_form->id)->where('status', CheckVoucherStatus::DONE)->exists())
+                                                <a href="#" data-href="{{ route('internals.brf.for-release', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">For Release</a> | 
+
+                                                <!-- @if (! CheckVoucher::where('budget_request_form_id', $budget_request_form->id)->where('status', CheckVoucherStatus::DONE)->exists())
                                                     <a href="#" data-href="{{ route('internals.cv.create', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Create CV</a>
+                                                @endif -->
+                                            @endif
+
+                                            @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_RELEASE)
+                                                @if (auth()->user()->role == 'Super Admin')
+                                                    <a href="#" data-href="{{ route('internals.brf.released', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Mark As Released</a>
                                                 @endif
                                             @endif
                                         </div>
@@ -169,6 +179,10 @@ use App\Models\BudgetRequestFormStatus;
                                             <div class="badge badge-info ml-2">For Approval</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL)
                                             <div class="badge badge-info ml-2">For Final Approval</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_RELEASE)
+                                            <div class="badge badge-info ml-2">For Release</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::RELEASED)
+                                            <div class="badge badge-success ml-2">Released</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS)
                                             <div class="badge badge-warning ml-2">On Process</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
