@@ -558,6 +558,7 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::post('/vat', 'App\Http\Controllers\Admin\Project\ProjectController@vat')->name('internals.projects.update.vat');
         Route::post('/terms', 'App\Http\Controllers\Admin\Project\ProjectController@terms')->name('internals.projects.update.terms');
         Route::post('/duration-date', 'App\Http\Controllers\Admin\Project\ProjectController@duration_date')->name('internals.projects.update.duration-date');
+        Route::post('/signed-ce', 'App\Http\Controllers\Admin\Project\ProjectController@signed_ce')->name('internals.projects.update.signed-ce');
         Route::post('/start-date', 'App\Http\Controllers\Admin\Project\ProjectController@start_date')->name('internals.projects.update.start-date');
         Route::post('/end-date', 'App\Http\Controllers\Admin\Project\ProjectController@end_date')->name('internals.projects.update.end-date');
 

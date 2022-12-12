@@ -28,6 +28,7 @@ class Project extends Model
         'description',
         'asf',
         'usd_asf',
+        'signed_ce',
         'usd_vat',
         'vat',
         'proposal_ownership',

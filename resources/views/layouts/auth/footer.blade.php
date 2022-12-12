@@ -534,7 +534,7 @@
 
   @if (request()->is('admin/projects/*') || request()->is('admin/projects'))
     @if(str_contains(url()->current(), '/manage') || str_contains(url()->current(), '/tasks') || str_contains(url()->current(), '/edit') || str_contains(url()->current(), '/add') || str_contains(url()->current(), '/view'))
-        
+        @include('layouts.modals.projects.signed-ce')
     @else
         @include('layouts.modals.projects.disapprove-from-show')
     @endif

@@ -106,7 +106,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <strong>Company <a href="{{ route('internals.projects.edit', [$project->id]) }}"><i class="material-icons icon-16pt text-success">edit</i></a></strong>
+                                            <strong>Company</strong>
                                         </div>
                                     </div>
                                     <div class="col-md-7">
@@ -144,8 +144,22 @@
                                             <strong>Project Name</strong>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-7">
                                         {{ $project->name }}
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <strong>Signed CE File <a href="#" data-toggle="modal" data-target="#signed-ce-{{ $project->id }}"><i class="material-icons icon-16pt text-success">edit</i></a></strong>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            @if ($project->signed_ce)
+                                                <a href="{{ url($project->signed_ce) }}" download>
+                                                    <button class="btn btn-sm btn-primary">Download File</button>
+                                                </a>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
 
