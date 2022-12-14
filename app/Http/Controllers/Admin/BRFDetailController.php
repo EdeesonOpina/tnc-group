@@ -55,7 +55,7 @@ class BRFDetailController extends Controller
                                         ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
                                         ->sum('total') - $data['total'];
         $brf->total = $total;
-        $brf->save();                             
+        $brf->save();
 
         $request->session()->flash('success', 'Data has been added');
         return redirect()->route('internals.brf.details.approve', [$budget_request_form_detail->id]);
