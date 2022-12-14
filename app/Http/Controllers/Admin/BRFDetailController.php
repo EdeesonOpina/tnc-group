@@ -47,15 +47,15 @@ class BRFDetailController extends Controller
 
         $data['price'] = str_replace(',', '', $request->price);
         $data['total'] = $request->qty * str_replace(',', '', $request->price);
-        $data['status'] = BudgetRequestFormStatus::FOR_APPROVAL; // if you want to insert to a specific column
+        $data['status'] = BudgetRequestFormDetailStatus::FOR_APPROVAL; // if you want to insert to a specific column
         $budget_request_form_detail = BudgetRequestFormDetail::create($data); // create data in a model
 
-        $budget_request_form = BudgetRequestForm::find($budget_request_form_detail->budget_request_form_id);
-        $budget_request_form_details_total = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form->id)
-                                                        ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
-                                                        ->sum('total');
-        $budget_request_form->total = $budget_request_form_details_total;
-        $budget_request_form->save();
+        $brf = BudgetRequestForm::find($budget_request_form_detail->budget_request_form_id);
+        $total = BudgetRequestFormDetail::where('budget_request_form_id', $brf->id)
+                                        ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
+                                        ->sum('total') - $data['total'];
+        $brf->total = $total;
+        $brf->save();                             
 
         $request->session()->flash('success', 'Data has been added');
         return redirect()->route('internals.brf.details.approve', [$budget_request_form_detail->id]);

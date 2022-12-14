@@ -669,6 +669,8 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::get('/for-release/{brf_id}', 'App\Http\Controllers\Admin\BRFController@for_release')->name('internals.brf.for-release');
         Route::get('/released/{brf_id}', 'App\Http\Controllers\Admin\BRFController@released')->name('internals.brf.released');
 
+        Route::get('/database/update', 'App\Http\Controllers\Admin\BRFController@database_update')->name('internals.brf.database.update');
+
         // manage
         Route::group(['prefix' => 'manage/{brf_id}'], function () {
             Route::get('/', 'App\Http\Controllers\Admin\BRFController@manage')->name('internals.brf.manage');

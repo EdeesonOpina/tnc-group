@@ -559,4 +559,21 @@ class BRFController extends Controller
 
         return back();
     }
+
+    public function database_update(Request $request)
+    {
+        /* payable overdue checker */
+        $brfs = BudgetRequestForm::all();
+        foreach ($brfs as $brf) {
+            $brf = BudgetRequestForm::find($brf->id);
+            // $brf->status == BudgetRequestFormStatus::FOR_APPROVAL;
+            $brf->total = BudgetRequestFormDetail::where('budget_request_form_id', $brf->id)
+                                            ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
+                                            ->sum('total');
+            $brf->save();
+        }
+
+        $request->session()->flash('success', 'Data has been updated');
+        return back();
+    }
 }

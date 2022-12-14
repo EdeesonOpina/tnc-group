@@ -85,9 +85,7 @@ use App\Models\ProjectStatus;
             <div class="card">
                 <div class="card-header card-header-large bg-white d-flex align-items-center">
                     <h4 class="card-header__title flex m-0">Projects</h4>
-                    <div data-toggle="flatpickr" data-flatpickr-wrap="true" data-flatpickr-static="true" data-flatpickr-mode="range" data-flatpickr-alt-format="d/m/Y" data-flatpickr-date-format="d/m/Y">
-                        
-                    </div>
+                    
                 </div>
 
                 <div class="table-responsive">
@@ -99,6 +97,7 @@ use App\Models\ProjectStatus;
                                 <th id="compact-table">Company</th>
                                 <th id="compact-table">Client</th>
                                 <th id="compact-table">Cost</th>
+                                <th id="compact-table">Used Cost</th>
                                 <th id="compact-table">ASF</th>
                                 <th id="compact-table">VAT</th>
                                 <th id="compact-table">Grand Total</th>
@@ -148,6 +147,7 @@ use App\Models\ProjectStatus;
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $project->company->name }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $project->client->name }}</td>
                                     <td id="compact-table">P{{ number_format($project->total, 2) }}</td>
+                                    <td id="compact-table">P{{ number_format($project->used_cost(), 2) }}</td>
                                     <td id="compact-table">P{{ number_format($project->asf, 2) }}</td>
                                     <td id="compact-table">P{{ number_format($project->vat, 2) }}</td>
                                     <td id="compact-table">P{{ number_format($project->total + $project->asf + $project->vat, 2) }}</td>

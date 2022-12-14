@@ -93,8 +93,12 @@ use App\Models\BudgetRequestFormDetailStatus;
             <div class="card">
                 <div class="card-header card-header-large bg-white d-flex align-items-center">
                     <h4 class="card-header__title flex m-0">BRF</h4>
-                    <div data-toggle="flatpickr" data-flatpickr-wrap="true" data-flatpickr-static="true" data-flatpickr-mode="range" data-flatpickr-alt-format="d/m/Y" data-flatpickr-date-format="d/m/Y">
-                        
+                    <div>
+                        @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+                            <a href="{{ route('internals.brf.database.update') }}">
+                                <button class="btn btn-light"><i class="fa fa-database" id="margin-right"></i>Update Database</button>
+                            </a>
+                        @endif
                     </div>
                 </div>
 

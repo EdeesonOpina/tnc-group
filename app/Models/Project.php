@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\BudgetRequestForm;
+use App\Models\BudgetRequestFormStatus;
+use App\Models\BudgetRequestFormDetail;
+use App\Models\BudgetRequestFormDetailStatus;
 
 class Project extends Model
 {
@@ -81,5 +85,14 @@ class Project extends Model
     public function approved_by_user()
     {
         return $this->hasOne(User::class, 'id', 'approved_by_user_id');
+    }
+
+    public function used_cost()
+    {
+        $brf = BudgetRequestForm::where('project_id', $this->id)
+                            ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
+                            ->sum('total');
+
+        return $brf;
     }
 }
