@@ -72,6 +72,56 @@ use App\Models\ProjectStatus;
                 </div>
                 <div class="row">
                     <div class="col">
+                        <div class="form-group">
+                            <label>Client Name</label>
+                            <input name="client" type="text" class="form-control" placeholder="Search by client name" value="{{ old('client') }}">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Client Cost</label>
+                            <select name="client_cost" class="form-control" data-toggle="select">
+                                @if (old('client_cost'))
+                                    <option value="{{ old('client_cost') }}">{{ old('client_cost') }}</option>
+                                @endif
+                                <option value="*">All</option>
+                                <option value="Below 100k">Below 100k</option>
+                                <option value="100k - 499k">100k - 499k</option>
+                                <option value="500k - 1m">500k - 1m</option>
+                                <option value="1m and above">1m and above</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Project Creator</label>
+                            <select name="prepared_by_user_id" class="form-control" data-toggle="select">
+                                @if (old('prepared_by_user_id'))
+                                    <option value="{{ old('prepared_by_user_id') }}">{{ old('prepared_by_user_id') }}</option>
+                                @endif
+                                <option value="*">All</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Budget</label>
+                            <select name="budget" class="form-control" data-toggle="select">
+                                @if (old('budget'))
+                                    <option value="{{ old('budget') }}">{{ old('budget') }}</option>
+                                @endif
+                                <option value="*">All</option>
+                                <option value="WITHIN BUDGET">WITHIN BUDGET</option>
+                                <option value="OVERBUDGET">OVERBUDGET</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
                         <label><a href="{{ route('internals.projects') }}" id="no-underline">Clear Filters</a></label>
                     </div>
                 </div>
@@ -94,6 +144,7 @@ use App\Models\ProjectStatus;
                             <tr>
                                 <th id="compact-table">CE#</th>
                                 <th id="compact-table">Name</th>
+                                <th id="compact-table">Created By</th>
                                 <th id="compact-table">Company</th>
                                 <th id="compact-table">Client</th>
                                 <th id="compact-table">Cost</th>
@@ -144,6 +195,7 @@ use App\Models\ProjectStatus;
                                             @endif
                                         </div>
                                     </td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $project->prepared_by_user->firstname }} {{ $project->prepared_by_user->lastname }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $project->company->name }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $project->client->name }}</td>
                                     <td id="compact-table">P{{ number_format($project->total, 2) }}</td>

@@ -31,8 +31,12 @@ class ProjectController extends Controller
         $projects = Project::orderBy('created_at', 'desc')
                     ->where('status', '!=', ProjectStatus::INACTIVE)
                     ->paginate(15);
+        $users = User::orderBy('created_at', 'desc')
+                    ->where('status', '!=', UserStatus::INACTIVE)
+                    ->get();
 
         return view('admin.projects.show', compact(
+            'users',
             'projects'
         ));
     }
@@ -40,36 +44,73 @@ class ProjectController extends Controller
     public function search(Request $request)
     {
         $reference_number = $request->reference_number ?? '*';
+        $client = $request->client ?? '*';
+        $client_cost = $request->client_cost ?? '*';
+        $prepared_by_user_id = $request->prepared_by_user_id ?? '*';
+        $budget = $request->budget ?? '*';
         $status = $request->status ?? '*';
         $from_date = $request->from_date ?? '*';
         $to_date = $request->to_date ?? '*';
 
-        return redirect()->route('internals.projects.filter', [$reference_number, $status, $from_date, $to_date])->withInput();
+        return redirect()->route('internals.projects.filter', [$reference_number, $client, $client_cost, $prepared_by_user_id, $budget, $status, $from_date, $to_date])->withInput();
     }
 
-    public function filter($reference_number, $status, $from_date, $to_date)
+    public function filter($reference_number, $client, $client_cost, $prepared_by_user_id, $budget, $status, $from_date, $to_date)
     {
-        $query = Project::where('status', '!=', ProjectStatus::INACTIVE)
-                    ->orderBy('created_at', 'desc');
+        $query = Project::leftJoin('clients', 'projects.client_id', '=', 'clients.id')
+                    ->leftJoin('users', 'projects.prepared_by_user_id', '=', 'users.id')
+                    ->select('projects.*')
+                    ->where('projects.status', '!=', ProjectStatus::INACTIVE)
+                    ->orderBy('projects.created_at', 'desc');
 
         if ($reference_number != '*') {
-            $query->where('reference_number', $reference_number);
+            $query->where('projects.reference_number', $reference_number);
+        }
+
+        if ($client != '*') {
+            $query->where('clients.name', 'LIKE', '%' . $client . '%');
+        }
+
+        if ($client_cost != '*') {
+            if ($client_cost == 'Below 100k')
+                $query->where('projects.total', '<', '100000');
+
+            if ($client_cost == '100k - 499k')
+                $query->whereBetween('projects.total', ['100000', '499999']);
+
+            if ($client_cost == '500k - 1m')
+                $query->whereBetween('projects.total', ['500000', '1000000']);
+
+             if ($client_cost == '500k - 1m')
+                $query->where('projects.total', '>', '1000000');
+        }
+
+        if ($prepared_by_user_id != '*') {
+            $query->where('users.id', $prepared_by_user_id);
+        }
+
+        if ($budget != '*') {
+            $query->where('budget', $budget);
         }
 
         if ($status != '*') {
-            $query->where('status', $status);
+            $query->where('projects.status', $status);
         }
 
         /* date filter */
         // if they provided both from date and to date
         if ($from_date != '*' && $to_date != '*') {
-            $query->whereBetween('created_at', [$from_date . ' 00:00:00', $to_date . ' 23:59:59']);
+            $query->whereBetween('projects.created_at', [$from_date . ' 00:00:00', $to_date . ' 23:59:59']);
         }
         /* date filter */
 
         $projects = $query->paginate(15);
+        $users = User::orderBy('created_at', 'desc')
+                    ->where('status', '!=', UserStatus::INACTIVE)
+                    ->get();
 
         return view('admin.projects.show', compact(
+            'users',
             'projects'
         ));
     }
