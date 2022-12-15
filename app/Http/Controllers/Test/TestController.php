@@ -17,7 +17,7 @@ class TestController extends Controller
 
     public function email()
     {
-        $budget_request_form = BudgetRequestForm::find(6);
+        $budget_request_form = BudgetRequestForm::find(1);
 
         /* dan mar user */
         $name = 'Test';
