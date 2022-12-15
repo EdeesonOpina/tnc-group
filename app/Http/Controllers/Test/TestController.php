@@ -20,7 +20,7 @@ class TestController extends Controller
         $budget_request_form = BudgetRequestForm::find(6);
 
         /* dan mar user */
-        $name = 'Dan Mar Dumawin';
+        $name = 'Test';
         $email = 'mdumawin@tnc.com.ph';
         $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' sent a BRF for finance checking';
 

@@ -926,6 +926,22 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
             });
         });
 
+        // projects
+        Route::group(['prefix' => 'projects/'], function () {
+            Route::get('/', 'App\Http\Controllers\Report\ProjectController@show')->name('admin.reports.projects');
+
+            // month
+            Route::group(['prefix' => 'month/{month}'], function () {
+                Route::get('/', 'App\Http\Controllers\Report\ProjectController@month')->name('admin.reports.projects.month');
+            });
+
+            // for searching
+            Route::group(['prefix' => 'search/'], function () {
+                Route::post('/', 'App\Http\Controllers\Report\ProjectController@search')->name('admin.reports.projects.search');
+                Route::get('/{from_date}/{to_date}', 'App\Http\Controllers\Report\ProjectController@filter')->name('admin.reports.projects.filter');
+            });
+        });
+
         // payment credits
         Route::group(['prefix' => 'payment-credits/'], function () {
             Route::get('/', 'App\Http\Controllers\Report\PaymentCreditController@show')->name('admin.reports.payment-credits');
