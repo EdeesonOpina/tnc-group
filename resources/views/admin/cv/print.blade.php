@@ -189,11 +189,11 @@
         <tbody class="list" id="companies">
             @foreach ($budget_request_form_details as $budget_request_form_detail)
                 <tr>
-                    <td class="no-border min-space">{{ $budget_request_form_detail->name }}</td>
-                    <td class="no-border min-space">{{ $budget_request_form_detail->description }}</td>
-                    <td class="no-border min-space">{{ $budget_request_form_detail->qty }}</td>
-                    <td class="no-border min-space">P{{ number_format($budget_request_form_detail->price, 2) }}</td>
-                    <td class="no-border min-space">P{{ number_format($budget_request_form_detail->total, 2) }}</td>
+                    <td class="table-black-border min-space">{{ $budget_request_form_detail->name }}</td>
+                    <td class="table-black-border min-space">{{ $budget_request_form_detail->description }}</td>
+                    <td class="table-black-border min-space">{{ $budget_request_form_detail->qty }}</td>
+                    <td class="table-black-border min-space">P{{ number_format($budget_request_form_detail->price, 2) }}</td>
+                    <td class="table-black-border min-space">P{{ number_format($budget_request_form_detail->total, 2) }}</td>
                 </tr>
             @endforeach
             <tr> 

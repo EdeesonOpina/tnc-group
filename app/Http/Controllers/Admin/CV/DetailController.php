@@ -24,7 +24,7 @@ class DetailController extends Controller
     public function create(Request $request)
     {
         $rules = [
-            'reference_number' => 'required|exists:projects',
+            'reference_number' => 'nullable|exists:projects',
             'name' => 'required',
             'qty' => 'required',
             'price' => 'required',
@@ -42,9 +42,11 @@ class DetailController extends Controller
                         ->where('status', '!=', ProjectStatus::INACTIVE)
                         ->first();
 
-        if ($project->status != ProjectStatus::APPROVED) {
-            $request->session()->flash('error', 'Selected CE is still not approved');
-            return back();
+        if ($request->reference_number) {
+            if ($project->status != ProjectStatus::APPROVED) {
+                $request->session()->flash('error', 'Selected CE is still not approved');
+                return back();
+            }
         }
 
         $data = request()->all(); // get all request
@@ -55,7 +57,9 @@ class DetailController extends Controller
             $data['file'] = 'uploads/files/cv/' . $image_name; // save the destination of the file to the database
         }
 
-        $data['project_id'] = $project->id;
+        if ($request->reference_number)
+            $data['project_id'] = $project->id;
+
         $data['price'] = str_replace(',', '', $request->price);
         $data['total'] = $request->qty * str_replace(',', '', $request->price);
         $data['status'] = CheckVoucherDetailStatus::FOR_APPROVAL; // if you want to insert to a specific column
@@ -86,7 +90,7 @@ class DetailController extends Controller
     public function update(Request $request)
     {
         $rules = [
-            'reference_number' => 'required|exists:projects',
+            'reference_number' => 'nullable|exists:projects',
             'name' => 'required',
             'qty' => 'required',
             'price' => 'required',
@@ -104,9 +108,11 @@ class DetailController extends Controller
                         ->where('status', '!=', ProjectStatus::INACTIVE)
                         ->first();
 
-        if ($project->status != ProjectStatus::APPROVED) {
-            $request->session()->flash('error', 'Selected CE is still not approved');
-            return back();
+        if ($request->reference_number) {
+            if ($project->status != ProjectStatus::APPROVED) {
+                $request->session()->flash('error', 'Selected CE is still not approved');
+                return back();
+            }
         }
 
         $data = $request->all();
@@ -118,6 +124,10 @@ class DetailController extends Controller
         }
 
         $cv_detail = CheckVoucherDetail::find($request->check_voucher_detail_id);
+
+        if ($request->reference_number)
+            $data['project_id'] = $project->id;
+
         $data['price'] = str_replace(',', '', $request->price);
         $data['total'] = $request->qty * str_replace(',', '', $request->price);
         $cv_detail->fill($data)->save();

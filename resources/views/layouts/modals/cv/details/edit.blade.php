@@ -31,7 +31,11 @@
                 </div>
                 <hr>
                 <label>CE #</label><br>
-                <input type="text" name="reference_number" class="form-control" placeholder="CE #" value="{{ old('reference_number') ?? $detail->project->reference_number }}"><br>
+                @if ($detail->project)
+                  <input type="text" name="reference_number" class="form-control" placeholder="CE #" value="{{ old('reference_number') ?? $detail->project->reference_number }}"><br>
+                @else
+                  <input type="text" name="reference_number" class="form-control" placeholder="CE #" value="{{ old('reference_number') }}"><br>
+                @endif
                 <label>Name</label><br>
                 <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') ?? $detail->name }}"><br>
                 <div class="row">

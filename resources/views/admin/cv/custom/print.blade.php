@@ -184,15 +184,17 @@
         <tbody class="list" id="companies">
             @foreach ($details as $detail)
                 <tr>
-                    <td class="no-border min-space">{{ $detail->name }}</td>
-                    <td class="no-border min-space">{{ $detail->description }}</td>
-                    <td class="no-border min-space">
-                        <strong>{{ $detail->project->reference_number }}</strong><br>
-                        {{ $detail->project->name }}
+                    <td class="table-black-border min-space">{{ $detail->name }}</td>
+                    <td class="table-black-border min-space">{{ $detail->description }}</td>
+                    <td class="table-black-border min-space">
+                        @if ($detail->project)
+                            <strong>{{ $detail->project->reference_number }}</strong><br>
+                            {{ $detail->project->name }}
+                        @endif
                     </td>
-                    <td class="no-border min-space">{{ $detail->qty }}</td>
-                    <td class="no-border min-space">P{{ number_format($detail->price, 2) }}</td>
-                    <td class="no-border min-space">P{{ number_format($detail->total, 2) }}</td>
+                    <td class="table-black-border min-space">{{ $detail->qty }}</td>
+                    <td class="table-black-border min-space">P{{ number_format($detail->price, 2) }}</td>
+                    <td class="table-black-border min-space">P{{ number_format($detail->total, 2) }}</td>
                 </tr>
             @endforeach
             <tr> 

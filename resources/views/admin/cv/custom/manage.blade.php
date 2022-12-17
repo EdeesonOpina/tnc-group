@@ -124,7 +124,11 @@
                                         </div>
                                     </td>
                                     <td>{{ $detail->description }}</td>
-                                    <td>{{ $detail->project->name }}</td>
+                                    <td>
+                                        @if ($detail->project)
+                                            {{ $detail->project->name }}
+                                        @endif
+                                    </td>
                                     <td id="compact-table">
                                         @if ($detail->file)
                                             <a href="{{ url($detail->file) }}" download>
