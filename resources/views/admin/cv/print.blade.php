@@ -248,35 +248,33 @@
                 <td class="text-left">
                     <p class="font-change">
                       <strong>Prepared By:</strong><br>
-                      @if ($budget_request_form->payment_for_user)
-                          @if ($budget_request_form->payment_for_user->signature)
-                              <img src="{{ url($budget_request_form->payment_for_user->signature) }}" width="80px"><br>
+                      @if ($cv->prepared_by_user)
+                          @if ($cv->prepared_by_user->signature)
+                              <img src="{{ url($cv->prepared_by_user->signature) }}" width="80px"><br>
                           @else
-                            <br><br><br><br><br>
+                            <br><br><br>
                           @endif
-                      @else
-                        <br><br><br><br><br>
                       @endif
                       <strong>
-                        @if ($budget_request_form->payment_for_user)
-                            {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                        @if ($cv->prepared_by_user)
+                            {{ $cv->prepared_by_user->firstname }} {{ $cv->prepared_by_user->lastname }}
                         @endif
 
-                        @if ($budget_request_form->payment_for_supplier)
-                            {{ $budget_request_form->payment_for_supplier->name }}
+                        @if ($cv->payment_for_supplier)
+                            {{ $cv->payment_for_supplier->name }}
                         @endif
                       </strong><br>
-                      @if ($budget_request_form->payment_for_user)
-                          @if ($budget_request_form->payment_for_user->role)
-                            {{ $budget_request_form->payment_for_user->role }}<br>
+                      @if ($cv->prepared_by_user)
+                          @if ($cv->prepared_by_user->role)
+                            {{ $cv->prepared_by_user->role }}<br>
                           @endif
 
-                          @if ($budget_request_form->payment_for_user->position)
-                            {{ $budget_request_form->payment_for_user->position }}<br>
+                          @if ($cv->prepared_by_user->position)
+                            {{ $cv->prepared_by_user->position }}<br>
                           @endif
 
-                          @if ($budget_request_form->payment_for_user->company)
-                            {{ $budget_request_form->payment_for_user->company->name }}
+                          @if ($cv->prepared_by_user->company)
+                            {{ $cv->prepared_by_user->company->name }}
                           @endif
                       @endif
                     </p>
