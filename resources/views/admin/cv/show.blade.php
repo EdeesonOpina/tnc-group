@@ -108,13 +108,15 @@ use App\Models\BudgetRequestFormStatus;
                                     <td id="compact-table">
                                         <strong>{{ $cv->reference_number }}</strong>
                                         <div class="d-flex">
-                                            @if ($cv->status == CheckVoucherStatus::ON_PROCESS)
+                                            @if ($cv->status == CheckVoucherStatus::ON_PROCESS || $cv->status == CheckVoucherStatus::OPEN_FOR_EDITING)
                                                 @if ($cv->is_custom == 1)
                                                     <a href="{{ route('internals.cv.custom.manage', [$cv->id]) }}" id="margin-right">Manage</a> | 
                                                 @endif
                                             @endif
 
                                             @if ($cv->status == CheckVoucherStatus::DONE)
+                                                <a href="#" data-href="{{ route('internals.cv.open-for-editing', [$cv->id]) }}" data-toggle="modal" data-target="#confirm-action" id="margin-right">Open For Editing</a> | 
+
                                                 @if ($cv->is_custom == 1)
                                                     <a href="{{ route('internals.exports.cv.print.custom', [$cv->reference_number]) }}" id="space-table">Print</a>
                                                 @else
@@ -162,8 +164,6 @@ use App\Models\BudgetRequestFormStatus;
                                     <td id="compact-table">
                                         @if ($cv->is_custom == 0)
                                             {{ $cv->budget_request_form->project->name }}
-                                        @else
-                                            N/A
                                         @endif
                                     </td>
                                     <td id="compact-table">
@@ -178,6 +178,8 @@ use App\Models\BudgetRequestFormStatus;
                                     <td>
                                         @if ($cv->status == CheckVoucherStatus::DONE)
                                             <div class="badge badge-success ml-2">Done</div>
+                                        @elseif ($cv->status == CheckVoucherStatus::OPEN_FOR_EDITING)
+                                            <div class="badge badge-info ml-2">Open For Editing</div>
                                         @elseif ($cv->status == CheckVoucherStatus::INACTIVE)
                                             <div class="badge badge-danger ml-2">Inactive</div>
                                         @endif

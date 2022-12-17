@@ -12,4 +12,5 @@ class CheckVoucherStatus extends Model
     const INACTIVE = 0;
     const DONE = 1;
     const ON_PROCESS = 2;
+    const OPEN_FOR_EDITING = 3;
 }

@@ -153,4 +153,14 @@ class CVController extends Controller
         $request->session()->flash('success', 'Data has been marked as done');
         return redirect()->route('internals.exports.cv.print.custom', $cv->reference_number);
     }
+
+    public function open_for_editing(Request $request, $cv_id)
+    {
+        $cv = CheckVoucher::find($cv_id);
+        $cv->status = CheckVoucherStatus::OPEN_FOR_EDITING; // mark data as open for editing
+        $cv->save();
+
+        $request->session()->flash('success', 'Data has been marked as open for editing');
+        return back();
+    }
 }

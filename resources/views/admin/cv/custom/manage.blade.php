@@ -18,7 +18,7 @@
             </nav>
             <h1 class="m-0">Manage Check Voucher</h1>
         </div>
-        @if ($cv->status == CheckVoucherStatus::ON_PROCESS)
+        @if ($cv->status == CheckVoucherStatus::ON_PROCESS || $cv->status == CheckVoucherStatus::OPEN_FOR_EDITING)
             <a href="#" data-href="{{ route('internals.cv.done', [$cv->id]) }}" data-toggle="modal" data-target="#confirm-action">
                 <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Done</button>
             </a>
