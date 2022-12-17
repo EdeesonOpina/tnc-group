@@ -532,6 +532,11 @@
     @endif
   @endif
 
+  @if (request()->is('admin/cv/custom/manage/*'))
+    @include('layouts.modals.cv.details.add')
+    @include('layouts.modals.cv.details.edit')
+  @endif
+
   @if (request()->is('admin/projects/*') || request()->is('admin/projects'))
     @if(str_contains(url()->current(), '/manage') || str_contains(url()->current(), '/tasks') || str_contains(url()->current(), '/edit')|| str_contains(url()->current(), '/view'))
         @include('layouts.modals.projects.signed-ce')

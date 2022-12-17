@@ -624,13 +624,20 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
     // cv
     Route::group(['prefix' => 'cv/'], function () {
-        Route::get('/','App\Http\Controllers\Admin\CVController@show')->name('internals.cv');
-        Route::get('/view/{reference_number}','App\Http\Controllers\Admin\CVController@view')->name('internals.cv.view');
-        Route::post('/create','App\Http\Controllers\Admin\CVController@create')->name('internals.cv.create');
+        Route::get('/','App\Http\Controllers\Admin\CV\CVController@show')->name('internals.cv');
+        Route::get('/view/{reference_number}','App\Http\Controllers\Admin\CV\CVController@view')->name('internals.cv.view');
+        Route::post('/create','App\Http\Controllers\Admin\CV\CVController@create')->name('internals.cv.create');
+
+        Route::get('/custom/add','App\Http\Controllers\Admin\CV\CVController@add_custom')->name('internals.cv.custom.add');
+        Route::post('/custom/create','App\Http\Controllers\Admin\CV\CVController@create_custom')->name('internals.cv.custom.create');
+        Route::get('/custom/edit/{cv_id}','App\Http\Controllers\Admin\CV\CVController@edit_custom')->name('internals.cv.custom.edit');
+        Route::post('/custom/update','App\Http\Controllers\Admin\CVController@update_custom')->name('internals.cv.custom.update');
+        Route::get('/custom/manage/{cv_id}','App\Http\Controllers\Admin\CV\CVController@manage')->name('internals.cv.custom.manage');
 
         // exports
         Route::group(['prefix' => 'exports/'], function () {
             Route::get('print/{reference_number}', 'App\Http\Controllers\Export\CVController@print')->name('internals.exports.cv.print');
+            Route::get('print/custom/{reference_number}', 'App\Http\Controllers\Export\CVController@print_custom')->name('internals.exports.cv.print.custom');
             Route::get('excel/{cv_id}', 'App\Http\Controllers\Export\CVController@excel')->name('internals.exports.cv.excel');
             Route::get('pdf/{cv_id}', 'App\Http\Controllers\Export\CVController@pdf')->name('internals.exports.cv.pdf');
             Route::get('sql', 'App\Http\Controllers\Admin\Report\CVController@sql')->name('internals.exports.cv.sql');
@@ -638,9 +645,20 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\CVController@search')->name('internals.cv.search');
-            Route::get('/{reference_number}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\CVController@filter')->name('internals.cv.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\CV\CVController@search')->name('internals.cv.search');
+            Route::get('/{reference_number}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\CV\CVController@filter')->name('internals.cv.filter');
         });
+    });
+
+    // cv details
+    Route::group(['prefix' => 'cv/details'], function () {
+        Route::post('/create','App\Http\Controllers\Admin\CV\DetailController@create')->name('internals.cv.details.create');
+        Route::post('/update','App\Http\Controllers\Admin\CV\DetailController@update')->name('internals.cv.details.update');
+        Route::get('/approve/{cv_detail_id}','App\Http\Controllers\Admin\CV\DetailController@approve')->name('internals.cv.details.approve');
+        Route::get('/disapprove/{cv_detail_id}','App\Http\Controllers\Admin\CV\DetailController@disapprove')->name('internals.cv.details.disapprove');
+        Route::get('/activate/{cv_detail_id}','App\Http\Controllers\Admin\CV\DetailController@activate')->name('internals.cv.details.activate');
+        Route::get('/deactivate/{cv_detail_id}','App\Http\Controllers\Admin\CV\DetailController@deactivate')->name('internals.cv.details.deactivate');
+        Route::get('/delete/{cv_detail_id}', 'App\Http\Controllers\Admin\CV\DetailController@delete')->name('internals.cv.details.delete');
     });
 
     // brf

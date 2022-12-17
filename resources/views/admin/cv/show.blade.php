@@ -2,6 +2,7 @@
 @php
 use Carbon\Carbon;
 use App\Models\CheckVoucherStatus;
+use App\Models\BudgetRequestFormStatus;
 @endphp
 
 <div class="container-fluid page__heading-container">
@@ -15,6 +16,7 @@ use App\Models\CheckVoucherStatus;
             </nav>
             <h1 class="m-0">Check Vouchers</h1>
         </div>
+        <a href="{{ route('internals.cv.custom.add') }}" class="btn btn-primary" id="margin-right"><i class="material-icons">add</i> Add Custom CV</a>
     </div>
 </div>
 
@@ -91,6 +93,7 @@ use App\Models\CheckVoucherStatus;
                         <thead>
                             <tr>
                                 <th id="compact-table">CV#</th>
+                                <th id="compact-table">BRF#</th>
                                 <th id="compact-table">Pay To</th>
                                 <th id="compact-table">Payment For</th>
                                 <th id="compact-table">Project</th>
@@ -105,22 +108,73 @@ use App\Models\CheckVoucherStatus;
                                     <td id="compact-table">
                                         <strong>{{ $cv->reference_number }}</strong>
                                         <div class="d-flex">
-                                            <a href="{{ route('internals.exports.cv.print', [$cv->reference_number]) }}" id="margin-right">Print</a>
+                                            @if ($cv->status == CheckVoucherStatus::ON_PROCESS)
+                                                @if ($cv->is_custom == 1)
+                                                    <a href="{{ route('internals.cv.custom.manage', [$cv->id]) }}" id="margin-right">Manage</a> | 
+                                                @endif
+                                            @endif
+
+                                            @if ($cv->status == CheckVoucherStatus::DONE || $cv->status == CheckVoucherStatus::ON_PROCESS)
+                                                @if ($cv->is_custom == 1)
+                                                    <a href="{{ route('internals.exports.cv.print.custom', [$cv->reference_number]) }}" id="space-table">Print</a>
+                                                @else
+                                                    <a href="{{ route('internals.exports.cv.print', [$cv->reference_number]) }}" id="space-table">Print</a>
+                                                @endif
+                                            @endif
                                         </div>
                                     </td>
                                     <td id="compact-table">
-                                        @if ($cv->budget_request_form->payment_for_user)
-                                            {{ $cv->budget_request_form->payment_for_user->firstname }} {{ $cv->budget_request_form->payment_for_user->lastname }}
-                                        @endif
-
-                                        @if ($cv->budget_request_form->payment_for_supplier)
-                                            {{ $cv->budget_request_form->payment_for_supplier->name }}
+                                        @if ($cv->budget_request_form)
+                                            <strong>
+                                                <a href="{{ route('internals.brf.view', [$cv->budget_request_form->reference_number]) }}">
+                                                    {{ $cv->budget_request_form->reference_number }}
+                                                </a>
+                                            </strong>
+                                            <div class="d-flex">
+                                                @if ($cv->budget_request_form->status == BudgetRequestFormStatus::FOR_RELEASE)
+                                                    @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
+                                                        <a href="#" data-href="{{ route('internals.brf.released', [$cv->budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action">Mark As Released</a>
+                                                    @endif
+                                                @endif
+                                            </div>
                                         @endif
                                     </td>
-                                    <td id="compact-table">{{ $cv->budget_request_form->name }}</td>
-                                    <td id="compact-table">{{ $cv->budget_request_form->project->name }}</td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($cv->budget_request_form->needed_date)->format('M d Y') }}</td>
-                                    <td>P{{ number_format($cv->budget_request_form->total, 2) }}</td>
+                                    <td id="compact-table">
+                                        @if ($cv->is_custom == 0)
+                                            @if ($cv->budget_request_form->payment_for_user)
+                                                {{ $cv->budget_request_form->payment_for_user->firstname }} {{ $cv->budget_request_form->payment_for_user->lastname }}
+                                            @endif
+
+                                            @if ($cv->budget_request_form->payment_for_supplier)
+                                                {{ $cv->budget_request_form->payment_for_supplier->name }}
+                                            @endif
+                                        @else
+                                            {{ $cv->pay_to }}
+                                        @endif
+                                    </td>
+                                    <td id="compact-table">
+                                        @if ($cv->is_custom == 0)
+                                            {{ $cv->budget_request_form->name }}
+                                        @else
+                                            {{ $cv->name }}
+                                        @endif
+                                    </td>
+                                    <td id="compact-table">
+                                        @if ($cv->is_custom == 0)
+                                            {{ $cv->budget_request_form->project->name }}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+                                    <td id="compact-table">
+                                        <i class="material-icons icon-16pt text-muted mr-1">today</i> 
+                                        @if ($cv->is_custom == 0)
+                                            {{ Carbon::parse($cv->budget_request_form->needed_date)->format('M d Y') }}
+                                        @else
+                                            {{ Carbon::parse($cv->needed_date)->format('M d Y') }}
+                                        @endif
+                                    </td>
+                                    <td>P{{ number_format($cv->total, 2) }}</td>
                                     <td>
                                         @if ($cv->status == CheckVoucherStatus::DONE)
                                             <div class="badge badge-success ml-2">Done</div>

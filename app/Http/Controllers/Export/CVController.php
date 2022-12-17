@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Auth;
 use Mail;
 use Validator;
+use App\Models\CheckVoucherDetail;
+use App\Models\CheckVoucherDetailStatus;
 use App\Models\CheckVoucher;
 use App\Models\CheckVoucherStatus;
 use App\Models\CheckVoucherRemark;
@@ -38,6 +40,27 @@ class CVController extends Controller
             'budget_request_form',
             'budget_request_form_details_total',
             'budget_request_form_details',
+            'remarks',
+        ));
+    }
+
+    public function print_custom($reference_number)
+    {
+        $cv = CheckVoucher::where('reference_number', $reference_number)->first();
+        $details = CheckVoucherDetail::where('check_voucher_id', $cv->id)
+                                                        ->where('status', '!=', CheckVoucherDetailStatus::INACTIVE)
+                                                        ->get();
+        $details_total = CheckVoucherDetail::where('check_voucher_id', $cv->id)
+                                                        ->where('status', '!=', CheckVoucherDetailStatus::INACTIVE)
+                                                        ->sum('total');
+        $remarks = CheckVoucherRemark::where('check_voucher_id', $cv->id)
+                                ->where('status', '!=', CheckVoucherStatus::INACTIVE)
+                                ->get();
+
+        return view('admin.cv.custom.print', compact(
+            'cv',
+            'details_total',
+            'details',
             'remarks',
         ));
     }

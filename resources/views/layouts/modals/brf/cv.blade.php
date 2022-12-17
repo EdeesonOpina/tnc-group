@@ -35,7 +35,7 @@
                   </div>
                 </div>
                 <hr>
-                <label for="company">Company</label><br />
+                <label for="company">Bank Account</label><br />
                 <select id="company" name="account_id" class="custom-select" data-toggle="select">
                     @foreach($accounts as $account)
                         <option value="{{ $account->id }}">{{ $account->bank }} ({{ $account->number }}) - {{ $account->name }}</option>

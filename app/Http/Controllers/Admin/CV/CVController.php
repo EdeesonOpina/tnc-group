@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\CV;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,10 +8,14 @@ use Carbon\Carbon;
 use Auth;
 use Mail;
 use Validator;
+use App\Models\Account;
+use App\Models\AccountStatus;
 use App\Models\CheckVoucher;
 use App\Models\CheckVoucherStatus;
 use App\Models\CheckVoucherRemark;
 use App\Models\CheckVoucherRemarkStatus;
+use App\Models\CheckVoucherDetail;
+use App\Models\CheckVoucherDetailStatus;
 
 class CVController extends Controller
 {
@@ -22,6 +26,16 @@ class CVController extends Controller
 
         return view('admin.cv.show', compact(
             'cvs'
+        ));
+    }
+
+    public function add_custom()
+    {
+        $accounts = Account::where('status', '!=', AccountStatus::INACTIVE)
+                  ->get();
+
+        return view('admin.cv.custom.add', compact(
+            'accounts'
         ));
     }
 
@@ -61,6 +75,28 @@ class CVController extends Controller
         ));
     }
 
+    public function create_custom(Request $request)
+    {
+        $cv_count = str_replace('CV-', '', CheckVoucher::orderBy('created_at', 'desc')->first()->reference_number ?? 0) + 1; // get the latest cv sequence then add 1
+
+        $data = request()->all(); // get all request
+        $data['reference_number'] = 'CV-' . str_pad($cv_count, 8, '0', STR_PAD_LEFT);
+        $data['budget_request_form_id'] = 0;
+        $data['is_custom'] = 1;
+        $data['total'] = str_replace(',', '', $request->amount);
+        $data['prepared_by_user_id'] = auth()->user()->id;
+        $data['status'] = CheckVoucherStatus::ON_PROCESS; // if you want to insert to a specific column
+        $cv = CheckVoucher::create($data); // create data in a model
+
+        $data['check_voucher_id'] = $cv->id;
+        $data['amount'] = str_replace(',', '', $request->amount);
+        $data['status'] = CheckVoucherRemarkStatus::ACTIVE;
+        $remarks = CheckVoucherRemark::create($data);
+
+        $request->session()->flash('success', 'Data has been added');
+        return redirect()->route('internals.cv.custom.manage', $cv->id);
+    }
+
     public function create(Request $request)
     {
         $cv_count = str_replace('CV-', '', CheckVoucher::orderBy('created_at', 'desc')->first()->reference_number ?? 0) + 1; // get the latest cv sequence then add 1
@@ -69,6 +105,7 @@ class CVController extends Controller
         $data['reference_number'] = 'CV-' . str_pad($cv_count, 8, '0', STR_PAD_LEFT);
         $data['budget_request_form_id'] = $request->budget_request_form_id;
         $data['prepared_by_user_id'] = auth()->user()->id;
+        $data['total'] = str_replace(',', '', $request->amount);
         $data['status'] = CheckVoucherStatus::DONE; // if you want to insert to a specific column
         $cv = CheckVoucher::create($data); // create data in a model
 
@@ -87,6 +124,23 @@ class CVController extends Controller
 
         return view('admin.cv.view', compact(
             'cv'
+        ));
+    }
+
+    public function manage($cv_id)
+    {
+        $cv = CheckVoucher::find($cv_id);
+        $details = CheckVoucherDetail::where('check_voucher_id', $cv_id)
+                                                        ->where('status', '!=', CheckVoucherDetailStatus::INACTIVE)
+                                                        ->get();
+        $details_total = CheckVoucherDetail::where('check_voucher_id', $cv_id)
+                                                        ->where('status', '!=', CheckVoucherDetailStatus::INACTIVE)
+                                                        ->sum('total');
+
+        return view('admin.cv.custom.manage', compact(
+            'cv',
+            'details_total',
+            'details'
         ));
     }
 }

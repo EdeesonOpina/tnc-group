@@ -11,8 +11,13 @@ class CheckVoucher extends Model
 
     protected $fillable = [
         'budget_request_form_id',
+        'pay_to',
+        'name',
+        'is_custom',
+        'needed_date',
         'prepared_by_user_id',
         'reference_number',
+        'total',
         'status',
     ];
 

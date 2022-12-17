@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CheckVoucherStatus extends Model
+class CheckVoucherDetailStatus extends Model
 {
     use HasFactory;
 
     const INACTIVE = 0;
-    const DONE = 1;
-    const ON_PROCESS = 2;
+    const FOR_APPROVAL = 1;
+    const APPROVED = 2;
+    const DISAPPROVED = 3;
+    const CANCELLED = 9;
 }

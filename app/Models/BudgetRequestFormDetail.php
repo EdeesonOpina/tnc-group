@@ -20,8 +20,8 @@ class BudgetRequestFormDetail extends Model
         'total',
     ];
 
-    public function project()
+    public function budget_request_form()
     {
-        return $this->hasOne(Project::class, 'id', 'project_id');
-    }
+        return $this->hasOne(BudgetRequestForm::class, 'id', 'budget_request_form_id');
+    } 
 }
