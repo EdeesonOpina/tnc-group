@@ -11,6 +11,7 @@ class CheckVoucher extends Model
 
     protected $fillable = [
         'budget_request_form_id',
+        'prepared_by_user_id',
         'reference_number',
         'status',
     ];
@@ -18,5 +19,10 @@ class CheckVoucher extends Model
     public function budget_request_form()
     {
         return $this->hasOne(BudgetRequestForm::class, 'id', 'budget_request_form_id');
+    }
+
+    public function prepared_by_user()
+    {
+        return $this->hasOne(User::class, 'id', 'prepared_by_user_id');
     }
 }

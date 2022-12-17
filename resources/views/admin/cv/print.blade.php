@@ -259,10 +259,6 @@
                         @if ($cv->prepared_by_user)
                             {{ $cv->prepared_by_user->firstname }} {{ $cv->prepared_by_user->lastname }}
                         @endif
-
-                        @if ($cv->payment_for_supplier)
-                            {{ $cv->payment_for_supplier->name }}
-                        @endif
                       </strong><br>
                       @if ($cv->prepared_by_user)
                           @if ($cv->prepared_by_user->role)

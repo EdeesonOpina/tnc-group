@@ -68,11 +68,11 @@ class CVController extends Controller
         $data = request()->all(); // get all request
         $data['reference_number'] = 'CV-' . str_pad($cv_count, 8, '0', STR_PAD_LEFT);
         $data['budget_request_form_id'] = $request->budget_request_form_id;
+        $data['prepared_by_user_id'] = auth()->user()->id;
         $data['status'] = CheckVoucherStatus::DONE; // if you want to insert to a specific column
         $cv = CheckVoucher::create($data); // create data in a model
 
         $data['check_voucher_id'] = $cv->id;
-        $data['prepared_by_user_id'] = auth()->user()->id;
         $data['amount'] = str_replace(',', '', $request->amount);
         $data['status'] = CheckVoucherRemarkStatus::ACTIVE;
         $remarks = CheckVoucherRemark::create($data);
