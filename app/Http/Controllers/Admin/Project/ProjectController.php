@@ -47,15 +47,15 @@ class ProjectController extends Controller
         $client = $request->client ?? '*';
         $client_cost = $request->client_cost ?? '*';
         $prepared_by_user_id = $request->prepared_by_user_id ?? '*';
-        $budget = $request->budget ?? '*';
+        $budget_status = $request->budget_status ?? '*';
         $status = $request->status ?? '*';
         $from_date = $request->from_date ?? '*';
         $to_date = $request->to_date ?? '*';
 
-        return redirect()->route('internals.projects.filter', [$reference_number, $client, $client_cost, $prepared_by_user_id, $budget, $status, $from_date, $to_date])->withInput();
+        return redirect()->route('internals.projects.filter', [$reference_number, $client, $client_cost, $prepared_by_user_id, $budget_status, $status, $from_date, $to_date])->withInput();
     }
 
-    public function filter($reference_number, $client, $client_cost, $prepared_by_user_id, $budget, $status, $from_date, $to_date)
+    public function filter($reference_number, $client, $client_cost, $prepared_by_user_id, $budget_status, $status, $from_date, $to_date)
     {
         $query = Project::leftJoin('clients', 'projects.client_id', '=', 'clients.id')
                     ->leftJoin('users', 'projects.prepared_by_user_id', '=', 'users.id')
@@ -89,8 +89,8 @@ class ProjectController extends Controller
             $query->where('users.id', $prepared_by_user_id);
         }
 
-        if ($budget != '*') {
-            $query->where('budget', $budget);
+        if ($budget_status != '*') {
+            $query->where('projects.budget_status', $budget_status);
         }
 
         if ($status != '*') {

@@ -2,6 +2,7 @@
 @php
 use Carbon\Carbon;
 use App\Models\ProjectStatus;
+use App\Models\ProjectBudgetStatus;
 @endphp
 
 <div class="container-fluid page__heading-container">
@@ -109,13 +110,13 @@ use App\Models\ProjectStatus;
                     <div class="col">
                         <div class="form-group">
                             <label>Budget</label>
-                            <select name="budget" class="form-control" data-toggle="select">
-                                @if (old('budget'))
-                                    <option value="{{ old('budget') }}">{{ old('budget') }}</option>
+                            <select name="budget_status" class="form-control" data-toggle="select">
+                                @if (old('budget_status'))
+                                    <option value="{{ old('budget_status') }}">{{ old('budget_status') }}</option>
                                 @endif
                                 <option value="*">All</option>
-                                <option value="WITHIN BUDGET">WITHIN BUDGET</option>
-                                <option value="OVERBUDGET">OVERBUDGET</option>
+                                <option value="{{ ProjectBudgetStatus::WITHIN_BUDGET }}">WITHIN BUDGET</option>
+                                <option value="{{ ProjectBudgetStatus::OVERBUDGET }}">OVERBUDGET</option>
                             </select>
                         </div>
                     </div>
@@ -161,6 +162,12 @@ use App\Models\ProjectStatus;
                                 <tr>
                                     <td id="compact-table"><strong>{{ $project->reference_number }}</strong></td>
                                     <td id="compact-table">
+                                        @if ($project->budget_status == ProjectBudgetStatus::WITHIN_BUDGET)
+                                            <div class="badge badge-success">WITHIN BUDGET</div>
+                                        @elseif ($project->budget_status == ProjectBudgetStatus::OVERBUDGET)
+                                            <div class="badge badge-danger">OVERBUDGET</div>
+                                        @endif
+                                        <br>
                                         <b>{{ $project->name }}</b>
                                         <div class="d-flex">
                                             <a href="{{ route('internals.projects.view', [$project->reference_number]) }}" id="table-letter-margin">View</a> | 

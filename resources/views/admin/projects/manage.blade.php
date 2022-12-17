@@ -33,7 +33,7 @@
             </a>
         @endif
 
-        @if (auth()->user()->id == $project->noted_by_user->id)
+        @if (auth()->user()->id == $project->noted_by_user->id || auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
             @if ($project->status == ProjectStatus::FOR_APPROVAL)
                 <a href="#" data-href="{{ route('internals.projects.approve', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action">
                     <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Approve</button>

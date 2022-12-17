@@ -2,6 +2,7 @@
 @php
     use Carbon\Carbon;
     use App\Models\ProjectStatus;
+    use App\Models\ProjectBudgetStatus;
     use App\Models\ProjectDetail;
     use App\Models\ProjectDetailStatus;
     use App\Models\BudgetRequestFormStatus;
@@ -171,9 +172,19 @@
                                             <strong>Project Duration</strong>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-7">
                                         {{-- Carbon::parse($project->end_date)->format('M d Y') --}}
                                         {{ Carbon::parse($project->start_date)->format('M d Y') ?? null }} - {{ Carbon::parse($project->end_date)->format('M d Y') ?? null }}
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <strong>Used Cost</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            P{{ number_format($project->used_cost(), 2) }}
+                                        </div>
                                     </div>
                                 </div>
 

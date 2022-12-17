@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\BRF;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,8 +18,9 @@ use App\Models\Client;
 use App\Models\ClientStatus;
 use App\Models\Company;
 use App\Models\CompanyStatus;
+use App\Models\ProjectBudgetStatus;
 
-class BRFDetailController extends Controller
+class DetailController extends Controller
 {
     public function create(Request $request)
     {
@@ -51,10 +52,22 @@ class BRFDetailController extends Controller
         $budget_request_form_detail = BudgetRequestFormDetail::create($data); // create data in a model
 
         $brf = BudgetRequestForm::find($budget_request_form_detail->budget_request_form_id);
+        $project = Project::find($brf->project->id);
+        $project_total = $project->total + $project->asf + $project->vat;
+
+        /* there is a bug on total so just subtract it to request total to solve the issue */
         $total = BudgetRequestFormDetail::where('budget_request_form_id', $brf->id)
-                                        ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
-                                        ->sum('total') - $data['total'];
+                                ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
+                                ->sum('total') - $data['total'];
         $brf->total = $total;
+
+        if ($total > $project_total) {
+            $project->budget_status = ProjectBudgetStatus::OVERBUDGET;
+        } else {
+            $project->budget_status = ProjectBudgetStatus::WITHIN_BUDGET;
+        }
+
+        $project->save();
         $brf->save();
 
         $request->session()->flash('success', 'Data has been added');
@@ -105,6 +118,17 @@ class BRFDetailController extends Controller
                                                         ->sum('total');
         $budget_request_form->total = $budget_request_form_details_total;
         $budget_request_form->save();
+
+        $project = Project::find($budget_request_form->project->id);
+        $project_total = $project->total + $project->asf + $project->vat;
+
+        if ($budget_request_form_details_total > $project_total) {
+            $project->budget_status = ProjectBudgetStatus::OVERBUDGET;
+        } else {
+            $project->budget_status = ProjectBudgetStatus::WITHIN_BUDGET;
+        }
+
+        $project->save();
 
         $request->session()->flash('success', 'Data has been updated');
         return back();

@@ -645,62 +645,62 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
     // brf
     Route::group(['prefix' => 'brf/'], function () {
-        Route::get('/','App\Http\Controllers\Admin\BRFController@show')->name('internals.brf');
+        Route::get('/','App\Http\Controllers\Admin\BRF\BRFController@show')->name('internals.brf');
 
-        Route::get('/view/{id}','App\Http\Controllers\Admin\BRFController@view')->name('internals.brf.view');
-        Route::get('/add/users','App\Http\Controllers\Admin\BRFController@add_user')->name('internals.brf.users.add');
-        Route::get('/edit/users/{id}','App\Http\Controllers\Admin\BRFController@edit_user')->name('internals.brf.users.edit');
-        Route::get('/add/suppliers','App\Http\Controllers\Admin\BRFController@add_supplier')->name('internals.brf.suppliers.add');
-        Route::get('/edit/suppliers/{id}','App\Http\Controllers\Admin\BRFController@edit_supplier')->name('internals.brf.suppliers.edit');
-        Route::post('/create/users','App\Http\Controllers\Admin\BRFController@create_user')->name('internals.brf.users.create');
-        Route::post('/update/users','App\Http\Controllers\Admin\BRFController@update_user')->name('internals.brf.users.update');
-        Route::post('/create/suppliers','App\Http\Controllers\Admin\BRFController@create_supplier')->name('internals.brf.suppliers.create');
-        Route::post('/update/suppliers','App\Http\Controllers\Admin\BRFController@update_supplier')->name('internals.brf.suppliers.update');
-        Route::post('/update','App\Http\Controllers\Admin\BRFController@update')->name('internals.brf.update');
-        Route::get('/approve/{id}','App\Http\Controllers\Admin\BRFController@approve')->name('internals.brf.approve');
-        Route::post('/disapprove','App\Http\Controllers\Admin\BRFController@disapprove')->name('internals.brf.disapprove');
-        Route::get('/activate/{id}','App\Http\Controllers\Admin\BRFController@activate')->name('internals.brf.activate');
-        Route::get('/deactivate/{id}','App\Http\Controllers\Admin\BRFController@deactivate')->name('internals.brf.deactivate');
-        Route::get('/delete/{brf_id}', 'App\Http\Controllers\Admin\BRFController@delete')->name('internals.brf.delete');
+        Route::get('/view/{id}','App\Http\Controllers\Admin\BRF\BRFController@view')->name('internals.brf.view');
+        Route::get('/add/users','App\Http\Controllers\Admin\BRF\BRFController@add_user')->name('internals.brf.users.add');
+        Route::get('/edit/users/{id}','App\Http\Controllers\Admin\BRF\BRFController@edit_user')->name('internals.brf.users.edit');
+        Route::get('/add/suppliers','App\Http\Controllers\Admin\BRF\BRFController@add_supplier')->name('internals.brf.suppliers.add');
+        Route::get('/edit/suppliers/{id}','App\Http\Controllers\Admin\BRF\BRFController@edit_supplier')->name('internals.brf.suppliers.edit');
+        Route::post('/create/users','App\Http\Controllers\Admin\BRF\BRFController@create_user')->name('internals.brf.users.create');
+        Route::post('/update/users','App\Http\Controllers\Admin\BRF\BRFController@update_user')->name('internals.brf.users.update');
+        Route::post('/create/suppliers','App\Http\Controllers\Admin\BRF\BRFController@create_supplier')->name('internals.brf.suppliers.create');
+        Route::post('/update/suppliers','App\Http\Controllers\Admin\BRF\BRFController@update_supplier')->name('internals.brf.suppliers.update');
+        Route::post('/update','App\Http\Controllers\Admin\BRF\BRFController@update')->name('internals.brf.update');
+        Route::get('/approve/{id}','App\Http\Controllers\Admin\BRF\BRFController@approve')->name('internals.brf.approve');
+        Route::post('/disapprove','App\Http\Controllers\Admin\BRF\BRFController@disapprove')->name('internals.brf.disapprove');
+        Route::get('/activate/{id}','App\Http\Controllers\Admin\BRF\BRFController@activate')->name('internals.brf.activate');
+        Route::get('/deactivate/{id}','App\Http\Controllers\Admin\BRF\BRFController@deactivate')->name('internals.brf.deactivate');
+        Route::get('/delete/{brf_id}', 'App\Http\Controllers\Admin\BRF\BRFController@delete')->name('internals.brf.delete');
 
-        Route::get('/for-approval/{brf_id}', 'App\Http\Controllers\Admin\BRFController@for_approval')->name('internals.brf.for-approval');
-        Route::get('/for-final-approval/{brf_id}', 'App\Http\Controllers\Admin\BRFController@for_final_approval')->name('internals.brf.for-final-approval');
-        Route::get('/send-to-finance/{reference_number}', 'App\Http\Controllers\Admin\BRFController@send_to_finance')->name('internals.brf.send-to-finance');
-        Route::get('/for-release/{brf_id}', 'App\Http\Controllers\Admin\BRFController@for_release')->name('internals.brf.for-release');
-        Route::get('/released/{brf_id}', 'App\Http\Controllers\Admin\BRFController@released')->name('internals.brf.released');
+        Route::get('/for-approval/{brf_id}', 'App\Http\Controllers\Admin\BRF\BRFController@for_approval')->name('internals.brf.for-approval');
+        Route::get('/for-final-approval/{brf_id}', 'App\Http\Controllers\Admin\BRF\BRFController@for_final_approval')->name('internals.brf.for-final-approval');
+        Route::get('/send-to-finance/{reference_number}', 'App\Http\Controllers\Admin\BRF\BRFController@send_to_finance')->name('internals.brf.send-to-finance');
+        Route::get('/for-release/{brf_id}', 'App\Http\Controllers\Admin\BRF\BRFController@for_release')->name('internals.brf.for-release');
+        Route::get('/released/{brf_id}', 'App\Http\Controllers\Admin\BRF\BRFController@released')->name('internals.brf.released');
 
-        Route::get('/database/update', 'App\Http\Controllers\Admin\BRFController@database_update')->name('internals.brf.database.update');
+        Route::get('/database/update', 'App\Http\Controllers\Admin\BRF\BRFController@database_update')->name('internals.brf.database.update');
 
         // manage
         Route::group(['prefix' => 'manage/{brf_id}'], function () {
-            Route::get('/', 'App\Http\Controllers\Admin\BRFController@manage')->name('internals.brf.manage');
-            Route::get('/items/masterlist', 'App\Http\Controllers\Admin\BRFController@masterlist')->name('internals.brf.items.masterlist');
+            Route::get('/', 'App\Http\Controllers\Admin\BRF\BRFController@manage')->name('internals.brf.manage');
+            Route::get('/items/masterlist', 'App\Http\Controllers\Admin\BRF\BRFController@masterlist')->name('internals.brf.items.masterlist');
         });
 
         // exports
         Route::group(['prefix' => 'exports/'], function () {
-            Route::get('print/{brf_id}', 'App\Http\Controllers\Export\BRFController@print')->name('internals.exports.brf.print');
-            Route::get('excel/{brf_id}', 'App\Http\Controllers\Export\BRFController@excel')->name('internals.exports.brf.excel');
-            Route::get('pdf/{brf_id}', 'App\Http\Controllers\Export\BRFController@pdf')->name('internals.exports.brf.pdf');
-            Route::get('sql', 'App\Http\Controllers\Admin\Report\BRFController@sql')->name('internals.exports.brf.sql');
+            Route::get('print/{brf_id}', 'App\Http\Controllers\Export\BRF\BRFController@print')->name('internals.exports.brf.print');
+            Route::get('excel/{brf_id}', 'App\Http\Controllers\Export\BRF\BRFController@excel')->name('internals.exports.brf.excel');
+            Route::get('pdf/{brf_id}', 'App\Http\Controllers\Export\BRF\BRFController@pdf')->name('internals.exports.brf.pdf');
+            Route::get('sql', 'App\Http\Controllers\Admin\Report\BRF\BRFController@sql')->name('internals.exports.brf.sql');
         });
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\BRFController@search')->name('internals.brf.search');
-            Route::get('/{reference_number}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\BRFController@filter')->name('internals.brf.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\BRF\BRFController@search')->name('internals.brf.search');
+            Route::get('/{reference_number}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\BRF\BRFController@filter')->name('internals.brf.filter');
         });
     });
 
     // brf details
     Route::group(['prefix' => 'brf/details'], function () {
-        Route::post('/create','App\Http\Controllers\Admin\BRFDetailController@create')->name('internals.brf.details.create');
-        Route::post('/update','App\Http\Controllers\Admin\BRFDetailController@update')->name('internals.brf.details.update');
-        Route::get('/approve/{brf_detail_id}','App\Http\Controllers\Admin\BRFDetailController@approve')->name('internals.brf.details.approve');
-        Route::get('/disapprove/{brf_detail_id}','App\Http\Controllers\Admin\BRFDetailController@disapprove')->name('internals.brf.details.disapprove');
-        Route::get('/activate/{brf_detail_id}','App\Http\Controllers\Admin\BRFDetailController@activate')->name('internals.brf.details.activate');
-        Route::get('/deactivate/{brf_detail_id}','App\Http\Controllers\Admin\BRFDetailController@deactivate')->name('internals.brf.details.deactivate');
-        Route::get('/delete/{brf_detail_id}', 'App\Http\Controllers\Admin\BRFDetailController@delete')->name('internals.brf.details.delete');
+        Route::post('/create','App\Http\Controllers\Admin\BRF\DetailController@create')->name('internals.brf.details.create');
+        Route::post('/update','App\Http\Controllers\Admin\BRF\DetailController@update')->name('internals.brf.details.update');
+        Route::get('/approve/{brf_detail_id}','App\Http\Controllers\Admin\BRF\DetailController@approve')->name('internals.brf.details.approve');
+        Route::get('/disapprove/{brf_detail_id}','App\Http\Controllers\Admin\BRF\DetailController@disapprove')->name('internals.brf.details.disapprove');
+        Route::get('/activate/{brf_detail_id}','App\Http\Controllers\Admin\BRF\DetailController@activate')->name('internals.brf.details.activate');
+        Route::get('/deactivate/{brf_detail_id}','App\Http\Controllers\Admin\BRF\DetailController@deactivate')->name('internals.brf.details.deactivate');
+        Route::get('/delete/{brf_detail_id}', 'App\Http\Controllers\Admin\BRF\DetailController@delete')->name('internals.brf.details.delete');
     });
 
     // purchase orders
