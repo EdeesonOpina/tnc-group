@@ -1,6 +1,9 @@
 @php
-  use App\Account;
-  use App\AccountStatus;
+  use App\Models\Account;
+  use App\Models\AccountStatus;
+
+  $accounts = Account::where('status', '!=', AccountStatus::INACTIVE)
+                  ->get();
 @endphp
 
 @foreach ($budget_request_forms as $budget_request_form)
@@ -32,9 +35,23 @@
                   </div>
                 </div>
                 <hr>
+                <label for="company">Company</label><br />
+                <select id="company" name="account_id" class="custom-select" data-toggle="select">
+                    @foreach($accounts as $account)
+                        <option value="{{ $account->id }}">{{ $account->bank }} ({{ $account->number }}) - {{ $account->name }}</option>
+                    @endforeach
+                </select>
+                <br><br>
                 <label>Check #</label><br>
-                <label>Check #</label><br>
-                <input type="text" name="cheque_number" class="form-control" value="{{ old('cheque_number') }}" placeholder="Check #">
+                <input type="text" name="cheque_number" class="form-control" value="{{ old('cheque_number') }}" placeholder="Check #"><br>
+                <label for="currency">Currency</label><br />
+                <select id="currency" name="currency" class="custom-select" data-toggle="select">
+                    <option value="PHP">PHP</option>
+                    <option value="USD">USD</option>
+                </select>
+                <br><br>
+                <label>Amount</label><br>
+                <input type="text" name="amount" class="form-control" value="{{ old('amount') }}" placeholder="Amount">
               </div>
             </div>
 

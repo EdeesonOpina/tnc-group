@@ -10,6 +10,8 @@ use Mail;
 use Validator;
 use App\Models\CheckVoucher;
 use App\Models\CheckVoucherStatus;
+use App\Models\CheckVoucherRemark;
+use App\Models\CheckVoucherRemarkStatus;
 use App\Models\BudgetRequestForm;
 use App\Models\BudgetRequestFormStatus;
 use App\Models\BudgetRequestFormDetail;
@@ -25,14 +27,18 @@ class CVController extends Controller
                                                         ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
                                                         ->get();
         $budget_request_form_details_total = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form->id)
-                                                        ->where('status', BudgetRequestFormDetailStatus::APPROVED)
+                                                        ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
                                                         ->sum('total');
+        $remarks = CheckVoucherRemark::where('check_voucher_id', $cv->id)
+                                ->where('status', '!=', CheckVoucherStatus::INACTIVE)
+                                ->get();
 
         return view('admin.cv.print', compact(
             'cv',
             'budget_request_form',
             'budget_request_form_details_total',
-            'budget_request_form_details'
+            'budget_request_form_details',
+            'remarks',
         ));
     }
 }

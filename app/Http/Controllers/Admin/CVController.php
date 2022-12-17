@@ -10,6 +10,8 @@ use Mail;
 use Validator;
 use App\Models\CheckVoucher;
 use App\Models\CheckVoucherStatus;
+use App\Models\CheckVoucherRemark;
+use App\Models\CheckVoucherRemarkStatus;
 
 class CVController extends Controller
 {
@@ -70,11 +72,13 @@ class CVController extends Controller
         $cv = CheckVoucher::create($data); // create data in a model
 
         $data['check_voucher_id'] = $cv->id;
+        $data['prepared_by_user_id'] = auth()->user()->id;
+        $data['amount'] = str_replace(',', '', $request->amount);
         $data['status'] = CheckVoucherRemarkStatus::ACTIVE;
         $remarks = CheckVoucherRemark::create($data);
 
         $request->session()->flash('success', 'Data has been added');
-        return redirect()->route('internals.cv.view', $cv->reference_number);
+        return redirect()->route('internals.exports.cv.print', $cv->reference_number);
     }
 
     public function view($cv_id)

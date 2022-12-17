@@ -12,6 +12,7 @@ class CheckVoucherRemark extends Model
     protected $fillable = [
         'check_voucher_id',
         'account_id',
+        'prepared_by_user_id',
         'cheque_number',
         'currency',
         'amount',
@@ -26,5 +27,10 @@ class CheckVoucherRemark extends Model
     public function account()
     {
         return $this->hasOne(Account::class, 'id', 'account_id');
+    }
+
+    public function prepared_by_user()
+    {
+        return $this->hasOne(User::class, 'id', 'prepared_by_user_id');
     }
 }

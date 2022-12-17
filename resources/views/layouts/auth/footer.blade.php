@@ -557,6 +557,7 @@
             @include('layouts.modals.brf.disapprove')
         @else
             @include('layouts.modals.brf.disapprove-from-show')
+            @include('layouts.modals.brf.cv')
         @endif
 
     @endif 
