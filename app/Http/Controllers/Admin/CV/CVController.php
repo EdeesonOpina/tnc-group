@@ -143,4 +143,14 @@ class CVController extends Controller
             'details'
         ));
     }
+
+    public function done(Request $request, $cv_id)
+    {
+        $cv = CheckVoucher::find($cv_id);
+        $cv->status = CheckVoucherStatus::DONE; // mark data as done
+        $cv->save();
+
+        $request->session()->flash('success', 'Data has been marked as done');
+        return redirect()->route('internals.exports.cv.print.custom', $cv->reference_number);
+    }
 }

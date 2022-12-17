@@ -627,6 +627,7 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::get('/','App\Http\Controllers\Admin\CV\CVController@show')->name('internals.cv');
         Route::get('/view/{reference_number}','App\Http\Controllers\Admin\CV\CVController@view')->name('internals.cv.view');
         Route::post('/create','App\Http\Controllers\Admin\CV\CVController@create')->name('internals.cv.create');
+        Route::get('/done/{cv_id}','App\Http\Controllers\Admin\CV\CVController@done')->name('internals.cv.done');
 
         Route::get('/custom/add','App\Http\Controllers\Admin\CV\CVController@add_custom')->name('internals.cv.custom.add');
         Route::post('/custom/create','App\Http\Controllers\Admin\CV\CVController@create_custom')->name('internals.cv.custom.create');

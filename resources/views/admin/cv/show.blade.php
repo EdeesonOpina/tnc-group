@@ -114,7 +114,7 @@ use App\Models\BudgetRequestFormStatus;
                                                 @endif
                                             @endif
 
-                                            @if ($cv->status == CheckVoucherStatus::DONE || $cv->status == CheckVoucherStatus::ON_PROCESS)
+                                            @if ($cv->status == CheckVoucherStatus::DONE)
                                                 @if ($cv->is_custom == 1)
                                                     <a href="{{ route('internals.exports.cv.print.custom', [$cv->reference_number]) }}" id="space-table">Print</a>
                                                 @else
