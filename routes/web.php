@@ -626,7 +626,7 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
     Route::group(['prefix' => 'cv/'], function () {
         Route::get('/','App\Http\Controllers\Admin\CVController@show')->name('internals.cv');
         Route::get('/view/{reference_number}','App\Http\Controllers\Admin\CVController@view')->name('internals.cv.view');
-        Route::get('/create/{brf_id}','App\Http\Controllers\Admin\CVController@create')->name('internals.cv.create');
+        Route::post('/create','App\Http\Controllers\Admin\CVController@create')->name('internals.cv.create');
 
         // exports
         Route::group(['prefix' => 'exports/'], function () {
@@ -679,10 +679,10 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
         // exports
         Route::group(['prefix' => 'exports/'], function () {
-            Route::get('print/{brf_id}', 'App\Http\Controllers\Export\BRF\BRFController@print')->name('internals.exports.brf.print');
-            Route::get('excel/{brf_id}', 'App\Http\Controllers\Export\BRF\BRFController@excel')->name('internals.exports.brf.excel');
-            Route::get('pdf/{brf_id}', 'App\Http\Controllers\Export\BRF\BRFController@pdf')->name('internals.exports.brf.pdf');
-            Route::get('sql', 'App\Http\Controllers\Admin\Report\BRF\BRFController@sql')->name('internals.exports.brf.sql');
+            Route::get('print/{brf_id}', 'App\Http\Controllers\Export\BRFController@print')->name('internals.exports.brf.print');
+            Route::get('excel/{brf_id}', 'App\Http\Controllers\Export\BRFController@excel')->name('internals.exports.brf.excel');
+            Route::get('pdf/{brf_id}', 'App\Http\Controllers\Export\BRFController@pdf')->name('internals.exports.brf.pdf');
+            Route::get('sql', 'App\Http\Controllers\Admin\Report\BRFController@sql')->name('internals.exports.brf.sql');
         });
 
         // for searching

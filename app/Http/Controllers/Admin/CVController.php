@@ -59,18 +59,22 @@ class CVController extends Controller
         ));
     }
 
-    public function create(Request $request, $brf_id)
+    public function create(Request $request)
     {
         $cv_count = str_replace('CV-', '', CheckVoucher::orderBy('created_at', 'desc')->first()->reference_number ?? 0) + 1; // get the latest cv sequence then add 1
 
         $data = request()->all(); // get all request
         $data['reference_number'] = 'CV-' . str_pad($cv_count, 8, '0', STR_PAD_LEFT);
-        $data['budget_request_form_id'] = $brf_id;
+        $data['budget_request_form_id'] = $request->budget_request_form_id;
         $data['status'] = CheckVoucherStatus::DONE; // if you want to insert to a specific column
         $cv = CheckVoucher::create($data); // create data in a model
 
+        $data['check_voucher_id'] = $cv->id;
+        $data['status'] = CheckVoucherRemarkStatus::ACTIVE;
+        $remarks = CheckVoucherRemark::create($data);
+
         $request->session()->flash('success', 'Data has been added');
-        return redirect()->route('internals.cv');
+        return redirect()->route('internals.cv.view', $cv->reference_number);
     }
 
     public function view($cv_id)
