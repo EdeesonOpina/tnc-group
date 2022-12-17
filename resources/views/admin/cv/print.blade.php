@@ -242,7 +242,7 @@
         </tbody>
     </table>
 
-    <table class="table border-bottom no-border table-borderless font-change">
+    <table class="table table-bordered font-change">
         <tbody>
             <tr>
                 <td class="text-left">
@@ -252,10 +252,10 @@
                           @if ($budget_request_form->payment_for_user->signature)
                               <img src="{{ url($budget_request_form->payment_for_user->signature) }}" width="80px"><br>
                           @else
-                            <br><br><br>
+                            <br><br><br><br><br>
                           @endif
                       @else
-                        <br><br><br>
+                        <br><br><br><br><br>
                       @endif
                       <strong>
                         @if ($budget_request_form->payment_for_user)
@@ -283,8 +283,7 @@
                 </td>
                 <td>
                     <p class="font-change">
-                      <strong>Approved By:</strong><br>
-                      
+                        <strong>Approved By:</strong>
                     </p>
                 </td>
 
