@@ -491,6 +491,38 @@
                                 <tr>
                                     <td>
                                         <strong><a href="{{ route('internals.brf.view', [$budget_request_form->reference_number]) }}" id="margin-right">{{ $budget_request_form->reference_number }}</a></strong>
+                                        <div class="d-flex">
+                                            <a href="{{ route('internals.projects.view', [$project->reference_number]) }}" id="table-letter-margin">View</a> | 
+
+                                            <!-- <a href="{{ route('internals.projects.edit', [$project->id]) }}" id="space-table">Edit</a> |  -->
+
+                                            @if ($project->created_by_user_id == auth()->user()->id || auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+                                                @if ($project->status == ProjectStatus::ON_PROCESS || $project->status == ProjectStatus::FOR_APPROVAL || $project->status == ProjectStatus::DISAPPROVED || $project->status == ProjectStatus::OPEN_FOR_EDITING)
+                                                    <a href="{{ route('internals.projects.manage', [$project->id]) }}" id="space-table">Manage</a> | 
+                                                @endif
+                                            @endif
+
+                                            @if ($project->status == ProjectStatus::APPROVED)
+                                                <a href="#" data-href="{{ route('internals.projects.done', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Mark as Done</a> | 
+                                                @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+                                                    <a href="#" data-href="{{ route('internals.projects.open-for-editing', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Open For Editing</a> | 
+                                                @endif
+                                            @endif
+
+                                            @if (auth()->user()->id == $project->noted_by_user->id)
+                                                @if ($project->status == ProjectStatus::FOR_APPROVAL)
+                                                    <a href="#" data-href="{{ route('internals.projects.approve', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
+
+                                                    <a href="#" data-toggle="modal" data-target="#disapprove-{{ $project->id }}" id="space-table">Disapprove</a> | 
+                                                @endif
+                                            @endif
+
+                                            <a href="#" data-href="{{ route('internals.projects.delete', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
+
+                                            @if ($project->status == ProjectStatus::INACTIVE)
+                                                <a href="#" data-href="{{ route('internals.projects.recover', [$project->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Recover</a>
+                                            @endif
+                                        </div>
                                     </td>
                                     <td>
                                         @if ($budget_request_form->payment_for_user)
