@@ -489,7 +489,7 @@
                                                         ->sum('total');
                             @endphp
                                 <tr>
-                                    <td>
+                                    <td id="compact-table">
                                         <strong><a href="{{ route('internals.brf.view', [$budget_request_form->reference_number]) }}" id="margin-right">{{ $budget_request_form->reference_number }}</a></strong>
                                         <div class="d-flex">
                                             <a href="{{ route('internals.projects.view', [$project->reference_number]) }}" id="table-letter-margin">View</a> | 
@@ -524,7 +524,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <td>
+                                    <td id="compact-table">
                                         @if ($budget_request_form->payment_for_user)
                                             {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
                                         @endif
