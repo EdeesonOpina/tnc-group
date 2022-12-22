@@ -8,6 +8,8 @@
     use App\Models\BudgetRequestFormStatus;
     use App\Models\BudgetRequestFormDetail;
     use App\Models\BudgetRequestFormDetailStatus;
+    use App\Models\CheckVoucher;
+    use App\Models\CheckVoucherStatus;
 @endphp
 
 <div class="container page__heading-container">
