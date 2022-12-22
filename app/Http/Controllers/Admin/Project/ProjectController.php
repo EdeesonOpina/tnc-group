@@ -206,7 +206,6 @@ class ProjectController extends Controller
                         ->where('status', '!=', ProjectDetailStatus::INACTIVE)
                         ->paginate(15);
         $budget_request_forms = BudgetRequestForm::where('project_id', $project->id)
-                        ->where('status', BudgetRequestFormStatus::APPROVED)
                         ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
                         ->paginate(15);
 
@@ -428,7 +427,7 @@ class ProjectController extends Controller
 
         $data = $request->all();
         $project = Project::find($request->project_id);
-        
+
         if ($project->margin > 0) {
             $data['usd_asf'] = $request->asf / $usd_rate;
         }
