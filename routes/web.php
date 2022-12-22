@@ -342,16 +342,16 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
             // supplies
             Route::group(['prefix' => 'supplies'], function () {
-                Route::post('/create', 'App\Http\Controllers\Admin\SupplyController@create')->name('admin.supplies.create');
-                Route::post('/update/price', 'App\Http\Controllers\Admin\SupplyController@price')->name('admin.supplies.update.price');
-                Route::get('/recover/{supply_id}', 'App\Http\Controllers\Admin\SupplyController@recover')->name('admin.supplies.recover');
-                Route::get('/delete/{supply_id}', 'App\Http\Controllers\Admin\SupplyController@delete')->name('admin.supplies.delete');
+                // Route::post('/create', 'App\Http\Controllers\Admin\SupplyController@create')->name('admin.supplies.create');
+                // Route::post('/update/price', 'App\Http\Controllers\Admin\SupplyController@price')->name('admin.supplies.update.price');
+                // Route::get('/recover/{supply_id}', 'App\Http\Controllers\Admin\SupplyController@recover')->name('admin.supplies.recover');
+                // Route::get('/delete/{supply_id}', 'App\Http\Controllers\Admin\SupplyController@delete')->name('admin.supplies.delete');
 
                 // for searching supplies
-                Route::group(['prefix' => 'search/'], function () {
-                    Route::post('/', 'App\Http\Controllers\Admin\SupplyController@search')->name('admin.supplies.search');
-                    Route::get('/{name}', 'App\Http\Controllers\Admin\SupplyController@filter')->name('admin.supplies.filter');
-                });
+                // Route::group(['prefix' => 'search/'], function () {
+                //     Route::post('/', 'App\Http\Controllers\Admin\SupplyController@search')->name('admin.supplies.search');
+                //     Route::get('/{name}', 'App\Http\Controllers\Admin\SupplyController@filter')->name('admin.supplies.filter');
+                // });
             });
         });
 
