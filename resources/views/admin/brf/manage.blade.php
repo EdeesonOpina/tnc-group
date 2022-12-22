@@ -289,7 +289,7 @@
                         <div class="form-group">
                             <strong>Checked By</strong>
                             @if ($budget_request_form->status == BudgetRequestFormStatus::APPROVED || $budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL || $budget_request_form->status == BudgetRequestFormStatus::DONE)
-                                @if ($budget_request_form->checked_by_user->signature)
+                                @if ($budget_request_form->checked_by_user->signature || $budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL || $budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL)
                                       <br><img src="{{ url($budget_request_form->checked_by_user->signature) }}" width="80px" height="60px"><br>
                                 @else
                                     <br><br><br><br>
@@ -307,7 +307,7 @@
                         <div class="form-group">
                             <strong>Noted By</strong>
                             @if ($budget_request_form->status == BudgetRequestFormStatus::APPROVED || $budget_request_form->status == BudgetRequestFormStatus::DONE)
-                                @if ($budget_request_form->noted_by_user->signature)
+                                @if ($budget_request_form->noted_by_user->signature || $budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL || $budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL)
                                       <br><img src="{{ url($budget_request_form->noted_by_user->signature) }}" width="80px" height="60px"><br>
                                 @else
                                     <br><br><br><br>
