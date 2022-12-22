@@ -153,9 +153,9 @@ class ProjectController extends Controller
             'noted_by_user_id' => 'required',
             'client_id' => 'required',
             'name' => 'required',
-            'margin' => 'required|not_in:0',
-            'usd_rate' => 'required|not_in:0',
-            'vat_rate' => 'required|not_in:0',
+            'margin' => 'required',
+            'usd_rate' => 'required',
+            'vat_rate' => 'required',
             'description' => 'nullable',
         ];
 
@@ -428,7 +428,11 @@ class ProjectController extends Controller
 
         $data = $request->all();
         $project = Project::find($request->project_id);
-        $data['usd_asf'] = $request->asf / $usd_rate;
+        
+        if ($project->margin > 0) {
+            $data['usd_asf'] = $request->asf / $usd_rate;
+        }
+        
         $project->fill($data)->save();
 
         $request->session()->flash('success', 'Data has been updated');
