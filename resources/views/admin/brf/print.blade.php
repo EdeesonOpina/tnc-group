@@ -25,11 +25,15 @@
     }
 
     .font-change {
-        font-family: "Lucida Console", "Courier New", monospace;
+        font-family: "Lucida Console", "Courier New", monospace !important;
     }
 
     .heading-text {
         font-size: 30px;
+    }
+
+    .table-black-border {
+/*        border: 2px solid #333 !important;*/
     }
 
     .no-underline {
@@ -43,15 +47,41 @@
       margin-bottom: 0px;
     }
 
+    .no-border-right {
+      border-right: none !important;
+    }
+
+    .table-color-primary {
+        color: #E74414 !important;
+    }
+
+    .no-space {
+        padding: 0px !important;
+    }
+
+    .min-space {
+        padding: 5px !important;
+    }
+
     #compact-table {
         width:1%;
         white-space:nowrap;
     }
 
+    .page-break {
+        page-break-after: always;
+    }
+
+    table {
+        font-size: 10px !important;
+    }
+
     body {
         background: #fff;
-        font-family: "Lucida Console", "Courier New", monospace;
+        font-family: "Lucida Console", "Courier New", monospace !important;
     }
+
+    @page { margin: 0px; }
     </style>
 </head>
 <body>
@@ -61,33 +91,33 @@
     <button class="btn btn-light">Go Back</button>
   </a>
   <button class="btn btn-success" onclick="printDiv('printableArea')">Print Page</button>
-  <br><br>
   <!-- START OF PRINTABLE AREA -->
   <div id="printableArea">
+    <br><br>
     <img src="{{ url(env('APP_LOGO_WITH_TEXT')) }}" width="160px">
     <br><br>
     <h2 class="font-change">Budget Request Form</h2>
     <table class="table border-bottom no-border table-borderless font-change">
         <tbody>
             <tr>
-                <td>
+                <td class="no-space">
                     <div class="text-label"><strong>BRF #:</strong></div>
                 </td>
-                <td>
+                <td class="no-space">
                     {{ $budget_request_form->reference_number }}<br>
                 </td>
-                <td>
+                <td class="no-space">
                     <strong>Date</strong>
                 </td>
-                <td class="text-right">
+                <td class="text-right no-space">
                         {{ $budget_request_form->created_at->format('M d Y') }}
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="no-space">
                     <div class="text-label"><strong>Pay To:</strong></div>
                 </td>
-                <td>
+                <td class="no-space">
                     @if ($budget_request_form->payment_for_user)
                         {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
                     @endif
@@ -98,34 +128,34 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="no-space">
                     <div class="text-label"><strong>In Payment For:</strong></div>
                 </td>
-                <td>
+                <td class="no-space">
                     {{ $budget_request_form->name }}<br>
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="no-space">
                     <div class="text-label"><strong>Project:</strong></div>
                 </td>
-                <td>
+                <td class="no-space">
                     {{ $budget_request_form->project->name }}<br>
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="no-space">
                     <div class="text-label"><strong>Get Budget From:</strong></div>
                 </td>
-                <td>
+                <td class="no-space">
                     {{ $budget_request_form->project->company->name }}<br>
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="no-space">
                     <div class="text-label"><strong>Needed Date:</strong></div>
                 </td>
-                <td>
+                <td class="no-space">
                     {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}<br>
                 </td>
             </tr>
@@ -137,27 +167,27 @@
     <table class="table table-bordered font-change">
         <thead>
             <tr>
-                <th id="compact-table">Particulars</th>
-                <th id="compact-table">Description</th>
-                <th id="compact-table">Quantity</th>
-                <th id="compact-table">Unit Price</th>
-                <th id="compact-table">Total Price</th>
+                <th id="compact-table" class="table-black-border table-color-primary min-space">Particulars</th>
+                <th id="compact-table" class="table-black-border table-color-primary min-space">Description</th>
+                <th id="compact-table" class="table-black-border table-color-primary min-space">Quantity</th>
+                <th id="compact-table" class="table-black-border table-color-primary min-space">Unit Price</th>
+                <th id="compact-table" class="table-black-border table-color-primary min-space">Total Price</th>
             </tr>
         </thead>
         <tbody class="list" id="companies">
             @foreach ($budget_request_form_details as $budget_request_form_detail)
                 <tr>
-                    <td>{{ $budget_request_form_detail->name }}</td>
-                    <td>{{ $budget_request_form_detail->description }}</td>
-                    <td>{{ $budget_request_form_detail->qty }}</td>
-                    <td>P{{ number_format($budget_request_form_detail->price, 2) }}</td>
-                    <td>P{{ number_format($budget_request_form_detail->total, 2) }}</td>
+                    <td class="table-black-border min-space">{{ $budget_request_form_detail->name }}</td>
+                    <td class="table-black-border min-space">{{ $budget_request_form_detail->description }}</td>
+                    <td class="table-black-border min-space">{{ $budget_request_form_detail->qty }}</td>
+                    <td class="table-black-border min-space">P{{ number_format($budget_request_form_detail->price, 2) }}</td>
+                    <td class="table-black-border min-space">P{{ number_format($budget_request_form_detail->total, 2) }}</td>
                 </tr>
             @endforeach
             <tr> 
-                <td colspan="3">&nbsp;</td>
-                <td id="compact-table"><strong>Total Cost</strong></th>
-                <td id="compact-table">P{{ number_format($budget_request_form_details_total, 2) }}</th>
+                <td colspan="3" class="table-black-border min-space">&nbsp;</td>
+                <td id="compact-table" class="table-black-border min-space"><strong>Total Cost</strong></th>
+                <td id="compact-table" class="table-black-border min-space">P{{ number_format($budget_request_form_details_total, 2) }}</th>
             </tr>
         </tbody>
     </table>
@@ -199,7 +229,7 @@
         <table class="table border-bottom no-border table-borderless font-change">
             <tbody>
                 <tr>
-                    <td>
+                    <td class="table-black-border min-space">
                         <div class="text-label"><strong>Remarks:</strong></div>
                     </td>
                     <td>
@@ -213,7 +243,7 @@
     <table class="table border-bottom no-border table-borderless font-change">
         <tbody>
             <tr>
-                <td class="text-left">
+                <td class="table-black-border text-left">
                     <p class="font-change">
                       <strong>Prepared By:</strong><br>
                         @if ($budget_request_form->requested_by_user->signature)
@@ -227,7 +257,7 @@
                     </p>
                 </td>
 
-                <td>
+                <td class="table-black-border ">
                     <p class="font-change">
                       <strong>Checked By:</strong><br>
                       @if ($budget_request_form->checked_by_user->signature)
@@ -241,7 +271,7 @@
                     </p>
                 </td>
 
-                <td>
+                <td class="table-black-border ">
                     <p class="font-change">
                       <strong>Noted By:</strong><br>
                         @if ($budget_request_form->noted_by_user->signature)
@@ -255,7 +285,7 @@
                     </p>
                 </td>
 
-                <td>
+                <td class="table-black-border ">
                     <p class="font-change">
                     <strong>Approved By:</strong><br>
                     </p>
