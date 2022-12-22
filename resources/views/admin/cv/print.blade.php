@@ -32,7 +32,7 @@
     }
 
     .table-black-border {
-        /*border: 2px solid #000 !important;*/
+        border: 2px solid #333 !important;
     }
 
     .no-underline {
@@ -204,36 +204,36 @@
         </tbody>
     </table>
 
-    <table class="table table-bordered font-change">
+    <table class="table table-black-border table-bordered font-change">
         <tbody>
             @foreach ($remarks as $remark)
                 <tr>
-                    <td colspan="6">
+                    <td colspan="6" class="table-black-border ">
                         <div class="text-label"><strong>Remarks:</strong></div>
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="table-black-border ">
                         <strong>Bank</strong><br>
                         {{ $remark->account->bank }}<br>
                     </td>
-                    <td>
+                    <td class="table-black-border ">
                         <strong>ACCT NAME</strong><br>
                         {{ $remark->account->name }}<br>
                     </td>
-                    <td>
+                    <td class="table-black-border ">
                         <strong>ACCT #</strong><br>
                         {{ $remark->account->number }}<br>
                     </td>
-                    <td>
+                    <td class="table-black-border ">
                         <strong>CHECK #</strong><br>
                         {{ $remark->cheque_number }}<br>
                     </td>
-                    <td>
+                    <td class="table-black-border ">
                         <strong>CURRENCY</strong><br>
                         {{ $remark->currency }}<br>
                     </td>
-                    <td>
+                    <td class="table-black-border ">
                         <strong>AMOUNT</strong><br>
                         {{ number_format($remark->amount, 2) }}<br>
                     </td>
@@ -242,10 +242,10 @@
         </tbody>
     </table>
 
-    <table class="table table-bordered font-change">
+    <table class="table table-black-border table-bordered font-change">
         <tbody>
             <tr>
-                <td class="text-left">
+                <td class="table-black-border text-left">
                     <p class="font-change">
                       <strong>Prepared By:</strong><br>
                       @if ($cv->prepared_by_user)
@@ -275,13 +275,13 @@
                       @endif
                     </p>
                 </td>
-                <td>
+                <td class="table-black-border ">
                     <p class="font-change">
                         <strong>Approved By:</strong>
                     </p>
                 </td>
 
-                <td>
+                <td class="table-black-border ">
                     <p class="font-change">
                       <strong>Received By:</strong>
                     </p>
