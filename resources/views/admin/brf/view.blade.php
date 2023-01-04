@@ -140,22 +140,30 @@
                         </div>
                     </div>
                     <div class="col">
-                        @if (BudgetRequestFormFile::where('budget_request_form_id', $budget_request_form->id)
-                        ->where('status', BudgetRequestFormFileStatus::ACTIVE)
-                        ->exists())
-                        @php
-                            $brf_file = BudgetRequestFormFile::where('budget_request_form_id', $budget_request_form->id)
-                                            ->where('status', BudgetRequestFormFileStatus::ACTIVE)
-                                            ->first();
-                        @endphp
+                        @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
 
-                            <a href="{{ url($brf_file->file) }}" download>
-                                <button class="btn btn-sm btn-primary">Download File</button>
-                            </a>
-                        @else
-                            <a href="#" data-toggle="modal" data-target="#release-file-{{ $budget_request_form->id }}">
-                                <button class="btn btn-primary btn-sm">Upload File</button>
-                            </a>
+                            @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION || $budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP)
+
+                                @if (BudgetRequestFormFile::where('budget_request_form_id', $budget_request_form->id)
+                                ->where('status', BudgetRequestFormFileStatus::ACTIVE)
+                                ->exists())
+                                @php
+                                    $brf_file = BudgetRequestFormFile::where('budget_request_form_id', $budget_request_form->id)
+                                                    ->where('status', BudgetRequestFormFileStatus::ACTIVE)
+                                                    ->first();
+                                @endphp
+
+                                    <a href="{{ url($brf_file->file) }}" download>
+                                        <button class="btn btn-sm btn-primary">Download File</button>
+                                    </a>
+                                @else
+                                    <a href="#" data-toggle="modal" data-target="#release-file-{{ $budget_request_form->id }}">
+                                        <button class="btn btn-primary btn-sm">Upload File</button>
+                                    </a>
+                                @endif
+
+                            @endif
+
                         @endif
                     </div>
                 </div>
