@@ -103,6 +103,8 @@
                                 <div class="badge badge-success">FOR BANK DEPOSIT SLIP</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP)
                                 <div class="badge badge-success">FOR LIQUIDATION BANK DEPOSIT SLIP</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT)
+                                <div class="badge badge-success">FOR OFFICIAL RECEIPT</div>
                             @endif
                         </div>
                     </div>
@@ -142,7 +144,7 @@
                     <div class="col">
                         @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
 
-                            @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION || $budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP)
+                            @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION || $budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT)
 
                                 @if (BudgetRequestFormFile::where('budget_request_form_id', $budget_request_form->id)
                                 ->where('status', BudgetRequestFormFileStatus::ACTIVE)

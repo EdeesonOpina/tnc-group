@@ -51,6 +51,7 @@
                 <label>Payment To</label><br>
                 <select class="form-control" name="status">
                   <option value=""></option>
+                  <option value="{{ BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT }}">For Official Receipt</option>
                   <option value="{{ BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP }}">For Bank Deposit Slip</option>
                   <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION }}">For Liquidation</option>
                   <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP }}">For Liquidation Bank Deposit Slip</option>

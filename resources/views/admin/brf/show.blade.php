@@ -68,6 +68,7 @@ use App\Models\BudgetRequestFormDetailStatus;
                                 <option value="{{ BudgetRequestFormStatus::DISAPPROVED }}">Disapproved</option>
                                 <option value="{{ BudgetRequestFormStatus::FOR_RELEASE }}">For Release</option>
                                 <option value="{{ BudgetRequestFormStatus::RELEASED }}">Released</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT }}">FOR OFFICIAL RECEIPT</option>
                                 <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION }}">FOR LIQUIDATION</option>
                                 <option value="{{ BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP }}">FOR BANK DEPOSIT SLIP</option>
                                 <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP }}">FOR LIQUIDATION BANK DEPOSIT SLIP</option>
@@ -221,6 +222,8 @@ use App\Models\BudgetRequestFormDetailStatus;
                                             <div class="badge badge-danger ml-2">Disapproved</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION)
                                             <div class="badge badge-success ml-2">FOR LIQUIDATION</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT)
+                                            <div class="badge badge-success ml-2">FOR OFFICIAL RECEIPT</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP)
                                             <div class="badge badge-success ml-2">FOR BANK DEPOSIT SLIP</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP)
