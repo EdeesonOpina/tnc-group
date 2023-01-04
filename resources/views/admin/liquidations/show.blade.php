@@ -1,7 +1,12 @@
 @include('layouts.auth.header')
 @php
-    use Carbon\Carbon;
-    use App\Models\LiquidationStatus;
+use Carbon\Carbon;
+use App\Models\CheckVoucher;
+use App\Models\CheckVoucherStatus;
+use App\Models\BudgetRequestForm;
+use App\Models\BudgetRequestFormStatus;
+use App\Models\BudgetRequestFormDetail;
+use App\Models\BudgetRequestFormDetailStatus;
 @endphp
 
 <div class="container-fluid page__heading-container">
@@ -15,7 +20,6 @@
             </nav>
             <h1 class="m-0">Liquidations</h1>
         </div>
-        <a href="{{ route('accounting.liquidations.add') }}" class="btn btn-primary"><i class="material-icons">add</i> Add</a>
     </div>
 </div>
 
@@ -35,36 +39,36 @@
                     </div>
                     <div class="col">
                         <div class="form-group">
+                            <label>Name</label>
+                            <input name="name" type="text" class="form-control" placeholder="Search by name" value="{{ old('name') }}">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
                             <label>Status</label>
                             <select name="status" class="form-control" data-toggle="select">
                                 @if (old('status'))
                                     @if (old('status') != '*')
-                                        @if (old('status') == LiquidationStatus::FOR_APPROVAL)
-                                            <option value="{{ old('status') }}">For Approval</option>
+                                        @if (old('status') == BudgetRequestFormStatus::FOR_APPROVAL)
+                                            <option value="{{ old('status') }}">Active</option>
                                         @endif
 
-                                        @if (old('status') == LiquidationStatus::INACTIVE)
+                                        @if (old('status') == BudgetRequestFormStatus::INACTIVE)
                                             <option value="{{ old('status') }}">Inactive</option>
                                         @endif
                                     @endif
                                 @endif
                                 <option value="*">All</option>
-                                <option value="LiquidationStatus::FOR_APPROVAL">For Approval</option>
-                                <option value="LiquidationStatus::APPROVED">Approved</option>
-                                <option value="LiquidationStatus::DISAPPROVED">Disapproved</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION }}">FOR LIQUIDATION</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP }}">FOR BANK DEPOSIT SLIP</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP }}">FOR LIQUIDATION BANK DEPOSIT SLIP</option>
                             </select>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
-                            <label>From</label>
-                            <input name="from_date" type="date" class="form-control" data-toggle="flatpickr" max="{{ date('Y-m-d') }}" value="{{ old('from_date') }}">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>To</label>
-                            <input name="to_date" type="date" class="form-control" data-toggle="flatpickr" max="{{ date('Y-m-d') }}" value="{{ old('to_date') }}">
+                            <label>Needed Date</label>
+                            <input name="from_date" type="needed_date" class="form-control" data-toggle="flatpickr" max="{{ date('Y-m-d') }}" value="{{ old('needed_date') }}">
                         </div>
                     </div>
                 </div>
@@ -83,8 +87,7 @@
             <div class="card">
                 <div class="card-header card-header-large bg-white d-flex align-items-center">
                     <h4 class="card-header__title flex m-0">Liquidations</h4>
-                    <div data-toggle="flatpickr" data-flatpickr-wrap="true" data-flatpickr-static="true" data-flatpickr-mode="range" data-flatpickr-alt-format="d/m/Y" data-flatpickr-date-format="d/m/Y">
-                        
+                    <div>
                     </div>
                 </div>
 
@@ -93,67 +96,81 @@
                         <thead>
                             <tr>
                                 <th id="compact-table">BRF#</th>
-                                <th id="compact-table">Category</th>
-                                <th id="compact-table">Particulars</th>
-                                <th id="compact-table">Description</th>
-                                <th id="compact-table">Cost</th>
+                                <th id="compact-table">Pay To</th>
+                                <th id="compact-table">Payment For</th>
+                                <th id="compact-table">Project</th>
+                                <th id="compact-table">Needed Date</th>
+                                <th id="compact-table">Total Price</th>
                                 <th id="compact-table">Status</th>
-                                <th id="compact-table">Date</th>
                             </tr>
                         </thead>
                         <tbody class="list" id="companies">
-                            @foreach($liquidations as $liquidation)
+                            @foreach ($budget_request_forms as $budget_request_form)
+                            @php
+                                $total = BudgetRequestFormDetail::where('budget_request_form_id', $budget_request_form->id)
+                                                        ->where('status', '!=', BudgetRequestFormDetailStatus::INACTIVE)
+                                                        ->sum('total');
+                            @endphp
                                 <tr>
-                                    <td><strong>
-                                        <a href="{{ route('internals.brf.view', [$liquidation->budget_request_form->reference_number]) }}" id="margin-right">{{ $liquidation->budget_request_form->reference_number }}
-                                        </a>
-                                        </strong></td>
-                                    <td id="compact-table">
-                                        <b>{{ $liquidation->category->name }}</b>
+                                    <td>
+                                        <strong>{{ $budget_request_form->reference_number }}</strong>
                                         <div class="d-flex">
-                                            @if ($liquidation->status == LiquidationStatus::FOR_APPROVAL)
-                                                <a href="{{ route('accounting.liquidations.edit', [$liquidation->id]) }}" id="margin-right">Edit</a> | 
-                                                <a href="#" data-href="{{ route('accounting.liquidations.approve', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Approve</a> | 
-                                                <a href="#" data-href="{{ route('accounting.liquidations.disapprove', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a> | 
-                                            @endif
+                                            <a href="{{ route('internals.brf.view', [$budget_request_form->reference_number]) }}" id="margin-right">View</a> | 
 
-                                            @if ($liquidation->status == LiquidationStatus::APPROVED || $liquidation->status == LiquidationStatus::DISAPPROVED)
-                                                <a href="#" data-href="{{ route('accounting.liquidations.delete', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="margin-right">Delete</a>
-                                            @endif
+                                            @if ($budget_request_form->status == BudgetRequestFormStatus::RELEASED)
 
-                                            @if ($liquidation->status == LiquidationStatus::INACTIVE)
-                                                <a href="#" data-href="{{ route('accounting.liquidations.recover', [$liquidation->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Recover</a>
                                             @endif
                                         </div>
                                     </td>
-                                    <td id="compact-table">{{ $liquidation->name }}</td>
-                                    <td id="compact-table">{{ $liquidation->description }}</td>
-                                    <td id="compact-table">P{{ number_format($liquidation->cost, 2) }}</td> 
-                                    <td>
-                                        @if ($liquidation->status == LiquidationStatus::FOR_APPROVAL)
-                                            <div class="badge badge-warning">For Approval</div>
-                                        @elseif ($liquidation->status == LiquidationStatus::APPROVED)
-                                            <div class="badge badge-success">Approved</div>
-                                        @elseif ($liquidation->status == LiquidationStatus::DISAPPROVED)
-                                            <div class="badge badge-danger">Disapproved</div>
-                                        @elseif ($liquidation->status == LiquidationStatus::INACTIVE)
-                                            <div class="badge badge-danger">Inactive</div>
+                                    <td id="compact-table">
+                                        @if ($budget_request_form->payment_for_user)
+                                            {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
+                                        @endif
+
+                                        @if ($budget_request_form->payment_for_supplier)
+                                            {{ $budget_request_form->payment_for_supplier->name }}
                                         @endif
                                     </td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($liquidation->date)->format('M d Y') }}</td>
+                                    <td id="compact-table">{{ $budget_request_form->name }}</td>
+                                    <td id="compact-table">{{ $budget_request_form->project->name }}</td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}</td>
+                                    <td>P{{ number_format($total, 2) }}</td>
+                                    <td>
+                                        @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
+                                            <div class="badge badge-info ml-2">For Approval</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL)
+                                            <div class="badge badge-info ml-2">For Final Approval</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_RELEASE)
+                                            <div class="badge badge-info ml-2">For Release</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::RELEASED)
+                                            <div class="badge badge-success ml-2">Released</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS)
+                                            <div class="badge badge-warning ml-2">On Process</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
+                                            <div class="badge badge-success ml-2">Approved</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
+                                            <div class="badge badge-danger ml-2">Disapproved</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION)
+                                            <div class="badge badge-success ml-2">FOR LIQUIDATION</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP)
+                                            <div class="badge badge-success ml-2">FOR BANK DEPOSIT SLIP</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP)
+                                            <div class="badge badge-success ml-2">FOR LIQUIDATION BANK DEPOSIT SLIP</div>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
 
-                    @if (count($liquidations) <= 0)
+                    @if (count($budget_request_forms) <= 0)
                         <div style="padding: 20px">
                             <center><i class="material-icons icon-16pt mr-1 text-muted">assignment</i> No record/s found</center>
                         </div>
                     @endif
                 </div>
             </div>
-            {{ $liquidations->links() }}
+            {{ $budget_request_forms->links() }}
         </div>
     </div>
 </div>

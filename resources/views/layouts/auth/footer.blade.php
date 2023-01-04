@@ -532,6 +532,10 @@
     @endif
   @endif
 
+  @if (request()->is('admin/cv/*') || request()->is('admin/cv'))
+    @include('layouts.modals.cv.mark-as-released')
+  @endif
+
   @if (request()->is('admin/cv/custom/manage/*'))
     @include('layouts.modals.cv.details.add')
     @include('layouts.modals.cv.details.edit')
@@ -553,7 +557,7 @@
 
   @if (request()->is('admin/brf') || request()->is('admin/brf/*'))
     @if(str_contains(url()->current(), '/edit') || str_contains(url()->current(), '/add') || str_contains(url()->current(), '/view'))
-
+        @include('layouts.modals.brf.release-file')
     @else
         {{-- @include('layouts.modals.brf.add-from-project-list') --}}
 
@@ -563,6 +567,8 @@
         @else
             @include('layouts.modals.brf.disapprove-from-show')
             @include('layouts.modals.brf.cv')
+
+            @include('layouts.modals.brf.mark-as-released')
         @endif
 
     @endif 

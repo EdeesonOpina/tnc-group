@@ -22,4 +22,6 @@ class BudgetRequestFormStatus extends Model
     const FOR_PROCESS = 10;
     const FOR_RELEASE = 11;
     const RELEASED = 12;
+    const FOR_BANK_DEPOSIT_SLIP = 13;
+    const FOR_LIQUIDATION_BANK_DEPOSIT_SLIP = 14;
 }

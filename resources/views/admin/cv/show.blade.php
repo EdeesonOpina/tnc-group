@@ -135,7 +135,9 @@ use App\Models\BudgetRequestFormStatus;
                                             <div class="d-flex">
                                                 @if ($cv->budget_request_form->status == BudgetRequestFormStatus::FOR_RELEASE)
                                                     @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
-                                                        <a href="#" data-href="{{ route('internals.brf.released', [$cv->budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action">Mark As Released</a>
+                                                        <!-- <a href="#" data-href="{{ route('internals.brf.released', [$cv->budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action">Mark As Released</a> -->
+
+                                                        <a href="#" data-toggle="modal" data-target="#mark-as-released-{{ $cv->budget_request_form->id }}">Mark As Released</a>
                                                     @endif
                                                 @endif
                                             </div>

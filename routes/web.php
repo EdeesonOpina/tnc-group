@@ -689,6 +689,10 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
         Route::get('/for-release/{brf_id}', 'App\Http\Controllers\Admin\BRF\BRFController@for_release')->name('internals.brf.for-release');
         Route::get('/released/{brf_id}', 'App\Http\Controllers\Admin\BRF\BRFController@released')->name('internals.brf.released');
 
+        Route::post('/mark-as-released', 'App\Http\Controllers\Admin\BRF\BRFController@mark_as_released')->name('internals.brf.mark-as-released');
+        Route::post('/release-file/upload', 'App\Http\Controllers\Admin\BRF\BRFController@release_file')->name('internals.brf.file.upload');
+        Route::get('/release-file/delete/{brf_file_id}', 'App\Http\Controllers\Admin\BRF\BRFController@delete_release_file')->name('internals.brf.file.delete');
+
         Route::get('/database/update', 'App\Http\Controllers\Admin\BRF\BRFController@database_update')->name('internals.brf.database.update');
 
         // manage

@@ -68,6 +68,9 @@ use App\Models\BudgetRequestFormDetailStatus;
                                 <option value="{{ BudgetRequestFormStatus::DISAPPROVED }}">Disapproved</option>
                                 <option value="{{ BudgetRequestFormStatus::FOR_RELEASE }}">For Release</option>
                                 <option value="{{ BudgetRequestFormStatus::RELEASED }}">Released</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION }}">FOR LIQUIDATION</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP }}">FOR BANK DEPOSIT SLIP</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP }}">FOR LIQUIDATION BANK DEPOSIT SLIP</option>
                             </select>
                         </div>
                     </div>
@@ -175,7 +178,9 @@ use App\Models\BudgetRequestFormDetailStatus;
                                                 @if (CheckVoucher::where('budget_request_form_id', $budget_request_form->id)->where('status', CheckVoucherStatus::DONE)->exists())
 
                                                     @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
-                                                        <a href="#" data-href="{{ route('internals.brf.released', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Mark As Released</a>
+                                                        <!-- <a href="#" data-href="{{ route('internals.brf.released', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Mark As Released</a> -->
+
+                                                        <a href="#" data-toggle="modal" data-target="#mark-as-released-{{ $budget_request_form->id }}" id="space-table">Mark As Released</a>
                                                     @endif
 
                                                 @endif
@@ -214,6 +219,12 @@ use App\Models\BudgetRequestFormDetailStatus;
                                             <div class="badge badge-success ml-2">Approved</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
                                             <div class="badge badge-danger ml-2">Disapproved</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION)
+                                            <div class="badge badge-success ml-2">FOR LIQUIDATION</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP)
+                                            <div class="badge badge-success ml-2">FOR BANK DEPOSIT SLIP</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP)
+                                            <div class="badge badge-success ml-2">FOR LIQUIDATION BANK DEPOSIT SLIP</div>
                                         @endif
                                     </td>
                                 </tr>

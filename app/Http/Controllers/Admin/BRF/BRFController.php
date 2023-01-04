@@ -24,6 +24,8 @@ use App\Models\User;
 use App\Models\UserStatus;
 use App\Models\Supplier;
 use App\Models\SupplierStatus;
+use App\Models\BudgetRequestFormFile;
+use App\Models\BudgetRequestFormFileStatus;
 
 class BRFController extends Controller
 {
@@ -560,6 +562,16 @@ class BRFController extends Controller
         return back();
     }
 
+    public function mark_as_released(Request $request)
+    {
+        $budget_request_form = BudgetRequestForm::find($request->budget_request_form_id);
+        $budget_request_form->status = $request->status;
+        $budget_request_form->save();
+
+        $request->session()->flash('success', 'Data has been marked as released');
+        return back();
+    }
+
     public function database_update(Request $request)
     {
         /* payable overdue checker */
@@ -574,6 +586,44 @@ class BRFController extends Controller
         }
 
         $request->session()->flash('success', 'Data has been updated');
+        return back();
+    }
+
+    public function release_file(Request $request)
+    {
+        $rules = [
+            'file' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);
+        }
+
+        $data = request()->all(); // get all request
+
+        if ($request->file('file')) { // if the file is present
+            $image_name = $request->name . '-' . time() . '.' . $request->file('file')->getClientOriginalExtension(); // set unique name for that file
+            $request->file('file')->move('uploads/files/brf/release-file', $image_name); // move the file to the laravel project
+            $data['file'] = 'uploads/files/brf/release-file/' . $image_name; // save the destination of the file to the database
+        }
+
+        $data['status'] = BudgetRequestFormFileStatus::ACTIVE; // if you want to insert to a specific column
+        $brf_file = BudgetRequestFormFile::create($data); // create data in a model
+        $brf_file->save();
+
+        $request->session()->flash('success', 'Data has been added');
+        return back();
+    }
+
+    public function delete_release_file(Request $request, $budget_request_form_file_id)
+    {
+        $brf_file = BudgetRequestFormFile::find($budget_request_form_file_id);
+        $brf_file->status = BudgetRequestFormFileStatus::INACTIVE;
+        $brf_file->save();
+
+        $request->session()->flash('success', 'Data has been deleted');
         return back();
     }
 }

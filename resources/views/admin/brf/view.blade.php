@@ -4,6 +4,8 @@
     use App\Models\LiquidationStatus;
     use App\Models\ProjectDetailStatus;
     use App\Models\BudgetRequestFormStatus;
+    use App\Models\BudgetRequestFormFile;
+    use App\Models\BudgetRequestFormFileStatus;
 @endphp
 
 <div class="container page__heading-container">
@@ -95,6 +97,12 @@
                                 <div class="badge badge-info">For Release</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::RELEASED)
                                 <div class="badge badge-success">Released</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION)
+                                <div class="badge badge-success">FOR LIQUIDATION</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP)
+                                <div class="badge badge-success">FOR BANK DEPOSIT SLIP</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP)
+                                <div class="badge badge-success">FOR LIQUIDATION BANK DEPOSIT SLIP</div>
                             @endif
                         </div>
                     </div>
@@ -106,13 +114,48 @@
                             <strong>Pay To</strong>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-md-7">
                         @if ($budget_request_form->payment_for_user)
                             {{ $budget_request_form->payment_for_user->firstname }} {{ $budget_request_form->payment_for_user->lastname }}
                         @endif
 
                         @if ($budget_request_form->payment_for_supplier)
                             {{ $budget_request_form->payment_for_supplier->name }}
+                        @endif
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <strong>Release File 
+                                @if (BudgetRequestFormFile::where('budget_request_form_id', $budget_request_form->id)
+                                ->where('status', BudgetRequestFormFileStatus::ACTIVE)
+                                ->exists())
+                                @php
+                                    $brf_file = BudgetRequestFormFile::where('budget_request_form_id', $budget_request_form->id)
+                                                    ->where('status', BudgetRequestFormFileStatus::ACTIVE)
+                                                    ->first();
+                                @endphp
+                                    <a href="#" data-href="{{ route('internals.brf.file.delete', [$brf_file->id]) }}" data-toggle="modal" data-target="#confirm-action"><i class="material-icons icon-16pt text-danger">delete</i></a>
+                                @endif
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="col">
+                        @if (BudgetRequestFormFile::where('budget_request_form_id', $budget_request_form->id)
+                        ->where('status', BudgetRequestFormFileStatus::ACTIVE)
+                        ->exists())
+                        @php
+                            $brf_file = BudgetRequestFormFile::where('budget_request_form_id', $budget_request_form->id)
+                                            ->where('status', BudgetRequestFormFileStatus::ACTIVE)
+                                            ->first();
+                        @endphp
+
+                            <a href="{{ url($brf_file->file) }}" download>
+                                <button class="btn btn-sm btn-primary">Download File</button>
+                            </a>
+                        @else
+                            <a href="#" data-toggle="modal" data-target="#release-file-{{ $budget_request_form->id }}">
+                                <button class="btn btn-primary btn-sm">Upload File</button>
+                            </a>
                         @endif
                     </div>
                 </div>
