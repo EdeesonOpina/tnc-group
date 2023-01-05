@@ -114,9 +114,9 @@ use App\Models\BudgetRequestFormDetailStatus;
                                 <th id="compact-table">Pay To</th>
                                 <th id="compact-table">Payment For</th>
                                 <th id="compact-table">Project</th>
+                                <th id="compact-table">Status</th>
                                 <th id="compact-table">Needed Date</th>
                                 <th id="compact-table">Total Price</th>
-                                <th id="compact-table">Status</th>
                             </tr>
                         </thead>
                         <tbody class="list" id="companies">
@@ -203,8 +203,6 @@ use App\Models\BudgetRequestFormDetailStatus;
                                     </td>
                                     <td id="compact-table">{{ $budget_request_form->name }}</td>
                                     <td id="compact-table">{{ $budget_request_form->project->name }}</td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}</td>
-                                    <td>P{{ number_format($total, 2) }}</td>
                                     <td>
                                         @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
                                             <div class="badge badge-info ml-2">For Approval</div>
@@ -230,6 +228,8 @@ use App\Models\BudgetRequestFormDetailStatus;
                                             <div class="badge badge-success ml-2">FOR LIQUIDATION BANK DEPOSIT SLIP</div>
                                         @endif
                                     </td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}</td>
+                                    <td>P{{ number_format($total, 2) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

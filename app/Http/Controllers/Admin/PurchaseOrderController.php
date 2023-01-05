@@ -238,7 +238,6 @@ class PurchaseOrderController extends Controller
         app('App\Http\Controllers\Log\PurchaseOrderController')->disapprove($request, $purchase_order->id);
 
         $request->session()->flash('success', 'Data has been disapproved');
-
         return back();
     }
 
@@ -252,7 +251,6 @@ class PurchaseOrderController extends Controller
         app('App\Http\Controllers\Log\PurchaseOrderController')->cancel($request, $purchase_order->id);
 
         $request->session()->flash('success', 'Data has been cancelled');
-
         return back();
     }
 
@@ -265,7 +263,6 @@ class PurchaseOrderController extends Controller
         $purchase_order->fill($data)->save();
 
         $request->session()->flash('success', 'Data has been finalized');
-
         return redirect()->route('internals.purchase-orders');
     }
 }
