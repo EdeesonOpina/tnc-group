@@ -613,6 +613,20 @@ class BRFController extends Controller
         $brf_file = BudgetRequestFormFile::create($data); // create data in a model
         $brf_file->save();
 
+        /* requested by user */
+        $name = $brf_file->budget_request_form->requested_by_user->firstname . ' ' . $brf_file->budget_request_form->requested_by_user->lastname;
+        $email = $brf_file->budget_request_form->requested_by_user->email;
+        $subject = 'Finance has uploaded a RELEASE file on your BRF';
+
+        /* send mail to user */
+        Mail::send('emails.brf.release-file', [
+            'brf' => $brf_file->budget_request_form
+        ], function ($message) use ($name, $email, $subject) {
+            $message->to($email, $name)
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+            ->subject($subject);
+        });
+
         $request->session()->flash('success', 'Data has been added');
         return back();
     }

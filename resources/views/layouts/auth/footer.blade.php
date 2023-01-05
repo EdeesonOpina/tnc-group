@@ -557,7 +557,11 @@
 
   @if (request()->is('admin/brf') || request()->is('admin/brf/*'))
     @if(str_contains(url()->current(), '/edit') || str_contains(url()->current(), '/add') || str_contains(url()->current(), '/view'))
-        @include('layouts.modals.brf.release-file')
+        @if(str_contains(url()->current(), '/users') || str_contains(url()->current(), '/suppliers'))
+
+        @else
+            @include('layouts.modals.brf.release-file')
+        @endif
     @else
         {{-- @include('layouts.modals.brf.add-from-project-list') --}}
 

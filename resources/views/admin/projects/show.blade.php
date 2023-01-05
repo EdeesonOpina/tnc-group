@@ -148,13 +148,13 @@ use App\Models\ProjectBudgetStatus;
                                 <th id="compact-table">Created By</th>
                                 <th id="compact-table">Company</th>
                                 <th id="compact-table">Client</th>
+                                <th id="compact-table">Status</th>
                                 <th id="compact-table">Cost</th>
                                 <th id="compact-table">Used Cost</th>
                                 <th id="compact-table">ASF</th>
                                 <th id="compact-table">VAT</th>
                                 <th id="compact-table">Grand Total</th>
                                 <th id="compact-table">Duration Date</th>
-                                <th id="compact-table">Status</th>
                             </tr>
                         </thead>
                         <tbody class="list" id="companies">
@@ -205,12 +205,6 @@ use App\Models\ProjectBudgetStatus;
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $project->prepared_by_user->firstname }} {{ $project->prepared_by_user->lastname }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $project->company->name }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $project->client->name }}</td>
-                                    <td id="compact-table">P{{ number_format($project->total, 2) }}</td>
-                                    <td id="compact-table">P{{ number_format($project->used_cost(), 2) }}</td>
-                                    <td id="compact-table">P{{ number_format($project->asf, 2) }}</td>
-                                    <td id="compact-table">P{{ number_format($project->vat, 2) }}</td>
-                                    <td id="compact-table">P{{ number_format($project->total + $project->asf + $project->vat, 2) }}</td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($project->duration_date)->format('M d Y') ?? null }}</td>
                                     <td>
                                         @if ($project->status == ProjectStatus::FOR_APPROVAL)
                                             <div class="badge badge-info ml-2">For Approval</div>
@@ -228,6 +222,12 @@ use App\Models\ProjectBudgetStatus;
                                             <div class="badge badge-danger ml-2">Inactive</div>
                                         @endif
                                     </td>
+                                    <td id="compact-table">P{{ number_format($project->total, 2) }}</td>
+                                    <td id="compact-table">P{{ number_format($project->used_cost(), 2) }}</td>
+                                    <td id="compact-table">P{{ number_format($project->asf, 2) }}</td>
+                                    <td id="compact-table">P{{ number_format($project->vat, 2) }}</td>
+                                    <td id="compact-table">P{{ number_format($project->total + $project->asf + $project->vat, 2) }}</td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($project->duration_date)->format('M d Y') ?? null }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
