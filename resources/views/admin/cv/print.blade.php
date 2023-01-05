@@ -176,7 +176,7 @@
 
     <br>
 
-    <table class="table table-bordered font-change">
+    <table class="table table-black-border font-change">
         <thead>
             <tr>
                 <th id="compact-table" class="table-black-border table-color-primary min-space">Particulars</th>
@@ -204,7 +204,7 @@
         </tbody>
     </table>
 
-    <table class="table table-black-border table-bordered font-change">
+    <table class="table table-black-border font-change">
         <tbody>
             @foreach ($remarks as $remark)
                 <tr>
@@ -242,7 +242,7 @@
         </tbody>
     </table>
 
-    <table class="table table-black-border table-bordered font-change">
+    <table class="table table-black-border font-change">
         <tbody>
             <tr>
                 <td class="table-black-border text-left">
