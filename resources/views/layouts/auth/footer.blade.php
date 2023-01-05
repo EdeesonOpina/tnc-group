@@ -146,6 +146,12 @@
                                             <span class="sidebar-menu-text">Activity Logs</span>
                                         </a>
                                     </li>
+
+                                    <li class="sidebar-menu-item">
+                                        <a class="sidebar-menu-button" href="{{ route('admin.reports.projects') }}">
+                                            <span class="sidebar-menu-text">Projects</span>
+                                        </a>
+                                    </li>
                                 @endif
 
                                 @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
