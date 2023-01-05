@@ -32,10 +32,6 @@
   <a href="{{ route('internals.brf.view', [$brf->reference_number]) }}" target="_blank" style="display: inline-block; color: #ffffff; background-color: #FF6F11; border: solid 1px #FF6F11; border-radius: 0px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #FF6F11;">Click here to view and approve</a> 
 </p>
 
-<p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
-  Upon approval of the final approver, the requestor must receive an email indicating that the request has been approved by the final approver.
-</p>
-
 <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><small>&copy; {{ str_replace('_', ' ', env('APP_NAME')) }} {{ date('Y') }}</small>
 </p>
 
