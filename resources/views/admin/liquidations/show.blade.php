@@ -59,9 +59,10 @@ use App\Models\BudgetRequestFormDetailStatus;
                                     @endif
                                 @endif
                                 <option value="*">All</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION }}">FOR LIQUIDATION</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP }}">FOR BANK DEPOSIT SLIP</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP }}">FOR LIQUIDATION BANK DEPOSIT SLIP</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT }}">For Official Receipt</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION }}">For Liquidation</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP }}">For Bank Deposit Slip</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP }}">For Liquidation Bank Deposit Slip</option>
                             </select>
                         </div>
                     </div>
@@ -152,6 +153,8 @@ use App\Models\BudgetRequestFormDetailStatus;
                                             <div class="badge badge-danger ml-2">Disapproved</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION)
                                             <div class="badge badge-success ml-2">FOR LIQUIDATION</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT)
+                                            <div class="badge badge-success ml-2">FOR OFFICIAL RECEIPT</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP)
                                             <div class="badge badge-success ml-2">FOR BANK DEPOSIT SLIP</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP)

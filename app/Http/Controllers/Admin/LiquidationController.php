@@ -50,7 +50,7 @@ class LiquidationController extends Controller
         $from_date = $request->from_date ?? '*';
         $to_date = $request->to_date ?? '*';
 
-        return redirect()->route('internals.liquidations.filter', [$reference_number, $name, $status, $from_date, $to_date])->withInput();
+        return redirect()->route('accounting.liquidations.filter', [$reference_number, $name, $status, $from_date, $to_date])->withInput();
     }
 
     public function filter($reference_number, $name, $status, $from_date, $to_date)

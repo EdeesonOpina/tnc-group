@@ -68,10 +68,10 @@ use App\Models\BudgetRequestFormDetailStatus;
                                 <option value="{{ BudgetRequestFormStatus::DISAPPROVED }}">Disapproved</option>
                                 <option value="{{ BudgetRequestFormStatus::FOR_RELEASE }}">For Release</option>
                                 <option value="{{ BudgetRequestFormStatus::RELEASED }}">Released</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT }}">FOR OFFICIAL RECEIPT</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION }}">FOR LIQUIDATION</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP }}">FOR BANK DEPOSIT SLIP</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP }}">FOR LIQUIDATION BANK DEPOSIT SLIP</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT }}">For Official Receipt</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION }}">For Liquidation</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP }}">For Bank Deposit Slip</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP }}">For Liquidation Bank Deposit Slip</option>
                             </select>
                         </div>
                     </div>
