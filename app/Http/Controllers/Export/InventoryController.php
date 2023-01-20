@@ -8,27 +8,29 @@ use Carbon\Carbon;
 use Auth;
 use Mail;
 use Validator;
-use App\Models\Branch;
+use App\Models\Company;
 use App\Models\Inventory;
 use App\Models\BranchStatus;
+use App\Models\ItemStatus;
 use App\Models\InventoryStatus;
 
 class InventoryController extends Controller
 {
-    public function print($so_number)
+    public function print($company_id)
     {
-        $branch = Branch::find(auth()->user()->branch->id);
+        $company = Company::find($company_id);
 
         $inventories = Inventory::leftJoin('items', 'inventories.item_id', '=', 'items.id')
                             ->select('inventories.*')
-                            ->where('inventories.branch_id', auth()->user()->branch->id)
+                            ->where('inventories.company_id', $company->id)
                             ->where('inventories.qty', '>', 0)
                             ->where('inventories.status', InventoryStatus::ACTIVE)
+                            ->where('items.status', ItemStatus::ACTIVE)
                             ->orderBy('items.name', 'asc')
                             ->get();
 
         return view('admin.inventories.print', compact(
-            'branch',
+            'company',
             'inventories'
         ));
     }

@@ -153,7 +153,8 @@ use App\Models\ProjectBudgetStatus;
                                 <th id="compact-table">Used Cost</th>
                                 <th id="compact-table">ASF</th>
                                 <th id="compact-table">VAT</th>
-                                <th id="compact-table">Grand Total</th>
+                                <th id="compact-table">CE Total</th>
+                                <th id="compact-table">Net Rceivable</th>
                                 <th id="compact-table">Duration Date</th>
                             </tr>
                         </thead>
@@ -227,6 +228,7 @@ use App\Models\ProjectBudgetStatus;
                                     <td id="compact-table">P{{ number_format($project->asf, 2) }}</td>
                                     <td id="compact-table">P{{ number_format($project->vat, 2) }}</td>
                                     <td id="compact-table">P{{ number_format($project->total + $project->asf + $project->vat, 2) }}</td>
+                                    <td id="compact-table">P{{ number_format(0, 2) }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($project->duration_date)->format('M d Y') ?? null }}</td>
                                 </tr>
                             @endforeach
