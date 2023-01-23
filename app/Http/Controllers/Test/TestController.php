@@ -33,4 +33,9 @@ class TestController extends Controller
             ->subject($subject);
         });
     }
+
+    public function qr()
+    {
+        return view('test.qr');
+    }
 }

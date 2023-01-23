@@ -1135,6 +1135,7 @@ Route::group(['prefix' => 'imports/', 'middleware' => ['auth', 'internal']], fun
 Route::group(['prefix' => 'test/'], function () {
     Route::get('/version', 'App\Http\Controllers\Test\TestController@version');
     Route::get('/email', 'App\Http\Controllers\Test\TestController@email');
+    Route::get('/qr', 'App\Http\Controllers\Test\TestController@qr');
 });
 
 // ajax routes
