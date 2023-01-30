@@ -14,9 +14,9 @@
                                 <div class="text">As a leading pioneer, key driver, and innovator with over 15 years of experience across various sectors of the gaming and esports industry, TNC has a proven track record of successfully navigating challenges and pushing beyond boundaries to achieve success.</div>
                                 <h3>Contact:</h3>
                                 <div class="row clearfix">
-                                    <!-- <div class="inner-column col-md-6 col-sm-6 col-xs-12">
-                                        <div class="info-text">13, Big Smart Str, 2nd Cross Newyork, USA 1002.</div>
-                                    </div> -->
+                                    <div class="inner-column col-md-6 col-sm-6 col-xs-12">
+                                        <div class="info-text">13, 2nd Floor, CVJ Bldg. Nicanor Roxas St. Quezon City, Metro Manila Philippines.</div>
+                                    </div>
                                     <div class="inner-column col-md-6 col-sm-6 col-xs-12">
                                         <ul>
                                             <!-- <li><span>Ph:</span> +123-456-7890</li> -->

@@ -133,7 +133,7 @@
             <div class="auto-container clearfix">
                 <!--Logo-->
                 <div class="logo pull-left">
-                    <a href="index.html" class="img-responsive"><img src="{{ url('guest/images/logo-small.png') }}" alt="" title="" width="120px"></a>
+                    <a href="{{ url('/') }}" class="img-responsive"><img src="{{ url('guest/images/logo-small.png') }}" alt="" title="" width="120px"></a>
                 </div>
                 
                 <!--Right Col-->
