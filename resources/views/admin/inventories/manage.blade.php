@@ -17,9 +17,9 @@
             </nav>
             <h1 class="m-0">{{ $company->name }} Inventory</h1>
         </div>
-        <a href="{{ route('internals.inventories.print', [auth()->user()->company->id]) }}">
-                            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print</button>
-                        </a>
+        <a href="{{ route('internals.inventories.print', [$company->id]) }}">
+            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print</button>
+        </a>
     </div>
 </div>
 

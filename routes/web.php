@@ -246,9 +246,9 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
         // exports
         Route::group(['prefix' => 'exports/'], function () {
-            Route::get('print/{jo_number}', 'App\Http\Controllers\Export\InventoryController@print')->name('internals.inventories.print');
-            Route::get('excel/{jo_number}', 'App\Http\Controllers\Export\InventoryController@excel')->name('internals.inventories.excel');
-            Route::get('pdf/{jo_number}', 'App\Http\Controllers\Export\InventoryController@pdf')->name('internals.inventories.pdf');
+            Route::get('print/{company_id}', 'App\Http\Controllers\Export\InventoryController@print')->name('internals.inventories.print');
+            Route::get('excel/{company_id}', 'App\Http\Controllers\Export\InventoryController@excel')->name('internals.inventories.excel');
+            Route::get('pdf/{company_id}', 'App\Http\Controllers\Export\InventoryController@pdf')->name('internals.inventories.pdf');
             Route::get('sql', 'App\Http\Controllers\Export\InventoryController@sql')->name('internals.inventories.sql');
         });
 
@@ -1141,6 +1141,7 @@ Route::group(['prefix' => 'imports/', 'middleware' => ['auth', 'internal']], fun
 Route::group(['prefix' => 'test/'], function () {
     Route::get('/version', 'App\Http\Controllers\Test\TestController@version');
     Route::get('/email', 'App\Http\Controllers\Test\TestController@email');
+    Route::get('/qr', 'App\Http\Controllers\Test\TestController@qr');
 });
 
 // ajax routes

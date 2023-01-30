@@ -67,14 +67,18 @@
 <body>
 <div class="container">
   <br><br>
-  <a href="{{ route('internals.inventories.manage', [auth()->user()->branch->id]) }}" class="no-underline">
+  <a href="{{ route('internals.inventories.manage', [$company->id]) }}" class="no-underline">
     <button class="btn btn-light">Go Back</button>
   </a>
   <button class="btn btn-success" onclick="printDiv('printableArea')">Print Page</button>
   <br><br>
   <!-- START OF PRINTABLE AREA -->
   <div id="printableArea">
-    <img src="{{ url(env('BIG_FOUR_LOGO')) }}" width="150px">
+    @if ($company->image)
+        <img src="{{ url($company->image) }}" width="150px">
+    @else
+        <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="40px" style="margin-right: 7px;">
+    @endif
     <hr>
     <h2 class="font-change">Inventory Report</h2>
 
@@ -83,11 +87,11 @@
             <tr>
                 <td class="text-left">
                     <p class="font-change">
-                      <strong>Branch:</strong><br>
-                      {{ $branch->name }}<br>
-                      {{ $branch->line_address_1 }}<br>
-                      {{ $branch->line_address_2 }}<br>
-                      {{ $branch->mobile }} / {{ $branch->phone }}
+                      <strong>Company:</strong><br>
+                      {{ $company->name }}<br>
+                      {{ $company->line_address_1 }}<br>
+                      {{ $company->line_address_2 }}<br>
+                      {{ $company->mobile }} / {{ $company->phone }}
                     </p>
                 </td>
             </tr>
