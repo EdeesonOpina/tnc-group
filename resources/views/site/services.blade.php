@@ -26,8 +26,8 @@
         <div class="auto-container">
             <!--Sec Title-->
             <div class="sec-title centered">
-                <h2>Our Services</h2>
-                <div class="title">What We Do For You</div>
+                <h2>Our <span class="theme_color">Business Units</span><br>and <span class="theme_color">Services</span></h2>
+                <div class="title">Let's explore the possibilities to work together!</div>
                 <div class="separator"></div>
             </div>
             <div class="row clearfix">

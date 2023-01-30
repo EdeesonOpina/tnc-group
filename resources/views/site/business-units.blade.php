@@ -169,7 +169,7 @@
                     <div class="content">
                         <div class="row clearfix">
                             <div class="column col-md-6 col-sm-6 col-xs-12">
-                                <h2>Get Every Single Answers And Note Here.</h2>
+                                <h2>Got questions? Our team will help you out on that!</h2>
                             </div>
                             <div class="column col-md-6 col-sm-6 col-xs-12">
                                 <div class="text">We are dedicated to identifying and meeting the needs of our partners and clients, and stand ready to assist you in any way we can. </div>
@@ -182,7 +182,7 @@
             <div class="content-column">
                 <div class="inner-column">
                     <h2>Contact Us</h2>
-                    <div class="title">For Any Enquiry</div>
+                    <div>Fill out the form below and someone from our team will reach out to you as soon as we can!</div>
                     <div class="separator"></div>
                     
                     <!-- Appointment Form -->

@@ -136,7 +136,7 @@
             <div class="auto-container clearfix">
                 <!--Logo-->
                 <div class="logo pull-left">
-                    <a href="index.html" class="img-responsive"><img src="{{ url('guest/images/logo-small.png') }}" alt="" title="" width="120px"></a>
+                    <a href="{{ url('/') }}" class="img-responsive"><img src="{{ url('guest/images/logo-small.png') }}" alt="" title="" width="120px"></a>
                 </div>
                 
                 <!--Right Col-->
@@ -208,7 +208,7 @@
                     data-textalign="['top','top','top','top']"
                     data-frames='[{"from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","speed":1500,"to":"o:1;","delay":1000,"ease":"Power3.easeInOut"},{"delay":"wait","speed":1000,"to":"auto:auto;","mask":"x:0;y:0;s:inherit;e:inherit;","ease":"Power3.easeInOut"}]'
                     style="z-index: 7; white-space: nowrap;text-transform:left;">
-                        <h2>Welcome to <br> TNC Group</h2>
+                        <h2>TNC Group</h2>
                     </div>
                     
                     <div class="tp-caption" 
@@ -400,8 +400,8 @@
         <div class="auto-container">
             <!--Sec Title-->
             <div class="sec-title centered">
-                <h2>Our Services</h2>
-                <div class="title">What We Do For You</div>
+                <h2>Our <span class="theme_color">Business Units</span><br>and <span class="theme_color">Services</span></h2>
+                <div class="title">Let's explore the possibilities to work together!</div>
                 <div class="separator"></div>
             </div>
             <div class="row clearfix">
@@ -1666,7 +1666,7 @@
                     <div class="content">
                         <div class="row clearfix">
                             <div class="column col-md-6 col-sm-6 col-xs-12">
-                                <h2>Get Every Single Answers And Note Here.</h2>
+                                <h2>Got questions? Our team will help you out on that!</h2>
                             </div>
                             <div class="column col-md-6 col-sm-6 col-xs-12">
                                 <div class="text">We are dedicated to identifying and meeting the needs of our partners and clients, and stand ready to assist you in any way we can. </div>
@@ -1679,7 +1679,7 @@
             <div class="content-column">
                 <div class="inner-column">
                     <h2>Contact Us</h2>
-                    <div class="title">For Any Enquiry</div>
+                    <div>Fill out the form below and someone from our team will reach out to you as soon as we can!</div>
                     <div class="separator"></div>
                     
                     <!-- Appointment Form -->
@@ -1693,6 +1693,10 @@
             
                                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                     <input type="email" name="email" placeholder="Email Address" required>
+                                </div>
+
+                                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                    <textarea name="description" placeholder="Enter message here" required></textarea>
                                 </div>
                                 
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
