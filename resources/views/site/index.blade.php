@@ -2,7 +2,17 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>TNC</title>
+@if (Request::is('/'))
+    <title>TNC &dash; Home</title>
+@elseif(Request::is('business-units'))
+    <title>TNC &dash; Business Units</title>
+@elseif(Request::is('services'))
+    <title>TNC &dash; Services</title>
+@elseif(Request::is('contact'))
+    <title>TNC &dash; Contact</title>
+@elseif(Request::is('about'))
+    <title>TNC &dash; About Us</title>
+@endif
 <!-- Stylesheets -->
 <link href="{{ url('guest/css/bootstrap.css') }}" rel="stylesheet">
 <link href="{{ url('guest/plugins/revolution/css/settings.css') }}" rel="stylesheet" type="text/css"><!-- REVOLUTION SETTINGS STYLES -->
