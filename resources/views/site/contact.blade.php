@@ -7,7 +7,7 @@
             <div class="title">Get Every Single Answers And Note Here.</div>
         </div>
         <!--Page Info-->
-        <div class="page-info">
+        <!-- <div class="page-info">
             <div class="auto-container">
             	<div class="inner-container">
                     <ul class="bread-crumb">
@@ -16,7 +16,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!--End Page Info-->
     </section>
     <!--End Page Title-->
@@ -59,6 +59,10 @@
             
                                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                     <input type="email" name="email" placeholder="Email Address" required>
+                                </div>
+
+                                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                    <textarea name="description" placeholder="Enter message here" required></textarea>
                                 </div>
                                 
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">

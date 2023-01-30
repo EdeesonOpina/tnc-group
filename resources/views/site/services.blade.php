@@ -46,7 +46,7 @@
                             <div class="content">
                                 <div class="number">01</div>
                                 <h3><a href="services-single.html">Cyber Cafe Venues</a></h3>
-                                <div class="text">Cyber Cafe Venues</div>
+
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,6 @@
                             <div class="content">
                                 <div class="number">02</div>
                                 <h3><a href="services-single.html">Gaming and Esports Event Management</a></h3>
-                                <div class="text">Except to obtain some of advantages...</div>
                             </div>
                         </div>
                     </div>
@@ -86,7 +85,6 @@
                             <div class="content">
                                 <div class="number">03</div>
                                 <h3><a href="services-single.html">Professional Team Management</a></h3>
-                                <div class="text">Some advantage from right all default...</div>
                             </div>
                         </div>
                     </div>
@@ -106,7 +104,6 @@
                             <div class="content">
                                 <div class="number">04</div>
                                 <h3><a href="services-single.html">Food and Beverage Venture</a></h3>
-                                <div class="text">Anyone who love pursue work itself...</div>
                             </div>
                         </div>
                     </div>
@@ -126,7 +123,6 @@
                             <div class="content">
                                 <div class="number">05</div>
                                 <h3><a href="services-single.html">Web Development and Programming Services</a></h3>
-                                <div class="text">Except to obtain some of advantages...</div>
                             </div>
                         </div>
                     </div>
@@ -146,7 +142,6 @@
                             <div class="content">
                                 <div class="number">06</div>
                                 <h3><a href="services-single.html">Full Marketing Services </a></h3>
-                                <div class="text">Some advantage from right all default...</div>
                             </div>
                         </div>
                     </div>

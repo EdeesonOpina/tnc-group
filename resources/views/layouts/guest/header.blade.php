@@ -34,7 +34,7 @@
                     <div class="top-left">
                         <ul class="clearfix">
                             <!-- <li><a href="#"><span class="icon fa fa-phone"></span>+123-456-7890</a></li> -->
-                            <li><a href="#"><span class="icon fa fa-envelope"></span>support@tnc.com.ph</a></li>
+                            <li><a href="mailto:support@tnc.com.ph"><span class="icon fa fa-envelope"></span>support@tnc.com.ph</a></li>
                         </ul>
                     </div>
                     <div class="top-right clearfix">
