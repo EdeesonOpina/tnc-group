@@ -619,13 +619,13 @@ class BRFController extends Controller
         $subject = 'Finance has uploaded a RELEASE file on your BRF';
 
         /* send mail to user */
-        Mail::send('emails.brf.release-file', [
-            'brf' => $brf_file->budget_request_form
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.brf.release-file', [
+        //     'brf' => $brf_file->budget_request_form
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been added');
         return back();
