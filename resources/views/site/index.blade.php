@@ -563,18 +563,32 @@
                 <div class="sponsors-outer">
                     <!--Sponsors Carousel-->
                     <ul class="sponsors-carousel owl-carousel owl-theme">
-                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/clients/1.png') }}" alt=""></a></figure></li>
-                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/clients/2.png') }}" alt=""></a></figure></li>
-                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/clients/3.png') }}" alt=""></a></figure></li>
-                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/clients/4.png') }}" alt=""></a></figure></li>
-                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/clients/5.png') }}" alt=""></a></figure></li>
-                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/clients/6.png') }}" alt=""></a></figure></li>
-                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/clients/1.png') }}" alt=""></a></figure></li>
-                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/clients/2.png') }}" alt=""></a></figure></li>
-                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/clients/3.png') }}" alt=""></a></figure></li>
-                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/clients/4.png') }}" alt=""></a></figure></li>
-                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/clients/5.png') }}" alt=""></a></figure></li>
-                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/clients/6.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/1.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/2.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/3.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/4.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/5.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/6.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/7.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/8.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/9.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/10.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/11.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/12.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/13.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/14.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/15.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/16.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/17.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/18.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/19.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/20.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/21.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/22.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/23.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/24.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/25.png') }}" alt=""></a></figure></li>
+                        <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ url('guest/images/partners/26.png') }}" alt=""></a></figure></li>
                     </ul>
                 </div>
             </div>
