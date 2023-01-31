@@ -187,13 +187,13 @@ class ProjectController extends Controller
         $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' created a project';
 
         /* send mail to user */
-        Mail::send('emails.projects.create', [
-            'project' => $project
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.projects.create', [
+        //     'project' => $project
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been added');
         return redirect()->route('internals.projects.manage', [$project->id]);
@@ -355,13 +355,13 @@ class ProjectController extends Controller
         $subject = $project->prepared_by_user->name . ' has signed the project';
 
         /* send mail to user */
-        Mail::send('emails.projects.upload-conforme', [
-            'project' => $project
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.projects.upload-conforme', [
+        //     'project' => $project
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been updated');
         return back();
@@ -614,13 +614,13 @@ class ProjectController extends Controller
         $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' approved your project';
 
         /* send mail to user */
-        Mail::send('emails.projects.approve', [
-            'project' => $project
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.projects.approve', [
+        //     'project' => $project
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been approved');
         return redirect()->route('internals.projects.view', [$project->reference_number]);
@@ -639,13 +639,13 @@ class ProjectController extends Controller
         $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' disapproved your project';
 
         /* send mail to user */
-        Mail::send('emails.projects.disapprove', [
-            'project' => $project
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.projects.disapprove', [
+        //     'project' => $project
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been disapproved');
         return redirect()->route('internals.projects.view', [$project->reference_number]);
@@ -663,13 +663,13 @@ class ProjectController extends Controller
         $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' sent a project for approval';
 
         /* send mail to user */
-        Mail::send('emails.projects.create-for-approver', [
-            'project' => $project
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.projects.create-for-approver', [
+        //     'project' => $project
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been sent for approval');
         return back();
