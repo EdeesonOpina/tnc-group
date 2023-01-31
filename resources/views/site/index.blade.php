@@ -423,9 +423,9 @@
                         <a href="{{ url('services/1') }}">
                         <div class="image">
                             <img src="{{ url('guest/images/resource/18.jpg') }}" alt="" />
-                            <div class="icon-box">
+                            <!-- <div class="icon-box">
                                 <span class="icon flaticon-head"></span>
-                            </div>
+                            </div> -->
                             <div class="overlay-color"></div>
                         </div>
                         </a>
@@ -444,9 +444,9 @@
                         <a href="{{ url('services/2') }}">
                             <div class="image">
                                 <img src="{{ url('guest/images/resource/7.jpg') }}" alt="" />
-                                <div class="icon-box">
+                                <!-- <div class="icon-box">
                                     <span class="icon flaticon-open-book"></span>
-                                </div>
+                                </div> -->
                                 <div class="overlay-color"></div>
                             </div>
                         </a>
@@ -465,9 +465,9 @@
                         <a href="{{ url('services/3') }}">
                         <div class="image">
                             <img src="{{ url('guest/images/resource/10.jpg') }}" alt="" />
-                            <div class="icon-box">
+                            <!-- <div class="icon-box">
                                 <span class="icon flaticon-line-chart"></span>
-                            </div>
+                            </div> -->
                             <div class="overlay-color"></div>
                         </div>
                         </a>
@@ -486,9 +486,9 @@
                         <a href="{{ url('services/4') }}">
                         <div class="image">
                             <img src="{{ url('guest/images/resource/13.jpg') }}" alt="" />
-                            <div class="icon-box">
+                            <<!-- div class="icon-box">
                                 <span class="icon flaticon-head"></span>
-                            </div>
+                            </div> -->
                             <div class="overlay-color"></div>
                         </div>
                         </a>
@@ -507,9 +507,9 @@
                         <a href="{{ url('services/5') }}">
                         <div class="image">
                             <img src="{{ url('guest/images/resource/11.jpg') }}" alt="" />
-                            <div class="icon-box">
+                            <!-- <div class="icon-box">
                                 <span class="icon flaticon-open-book"></span>
-                            </div>
+                            </div> -->
                             <div class="overlay-color"></div>
                         </div>
                         </a>
@@ -528,9 +528,9 @@
                         <a href="{{ url('services/6') }}">
                         <div class="image">
                             <img src="{{ url('guest/images/resource/12.jpg') }}" alt="" />
-                            <div class="icon-box">
+                            <!-- <div class="icon-box">
                                 <span class="icon flaticon-line-chart"></span>
-                            </div>
+                            </div> -->
                             <div class="overlay-color"></div>
                         </div>
                         </a>
