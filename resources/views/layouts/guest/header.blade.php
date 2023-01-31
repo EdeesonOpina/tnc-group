@@ -95,13 +95,13 @@
                                     <li><a href="{{ url('/business-units') }}">Business Units</a></li>
                                     <li class="dropdown"><a href="#">Services</a>
                                         <ul>
-                                            <li><a href="{{ url('/services') }}">All Services</a></li>
-                                            <li><a href="{{ url('/services') }}">Cyber Cafe Venues</a></li>
-                                            <li><a href="{{ url('/services') }}">Gaming and Esports Event Management</a></li>
-                                            <li><a href="{{ url('/services') }}">Professional Team Management</a></li>
-                                            <li><a href="{{ url('/services') }}">Food and Beverage Venture</a></li>
-                                            <li><a href="{{ url('/services') }}">Web Development and Programming Services</a></li>
-                                            <li><a href="{{ url('/services') }}">Full Marketing Services</a></li>
+                                            <li><a href="{{ url('/services/*') }}">All Services</a></li>
+                                            <li><a href="{{ url('/services/1') }}">Cyber Cafe Venues</a></li>
+                                            <li><a href="{{ url('/services/2') }}">Gaming and Esports Event Management</a></li>
+                                            <li><a href="{{ url('/services/3') }}">Professional Team Management</a></li>
+                                            <li><a href="{{ url('/services/4') }}">Food and Beverage Venture</a></li>
+                                            <li><a href="{{ url('/services/5') }}">Web Development and Programming Services</a></li>
+                                            <li><a href="{{ url('/services/6') }}">Full Marketing Services</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="{{ url('/contact') }}">Contact</a></li>
@@ -167,12 +167,13 @@
                                 <li><a href="{{ url('/business-units') }}">Business Units</a></li>
                                 <li class="dropdown"><a href="#">Services</a>
                                     <ul>
-                                        <li><a href="{{ url('/services') }}">Cyber Cafe Venues</a></li>
-                                        <li><a href="{{ url('/services') }}">Gaming and Esports Event Management</a></li>
-                                        <li><a href="{{ url('/services') }}">Professional Team Management</a></li>
-                                        <li><a href="{{ url('/services') }}">Food and Beverage Venture</a></li>
-                                        <li><a href="{{ url('/services') }}">Web Development and Programming Services</a></li>
-                                        <li><a href="{{ url('/services') }}">Full Marketing Services</a></li>
+                                        <li><a href="{{ url('/services/*') }}">All Services</a></li>
+                                        <li><a href="{{ url('/services/1') }}">Cyber Cafe Venues</a></li>
+                                        <li><a href="{{ url('/services/2') }}">Gaming and Esports Event Management</a></li>
+                                        <li><a href="{{ url('/services/3') }}">Professional Team Management</a></li>
+                                        <li><a href="{{ url('/services/4') }}">Food and Beverage Venture</a></li>
+                                        <li><a href="{{ url('/services/5') }}">Web Development and Programming Services</a></li>
+                                        <li><a href="{{ url('/services/6') }}">Full Marketing Services</a></li>
                                     </ul>
                                 </li>
 

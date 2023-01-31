@@ -96,13 +96,13 @@
                                     <li><a href="{{ url('/business-units') }}">Business Units</a></li>
                                     <li class="dropdown"><a href="#">Services</a>
                                         <ul>
-                                            <li><a href="{{ url('/services') }}">All Services</a></li>
-                                            <li><a href="{{ url('/services') }}">Cyber Cafe Venues</a></li>
-                                            <li><a href="{{ url('/services') }}">Gaming and Esports Event Management</a></li>
-                                            <li><a href="{{ url('/services') }}">Professional Team Management</a></li>
-                                            <li><a href="{{ url('/services') }}">Food and Beverage Venture</a></li>
-                                            <li><a href="{{ url('/services') }}">Web Development and Programming Services</a></li>
-                                            <li><a href="{{ url('/services') }}">Full Marketing Services</a></li>
+                                            <li><a href="{{ url('/services/*') }}">All Services</a></li>
+                                            <li><a href="{{ url('/services/1') }}">Cyber Cafe Venues</a></li>
+                                            <li><a href="{{ url('/services/2') }}">Gaming and Esports Event Management</a></li>
+                                            <li><a href="{{ url('/services/3') }}">Professional Team Management</a></li>
+                                            <li><a href="{{ url('/services/4') }}">Food and Beverage Venture</a></li>
+                                            <li><a href="{{ url('/services/5') }}">Web Development and Programming Services</a></li>
+                                            <li><a href="{{ url('/services/6') }}">Full Marketing Services</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="{{ url('/contact') }}">Contact</a></li>
@@ -168,12 +168,13 @@
                                 <li><a href="{{ url('/business-units') }}">Business Units</a></li>
                                 <li class="dropdown"><a href="#">Services</a>
                                     <ul>
-                                        <li><a href="{{ url('/services') }}">Cyber Cafe Venues</a></li>
-                                        <li><a href="{{ url('/services') }}">Gaming and Esports Event Management</a></li>
-                                        <li><a href="{{ url('/services') }}">Professional Team Management</a></li>
-                                        <li><a href="{{ url('/services') }}">Food and Beverage Venture</a></li>
-                                        <li><a href="{{ url('/services') }}">Web Development and Programming Services</a></li>
-                                        <li><a href="{{ url('/services') }}">Full Marketing Services</a></li>
+                                        <li><a href="{{ url('/services/*') }}">All Services</a></li>
+                                        <li><a href="{{ url('/services/1') }}">Cyber Cafe Venues</a></li>
+                                        <li><a href="{{ url('/services/2') }}">Gaming and Esports Event Management</a></li>
+                                        <li><a href="{{ url('/services/3') }}">Professional Team Management</a></li>
+                                        <li><a href="{{ url('/services/4') }}">Food and Beverage Venture</a></li>
+                                        <li><a href="{{ url('/services/5') }}">Web Development and Programming Services</a></li>
+                                        <li><a href="{{ url('/services/6') }}">Full Marketing Services</a></li>
                                     </ul>
                                 </li>
 
@@ -419,6 +420,7 @@
                 <!--Services Block-->
                 <div class="services-block col-md-4 col-sm-6 col-xs-12">
                     <div class="inner-box">
+                        <a href="{{ url('services/1') }}">
                         <div class="image">
                             <img src="{{ url('guest/images/resource/18.jpg') }}" alt="" />
                             <div class="icon-box">
@@ -426,10 +428,11 @@
                             </div>
                             <div class="overlay-color"></div>
                         </div>
+                        </a>
                         <div class="lower-box">
                             <div class="content">
                                 <div class="number">01</div>
-                                <h3><a href="services-single.html">Cyber Cafe Venues</a></h3>
+                                <h3><a href="{{ url('services/1') }}">Cyber Cafe Venues</a></h3>
                             </div>
                         </div>
                     </div>
@@ -438,17 +441,19 @@
                 <!--Services Block-->
                 <div class="services-block col-md-4 col-sm-6 col-xs-12">
                     <div class="inner-box">
-                        <div class="image">
-                            <img src="{{ url('guest/images/resource/7.jpg') }}" alt="" />
-                            <div class="icon-box">
-                                <span class="icon flaticon-open-book"></span>
+                        <a href="{{ url('services/2') }}">
+                            <div class="image">
+                                <img src="{{ url('guest/images/resource/7.jpg') }}" alt="" />
+                                <div class="icon-box">
+                                    <span class="icon flaticon-open-book"></span>
+                                </div>
+                                <div class="overlay-color"></div>
                             </div>
-                            <div class="overlay-color"></div>
-                        </div>
+                        </a>
                         <div class="lower-box">
                             <div class="content">
                                 <div class="number">02</div>
-                                <h3><a href="services-single.html">Gaming and Esports Event Management</a></h3>
+                                <h3><a href="{{ url('services/2') }}">Gaming and Esports Event Management</a></h3>
                             </div>
                         </div>
                     </div>
@@ -457,6 +462,7 @@
                 <!--Services Block-->
                 <div class="services-block col-md-4 col-sm-6 col-xs-12">
                     <div class="inner-box">
+                        <a href="{{ url('services/3') }}">
                         <div class="image">
                             <img src="{{ url('guest/images/resource/10.jpg') }}" alt="" />
                             <div class="icon-box">
@@ -464,10 +470,11 @@
                             </div>
                             <div class="overlay-color"></div>
                         </div>
+                        </a>
                         <div class="lower-box">
                             <div class="content">
                                 <div class="number">03</div>
-                                <h3><a href="services-single.html">Professional Team Management</a></h3>
+                                <h3><a href="{{ url('services/3') }}">Professional Team Management</a></h3>
                             </div>
                         </div>
                     </div>
@@ -476,6 +483,7 @@
                 <!--Services Block-->
                 <div class="services-block col-md-4 col-sm-6 col-xs-12">
                     <div class="inner-box">
+                        <a href="{{ url('services/4') }}">
                         <div class="image">
                             <img src="{{ url('guest/images/resource/13.jpg') }}" alt="" />
                             <div class="icon-box">
@@ -483,10 +491,11 @@
                             </div>
                             <div class="overlay-color"></div>
                         </div>
+                        </a>
                         <div class="lower-box">
                             <div class="content">
                                 <div class="number">04</div>
-                                <h3><a href="services-single.html">Food and Beverage Venture</a></h3>
+                                <h3><a href="{{ url('services/4') }}">Food and Beverage Venture</a></h3>
                             </div>
                         </div>
                     </div>
@@ -495,6 +504,7 @@
                 <!--Services Block-->
                 <div class="services-block col-md-4 col-sm-6 col-xs-12">
                     <div class="inner-box">
+                        <a href="{{ url('services/5') }}">
                         <div class="image">
                             <img src="{{ url('guest/images/resource/11.jpg') }}" alt="" />
                             <div class="icon-box">
@@ -502,10 +512,11 @@
                             </div>
                             <div class="overlay-color"></div>
                         </div>
+                        </a>
                         <div class="lower-box">
                             <div class="content">
                                 <div class="number">05</div>
-                                <h3><a href="services-single.html">Web Development and Programming Services</a></h3>
+                                <h3><a href="{{ url('services/5') }}">Web Development and Programming Services</a></h3>
                             </div>
                         </div>
                     </div>
@@ -514,6 +525,7 @@
                 <!--Services Block-->
                 <div class="services-block col-md-4 col-sm-6 col-xs-12">
                     <div class="inner-box">
+                        <a href="{{ url('services/6') }}">
                         <div class="image">
                             <img src="{{ url('guest/images/resource/12.jpg') }}" alt="" />
                             <div class="icon-box">
@@ -521,10 +533,11 @@
                             </div>
                             <div class="overlay-color"></div>
                         </div>
+                        </a>
                         <div class="lower-box">
                             <div class="content">
                                 <div class="number">06</div>
-                                <h3><a href="services-single.html">Full Marketing Services </a></h3>
+                                <h3><a href="{{ url('services/6') }}">Full Marketing Services </a></h3>
                             </div>
                         </div>
                     </div>
@@ -1722,6 +1735,121 @@
         </div>
     </section>
     <!--End Fluid Section One-->
+
+    <!--Default Section-->
+    <section class="default-section">
+        <div class="auto-container">
+            <div class="row clearfix">
+                <!--Accordian Column-->
+                <div class="accordian-column col-md-6 col-sm-12 col-xs-12">
+                    
+                    <!--Accordian Box-->
+                    <ul class="accordion-box">
+                        
+                        <!--Block-->
+                        <li class="accordion block">
+                            <div class="acc-btn"><div class="icon-outer"><span class="icon icon-plus fa fa-arrow-down"></span></div>Application</div>
+                            <div class="acc-content">
+                                <div class="content">
+                                    <div class="text">To start your Cyber Cafe business, submit your application to the Cyber Cafe Team of TNC for review.</div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!--Block-->
+                        <li class="accordion block">
+                            <div class="acc-btn"><div class="icon-outer"><span class="icon icon-plus fa fa-arrow-down"></span></div>Survey and Approval</div>
+                            <div class="acc-content">
+                                <div class="content">
+                                    <div class="text">Once the application has been reviewed, a survey team will do an onsite checking of your location to conduct a feasibility study subject for the approval of the Cyber Cafe Team.</div>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!--Block-->
+                        <li class="accordion block active-block">
+                            <div class="acc-btn"><div class="icon-outer"><span class="icon icon-plus fa fa-arrow-down"></span></div>Planning and Construction</div>
+                            <div class="acc-content">
+                                <div class="content">
+                                    <div class="text">Upon approval, the planning and construction process will commence. This will be spearheaded by TNC's experienced group of professionals who excel in the construction field.</div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!--Block-->
+                        <li class="accordion block active-block">
+                            <div class="acc-btn active"><div class="icon-outer"><span class="icon icon-plus fa fa-arrow-down"></span></div>Turnover and Operate</div>
+                            <div class="acc-content current">
+                                <div class="content">
+                                    <div class="text">All that's left is for TNC to turnover the business and for you the operate and manage your business!</div>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <!--Counter Column-->
+                <div class="counter-column col-md-6 col-sm-12 col-xs-12">
+                    <div class="inner-column">
+                        <div class="text">Fall down, but Always Rise!</div>
+                        
+                        <!--Fact Counter-->
+                        <div class="fact-counter">
+                            <div class="row clearfix">
+                                
+                                <!--Column-->
+                                <div class="column counter-column col-md-6 col-sm-6 col-xs-12">
+                                    <div class="inner">
+                                        <span class="icon flaticon-idea"></span>
+                                        <div class="count-outer count-box">
+                                            <span class="count-text" data-speed="4000" data-stop="2745">0</span>
+                                        </div>
+                                        <h4 class="counter-title">Experienced Advisors</h4>
+                                    </div>
+                                </div>
+                        
+                                <!--Column-->
+                                <div class="column counter-column col-md-6 col-sm-6 col-xs-12">
+                                    <div class="inner">
+                                        <span class="icon flaticon-telemarketer"></span>
+                                        <div class="count-outer count-box">
+                                            <span class="count-text" data-speed="2000" data-stop="240">0</span>
+                                        </div>
+                                        <h4 class="counter-title">Worldwide Locations</h4>
+                                    </div>
+                                </div>
+                        
+                                <!--Column-->
+                                <div class="column counter-column col-md-6 col-sm-6 col-xs-12">
+                                    <div class="inner">
+                                        <span class="icon flaticon-smiling-emoticon-square-face"></span>
+                                        <div class="count-outer count-box">
+                                            <span class="count-text" data-speed="2500" data-stop="1564">0</span>
+                                        </div>
+                                        <h4 class="counter-title">Years of Experience</h4>
+                                    </div>
+                                </div>
+                        
+                                <!--Column-->
+                                <div class="column counter-column col-md-6 col-sm-6 col-xs-12">
+                                    <div class="inner">
+                                        <span class="icon flaticon-medal"></span>
+                                        <div class="count-outer count-box">
+                                            <span class="count-text" data-speed="4000" data-stop="172">0</span>
+                                        </div>
+                                        <h4 class="counter-title">Satisfied Customers</h4>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    <!--End Default Section-->
     
     <!--Main Footer-->
     <footer class="main-footer">

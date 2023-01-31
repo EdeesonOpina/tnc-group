@@ -6,18 +6,6 @@
             <h1>About Us</h1>
             <div class="title">Know Who We Are</div>
         </div>
-        <!--Page Info-->
-        <div class="page-info">
-            <div class="auto-container">
-            	<div class="inner-container">
-                    <ul class="bread-crumb">
-                        <li><a href="{{ url('/') }}">Home</a></li>
-                        <li>About us</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!--End Page Info-->
     </section>
     <!--End Page Title-->
     

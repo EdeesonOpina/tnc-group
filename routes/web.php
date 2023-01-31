@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/','App\Http\Controllers\Site\SiteController@index')->name('site.index');
 Route::get('/about','App\Http\Controllers\Site\SiteController@about')->name('site.about');
 Route::get('/contact','App\Http\Controllers\Site\SiteController@contact')->name('site.contact');
-Route::get('/services','App\Http\Controllers\Site\SiteController@services')->name('site.services');
+Route::get('/services/{page_id}','App\Http\Controllers\Site\SiteController@services')->name('site.services');
 Route::get('/business-units','App\Http\Controllers\Site\SiteController@business_units')->name('site.business-units');
 
 // dashboard group
