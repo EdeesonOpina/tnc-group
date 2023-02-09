@@ -2,18 +2,41 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/','App\Http\Controllers\Site\SiteController@index')->name('site.index');
-Route::get('/about','App\Http\Controllers\Site\SiteController@about')->name('site.about');
-Route::get('/contact','App\Http\Controllers\Site\SiteController@contact')->name('site.contact');
-Route::get('/services/{page_id}','App\Http\Controllers\Site\SiteController@services')->name('site.services');
-Route::get('/business-units','App\Http\Controllers\Site\SiteController@business_units')->name('site.business-units');
+// Route::get('/','App\Http\Controllers\Site\SiteController@index')->name('site.index');
+// Route::get('/about','App\Http\Controllers\Site\SiteController@about')->name('site.about');
+// Route::get('/contact','App\Http\Controllers\Site\SiteController@contact')->name('site.contact');
+// Route::get('/services/{page_id}','App\Http\Controllers\Site\SiteController@services')->name('site.services');
+// Route::get('/business-units','App\Http\Controllers\Site\SiteController@business_units')->name('site.business-units');
 
 // dashboard group
 Route::group(['prefix' => 'dashboard/', 'middleware' => ['auth']], function () {
     Route::get('/', 'App\Http\Controllers\Auth\DashboardController@show')->name('auth.dashboard');
 });
 
-// Route::get('/', 'App\Http\Controllers\Front\Site\SiteController@index')->name('site.index');
+Route::get('/', 'App\Http\Controllers\Front\Site\SiteController@index')->name('site.index');
+
+// hr group
+Route::group(['prefix' => 'hr/', 'middleware' => ['auth', 'internal']], function () {
+
+    // payslip
+    Route::group(['prefix' => 'payslip/'], function () {
+        Route::get('/', 'App\Http\Controllers\Admin\HR\PayslipController@show')->name('hr.payslips');
+
+        Route::get('/add', 'App\Http\Controllers\Admin\HR\PayslipController@add')->name('hr.payslips.time.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\HR\PayslipController@create')->name('hr.payslips.time.create');
+        Route::get('/view/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@view')->name('hr.payslips.view');
+        Route::get('/edit/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@edit')->name('hr.payslips.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\HR\PayslipController@update')->name('hr.payslips.update');
+        Route::get('/delete/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@delete')->name('hr.payslips.delete');
+        Route::get('/recover/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@recover')->name('hr.payslips.recover');
+
+        // for searching
+        Route::group(['prefix' => 'search/'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\HR\PayslipController@search')->name('hr.payslips.search');
+            Route::get('/{name}/{role}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\HR\PayslipController@filter')->name('hr.payslips.filter');
+        });
+    });
+});
 
 // accounting group
 Route::group(['prefix' => 'accounting/', 'middleware' => ['auth', 'accounting']], function () {

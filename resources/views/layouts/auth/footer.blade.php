@@ -173,6 +173,18 @@
                     </div>
                 @endif
 
+                <div class="sidebar-heading">HR</div>
+                <div class="sidebar-block p-0">
+                    <ul class="sidebar-menu" id="components_menu">
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ route('hr.payslips') }}">
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">account_balance_wallet</i>
+                                <span class="sidebar-menu-text">Payslip</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
                 @if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Programs')
                     <div class="sidebar-heading">System</div>
                     <div class="sidebar-block p-0">
