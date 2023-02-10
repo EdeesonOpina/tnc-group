@@ -20,7 +20,7 @@
             </nav>
             <h1 class="m-0">View BRF</h1>
         </div>
-        @if ($budget_request_form->status == BudgetRequestFormStatus::APPROVED || $budget_request_form->status == BudgetRequestFormStatus::FOR_RELEASE || $budget_request_form->status == BudgetRequestFormStatus::RELEASED || $budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION || $budget_request_form->status == BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT || $budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP)
+        @if ($budget_request_form->status == BudgetRequestFormStatus::APPROVED || $budget_request_form->status == BudgetRequestFormStatus::FOR_RELEASE || $budget_request_form->status == BudgetRequestFormStatus::RELEASED || $budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION || $budget_request_form->status == BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT || $budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::DONE)
             <a href="{{ route('internals.brf.send-to-finance', [$budget_request_form->reference_number]) }}">
                 <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-envelope" id="margin-right"></i>Send To Finance</button>
             </a>
@@ -88,15 +88,15 @@
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL)
                                 <div class="badge badge-info">For Final Approval</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS)
-                                <div class="badge badge-warning">On Process</div>
+                                <div class="badge badge-warning">ON PROCESS</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
-                                <div class="badge badge-success">Approved</div>
+                                <div class="badge badge-success">APPROVED</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
-                                <div class="badge badge-danger">Disapproved</div>
+                                <div class="badge badge-danger">DISAPPROVED</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_RELEASE)
-                                <div class="badge badge-info">For Release</div>
+                                <div class="badge badge-info">FOR RELEASE</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::RELEASED)
-                                <div class="badge badge-success">Released</div>
+                                <div class="badge badge-success">RELEASED</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION)
                                 <div class="badge badge-success">FOR LIQUIDATION</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP)
@@ -105,6 +105,8 @@
                                 <div class="badge badge-success">FOR LIQUIDATION BANK DEPOSIT SLIP</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT)
                                 <div class="badge badge-success">FOR OFFICIAL RECEIPT</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::DONE)
+                                <div class="badge badge-success">DONE</div>
                             @endif
                         </div>
                     </div>
@@ -144,7 +146,7 @@
                     <div class="col">
                         @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->id == $budget_request_form->requested_by_user->id || auth()->user()->id == $budget_request_form->checked_by_user->id || auth()->user()->id == $budget_request_form->noted_by_user->id)
 
-                            @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION || $budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT)
+                            @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION || $budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT || $budget_request_form->status == BudgetRequestFormStatus::DONE)
 
                                 @if (BudgetRequestFormFile::where('budget_request_form_id', $budget_request_form->id)
                                 ->where('status', BudgetRequestFormFileStatus::ACTIVE)
