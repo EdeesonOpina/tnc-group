@@ -257,4 +257,18 @@ class QueryController extends Controller
 
         return back();
     }
+
+    public function modify_projects(Request $request)
+    {
+        $projects = Project::where('status',ProjectStatus::DONE)
+                                ->get();
+
+        foreach ($projects as $project) {
+            $ce = Project::find($project->id);
+            $ce->status = ProjectStatus::APPROVED;
+            $ce->save();
+        }
+
+        return back();
+    }
 }

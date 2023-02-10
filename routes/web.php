@@ -1203,6 +1203,9 @@ Route::group(['prefix' => 'q/', 'middleware' => ['auth', 'internal']], function 
     /* verify internal users */
     Route::get('/verify/internal/users', 'App\Http\Controllers\Admin\QueryController@verify_internal_users')->name('query.verify.internal.users');
 
-    /* verify internal users */
+    /* verify brf */
     Route::get('/verify/brf', 'App\Http\Controllers\Admin\QueryController@verify_brf')->name('query.verify.brf');
+
+    /* modify brf */
+    Route::get('/modify/done/projects', 'App\Http\Controllers\Admin\QueryController@modify_projects')->name('query.modify.projects');
 });
