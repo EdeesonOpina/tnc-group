@@ -62,6 +62,10 @@
         color: #E74414 !important;
     }
 
+    .table-color-usd {
+        color: #1060E3 !important;
+    }
+
     .no-space {
         padding: 0px !important;
     }
@@ -170,10 +174,15 @@
                 <th id="compact-table" class="table-black-border table-color-primary min-space">Description</th>
                 <th id="compact-table" class="table-black-border table-color-primary min-space">Quantity</th>
                 @if ($project->has_usd == 1)
-                    <th id="compact-table" class="table-black-border table-color-primary min-space">Unit Price (USD)</th>
+                    <th id="compact-table" class="table-black-border table-color-usd min-space">Unit Price (USD)</th>
                 @endif
-                <th id="compact-table" class="table-black-border table-color-primary min-space">Unit Price</th>
-                <th id="compact-table" class="table-black-border table-color-primary min-space">Total Price</th>
+                @if ($project->has_usd == 1)
+                    <th id="compact-table" class="table-black-border table-color-usd min-space">Unit Price</th>
+                    <th id="compact-table" class="table-black-border table-color-usd min-space">Total Price in USD<br>($1 = P{{ number_format($project->usd_rate, 2) }})</th>
+                @else
+                    <th id="compact-table" class="table-black-border table-color-primary min-space">Unit Price</th>
+                    <th id="compact-table" class="table-black-border table-color-primary min-space">Total Price</th>
+                @endif
             </tr>
         </thead>
         <tbody class="list" id="companies">
