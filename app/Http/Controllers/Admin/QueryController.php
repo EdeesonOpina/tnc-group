@@ -25,6 +25,12 @@ use App\Models\POSDiscountStatus;
 use App\Models\PaymentCreditStatus;
 use App\Models\PaymentReceiptStatus;
 use App\Models\ItemSerialNumberStatus;
+use App\Models\BudgetRequestForm;
+use App\Models\BudgetRequestFormStatus;
+use App\Models\Project;
+use App\Models\ProjectStatus;
+use App\Models\BudgetRequestFormFile;
+use App\Models\BudgetRequestFormFileStatus;
 
 class QueryController extends Controller
 {
@@ -230,5 +236,25 @@ class QueryController extends Controller
                 'email_verified_at' => Carbon::now(),
                 'status' => UserStatus::ACTIVE,
             ]);
+    }
+
+    public function verify_brf(Request $request)
+    {
+        $budget_request_forms = BudgetRequestForm::where('status', '!=', BudgetRequestFormStatus::INACTIVE)
+                                            ->get();
+
+        foreach ($budget_request_forms as $budget_request_form) {
+            if (BudgetRequestFormFile::where('budget_request_form_id', $budget_request_form->id)->exists()) {
+                $brf = BudgetRequestForm::find($budget_request_form->id);
+                $brf->status = BudgetRequestFormStatus::DONE;
+                $brf->save();
+
+                $ce = Project::find($brf->project->id);
+                $ce->status = ProjectStatus::DONE;
+                $ce->save();
+            }
+        }
+
+        return back();
     }
 }

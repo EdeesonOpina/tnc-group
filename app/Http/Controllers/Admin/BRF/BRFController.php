@@ -613,6 +613,14 @@ class BRFController extends Controller
         $brf_file = BudgetRequestFormFile::create($data); // create data in a model
         $brf_file->save();
 
+        $brf = BudgetRequestForm::find($brf_file->budget_request_form->id);
+        $brf->status = BudgetRequestFormStatus::DONE;
+        $brf->save();
+
+        $ce = Project::find($brf->project->id);
+        $ce->status = ProjectStatus::DONE;
+        $ce->save();
+
         /* requested by user */
         $name = $brf_file->budget_request_form->requested_by_user->firstname . ' ' . $brf_file->budget_request_form->requested_by_user->lastname;
         $email = $brf_file->budget_request_form->requested_by_user->email;
