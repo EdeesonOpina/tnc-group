@@ -142,7 +142,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant')
+                        @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->id == $budget_request_form->requested_by_user->id || auth()->user()->id == $budget_request_form->checked_by_user->id || auth()->user()->id == $budget_request_form->noted_by_user->id)
 
                             @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION || $budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT)
 
