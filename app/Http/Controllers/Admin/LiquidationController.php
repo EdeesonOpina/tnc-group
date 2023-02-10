@@ -31,9 +31,6 @@ class LiquidationController extends Controller
     {
         $budget_request_forms = BudgetRequestForm::orderBy('created_at', 'desc')
                     ->where('status', BudgetRequestFormStatus::FOR_LIQUIDATION)
-                    ->orWhere('status', BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT)
-                    ->orWhere('status', BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP)
-                    ->orWhere('status', BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP)
                     ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
                     ->paginate(15);
 
