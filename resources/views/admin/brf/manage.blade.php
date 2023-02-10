@@ -108,19 +108,29 @@
                     <div class="col">
                         <div class="form-group">
                             @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                <div class="badge badge-info">For Approval</div>
+                                <div class="badge badge-info">FOR APPROVAL</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL)
-                                <div class="badge badge-info">For Final Approval</div>
+                                <div class="badge badge-info">FOR FINAL APPROVAL</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS)
-                                <div class="badge badge-warning">On Process</div>
+                                <div class="badge badge-warning">ON PROCESS</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
-                                <div class="badge badge-success">Approved</div>
+                                <div class="badge badge-success">APPROVED</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
-                                <div class="badge badge-danger">Disapproved</div>
+                                <div class="badge badge-danger">DISAPPROVED</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_RELEASE)
-                                <div class="badge badge-info">For Release</div>
+                                <div class="badge badge-info">FOR RELEASE</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::RELEASED)
-                                <div class="badge badge-success">Released</div>
+                                <div class="badge badge-success">RELEASED</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION)
+                                <div class="badge badge-success">FOR LIQUIDATION</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP)
+                                <div class="badge badge-success">FOR BANK DEPOSIT SLIP</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP)
+                                <div class="badge badge-success">FOR LIQUIDATION BANK DEPOSIT SLIP</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT)
+                                <div class="badge badge-success">FOR OFFICIAL RECEIPT</div>
+                            @elseif ($budget_request_form->status == BudgetRequestFormStatus::DONE)
+                                <div class="badge badge-success">DONE</div>
                             @endif
                         </div>
                     </div>

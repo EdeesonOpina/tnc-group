@@ -61,17 +61,18 @@ use App\Models\BudgetRequestFormDetailStatus;
                                     @endif
                                 @endif
                                 <option value="*">All</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_APPROVAL }}">For Approval</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_FINAL_APPROVAL }}">For Final Approval</option>
-                                <option value="{{ BudgetRequestFormStatus::INACTIVE }}">Inactive</option>
-                                <option value="{{ BudgetRequestFormStatus::APPROVED }}">Approved</option>
-                                <option value="{{ BudgetRequestFormStatus::DISAPPROVED }}">Disapproved</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_RELEASE }}">For Release</option>
-                                <option value="{{ BudgetRequestFormStatus::RELEASED }}">Released</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT }}">For Official Receipt</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION }}">For Liquidation</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP }}">For Bank Deposit Slip</option>
-                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP }}">For Liquidation Bank Deposit Slip</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_APPROVAL }}">FOR APPROVAL</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_FINAL_APPROVAL }}">FOR FINAL APPROVAL</option>
+                                <option value="{{ BudgetRequestFormStatus::INACTIVE }}">INACTIVE</option>
+                                <option value="{{ BudgetRequestFormStatus::APPROVED }}">APPROVED</option>
+                                <option value="{{ BudgetRequestFormStatus::DISAPPROVED }}">DISAPPROVED</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_RELEASE }}">FOR RELEASE</option>
+                                <option value="{{ BudgetRequestFormStatus::RELEASED }}">RELEASED</option>
+                                <option value="{{ BudgetRequestFormStatus::DONE }}">DONE</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT }}">FOR OFFICIAL RECEIPT</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION }}">FOR LIQUIDATION</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP }}">FOR BANK DEPOSIT SLIP</option>
+                                <option value="{{ BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP }}">FOR LIQUIDATION BANK DEPOSIT SLIP</option>
                             </select>
                         </div>
                     </div>
@@ -205,19 +206,19 @@ use App\Models\BudgetRequestFormDetailStatus;
                                     <td id="compact-table">{{ $budget_request_form->project->name }}</td>
                                     <td>
                                         @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                            <div class="badge badge-info ml-2">For Approval</div>
+                                            <div class="badge badge-info ml-2">FOR APPROVAL</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL)
-                                            <div class="badge badge-info ml-2">For Final Approval</div>
+                                            <div class="badge badge-info ml-2">FOR FINAL APPROVAL</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_RELEASE)
-                                            <div class="badge badge-info ml-2">For Release</div>
+                                            <div class="badge badge-info ml-2">FOR RELEASE</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::RELEASED)
-                                            <div class="badge badge-success ml-2">Released</div>
+                                            <div class="badge badge-success ml-2">RELEASED</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS)
-                                            <div class="badge badge-warning ml-2">On Process</div>
+                                            <div class="badge badge-warning ml-2">ON PROCESS</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
-                                            <div class="badge badge-success ml-2">Approved</div>
+                                            <div class="badge badge-success ml-2">APPROVED</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
-                                            <div class="badge badge-danger ml-2">Disapproved</div>
+                                            <div class="badge badge-danger ml-2">DISAPPROVED</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION)
                                             <div class="badge badge-success ml-2">FOR LIQUIDATION</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT)

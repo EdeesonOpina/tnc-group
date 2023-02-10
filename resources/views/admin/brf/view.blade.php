@@ -84,9 +84,9 @@
                     <div class="col">
                         <div class="form-group">
                             @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
-                                <div class="badge badge-info">For Approval</div>
+                                <div class="badge badge-info">FOR APPROVAL</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL)
-                                <div class="badge badge-info">For Final Approval</div>
+                                <div class="badge badge-info">FOR FINAL APPROVAL</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS)
                                 <div class="badge badge-warning">ON PROCESS</div>
                             @elseif ($budget_request_form->status == BudgetRequestFormStatus::APPROVED)
