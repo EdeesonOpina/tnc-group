@@ -81,7 +81,31 @@ class PayslipController extends Controller
     {
         $user = User::find($user_id);
 
-        return view('admin.users.add', compact(
+        return view('admin.payslips.time.add', compact(
+            'user'
+        ));
+    }
+
+    public function view($user_id)
+    {
+        $user = User::find($user_id);
+        $attendances = PayslipAttendance::where('status', '!=', PayslipStatus::INACTIVE)
+                                        ->paginate(30);
+
+        return view('admin.payslips.view', compact(
+            'attendances',
+            'user'
+        ));
+    }
+
+    public function manage($user_id)
+    {
+        $user = User::find($user_id);
+        $attendances = PayslipAttendance::where('status', '!=', PayslipStatus::INACTIVE)
+                                        ->paginate(30);
+
+        return view('admin.payslips.manage', compact(
+            'attendances',
             'user'
         ));
     }
@@ -90,6 +114,10 @@ class PayslipController extends Controller
     {
         $rules = [
             'user_id' => 'required',
+            'from_date' => 'required',
+            'to_date' => 'required',
+            'time_in' => 'required',
+            'time_out' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -98,11 +126,27 @@ class PayslipController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
+        /* get the hours rendered */
+        $from = Carbon::createFromFormat('Y-m-d H:i', $request->from_date . ' ' . $request->time_in);
+        $to = Carbon::createFromFormat('Y-m-d H:i', $request->to_date . ' ' . $request->time_out);
+        $hours_rendered = $to->diffInHours($from) - 1; // no break with 1 hour break
+
+        /* convert monthly salary to hourly */
+        $user = User::find($request->user_id);
+        $salary_per_hour = ($user->salary / 40);
+
+        if ($hours_rendered > 8) {
+            $hours_rendered = 8;
+        }
+
         $data = request()->all(); // get all request
-        $data['status'] = PayslipStatus::ACTIVE; // if you want to insert to a specific column
-        Payslip::create($data); // create data in a model
+        $data['hours_rendered'] = $hours_rendered;
+        $data['salary_per_hour'] = $salary_per_hour;
+        $data['total'] = $salary_per_hour * $hours_rendered;
+        $data['status'] = PayslipAttendanceStatus::PENDING; // if you want to insert to a specific column
+        PayslipAttendance::create($data); // create data in a model
 
         $request->session()->flash('success', 'Data has been added');
-        return redirect()->route('hr.payslips');
+        return redirect()->route('hr.payslips.manage', [$user->id]);
     }
 }

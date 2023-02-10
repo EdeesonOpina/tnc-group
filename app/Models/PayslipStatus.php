@@ -10,6 +10,7 @@ class PayslipStatus extends Model
     use HasFactory;
 
     const INACTIVE = 0;
-    const APPROVED = 1;
+    const PENDING = 1;
+    const APPROVED = 2;
     const DISAPPROVED = 9;
 }

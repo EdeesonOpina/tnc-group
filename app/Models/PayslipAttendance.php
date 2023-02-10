@@ -13,11 +13,13 @@ class PayslipAttendance extends Model
 
     protected $fillable = [
         'type',
+        'from_date',
+        'to_date',
         'user_id',
         'time_in',
         'time_out',
         'hours_rendered',
-        'price_per_hour',
+        'salary_per_hour',
         'total',
         'image',
         'status',

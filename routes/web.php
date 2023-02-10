@@ -22,13 +22,16 @@ Route::group(['prefix' => 'hr/', 'middleware' => ['auth', 'internal']], function
     Route::group(['prefix' => 'payslip/'], function () {
         Route::get('/', 'App\Http\Controllers\Admin\HR\PayslipController@show')->name('hr.payslips');
 
-        Route::get('/add', 'App\Http\Controllers\Admin\HR\PayslipController@add')->name('hr.payslips.time.add');
-        Route::post('/create', 'App\Http\Controllers\Admin\HR\PayslipController@create')->name('hr.payslips.time.create');
+        Route::get('/add/time/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@add')->name('hr.payslips.time.add');
+        Route::post('/create/time', 'App\Http\Controllers\Admin\HR\PayslipController@create')->name('hr.payslips.time.create');
         Route::get('/view/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@view')->name('hr.payslips.view');
-        Route::get('/edit/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@edit')->name('hr.payslips.edit');
-        Route::post('/edit', 'App\Http\Controllers\Admin\HR\PayslipController@update')->name('hr.payslips.update');
+        Route::get('/manage/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@manage')->name('hr.payslips.manage');
+        Route::get('/edit/time/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@edit')->name('hr.payslips.time.edit');
+        Route::post('/edit/time', 'App\Http\Controllers\Admin\HR\PayslipController@update')->name('hr.payslips.time.update');
         Route::get('/delete/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@delete')->name('hr.payslips.delete');
         Route::get('/recover/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@recover')->name('hr.payslips.recover');
+
+        Route::post('/update/user/salary', 'App\Http\Controllers\Admin\HR\UserController@salary')->name('hr.users.update.salary');
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {

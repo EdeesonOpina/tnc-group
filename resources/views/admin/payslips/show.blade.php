@@ -158,7 +158,8 @@ use App\Models\UserStatus;
                                             </div>
                                         </div>
                                         <div class="d-flex">
-                                            <a href="{{ route('hr.payslips.view', [$user->id]) }}" style="margin-right: 7px">View</a>
+                                            <a href="{{ route('hr.payslips.view', [$user->id]) }}" style="margin-right: 7px">View</a> | 
+                                            <a href="{{ route('hr.payslips.manage', [$user->id]) }}" id="space-table">Manage</a> 
                                         </div>
                                     </td>
                                     <td id="compact-table">
