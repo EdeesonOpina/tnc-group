@@ -226,6 +226,8 @@ use App\Models\BudgetRequestFormDetailStatus;
                                             <div class="badge badge-success ml-2">FOR BANK DEPOSIT SLIP</div>
                                         @elseif ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP)
                                             <div class="badge badge-success ml-2">FOR LIQUIDATION BANK DEPOSIT SLIP</div>
+                                        @elseif ($budget_request_form->status == BudgetRequestFormStatus::DONE)
+                                            <div class="badge badge-success ml-2">DONE</div>
                                         @endif
                                     </td>
                                     <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}</td>
