@@ -16,12 +16,8 @@
             </nav>
             <h1 class="m-0">{{ $user->firstname }} {{ $user->lastname }} Attendance</h1>
         </div>
-        <a href="{{ route('hr.payslips.date-select', [$user->id]) }}">
-            <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-envelope-open" id="margin-right"></i>Create Payslip</button>
-        </a>
-
-        <a href="{{ route('hr.payslips.time.add', [$user->id]) }}">
-            <button type="button" class="btn btn-primary" id="margin-right"><i class="fa fa-clock" id="margin-right"></i>Add Attendance Record</button>
+        <a href="{{ route('hr.payslips.details.print', [$payslip->id]) }}">
+            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print</button>
         </a>
     </div>
 </div>
@@ -32,6 +28,8 @@
     <div class="row">
         <div class="col">
             <div id="spaced-card" class="card card-body">
+                <img src="{{ url(env('APP_LOGO_WITH_TEXT')) }}" width="150px">
+                <br>
                 <div class="row">
                     <div class="col">
                         <strong>Name</strong><br>

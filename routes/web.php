@@ -41,6 +41,11 @@ Route::group(['prefix' => 'hr/', 'middleware' => ['auth', 'internal']], function
 
         Route::post('/update/user/salary', 'App\Http\Controllers\Admin\HR\UserController@salary')->name('hr.users.update.salary');
 
+        // exports
+        Route::group(['prefix' => 'exports/'], function () {
+            Route::get('print/details/{payslip_id}', 'App\Http\Controllers\Export\PayslipController@print_details')->name('hr.payslips.details.print');
+        });
+
         // for searching
         Route::group(['prefix' => 'search/'], function () {
             Route::post('/', 'App\Http\Controllers\Admin\HR\PayslipController@search')->name('hr.payslips.search');
