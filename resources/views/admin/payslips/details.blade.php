@@ -34,93 +34,33 @@
             <div id="spaced-card" class="card card-body">
                 <div class="row">
                     <div class="col">
-                        <div class="form-group">
-                            <h6>Name</h6>
-                            {{ $user->firstname }} {{ $user->lastname }}
-                        </div>
+                        <strong>Name</strong><br>
+                        {{ $user->firstname }} {{ $user->lastname }}
                     </div>
-                </div>
-                
-                <div class="row">
+
                     <div class="col">
-                        <div class="form-group">
-                            <h6>Position</h6>
-                            {{ $user->position }}
-                        </div>
+                        <strong>Position</strong><br>
+                        {{ $user->position }}
                     </div>
-                </div>
 
-                <div class="row">
                     <div class="col">
-                        <div class="form-group">
-                            <h6>Salary <a href="#" data-toggle="modal" data-target="#salary-{{ $user->id }}"><i class="material-icons icon-16pt text-success">edit</i></a></h6>
-                            @if ($user->salary)
-                                P{{ number_format($user->salary, 2) }}
-                            @else
-                                <a href="#" data-target="#salary-{{ $user->id }}" data-toggle="modal">
-                                    <button class="btn btn-primary">Update Salary</button>
-                                </a>
-                            @endif
-                        </div>
+                        <strong>Salary</strong><br>
+                        P{{ number_format($user->salary, 2) }}
                     </div>
                 </div>
-
+                <br>
                 <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <h6>Email Address</h6>
-                            {{ $user->email }}
-                        </div>
+                    <div class="col-md-4">
+                        <strong>From Date</strong><br>
+                        {{ Carbon::parse($from_date)->format('M d Y') }}
+                    </div>
+
+                    <div class="col-md-4">
+                        <strong>To Date</strong><br>
+                        {{ Carbon::parse($to_date)->format('M d Y') }}
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <h6>Phone</h6>
-                            {{ $user->phone ?? 'N/A' }}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <h6>Mobile</h6>
-                            {{ $user->mobile }}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <h6>Line Address 1</h6>
-                            {{ $user->line_address_1 }}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <h6>Line Address 2</h6>
-                            {{ $user->line_address_2 }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header card-header-large bg-white d-flex align-items-center">
-                    <h4 class="card-header__title flex m-0">{{ $user->firstname }} {{ $user->lastname }} Attendance</h4>
-
-                    <a href="#" data-href="{{ route('hr.payslips.time.delete-all', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action">
-                        <button class="btn btn-sm btn-danger"><i class="fa fa-trash" id="margin-right"></i>Delete All</button>
-                    </a>
-                </div>
+                <br>
 
                 <div class="table-responsive">
                     <table class="table mb-0 thead-border-top-0 table-striped">
@@ -166,6 +106,50 @@
                                     </td>
                                 </tr>
                             @endforeach
+                            <tr>
+                                <td colspan="3"></td>
+                                <td><strong>Hours</strong></td>
+                                <td><strong>{{ $payslip->hours }}</strong></td>
+                                <td><strong>Income</strong></td>
+                                <td><strong>P{{ number_format($payslip->total, 2) }}</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5"></td>
+                                <td><strong>W-Tax</strong></td>
+                                <td><strong>P{{ number_format($payslip->w_tax, 2) }}</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5"></td>
+                                <td><strong>SSS</strong></td>
+                                <td><strong>P{{ number_format($payslip->sss, 2) }}</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5"></td>
+                                <td><strong>PHILHEALTH</strong></td>
+                                <td><strong>P{{ number_format($payslip->philhealth, 2) }}</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5"></td>
+                                <td><strong>PAGIBIG</strong></td>
+                                <td><strong>P{{ number_format($payslip->pagibig, 2) }}</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5"></td>
+                                <td><strong>GSIS</strong></td>
+                                <td><strong>P{{ number_format($payslip->gsis, 2) }}</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5"></td>
+                                <td><strong>Total Income</strong></td>
+                                <td><strong>P{{ number_format(($payslip->total - $total_deductions), 2) }}</strong></td>
+                                <td></td>
+                            </tr>
                         </tbody>
                     </table>
 
@@ -176,7 +160,6 @@
                     @endif
                 </div>
             </div>
-            {{ $attendances->links() }}
         </div>
     </div>
 </div>

@@ -12,6 +12,7 @@ class PayslipAttendance extends Model
     protected $table = 'payslip_attendance';
 
     protected $fillable = [
+        'payslip_id',
         'type',
         'from_date',
         'to_date',

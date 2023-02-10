@@ -21,15 +21,23 @@ Route::group(['prefix' => 'hr/', 'middleware' => ['auth', 'internal']], function
     // payslip
     Route::group(['prefix' => 'payslip/'], function () {
         Route::get('/', 'App\Http\Controllers\Admin\HR\PayslipController@show')->name('hr.payslips');
-
-        Route::get('/add/time/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@add')->name('hr.payslips.time.add');
-        Route::post('/create/time', 'App\Http\Controllers\Admin\HR\PayslipController@create')->name('hr.payslips.time.create');
         Route::get('/view/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@view')->name('hr.payslips.view');
+        Route::get('/details/{payslip_id}', 'App\Http\Controllers\Admin\HR\PayslipController@details')->name('hr.payslips.details');
         Route::get('/manage/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@manage')->name('hr.payslips.manage');
-        Route::get('/edit/time/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@edit')->name('hr.payslips.time.edit');
-        Route::post('/edit/time', 'App\Http\Controllers\Admin\HR\PayslipController@update')->name('hr.payslips.time.update');
         Route::get('/delete/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@delete')->name('hr.payslips.delete');
         Route::get('/recover/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@recover')->name('hr.payslips.recover');
+        Route::get('/create/date-select/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@date_select')->name('hr.payslips.date-select');
+        Route::post('/create/date-select', 'App\Http\Controllers\Admin\HR\PayslipController@date_select_search')->name('hr.payslips.date-select.search');
+        Route::get('/create/deductions/{user_id}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\HR\PayslipController@deductions')->name('hr.payslips.deductions');
+        Route::post('/create/deductions', 'App\Http\Controllers\Admin\HR\PayslipController@apply_deductions')->name('hr.payslips.deductions.apply');
+
+        Route::get('/add/time/{user_id}', 'App\Http\Controllers\Admin\HR\TimeController@add')->name('hr.payslips.time.add');
+        Route::post('/create/time', 'App\Http\Controllers\Admin\HR\TimeController@create')->name('hr.payslips.time.create');
+        Route::get('/edit/time/{user_id}', 'App\Http\Controllers\Admin\HR\TimeController@edit')->name('hr.payslips.time.edit');
+        Route::post('/edit/time', 'App\Http\Controllers\Admin\HR\TimeController@update')->name('hr.payslips.time.update');
+        Route::get('/edit/time/approve/{user_id}', 'App\Http\Controllers\Admin\HR\TimeController@approve')->name('hr.payslips.time.approve');
+        Route::get('/edit/time/disapprove/{user_id}', 'App\Http\Controllers\Admin\HR\TimeController@disapprove')->name('hr.payslips.time.disapprove');
+        Route::get('/delete/time/all/{user_id}', 'App\Http\Controllers\Admin\HR\TimeController@delete_all')->name('hr.payslips.time.delete-all');
 
         Route::post('/update/user/salary', 'App\Http\Controllers\Admin\HR\UserController@salary')->name('hr.users.update.salary');
 

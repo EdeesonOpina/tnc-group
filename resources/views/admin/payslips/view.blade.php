@@ -1,5 +1,7 @@
 @include('layouts.auth.header')
 @php
+    use Carbon\Carbon;
+    use App\Models\PayslipStatus;
     use App\Models\PayslipAttendanceStatus;
 @endphp
 
@@ -38,6 +40,15 @@
                         <div class="form-group">
                             <h6>Position</h6>
                             {{ $user->position }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <h6>Salary</h6>
+                            P{{ number_format($user->salary, 2) }}
                         </div>
                     </div>
                 </div>
@@ -102,36 +113,36 @@
                     <table class="table mb-0 thead-border-top-0 table-striped">
                         <thead>
                             <tr>
-                                <th id="compact-table">#ID</th>
                                 <th id="compact-table">Date</th>
-                                <th id="compact-table">Type</th>
-                                <th id="compact-table">Time In</th>
-                                <th id="compact-table">Time Out</th>
+                                <th id="compact-table">W-Tax</th>
+                                <th id="compact-table">SSS</th>
+                                <th id="compact-table">PHILHEALTH</th>
+                                <th id="compact-table">PAGIBIG</th>
+                                <th id="compact-table">GSIS</th>
                                 <th id="compact-table">Hours</th>
-                                <th id="compact-table">Per Hour</th>
                                 <th id="compact-table">Total</th>
                                 <th id="compact-table">Status</th>
                             </tr>
                         </thead>
                         <tbody class="list" id="companies">
-                            @foreach($attendances as $attendance)
+                            @foreach($payslips as $payslip)
                                 <tr>
-                                    <td><div class="badge badge-light">#{{ $attendance->id }}</div></td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($attendance->from_date)->format('M d Y') }}</td>
-                                    <td id="compact-table">{{ $attendance->type }}</td>
-                                    <td id="compact-table">{{ $attendance->time_in }}</td>
-                                    <td id="compact-table">{{ $attendance->time_out }}</td>
-                                    <td id="compact-table">{{ $attendance->hours_rendered }}</td>
-                                    <td id="compact-table">P{{ number_format($attendance->salary_per_hour, 2) }}</td>
-                                    <td id="compact-table">P{{ number_format($attendance->total, 2) }}</td>
+                                    <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> <a href="{{ route('hr.payslips.details', [$payslip->id]) }}">{{ Carbon::parse($payslip->from_date)->format('M d Y') }}</a></td>
+                                    <td id="compact-table">P{{ number_format($payslip->w_tax, 2) }}</td>
+                                    <td id="compact-table">P{{ number_format($payslip->sss, 2) }}</td>
+                                    <td id="compact-table">P{{ number_format($payslip->philhealth, 2) }}</td>
+                                    <td id="compact-table">P{{ number_format($payslip->pagibig, 2) }}</td>
+                                    <td id="compact-table">P{{ number_format($payslip->gsis, 2) }}</td>
+                                    <td id="compact-table">{{ $payslip->hours }}</td>
+                                    <td id="compact-table">P{{ number_format($payslip->total, 2) }}</td>
                                     <td>
-                                        @if ($attendance->status == PayslipAttendanceStatus::PENDING)
+                                        @if ($payslip->status == PayslipStatus::PENDING)
                                             <div class="badge badge-warning ml-2">PENDING</div>
-                                        @elseif ($attendance->status == PayslipAttendanceStatus::APPROVED)
+                                        @elseif ($payslip->status == PayslipStatus::APPROVED)
                                             <div class="badge badge-success ml-2">APPROVED</div>
-                                        @elseif ($attendance->status == PayslipAttendanceStatus::DISAPPROVED)
+                                        @elseif ($payslip->status == PayslipStatus::DISAPPROVED)
                                             <div class="badge badge-danger ml-2">DISAPPROVED</div>
-                                        @elseif ($attendance->status == PayslipAttendanceStatus::INACTIVE)
+                                        @elseif ($payslip->status == PayslipStatus::INACTIVE)
                                             <div class="badge badge-danger ml-2">INACTIVE</div>
                                         @endif
                                     </td>
@@ -140,14 +151,14 @@
                         </tbody>
                     </table>
 
-                    @if (count($attendances) <= 0)
+                    @if (count($payslips) <= 0)
                         <div style="padding: 20px">
                             <center><i class="material-icons icon-16pt mr-1 text-muted">assignment</i> No record/s found</center>
                         </div>
                     @endif
                 </div>
             </div>
-            {{ $attendances->links() }}
+            {{ $payslips->links() }}
         </div>
     </div>
 </div>

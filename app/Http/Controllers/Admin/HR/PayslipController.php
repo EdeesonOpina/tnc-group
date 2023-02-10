@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\HR;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use DB;
 use Auth;
 use Mail;
 use Validator;
@@ -28,6 +29,45 @@ class PayslipController extends Controller
 
         return view('admin.payslips.show', compact(
             'users'
+        ));
+    }
+
+    public function date_select($user_id)
+    {
+        $user = User::find($user_id);
+
+        return view('admin.payslips.date-select', compact(
+            'user'
+        ));
+    }
+
+    public function date_select_search(Request $request)
+    {
+        $user_id = $request->user_id ?? '*';
+        $from_date = $request->from_date ?? '*';
+        $to_date = $request->to_date ?? '*';
+
+        return redirect()->route('hr.payslips.deductions', [$user_id, $from_date, $to_date])->withInput();
+    }
+
+    public function deductions($user_id, $from_date, $to_date)
+    {
+        $user = User::find($user_id);
+        $from_date = $from_date;
+        $to_date = $to_date;
+
+        $query = PayslipAttendance::where('status', PayslipAttendanceStatus::APPROVED);
+
+        $query->whereBetween('from_date', [$from_date . ' 00:00:00', $to_date . ' 23:59:59']);
+        $query->whereBetween('to_date', [$from_date . ' 00:00:00', $to_date . ' 23:59:59']);
+
+        $attendances = $query->get();
+
+        return view('admin.payslips.deductions', compact(
+            'attendances',
+            'from_date',
+            'to_date',
+            'user'
         ));
     }
 
@@ -77,22 +117,37 @@ class PayslipController extends Controller
         ));
     }
 
-    public function add($user_id)
+    public function view($user_id)
     {
         $user = User::find($user_id);
+        $payslips = Payslip::where('status', '!=', PayslipStatus::INACTIVE)
+                            ->paginate(30);
 
-        return view('admin.payslips.time.add', compact(
+        return view('admin.payslips.view', compact(
+            'payslips',
             'user'
         ));
     }
 
-    public function view($user_id)
+    public function details($payslip_id)
     {
-        $user = User::find($user_id);
-        $attendances = PayslipAttendance::where('status', '!=', PayslipStatus::INACTIVE)
-                                        ->paginate(30);
+        $payslip = Payslip::find($payslip_id);
+        $user = User::find($payslip->user_id);
+        $from_date = $payslip->from_date;
+        $to_date = $payslip->to_date;
 
-        return view('admin.payslips.view', compact(
+        $query = PayslipAttendance::where('payslip_id', $payslip->id)
+                            ->where('status', PayslipAttendanceStatus::APPROVED);
+
+        $attendances = $query->get();
+
+        $total_deductions = $payslip->w_tax + $payslip->sss + $payslip->philhealth + $payslip->pagibig + $payslip->gsis;
+
+        return view('admin.payslips.details', compact(
+            'total_deductions',
+            'payslip',
+            'from_date',
+            'to_date',
             'attendances',
             'user'
         ));
@@ -101,7 +156,7 @@ class PayslipController extends Controller
     public function manage($user_id)
     {
         $user = User::find($user_id);
-        $attendances = PayslipAttendance::where('status', '!=', PayslipStatus::INACTIVE)
+        $attendances = PayslipAttendance::where('status', '!=', PayslipAttendanceStatus::INACTIVE)
                                         ->paginate(30);
 
         return view('admin.payslips.manage', compact(
@@ -110,14 +165,14 @@ class PayslipController extends Controller
         ));
     }
 
-    public function create(Request $request)
+    public function apply_deductions(Request $request)
     {
         $rules = [
-            'user_id' => 'required',
-            'from_date' => 'required',
-            'to_date' => 'required',
-            'time_in' => 'required',
-            'time_out' => 'required',
+            'w_tax' => 'required',
+            'sss' => 'required',
+            'philhealth' => 'required',
+            'pagibig' => 'required',
+            'gsis' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -126,27 +181,19 @@ class PayslipController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
-        /* get the hours rendered */
-        $from = Carbon::createFromFormat('Y-m-d H:i', $request->from_date . ' ' . $request->time_in);
-        $to = Carbon::createFromFormat('Y-m-d H:i', $request->to_date . ' ' . $request->time_out);
-        $hours_rendered = $to->diffInHours($from) - 1; // no break with 1 hour break
+        $data = request()->all(); // get all request
+        $data['status'] = PayslipStatus::PENDING; // if you want to insert to a specific column
+        $payslip = Payslip::create($data); // create data in a model
 
-        /* convert monthly salary to hourly */
-        $user = User::find($request->user_id);
-        $salary_per_hour = ($user->salary / 40);
+        $attendances = $request->attendances;
 
-        if ($hours_rendered > 8) {
-            $hours_rendered = 8;
+        foreach ($attendances as $attendance) {
+            $atd = PayslipAttendance::find($attendance);
+            $atd->payslip_id = $payslip->id;
+            $atd->save();
         }
 
-        $data = request()->all(); // get all request
-        $data['hours_rendered'] = $hours_rendered;
-        $data['salary_per_hour'] = $salary_per_hour;
-        $data['total'] = $salary_per_hour * $hours_rendered;
-        $data['status'] = PayslipAttendanceStatus::PENDING; // if you want to insert to a specific column
-        PayslipAttendance::create($data); // create data in a model
-
         $request->session()->flash('success', 'Data has been added');
-        return redirect()->route('hr.payslips.manage', [$user->id]);
+        return redirect()->route('hr.payslips.view', [$payslip->user_id]);
     }
 }

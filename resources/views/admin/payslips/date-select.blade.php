@@ -10,7 +10,7 @@
                     <li class="breadcrumb-item active" aria-current="page">{{ $user->firstname }} {{ $user->lastname }}</li>
                 </ol>
             </nav>
-            <h1 class="m-0">{{ $user->firstname }} {{ $user->lastname }} Attendance</h1>
+            <h1 class="m-0">{{ $user->firstname }} {{ $user->lastname }} Payslip</h1>
         </div>
     </div>
 </div>
@@ -23,25 +23,12 @@
             <div id="spaced-card" class="card card-body">
                 <div class="row">
                     <div class="col">
-                        <h3>Time Record</h3>
+                        <h3>Create Payslip</h3>
                         <br>
-                        <form action="{{ route('hr.payslips.time.create') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('hr.payslips.date-select.search') }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="user_id" value="{{ $user->id }}">
                         
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="type">Type</label><br />
-                                    <select id="type" name="type" class="custom-select" data-toggle="select">
-                                        <option value="Regular">Regular</option>
-                                        <option value="Overtime">Overtime</option>
-                                        <option value="OB">Official Business Trip</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
@@ -54,21 +41,6 @@
                                 <div class="form-group">
                                     <label>To Date</label>
                                     <input type="date" name="to_date" class="form-control" value="{{ old('to_date') ?? date('Y-m-d') }}">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>Time In</label>
-                                    <input type="time" name="time_in" class="form-control" value="{{ old('time_in') }}">
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>Time Out</label>
-                                    <input type="time" name="time_out" class="form-control" value="{{ old('time_out') }}">
                                 </div>
                             </div>
                         </div>

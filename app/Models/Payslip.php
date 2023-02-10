@@ -11,10 +11,13 @@ class Payslip extends Model
 
     protected $fillable = [
         'user_id',
+        'from_date',
+        'to_date',
         'w_tax',
         'sss',
         'philhealth',
         'pagibig',
+        'hours',
         'total',
         'date_received',
         'image',
