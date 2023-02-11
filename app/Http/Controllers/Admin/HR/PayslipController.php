@@ -172,7 +172,7 @@ class PayslipController extends Controller
             'sss' => 'required',
             'philhealth' => 'required',
             'pagibig' => 'required',
-            'gsis' => 'required',
+            'gsis' => 'optional',
         ];
 
         $validator = Validator::make($request->all(), $rules);

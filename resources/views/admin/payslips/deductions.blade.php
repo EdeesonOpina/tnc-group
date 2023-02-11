@@ -82,14 +82,14 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <label>GSIS</label>
                                     <input type="text" name="gsis" class="form-control" value="{{ old('gsis') ?? '0.00' }}">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         
                         <div class="form-group m-0">
                             <button type="submit" class="btn btn-success">Submit</button>

@@ -136,12 +136,12 @@
                                 <td><strong>P{{ number_format($payslip->pagibig, 2) }}</strong></td>
                                 <td></td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td colspan="5"></td>
                                 <td><strong>GSIS</strong></td>
                                 <td><strong>P{{ number_format($payslip->gsis, 2) }}</strong></td>
                                 <td></td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <td colspan="5"></td>
                                 <td><strong>Total Income</strong></td>

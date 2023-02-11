@@ -197,11 +197,11 @@
                 <td class="table-black-border min-space"><strong>PAGIBIG</strong></td>
                 <td class="table-black-border min-space"><strong>P{{ number_format($payslip->pagibig, 2) }}</strong></td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td colspan="5" class="table-black-border min-space"></td>
                 <td class="table-black-border min-space"><strong>GSIS</strong></td>
                 <td class="table-black-border min-space"><strong>P{{ number_format($payslip->gsis, 2) }}</strong></td>
-            </tr>
+            </tr> -->
             <tr>
                 <td colspan="5" class="table-black-border min-space"></td>
                 <td class="table-black-border min-space"><strong>Total Income</strong></td>
