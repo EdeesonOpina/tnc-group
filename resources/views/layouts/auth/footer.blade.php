@@ -602,7 +602,7 @@
     @endif 
   @endif
 
-  @if (request()->is('admin/liquidations') || request()->is('admin/liquidations/*'))
+  @if (request()->is('accounting/liquidations') || request()->is('accounting/liquidations/*'))
     @if(str_contains(url()->current(), '/edit') || str_contains(url()->current(), '/add') || str_contains(url()->current(), '/view'))
 
     @else
