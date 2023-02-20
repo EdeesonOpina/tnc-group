@@ -7,6 +7,8 @@ use App\Models\BudgetRequestForm;
 use App\Models\BudgetRequestFormStatus;
 use App\Models\BudgetRequestFormDetail;
 use App\Models\BudgetRequestFormDetailStatus;
+use App\Models\BudgetRequestFormFile;
+use App\Models\BudgetRequestFormFileStatus;
 @endphp
 
 <div class="container-fluid page__heading-container">
@@ -102,6 +104,7 @@ use App\Models\BudgetRequestFormDetailStatus;
                                 <th id="compact-table">Project</th>
                                 <th id="compact-table">Needed Date</th>
                                 <th id="compact-table">Total Price</th>
+                                <th id="compact-table">File</th>
                                 <th id="compact-table">Status</th>
                             </tr>
                         </thead>
@@ -136,6 +139,33 @@ use App\Models\BudgetRequestFormDetailStatus;
                                     <td id="compact-table">{{ $budget_request_form->project->name }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}</td>
                                     <td>P{{ number_format($total, 2) }}</td>
+                                    <td>
+                                        @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Accountant' || auth()->user()->id == $budget_request_form->requested_by_user->id || auth()->user()->id == $budget_request_form->checked_by_user->id || auth()->user()->id == $budget_request_form->noted_by_user->id)
+
+                                            @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION || $budget_request_form->status == BudgetRequestFormStatus::FOR_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::FOR_LIQUIDATION_BANK_DEPOSIT_SLIP || $budget_request_form->status == BudgetRequestFormStatus::FOR_OFFICIAL_RECEIPT || $budget_request_form->status == BudgetRequestFormStatus::DONE)
+
+                                                @if (BudgetRequestFormFile::where('budget_request_form_id', $budget_request_form->id)
+                                                ->where('status', BudgetRequestFormFileStatus::ACTIVE)
+                                                ->exists())
+                                                @php
+                                                    $brf_file = BudgetRequestFormFile::where('budget_request_form_id', $budget_request_form->id)
+                                                                    ->where('status', BudgetRequestFormFileStatus::ACTIVE)
+                                                                    ->first();
+                                                @endphp
+
+                                                    <a href="{{ url($brf_file->file) }}" download>
+                                                        <button class="btn btn-sm btn-primary">Download File</button>
+                                                    </a>
+                                                @else
+                                                    <a href="#" data-toggle="modal" data-target="#release-file-{{ $budget_request_form->id }}">
+                                                        <button class="btn btn-primary btn-sm">Upload File</button>
+                                                    </a>
+                                                @endif
+
+                                            @endif
+
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
                                             <div class="badge badge-info ml-2">For Approval</div>

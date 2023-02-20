@@ -602,6 +602,14 @@
     @endif 
   @endif
 
+  @if (request()->is('admin/liquidations') || request()->is('admin/liquidations/*'))
+    @if(str_contains(url()->current(), '/edit') || str_contains(url()->current(), '/add') || str_contains(url()->current(), '/view'))
+
+    @else
+        @include('layouts.modals.brf.release-file-list')
+    @endif
+  @endif
+
   @if (request()->is('admin/clients') || request()->is('admin/clients/*'))
     @if(str_contains(url()->current(), '/edit') || str_contains(url()->current(), '/add') || str_contains(url()->current(), '/view'))
 
