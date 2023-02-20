@@ -91,6 +91,7 @@ class Project extends Model
     public function used_cost()
     {
         $brf = BudgetRequestForm::where('project_id', $this->id)
+                            ->where('status', '!=', BudgetRequestFormStatus::DISAPPROVED)
                             ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
                             ->sum('total');
 
