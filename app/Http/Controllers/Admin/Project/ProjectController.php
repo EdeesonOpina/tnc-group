@@ -205,11 +205,9 @@ class ProjectController extends Controller
         $project_details = ProjectDetail::where('project_id', $project->id)
                         ->where('status', '!=', ProjectDetailStatus::INACTIVE)
                         ->paginate(15);
-        // $budget_request_forms = BudgetRequestForm::where('project_id', $project->id)
-        //                 ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
-        //                 ->paginate(15);
         $budget_request_forms = BudgetRequestForm::where('project_id', $project->id)
-                        ->where('status', BudgetRequestFormStatus::APPROVED)
+                        ->where('status', '!=', BudgetRequestFormStatus::DISAPPROVED)
+                        ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
                         ->paginate(15);
 
         $budget_request_forms_total = BudgetRequestForm::where('project_id', $project->id)
@@ -240,11 +238,9 @@ class ProjectController extends Controller
         $project_details = ProjectDetail::where('project_id', $project_id)
                                 ->where('status', '!=', ProjectDetailStatus::INACTIVE)
                                 ->paginate(15);
-        // $budget_request_forms = BudgetRequestForm::where('project_id', $project_id)
-        //                 ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
-        //                 ->paginate(15);
         $budget_request_forms = BudgetRequestForm::where('project_id', $project_id)
-                        ->where('status', BudgetRequestFormStatus::APPROVED)
+                        ->where('status', '!=', BudgetRequestFormStatus::DISAPPROVED)
+                        ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
                         ->paginate(15);
 
         $budget_request_forms_total = BudgetRequestForm::where('project_id', $project_id)
