@@ -206,13 +206,13 @@ class BRFController extends Controller
         $subject = $brf->requested_by_user->firstname . ' ' . $brf->requested_by_user->lastname . ' created a BRF';
 
         /* send mail to user */
-        Mail::send('emails.brf.create', [
-            'brf' => $brf
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.brf.create', [
+        //     'brf' => $brf
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been added');
         return redirect()->route('internals.brf.manage', [$brf->id]);
@@ -268,13 +268,13 @@ class BRFController extends Controller
         $subject = $brf->requested_by_user->firstname . ' ' . $brf->requested_by_user->lastname . ' created a BRF';
 
         /* send mail to user */
-        Mail::send('emails.brf.create', [
-            'brf' => $brf
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.brf.create', [
+        //     'brf' => $brf
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been added');
         return redirect()->route('internals.brf.manage', [$brf->id]);
@@ -400,13 +400,13 @@ class BRFController extends Controller
         $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' sent a BRF for approval';
 
         /* send mail to user */
-        Mail::send('emails.brf.create-for-approver', [
-            'brf' => $brf
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.brf.create-for-approver', [
+        //     'brf' => $brf
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been sent for approval');
         return back();
@@ -424,13 +424,13 @@ class BRFController extends Controller
         $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' sent a BRF for final approval';
 
         /* send mail to user */
-        Mail::send('emails.brf.for-final-approval', [
-            'brf' => $brf
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.brf.for-final-approval', [
+        //     'brf' => $brf
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been approved');
 
@@ -449,13 +449,13 @@ class BRFController extends Controller
         $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' approved your BRF';
 
         /* send mail to user */
-        Mail::send('emails.brf.approve', [
-            'brf' => $budget_request_form
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.brf.approve', [
+        //     'brf' => $budget_request_form
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been approved');
 
@@ -472,13 +472,13 @@ class BRFController extends Controller
         $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' sent a BRF for finance checking';
 
         /* send mail to user */
-        Mail::send('emails.brf.send-to-finance', [
-            'brf' => $budget_request_form
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.brf.send-to-finance', [
+        //     'brf' => $budget_request_form
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been sent to finance');
         return back();
@@ -497,13 +497,13 @@ class BRFController extends Controller
         $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' disapproved your BRF';
 
         /* send mail to user */
-        Mail::send('emails.brf.disapprove', [
-            'brf' => $budget_request_form
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.brf.disapprove', [
+        //     'brf' => $budget_request_form
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been disapproved');
         return redirect()->route('internals.brf.view', [$budget_request_form->reference_number]);
@@ -627,13 +627,13 @@ class BRFController extends Controller
         $subject = 'Finance has uploaded a RELEASE file on your BRF';
 
         /* send mail to user */
-        Mail::send('emails.brf.release-file', [
-            'brf' => $brf_file->budget_request_form
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.brf.release-file', [
+        //     'brf' => $brf_file->budget_request_form
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been added');
         return back();
