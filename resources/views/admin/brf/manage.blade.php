@@ -18,9 +18,9 @@
             </nav>
             <h1 class="m-0">Manage BRF</h1>
         </div>
-        @if ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS || $budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
+        @if ($budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
             <a href="{{ route('internals.brf.for-approval', [$budget_request_form->id]) }}">
-                <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Submit Final Approval</button>
+                <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Submit For Re-Approval</button>
             </a>
         @endif
 
@@ -30,7 +30,7 @@
             </a>
         @endif -->
 
-        @if ($budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
+        @if ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS || $budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL)
             @if (auth()->user()->id == $budget_request_form->noted_by_user->id || auth()->user()->id == $budget_request_form->checked_by_user->id || auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
                 <a href="#" data-href="{{ route('internals.brf.for-final-approval', [$budget_request_form->id]) }}" data-toggle="modal" data-target="#confirm-action">
                     <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Approve</button>
