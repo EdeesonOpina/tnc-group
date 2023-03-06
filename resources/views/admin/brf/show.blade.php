@@ -144,7 +144,7 @@ use App\Models\BudgetRequestFormDetailStatus;
                                             @endif
 
 
-                                            @if ($budget_request_form->requested_by_user_id == auth()->user()->id || auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+                                            @if ($budget_request_form->requested_by_user_id == auth()->user()->id || auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->id == $budget_request_form->checked_by_user->id)
 
                                                 @if ($budget_request_form->status == BudgetRequestFormStatus::ON_PROCESS || $budget_request_form->status == BudgetRequestFormStatus::FOR_APPROVAL || $budget_request_form->status == BudgetRequestFormStatus::FOR_FINAL_APPROVAL || $budget_request_form->status == BudgetRequestFormStatus::DISAPPROVED)
                                                     <a href="{{ route('internals.brf.manage', [$budget_request_form->id]) }}" id="space-table">Manage</a> | 
