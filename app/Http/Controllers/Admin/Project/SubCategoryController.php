@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Project;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ use App\Models\ProjectSubCategory;
 use App\Models\ProjectCategoryStatus;
 use App\Models\ProjectSubCategoryStatus;
 
-class ProjectSubCategoryController extends Controller
+class SubCategoryController extends Controller
 {
     public function create(Request $request)
     {

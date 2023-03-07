@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Inventory;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,7 +10,7 @@ use Mail;
 use Validator;
 use App\Models\Company;
 
-class InventoryCompanyController extends Controller
+class CompanyController extends Controller
 {
     public function search(Request $request)
     {

@@ -90,60 +90,60 @@ Route::group(['prefix' => 'accounting/', 'middleware' => ['auth', 'accounting']]
 
     // liquidations
     Route::group(['prefix' => 'liquidations/'], function () {
-        Route::get('/', 'App\Http\Controllers\Admin\LiquidationController@show')->name('accounting.liquidations');
+        Route::get('/', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@show')->name('accounting.liquidations');
 
-        Route::get('/add', 'App\Http\Controllers\Admin\LiquidationController@add')->name('accounting.liquidations.add');
-        Route::post('/create', 'App\Http\Controllers\Admin\LiquidationController@create')->name('accounting.liquidations.create');
-        Route::get('/view/{expense_id}', 'App\Http\Controllers\Admin\LiquidationController@view')->name('accounting.liquidations.view');
-        Route::get('/edit/{expense_id}', 'App\Http\Controllers\Admin\LiquidationController@edit')->name('accounting.liquidations.edit');
-        Route::post('/edit', 'App\Http\Controllers\Admin\LiquidationController@update')->name('accounting.liquidations.update');
-        Route::get('/approve/{expense_id}', 'App\Http\Controllers\Admin\LiquidationController@approve')->name('accounting.liquidations.approve');
-        Route::get('/disapprove/{expense_id}', 'App\Http\Controllers\Admin\LiquidationController@disapprove')->name('accounting.liquidations.disapprove');
-        Route::get('/delete/{expense_id}', 'App\Http\Controllers\Admin\LiquidationController@delete')->name('accounting.liquidations.delete');
-        Route::get('/recover/{expense_id}', 'App\Http\Controllers\Admin\LiquidationController@recover')->name('accounting.liquidations.recover');
+        Route::get('/add', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@add')->name('accounting.liquidations.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@create')->name('accounting.liquidations.create');
+        Route::get('/view/{expense_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@view')->name('accounting.liquidations.view');
+        Route::get('/edit/{expense_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@edit')->name('accounting.liquidations.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@update')->name('accounting.liquidations.update');
+        Route::get('/approve/{expense_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@approve')->name('accounting.liquidations.approve');
+        Route::get('/disapprove/{expense_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@disapprove')->name('accounting.liquidations.disapprove');
+        Route::get('/delete/{expense_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@delete')->name('accounting.liquidations.delete');
+        Route::get('/recover/{expense_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@recover')->name('accounting.liquidations.recover');
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\LiquidationController@search')->name('accounting.liquidations.search');
-            Route::get('{description}/{category_id}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\LiquidationController@filter')->name('accounting.liquidations.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@search')->name('accounting.liquidations.search');
+            Route::get('{description}/{category_id}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@filter')->name('accounting.liquidations.filter');
         });
     });
 
     // expenses
     Route::group(['prefix' => 'expenses/'], function () {
-        Route::get('/', 'App\Http\Controllers\Admin\ExpenseController@show')->name('accounting.expenses');
+        Route::get('/', 'App\Http\Controllers\Admin\Expense\ExpenseController@show')->name('accounting.expenses');
 
-        Route::get('/add', 'App\Http\Controllers\Admin\ExpenseController@add')->name('accounting.expenses.add');
-        Route::post('/create', 'App\Http\Controllers\Admin\ExpenseController@create')->name('accounting.expenses.create');
-        Route::get('/view/{expense_id}', 'App\Http\Controllers\Admin\ExpenseController@view')->name('accounting.expenses.view');
-        Route::get('/edit/{expense_id}', 'App\Http\Controllers\Admin\ExpenseController@edit')->name('accounting.expenses.edit');
-        Route::post('/edit', 'App\Http\Controllers\Admin\ExpenseController@update')->name('accounting.expenses.update');
-        Route::get('/delete/{expense_id}', 'App\Http\Controllers\Admin\ExpenseController@delete')->name('accounting.expenses.delete');
-        Route::get('/recover/{expense_id}', 'App\Http\Controllers\Admin\ExpenseController@recover')->name('accounting.expenses.recover');
+        Route::get('/add', 'App\Http\Controllers\Admin\Expense\ExpenseController@add')->name('accounting.expenses.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\Expense\ExpenseController@create')->name('accounting.expenses.create');
+        Route::get('/view/{expense_id}', 'App\Http\Controllers\Admin\Expense\ExpenseController@view')->name('accounting.expenses.view');
+        Route::get('/edit/{expense_id}', 'App\Http\Controllers\Admin\Expense\ExpenseController@edit')->name('accounting.expenses.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\Expense\ExpenseController@update')->name('accounting.expenses.update');
+        Route::get('/delete/{expense_id}', 'App\Http\Controllers\Admin\Expense\ExpenseController@delete')->name('accounting.expenses.delete');
+        Route::get('/recover/{expense_id}', 'App\Http\Controllers\Admin\Expense\ExpenseController@recover')->name('accounting.expenses.recover');
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\ExpenseController@search')->name('accounting.expenses.search');
-            Route::get('{description}/{category_id}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ExpenseController@filter')->name('accounting.expenses.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\Expense\ExpenseController@search')->name('accounting.expenses.search');
+            Route::get('{description}/{category_id}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\Expense\ExpenseController@filter')->name('accounting.expenses.filter');
         });
     });
 
     // expense companies
     Route::group(['prefix' => 'expense-companies/'], function () {
-        Route::get('/', 'App\Http\Controllers\Admin\ExpenseCompanyController@show')->name('accounting.expense-companies');
+        Route::get('/', 'App\Http\Controllers\Admin\Expense\CompanyController@show')->name('accounting.expense-companies');
 
-        Route::get('/add', 'App\Http\Controllers\Admin\ExpenseCompanyController@add')->name('accounting.expense-companies.add');
-        Route::post('/create', 'App\Http\Controllers\Admin\ExpenseCompanyController@create')->name('accounting.expense-companies.create');
-        Route::get('/view/{expense_company_id}', 'App\Http\Controllers\Admin\ExpenseCompanyController@view')->name('accounting.expense-companies.view');
-        Route::get('/edit/{expense_company_id}', 'App\Http\Controllers\Admin\ExpenseCompanyController@edit')->name('accounting.expense-companies.edit');
-        Route::post('/edit', 'App\Http\Controllers\Admin\ExpenseCompanyController@update')->name('accounting.expense-companies.update');
-        Route::get('/delete/{expense_company_id}', 'App\Http\Controllers\Admin\ExpenseCompanyController@delete')->name('accounting.expense-companies.delete');
-        Route::get('/recover/{expense_company_id}', 'App\Http\Controllers\Admin\ExpenseCompanyController@recover')->name('accounting.expense-companies.recover');
+        Route::get('/add', 'App\Http\Controllers\Admin\Expense\CompanyController@add')->name('accounting.expense-companies.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\Expense\CompanyController@create')->name('accounting.expense-companies.create');
+        Route::get('/view/{expense_company_id}', 'App\Http\Controllers\Admin\Expense\CompanyController@view')->name('accounting.expense-companies.view');
+        Route::get('/edit/{expense_company_id}', 'App\Http\Controllers\Admin\Expense\CompanyController@edit')->name('accounting.expense-companies.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\Expense\CompanyController@update')->name('accounting.expense-companies.update');
+        Route::get('/delete/{expense_company_id}', 'App\Http\Controllers\Admin\Expense\CompanyController@delete')->name('accounting.expense-companies.delete');
+        Route::get('/recover/{expense_company_id}', 'App\Http\Controllers\Admin\Expense\CompanyController@recover')->name('accounting.expense-companies.recover');
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\ExpenseCompanyController@search')->name('accounting.expense-companies.search');
-            Route::get('{name}/{category_id}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ExpenseCompanyController@filter')->name('accounting.expense-companies.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\Expense\CompanyController@search')->name('accounting.expense-companies.search');
+            Route::get('{name}/{category_id}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\Expense\CompanyController@filter')->name('accounting.expense-companies.filter');
         });
     });
 
@@ -180,23 +180,23 @@ Route::group(['prefix' => 'accounting/', 'middleware' => ['auth', 'accounting']]
 
     // cash advances
     Route::group(['prefix' => 'cash-advances/'], function () {
-        Route::get('/', 'App\Http\Controllers\Admin\CashAdvanceController@show')->name('accounting.cash-advances');
-        Route::get('/add', 'App\Http\Controllers\Admin\CashAdvanceController@add')->name('accounting.cash-advances.add');
-        Route::post('/create', 'App\Http\Controllers\Admin\CashAdvanceController@create')->name('accounting.cash-advances.create');
+        Route::get('/', 'App\Http\Controllers\Admin\CashAdvance\CashAdvanceController@show')->name('accounting.cash-advances');
+        Route::get('/add', 'App\Http\Controllers\Admin\CashAdvance\CashAdvanceController@add')->name('accounting.cash-advances.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\CashAdvance\CashAdvanceController@create')->name('accounting.cash-advances.create');
 
-        Route::get('/approve/{cash_advance_id}', 'App\Http\Controllers\Admin\CashAdvanceController@approve')->name('accounting.cash-advances.approve');
-        Route::get('/disapprove/{cash_advance_id}', 'App\Http\Controllers\Admin\CashAdvanceController@disapprove')->name('accounting.cash-advances.disapprove');
-        Route::get('/final-approve/{cash_advance_id}', 'App\Http\Controllers\Admin\CashAdvanceController@final_approve')->name('accounting.cash-advances.final-approve');
+        Route::get('/approve/{cash_advance_id}', 'App\Http\Controllers\Admin\CashAdvance\CashAdvanceController@approve')->name('accounting.cash-advances.approve');
+        Route::get('/disapprove/{cash_advance_id}', 'App\Http\Controllers\Admin\CashAdvance\CashAdvanceController@disapprove')->name('accounting.cash-advances.disapprove');
+        Route::get('/final-approve/{cash_advance_id}', 'App\Http\Controllers\Admin\CashAdvance\CashAdvanceController@final_approve')->name('accounting.cash-advances.final-approve');
 
         // cash advance payment
         Route::group(['prefix' => 'view/{ca_number}'], function () {
-            Route::get('/', 'App\Http\Controllers\Admin\CashAdvanceController@view')->name('accounting.cash-advances.view');
-            Route::get('/approve/{cash_advance_payment_id}', 'App\Http\Controllers\Admin\CashAdvancePaymentController@approve')->name('accounting.cash-advance-payments.approve');
-            Route::get('/disapprove/{cash_advance_payment_id}', 'App\Http\Controllers\Admin\CashAdvancePaymentController@disapprove')->name('accounting.cash-advance-payments.disapprove');
+            Route::get('/', 'App\Http\Controllers\Admin\CashAdvance\CashAdvanceController@view')->name('accounting.cash-advances.view');
+            Route::get('/approve/{cash_advance_payment_id}', 'App\Http\Controllers\Admin\CashAdvance\PaymentController@approve')->name('accounting.cash-advance-payments.approve');
+            Route::get('/disapprove/{cash_advance_payment_id}', 'App\Http\Controllers\Admin\CashAdvance\PaymentController@disapprove')->name('accounting.cash-advance-payments.disapprove');
         });
 
-        Route::post('/assign/invoice-number', 'App\Http\Controllers\Admin\CashAdvanceController@invoiceNumber')->name('accounting.cash-advances.assign.invoice-number');
-        Route::post('/pay', 'App\Http\Controllers\Admin\CashAdvanceController@pay')->name('accounting.cash-advances.pay');
+        Route::post('/assign/invoice-number', 'App\Http\Controllers\Admin\CashAdvance\CashAdvanceController@invoiceNumber')->name('accounting.cash-advances.assign.invoice-number');
+        Route::post('/pay', 'App\Http\Controllers\Admin\CashAdvance\CashAdvanceController@pay')->name('accounting.cash-advances.pay');
 
         // exports
         Route::group(['prefix' => 'exports/'], function () {
@@ -208,8 +208,8 @@ Route::group(['prefix' => 'accounting/', 'middleware' => ['auth', 'accounting']]
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\CashAdvanceController@search')->name('accounting.cash-advances.search');
-            Route::get('/{ca_number}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\CashAdvanceController@filter')->name('accounting.cash-advances.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\CashAdvance\CashAdvanceController@search')->name('accounting.cash-advances.search');
+            Route::get('/{ca_number}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\CashAdvance\CashAdvanceController@filter')->name('accounting.cash-advances.filter');
         });
     });
 });
@@ -242,48 +242,48 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
     // inventories
     Route::group(['prefix' => 'inventories/'], function () {
-        Route::get('/', 'App\Http\Controllers\Admin\InventoryController@show')->name('internals.inventories');
-        Route::get('/view/{branch_id}', 'App\Http\Controllers\Admin\InventoryController@view')->name('internals.inventories.view');
+        Route::get('/', 'App\Http\Controllers\Admin\Inventory\InventoryController@show')->name('internals.inventories');
+        Route::get('/view/{branch_id}', 'App\Http\Controllers\Admin\Inventory\InventoryController@view')->name('internals.inventories.view');
 
         // management
         Route::group(['prefix' => 'manage/{branch_id}'], function () {
-            Route::get('/', 'App\Http\Controllers\Admin\InventoryController@manage')->name('internals.inventories.manage');
-            Route::post('/set-price', 'App\Http\Controllers\Admin\InventoryController@price')->name('internals.inventories.items.set-price');
-            Route::post('/set-discount', 'App\Http\Controllers\Admin\InventoryController@discount')->name('internals.inventories.items.set-discount');
-            Route::post('/set-barcode', 'App\Http\Controllers\Admin\InventoryController@barcode')->name('internals.inventories.items.set-barcode');
+            Route::get('/', 'App\Http\Controllers\Admin\Inventory\InventoryController@manage')->name('internals.inventories.manage');
+            Route::post('/set-price', 'App\Http\Controllers\Admin\Inventory\InventoryController@price')->name('internals.inventories.items.set-price');
+            Route::post('/set-discount', 'App\Http\Controllers\Admin\Inventory\InventoryController@discount')->name('internals.inventories.items.set-discount');
+            Route::post('/set-barcode', 'App\Http\Controllers\Admin\Inventory\InventoryController@barcode')->name('internals.inventories.items.set-barcode');
 
             // management
             Route::group(['prefix' => 'landing-price/{inventory_id}'], function () {
-                Route::get('/', 'App\Http\Controllers\Admin\InventoryReceiveRecordController@masterlist')->name('internals.inventories.landing-price.masterlist');
-                Route::post('/create', 'App\Http\Controllers\Admin\InventoryReceiveRecordController@create')->name('internals.inventories.landing-price.create');
+                Route::get('/', 'App\Http\Controllers\Admin\Inventory\ReceiveRecordController@masterlist')->name('internals.inventories.landing-price.masterlist');
+                Route::post('/create', 'App\Http\Controllers\Admin\Inventory\ReceiveRecordController@create')->name('internals.inventories.landing-price.create');
             });
 
             // for searching
             Route::group(['prefix' => 'search/'], function () {
-                Route::post('/', 'App\Http\Controllers\Admin\InventoryController@search')->name('internals.inventories.items.search');
-                Route::get('/{barcode}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\InventoryController@filter')->name('internals.inventories.items.filter');
+                Route::post('/', 'App\Http\Controllers\Admin\Inventory\InventoryController@search')->name('internals.inventories.items.search');
+                Route::get('/{barcode}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\Inventory\InventoryController@filter')->name('internals.inventories.items.filter');
             });
         });
 
         // item serial numbers
         Route::group(['prefix' => 'serial-numbers/items/{item_id}/'], function () {
-            Route::get('/', 'App\Http\Controllers\Admin\ItemSerialNumberController@show')->name('internals.inventories.items.serial-numbers');
-            Route::post('/create', 'App\Http\Controllers\Admin\ItemSerialNumberController@create')->name('internals.inventories.items.serial-numbers.create');
-            Route::get('/edit/{item_serial_number_id}', 'App\Http\Controllers\Admin\ItemSerialNumberController@edit')->name('internals.inventories.items.serial-numbers.edit');
-            Route::post('/edit', 'App\Http\Controllers\Admin\ItemSerialNumberController@update')->name('internals.inventories.items.serial-numbers.update');
-            Route::post('/assign-so', 'App\Http\Controllers\Admin\ItemSerialNumberController@assignSO')->name('internals.inventories.items.serial-numbers.assign-so');
+            Route::get('/', 'App\Http\Controllers\Admin\Item\SerialNumberController@show')->name('internals.inventories.items.serial-numbers');
+            Route::post('/create', 'App\Http\Controllers\Admin\Item\SerialNumberController@create')->name('internals.inventories.items.serial-numbers.create');
+            Route::get('/edit/{item_serial_number_id}', 'App\Http\Controllers\Admin\Item\SerialNumberController@edit')->name('internals.inventories.items.serial-numbers.edit');
+            Route::post('/edit', 'App\Http\Controllers\Admin\Item\SerialNumberController@update')->name('internals.inventories.items.serial-numbers.update');
+            Route::post('/assign-so', 'App\Http\Controllers\Admin\Item\SerialNumberController@assignSO')->name('internals.inventories.items.serial-numbers.assign-so');
 
-            Route::get('/available/{item_serial_number_id}', 'App\Http\Controllers\Admin\ItemSerialNumberController@available')->name('internals.inventories.items.serial-numbers.available');
-            Route::get('/floating/{item_serial_number_id}', 'App\Http\Controllers\Admin\ItemSerialNumberController@floating')->name('internals.inventories.items.serial-numbers.floating');
-            Route::get('/revert/{item_serial_number_id}', 'App\Http\Controllers\Admin\ItemSerialNumberController@revert')->name('internals.inventories.items.serial-numbers.revert');
-            Route::get('/sold/{item_serial_number_id}', 'App\Http\Controllers\Admin\ItemSerialNumberController@sold')->name('internals.inventories.items.serial-numbers.sold');
-            Route::get('/delete/{item_serial_number_id}', 'App\Http\Controllers\Admin\ItemSerialNumberController@delete')->name('internals.inventories.items.serial-numbers.delete');
-            Route::get('/recover/{item_serial_number_id}', 'App\Http\Controllers\Admin\ItemSerialNumberController@recover')->name('internals.inventories.items.serial-numbers.recover');
+            Route::get('/available/{item_serial_number_id}', 'App\Http\Controllers\Admin\Item\SerialNumberController@available')->name('internals.inventories.items.serial-numbers.available');
+            Route::get('/floating/{item_serial_number_id}', 'App\Http\Controllers\Admin\Item\SerialNumberController@floating')->name('internals.inventories.items.serial-numbers.floating');
+            Route::get('/revert/{item_serial_number_id}', 'App\Http\Controllers\Admin\Item\SerialNumberController@revert')->name('internals.inventories.items.serial-numbers.revert');
+            Route::get('/sold/{item_serial_number_id}', 'App\Http\Controllers\Admin\Item\SerialNumberController@sold')->name('internals.inventories.items.serial-numbers.sold');
+            Route::get('/delete/{item_serial_number_id}', 'App\Http\Controllers\Admin\Item\SerialNumberController@delete')->name('internals.inventories.items.serial-numbers.delete');
+            Route::get('/recover/{item_serial_number_id}', 'App\Http\Controllers\Admin\Item\SerialNumberController@recover')->name('internals.inventories.items.serial-numbers.recover');
 
             // for searching
             Route::group(['prefix' => 'search/'], function () {
-                Route::post('/', 'App\Http\Controllers\Admin\ItemSerialNumberController@search')->name('internals.inventories.items.serial-numbers.search');
-                Route::get('/{code}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ItemSerialNumberController@filter')->name('internals.inventories.items.serial-numbers.filter');
+                Route::post('/', 'App\Http\Controllers\Admin\Item\SerialNumberController@search')->name('internals.inventories.items.serial-numbers.search');
+                Route::get('/{code}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\Item\SerialNumberController@filter')->name('internals.inventories.items.serial-numbers.filter');
             });
         });
 
@@ -297,41 +297,41 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\InventoryCompanyController@search')->name('internals.inventories.companies.search');
-            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\InventoryCompanyController@filter')->name('internals.inventories.companies.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\Inventory\CompanyController@search')->name('internals.inventories.companies.search');
+            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\Inventory\CompanyController@filter')->name('internals.inventories.companies.filter');
         });
     });
 
     // items
     Route::group(['prefix' => 'items/'], function () {
-        Route::get('/', 'App\Http\Controllers\Admin\ItemController@show')->name('admin.items');
-        Route::get('/add', 'App\Http\Controllers\Admin\ItemController@add')->name('admin.items.add');
-        Route::post('/create', 'App\Http\Controllers\Admin\ItemController@create')->name('admin.items.create');
-        Route::get('/view/{item_id}', 'App\Http\Controllers\Admin\ItemController@view')->name('admin.items.view');
-        Route::get('/edit/{item_id}', 'App\Http\Controllers\Admin\ItemController@edit')->name('admin.items.edit');
-        Route::post('/edit', 'App\Http\Controllers\Admin\ItemController@update')->name('admin.items.update');
-        Route::get('/delete/{item_id}', 'App\Http\Controllers\Admin\ItemController@delete')->name('admin.items.delete');
-        Route::get('/recover/{item_id}', 'App\Http\Controllers\Admin\ItemController@recover')->name('admin.items.recover');
+        Route::get('/', 'App\Http\Controllers\Admin\Item\ItemController@show')->name('admin.items');
+        Route::get('/add', 'App\Http\Controllers\Admin\Item\ItemController@add')->name('admin.items.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\Item\ItemController@create')->name('admin.items.create');
+        Route::get('/view/{item_id}', 'App\Http\Controllers\Admin\Item\ItemController@view')->name('admin.items.view');
+        Route::get('/edit/{item_id}', 'App\Http\Controllers\Admin\Item\ItemController@edit')->name('admin.items.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\Item\ItemController@update')->name('admin.items.update');
+        Route::get('/delete/{item_id}', 'App\Http\Controllers\Admin\Item\ItemController@delete')->name('admin.items.delete');
+        Route::get('/recover/{item_id}', 'App\Http\Controllers\Admin\Item\ItemController@recover')->name('admin.items.recover');
 
         // items
         Route::group(['prefix' => 'photos/{item_id}'], function () {
-            Route::get('/', 'App\Http\Controllers\Admin\ItemPhotoController@show')->name('admin.items.photos');
-            Route::post('/create', 'App\Http\Controllers\Admin\ItemPhotoController@create')->name('admin.items.photos.create');
-            Route::post('/edit', 'App\Http\Controllers\Admin\ItemPhotoController@update')->name('admin.items.photos.update');
-            Route::get('/delete/{item_photo_id}', 'App\Http\Controllers\Admin\ItemPhotoController@delete')->name('admin.items.photos.delete');
-            Route::get('/recover/{item_photo_id}', 'App\Http\Controllers\Admin\ItemPhotoController@recover')->name('admin.items.photos.recover');
+            Route::get('/', 'App\Http\Controllers\Admin\Item\PhotoController@show')->name('admin.items.photos');
+            Route::post('/create', 'App\Http\Controllers\Admin\Item\PhotoController@create')->name('admin.items.photos.create');
+            Route::post('/edit', 'App\Http\Controllers\Admin\Item\PhotoController@update')->name('admin.items.photos.update');
+            Route::get('/delete/{item_photo_id}', 'App\Http\Controllers\Admin\Item\PhotoController@delete')->name('admin.items.photos.delete');
+            Route::get('/recover/{item_photo_id}', 'App\Http\Controllers\Admin\Item\PhotoController@recover')->name('admin.items.photos.recover');
 
             // for searching
             Route::group(['prefix' => 'search/'], function () {
-                Route::post('/', 'App\Http\Controllers\Admin\ItemPhotoController@search')->name('admin.items.photos.search');
-                Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ItemPhotoController@filter')->name('admin.items.photos.filter');
+                Route::post('/', 'App\Http\Controllers\Admin\Item\PhotoController@search')->name('admin.items.photos.search');
+                Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\Item\PhotoController@filter')->name('admin.items.photos.filter');
             });
         });
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\ItemController@search')->name('admin.items.search');
-            Route::get('/{barcode}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ItemController@filter')->name('admin.items.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\Item\ItemController@search')->name('admin.items.search');
+            Route::get('/{barcode}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\Item\ItemController@filter')->name('admin.items.filter');
         });
     });
 
@@ -375,18 +375,18 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
     // clients
     Route::group(['prefix' => 'clients/'], function () {
-        Route::get('/', 'App\Http\Controllers\Admin\ClientController@show')->name('admin.clients');
-        Route::get('/add', 'App\Http\Controllers\Admin\ClientController@add')->name('admin.clients.add');
-        Route::post('/create', 'App\Http\Controllers\Admin\ClientController@create')->name('admin.clients.create');
-        Route::get('/view/{supplier_id}', 'App\Http\Controllers\Admin\ClientController@view')->name('admin.clients.view');
-        Route::get('/edit/{supplier_id}', 'App\Http\Controllers\Admin\ClientController@edit')->name('admin.clients.edit');
-        Route::post('/edit', 'App\Http\Controllers\Admin\ClientController@update')->name('admin.clients.update');
-        Route::get('/delete/{supplier_id}', 'App\Http\Controllers\Admin\ClientController@delete')->name('admin.clients.delete');
-        Route::get('/recover/{supplier_id}', 'App\Http\Controllers\Admin\ClientController@recover')->name('admin.clients.recover');
+        Route::get('/', 'App\Http\Controllers\Admin\Client\ClientController@show')->name('admin.clients');
+        Route::get('/add', 'App\Http\Controllers\Admin\Client\ClientController@add')->name('admin.clients.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\Client\ClientController@create')->name('admin.clients.create');
+        Route::get('/view/{supplier_id}', 'App\Http\Controllers\Admin\Client\ClientController@view')->name('admin.clients.view');
+        Route::get('/edit/{supplier_id}', 'App\Http\Controllers\Admin\Client\ClientController@edit')->name('admin.clients.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\Client\ClientController@update')->name('admin.clients.update');
+        Route::get('/delete/{supplier_id}', 'App\Http\Controllers\Admin\Client\ClientController@delete')->name('admin.clients.delete');
+        Route::get('/recover/{supplier_id}', 'App\Http\Controllers\Admin\Client\ClientController@recover')->name('admin.clients.recover');
 
         // manage
         Route::group(['prefix' => 'manage/{supplier_id}'], function () {
-            Route::get('/', 'App\Http\Controllers\Admin\ClientController@manage')->name('admin.clients.manage');
+            Route::get('/', 'App\Http\Controllers\Admin\Client\ClientController@manage')->name('admin.clients.manage');
             Route::get('/items/masterlist', 'App\Http\Controllers\Admin\SupplyController@masterlist')->name('admin.clients.items.masterlist');
 
             // supplies
@@ -406,17 +406,17 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
         // for searching clients
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\ClientController@search')->name('admin.clients.search');
-            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ClientController@filter')->name('admin.clients.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\Client\ClientController@search')->name('admin.clients.search');
+            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\Client\ClientController@filter')->name('admin.clients.filter');
         });
     });
 
     // client contacts
     Route::group(['prefix' => 'clients/contacts/'], function () {
-        Route::post('/edit', 'App\Http\Controllers\Admin\ClientContactController@update')->name('admin.clients.contact.update');
-        Route::post('/create', 'App\Http\Controllers\Admin\ClientContactController@create')->name('admin.clients.contact.create');
-        Route::get('/delete/{client_id}', 'App\Http\Controllers\Admin\ClientContactController@delete')->name('admin.clients.contact.delete');
-        Route::get('/recover/{client_id}', 'App\Http\Controllers\Admin\ClientContactController@recover')->name('admin.clients.contact.recover');
+        Route::post('/edit', 'App\Http\Controllers\Admin\Client\ContactController@update')->name('admin.clients.contact.update');
+        Route::post('/create', 'App\Http\Controllers\Admin\Client\ContactController@create')->name('admin.clients.contact.create');
+        Route::get('/delete/{client_id}', 'App\Http\Controllers\Admin\Client\ContactController@delete')->name('admin.clients.contact.delete');
+        Route::get('/recover/{client_id}', 'App\Http\Controllers\Admin\Client\ContactController@recover')->name('admin.clients.contact.recover');
     });
 
     // brands
@@ -506,52 +506,52 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
     // project categories
     Route::group(['prefix' => 'project-categories/'], function () {
-        Route::get('/', 'App\Http\Controllers\Admin\ProjectCategoryController@show')->name('admin.project-categories');
-        Route::get('/add', 'App\Http\Controllers\Admin\ProjectCategoryController@add')->name('admin.project-categories.add');
-        Route::post('/create', 'App\Http\Controllers\Admin\ProjectCategoryController@create')->name('admin.project-categories.create');
-        Route::get('/edit/{category_id}', 'App\Http\Controllers\Admin\ProjectCategoryController@edit')->name('admin.project-categories.edit');
-        Route::post('/edit', 'App\Http\Controllers\Admin\ProjectCategoryController@update')->name('admin.project-categories.update');
-        Route::get('/delete/{category_id}', 'App\Http\Controllers\Admin\ProjectCategoryController@delete')->name('admin.project-categories.delete');
-        Route::get('/recover/{category_id}', 'App\Http\Controllers\Admin\ProjectCategoryController@recover')->name('admin.project-categories.recover');
+        Route::get('/', 'App\Http\Controllers\Admin\Project\CategoryController@show')->name('admin.project-categories');
+        Route::get('/add', 'App\Http\Controllers\Admin\Project\CategoryController@add')->name('admin.project-categories.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\Project\CategoryController@create')->name('admin.project-categories.create');
+        Route::get('/edit/{category_id}', 'App\Http\Controllers\Admin\Project\CategoryController@edit')->name('admin.project-categories.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\Project\CategoryController@update')->name('admin.project-categories.update');
+        Route::get('/delete/{category_id}', 'App\Http\Controllers\Admin\Project\CategoryController@delete')->name('admin.project-categories.delete');
+        Route::get('/recover/{category_id}', 'App\Http\Controllers\Admin\Project\CategoryController@recover')->name('admin.project-categories.recover');
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\ProjectCategoryController@search')->name('admin.project-categories.search');
-            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ProjectCategoryController@filter')->name('admin.project-categories.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\Project\CategoryController@search')->name('admin.project-categories.search');
+            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\Project\CategoryController@filter')->name('admin.project-categories.filter');
         });
     });
 
     // project sub categories
     Route::group(['prefix' => 'project-sub-categories/'], function () {
-        Route::get('/', 'App\Http\Controllers\Admin\ProjectSubCategoryController@show')->name('admin.project-sub-categories');
-        Route::get('/add', 'App\Http\Controllers\Admin\ProjectSubCategoryController@add')->name('admin.project-sub-categories.add');
-        Route::post('/create', 'App\Http\Controllers\Admin\ProjectSubCategoryController@create')->name('admin.project-sub-categories.create');
-        Route::get('/edit/{category_id}', 'App\Http\Controllers\Admin\ProjectSubCategoryController@edit')->name('admin.project-sub-categories.edit');
-        Route::post('/edit', 'App\Http\Controllers\Admin\ProjectSubCategoryController@update')->name('admin.project-sub-categories.update');
-        Route::get('/delete/{category_id}', 'App\Http\Controllers\Admin\ProjectSubCategoryController@delete')->name('admin.project-sub-categories.delete');
-        Route::get('/recover/{category_id}', 'App\Http\Controllers\Admin\ProjectSubCategoryController@recover')->name('admin.project-sub-categories.recover');
+        Route::get('/', 'App\Http\Controllers\Admin\Project\SubCategoryController@show')->name('admin.project-sub-categories');
+        Route::get('/add', 'App\Http\Controllers\Admin\Project\SubCategoryController@add')->name('admin.project-sub-categories.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\Project\SubCategoryController@create')->name('admin.project-sub-categories.create');
+        Route::get('/edit/{category_id}', 'App\Http\Controllers\Admin\Project\SubCategoryController@edit')->name('admin.project-sub-categories.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\Project\SubCategoryController@update')->name('admin.project-sub-categories.update');
+        Route::get('/delete/{category_id}', 'App\Http\Controllers\Admin\Project\SubCategoryController@delete')->name('admin.project-sub-categories.delete');
+        Route::get('/recover/{category_id}', 'App\Http\Controllers\Admin\Project\SubCategoryController@recover')->name('admin.project-sub-categories.recover');
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\ProjectSubCategoryController@search')->name('admin.project-sub-categories.search');
-            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ProjectSubCategoryController@filter')->name('admin.project-sub-categories.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\Project\SubCategoryController@search')->name('admin.project-sub-categories.search');
+            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\Project\SubCategoryController@filter')->name('admin.project-sub-categories.filter');
         });
     });
 
     // liquidation categories
     Route::group(['prefix' => 'liquidation-categories/'], function () {
-        Route::get('/', 'App\Http\Controllers\Admin\LiquidationCategoryController@show')->name('admin.liquidation-categories');
-        Route::get('/add', 'App\Http\Controllers\Admin\LiquidationCategoryController@add')->name('admin.liquidation-categories.add');
-        Route::post('/create', 'App\Http\Controllers\Admin\LiquidationCategoryController@create')->name('admin.liquidation-categories.create');
-        Route::get('/edit/{category_id}', 'App\Http\Controllers\Admin\LiquidationCategoryController@edit')->name('admin.liquidation-categories.edit');
-        Route::post('/edit', 'App\Http\Controllers\Admin\LiquidationCategoryController@update')->name('admin.liquidation-categories.update');
-        Route::get('/delete/{category_id}', 'App\Http\Controllers\Admin\LiquidationCategoryController@delete')->name('admin.liquidation-categories.delete');
-        Route::get('/recover/{category_id}', 'App\Http\Controllers\Admin\LiquidationCategoryController@recover')->name('admin.liquidation-categories.recover');
+        Route::get('/', 'App\Http\Controllers\Admin\Liquidation\CategoryController@show')->name('admin.liquidation-categories');
+        Route::get('/add', 'App\Http\Controllers\Admin\Liquidation\CategoryController@add')->name('admin.liquidation-categories.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\Liquidation\CategoryController@create')->name('admin.liquidation-categories.create');
+        Route::get('/edit/{category_id}', 'App\Http\Controllers\Admin\Liquidation\CategoryController@edit')->name('admin.liquidation-categories.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\Liquidation\CategoryController@update')->name('admin.liquidation-categories.update');
+        Route::get('/delete/{category_id}', 'App\Http\Controllers\Admin\Liquidation\CategoryController@delete')->name('admin.liquidation-categories.delete');
+        Route::get('/recover/{category_id}', 'App\Http\Controllers\Admin\Liquidation\CategoryController@recover')->name('admin.liquidation-categories.recover');
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\LiquidationCategoryController@search')->name('admin.liquidation-categories.search');
-            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\LiquidationCategoryController@filter')->name('admin.liquidation-categories.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\Liquidation\CategoryController@search')->name('admin.liquidation-categories.search');
+            Route::get('/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\Liquidation\CategoryController@filter')->name('admin.liquidation-categories.filter');
         });
     });
 

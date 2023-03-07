@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Liquidation;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ use Validator;
 use App\Models\LiquidationCategory;
 use App\Models\LiquidationCategoryStatus;
 
-class LiquidationCategoryController extends Controller
+class CategoryController extends Controller
 {
     public function show()
     {

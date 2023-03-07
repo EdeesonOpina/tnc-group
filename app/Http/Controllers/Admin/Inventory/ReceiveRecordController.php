@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Inventory;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ use App\Models\InventoryStatus;
 use App\Models\InventoryReceiveRecord;
 use App\Models\InventoryReceiveRecordStatus;
 
-class InventoryReceiveRecordController extends Controller
+class ReceiveRecordController extends Controller
 {
     public function masterlist(Request $request, $branch_id, $inventory_id)
     {

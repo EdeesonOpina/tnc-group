@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Item;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ use App\Models\CategoryStatus;
 use App\Models\ItemPhotoStatus;
 use App\Models\SubCategoryStatus;
 
-class ItemPhotoController extends Controller
+class PhotoController extends Controller
 {
     public function show($item_id)
     {

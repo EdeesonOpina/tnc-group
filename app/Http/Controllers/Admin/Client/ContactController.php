@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ use App\Models\ClientStatus;
 use App\Models\ClientContact;
 use App\Models\ClientContactStatus;
 
-class ClientContactController extends Controller
+class ContactController extends Controller
 {
     public function create(Request $request)
     {

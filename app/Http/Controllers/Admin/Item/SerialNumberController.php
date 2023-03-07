@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Item;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ use App\Models\ItemSerialNumber;
 use App\Models\DeliveryReceiptStatus;
 use App\Models\ItemSerialNumberStatus;
 
-class ItemSerialNumberController extends Controller
+class SerialNumberController extends Controller
 {
     public function show($item_id)
     {

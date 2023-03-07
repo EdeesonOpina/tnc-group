@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\CashAdvance;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,7 +9,7 @@ use App\Models\CashAdvanceStatus;
 use App\Models\CashAdvancePayment;
 use App\Models\CashAdvancePaymentStatus;
 
-class CashAdvancePaymentController extends Controller
+class PaymentController extends Controller
 {
     public function approve(Request $request, $cash_advance_payment_id)
     {
