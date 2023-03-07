@@ -110,6 +110,8 @@ class TimeController extends Controller
             'status' => PayslipAttendanceStatus::DISAPPROVED,
         ]);
 
+        return User::find($user_id)->firstname;
+
         $request->session()->flash('success', 'Data has been disapproved');
         return back();
     }

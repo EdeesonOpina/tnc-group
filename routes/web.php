@@ -23,6 +23,7 @@ Route::group(['prefix' => 'hr/', 'middleware' => ['auth', 'internal']], function
         Route::get('/', 'App\Http\Controllers\Admin\HR\PayslipController@show')->name('hr.payslips');
         Route::get('/view/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@view')->name('hr.payslips.view');
         Route::get('/details/{payslip_id}', 'App\Http\Controllers\Admin\HR\PayslipController@details')->name('hr.payslips.details');
+        Route::get('/summary/{payslip_id}', 'App\Http\Controllers\Admin\HR\PayslipController@summary')->name('hr.payslips.summary');
         Route::get('/manage/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@manage')->name('hr.payslips.manage');
         Route::get('/delete/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@delete')->name('hr.payslips.delete');
         Route::get('/recover/{user_id}', 'App\Http\Controllers\Admin\HR\PayslipController@recover')->name('hr.payslips.recover');

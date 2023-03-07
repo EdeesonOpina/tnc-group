@@ -14,7 +14,7 @@
                     <li class="breadcrumb-item active" aria-current="page">{{ $user->firstname }} {{ $user->lastname }}</li>
                 </ol>
             </nav>
-            <h1 class="m-0">{{ $user->firstname }} {{ $user->lastname }} Attendance</h1>
+            <h1 class="m-0">{{ $user->lastname }}, {{ $user->firstname }} Attendance</h1>
         </div>
         <a href="{{ route('hr.payslips.details.print', [$payslip->id]) }}">
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print</button>
@@ -24,6 +24,15 @@
 
 <div class="container-fluid page__container">
     @include('layouts.partials.alerts')
+
+    <a href="{{ route('hr.payslips.details', [$payslip->id]) }}">
+        <button type="button" class="btn btn-primary" id="margin-right"><i class="fa fa-list" id="margin-right"></i>Detailed Version</button>
+    </a>
+
+    <a href="{{ route('hr.payslips.summary', [$payslip->id]) }}">
+        <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-address-card" id="margin-right"></i>Summarized Version</button>
+    </a>
+    <br><br>
 
     <div class="row">
         <div class="col">

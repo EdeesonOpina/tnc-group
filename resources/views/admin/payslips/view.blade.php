@@ -15,7 +15,7 @@
                     <li class="breadcrumb-item active" aria-current="page">{{ $user->firstname }} {{ $user->lastname }}</li>
                 </ol>
             </nav>
-            <h1 class="m-0">{{ $user->firstname }} {{ $user->lastname }} Attendance</h1>
+            <h1 class="m-0">{{ $user->lastname }}, {{ $user->firstname }} Attendance</h1>
         </div>
     </div>
 </div>
@@ -103,9 +103,8 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header card-header-large bg-white d-flex align-items-center">
-                    <h4 class="card-header__title flex m-0">{{ $user->firstname }} {{ $user->lastname }} Attendance</h4>
+                    <h4 class="card-header__title flex m-0">{{ $user->lastname }}, {{ $user->firstname }} Attendance</h4>
                     <div data-toggle="flatpickr" data-flatpickr-wrap="true" data-flatpickr-static="true" data-flatpickr-mode="range" data-flatpickr-alt-format="d/m/Y" data-flatpickr-date-format="d/m/Y">
-                        
                     </div>
                 </div>
 

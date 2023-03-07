@@ -1,0 +1,125 @@
+@include('layouts.auth.header')
+@php
+    use Carbon\Carbon;
+    use App\Models\PayslipStatus;
+    use App\Models\PayslipAttendance;
+    use App\Models\PayslipAttendanceStatus;
+
+    $salary_per_hour = PayslipAttendance::where('payslip_id', $payslip->id)
+                                ->where('status', PayslipAttendanceStatus::APPROVED)
+                                ->first()
+                                ->salary_per_hour;
+@endphp
+
+<div class="container-fluid page__heading-container">
+    <div class="page__heading d-flex align-items-center">
+        <div class="flex">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{{ route('hr.payslips') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('hr.payslips.view', [$user->id]) }}">Payslip</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ $user->firstname }} {{ $user->lastname }}</li>
+                </ol>
+            </nav>
+            <h1 class="m-0">{{ $user->lastname }}, {{ $user->firstname }} Attendance</h1>
+        </div>
+        <a href="{{ route('hr.payslips.details.print', [$payslip->id]) }}">
+            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print</button>
+        </a>
+    </div>
+</div>
+
+<div class="container-fluid page__container">
+    @include('layouts.partials.alerts')
+
+    <a href="{{ route('hr.payslips.details', [$payslip->id]) }}">
+        <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-list" id="margin-right"></i>Detailed Version</button>
+    </a>
+
+    <a href="{{ route('hr.payslips.summary', [$payslip->id]) }}">
+        <button type="button" class="btn btn-primary" id="margin-right"><i class="fa fa-address-card" id="margin-right"></i>Summarized Version</button>
+    </a>
+    <br><br>
+
+    <div class="row">
+        <div class="col">
+            <div id="spaced-card" class="card card-body">
+                <img src="{{ url(env('APP_LOGO_WITH_TEXT')) }}" width="150px">
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <strong>Name</strong><br>
+                        {{ $user->firstname }} {{ $user->lastname }}
+                    </div>
+
+                    <div class="col">
+                        <strong>Position</strong><br>
+                        {{ $user->position }}
+                    </div>
+
+                    <div class="col">
+                        <strong>Salary</strong><br>
+                        P{{ number_format($user->salary, 2) }}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>From Date</strong><br>
+                        {{ Carbon::parse($from_date)->format('M d Y') }}
+                    </div>
+
+                    <div class="col-md-4">
+                        <strong>To Date</strong><br>
+                        {{ Carbon::parse($to_date)->format('M d Y') }}
+                    </div>
+                </div>
+                <br>
+
+                <div class="table-responsive">
+                    <table class="table mb-0 thead-border-top-0 table-striped">
+                        <thead>
+                            <tr>
+                                <th id="compact-table">Per Hour</th>
+                                <th id="compact-table">Hours Rendered</th>
+                                <th id="compact-table">Total</th>
+                                <th id="compact-table">W-Tax</th>
+                                <th id="compact-table">SSS</th>
+                                <th id="compact-table">PHILHEALTH</th>
+                                <th id="compact-table">PAGIBIG</th>
+                                <th id="compact-table">Total w/ Deductions</th>
+                                <th id="compact-table">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list" id="companies">
+                            <tr>
+                                <td id="compact-table">P{{ number_format($salary_per_hour, 2) }}</td>
+                                <td id="compact-table">{{ $payslip->hours }}</td>
+                                <td id="compact-table">P{{ $payslip->total }}</td>
+                                <td id="compact-table"><strong style="color: red">- P{{ $payslip->w_tax }}</strong></td>
+                                <td id="compact-table"><strong style="color: red">- P{{ $payslip->sss }}</strong></td>
+                                <td id="compact-table"><strong style="color: red">- P{{ $payslip->philhealth }}</strong></td>
+                                <td id="compact-table"><strong style="color: red">- P{{ $payslip->pagibig }}</strong></td>
+                                <td id="compact-table">P{{ number_format(($payslip->total - $total_deductions), 2) }}</td>
+                                <td>
+                                    @if ($payslip->status == PayslipStatus::PENDING)
+                                        <div class="badge badge-warning ml-2">PENDING</div>
+                                    @elseif ($payslip->status == PayslipStatus::APPROVED)
+                                        <div class="badge badge-success ml-2">APPROVED</div>
+                                    @elseif ($payslip->status == PayslipStatus::DISAPPROVED)
+                                        <div class="badge badge-danger ml-2">DISAPPROVED</div>
+                                    @elseif ($payslip->status == PayslipStatus::INACTIVE)
+                                        <div class="badge badge-danger ml-2">INACTIVE</div>
+                                    @endif
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@include('layouts.auth.footer')

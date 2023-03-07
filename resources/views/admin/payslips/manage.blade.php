@@ -14,8 +14,13 @@
                     <li class="breadcrumb-item active" aria-current="page">{{ $user->firstname }} {{ $user->lastname }}</li>
                 </ol>
             </nav>
-            <h1 class="m-0">{{ $user->firstname }} {{ $user->lastname }} Attendance</h1>
+            <h1 class="m-0">{{ $user->lastname }}, {{ $user->firstname }} Attendance</h1>
         </div>
+
+        <a href="{{ route('hr.payslips.date-select', [$user->id]) }}">
+            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-file-excel" id="margin-right"></i>Import From Excel</button>
+        </a>
+
         <a href="{{ route('hr.payslips.date-select', [$user->id]) }}">
             <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-envelope-open" id="margin-right"></i>Create Payslip</button>
         </a>

@@ -120,8 +120,9 @@ class PayslipController extends Controller
     public function view($user_id)
     {
         $user = User::find($user_id);
-        $payslips = Payslip::where('status', '!=', PayslipStatus::INACTIVE)
-                            ->paginate(30);
+        $payslips = Payslip::where('user_id', $user_id)
+                        ->where('status', '!=', PayslipStatus::INACTIVE)
+                        ->paginate(30);
 
         return view('admin.payslips.view', compact(
             'payslips',
@@ -153,11 +154,36 @@ class PayslipController extends Controller
         ));
     }
 
+    public function summary($payslip_id)
+    {
+        $payslip = Payslip::find($payslip_id);
+        $user = User::find($payslip->user_id);
+        $from_date = $payslip->from_date;
+        $to_date = $payslip->to_date;
+
+        $query = PayslipAttendance::where('payslip_id', $payslip->id)
+                            ->where('status', PayslipAttendanceStatus::APPROVED);
+
+        $attendances = $query->get();
+
+        $total_deductions = $payslip->w_tax + $payslip->sss + $payslip->philhealth + $payslip->pagibig + $payslip->gsis;
+
+        return view('admin.payslips.summary', compact(
+            'total_deductions',
+            'payslip',
+            'from_date',
+            'to_date',
+            'attendances',
+            'user'
+        ));
+    }
+
     public function manage($user_id)
     {
         $user = User::find($user_id);
-        $attendances = PayslipAttendance::where('status', '!=', PayslipAttendanceStatus::INACTIVE)
-                                        ->paginate(30);
+        $attendances = PayslipAttendance::where('user_id', $user_id)
+                            ->where('status', '!=', PayslipAttendanceStatus::INACTIVE)
+                            ->paginate(30);
 
         return view('admin.payslips.manage', compact(
             'attendances',
