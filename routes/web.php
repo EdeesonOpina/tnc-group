@@ -887,17 +887,17 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
     // return inventories
     Route::group(['prefix' => 'return-inventories/'], function () {
-        Route::get('/', 'App\Http\Controllers\Admin\ReturnInventoryController@show')->name('internals.return-inventories');
-        Route::get('/view/{return_inventory_id}', 'App\Http\Controllers\Admin\ReturnInventoryController@view')->name('internals.return-inventories.view');
-        Route::get('/add', 'App\Http\Controllers\Admin\ReturnInventoryController@add')->name('internals.return-inventories.add');
-        Route::post('/create', 'App\Http\Controllers\Admin\ReturnInventoryController@create')->name('internals.return-inventories.create');
-        Route::get('/edit/{return_inventory_id}', 'App\Http\Controllers\Admin\ReturnInventoryController@edit')->name('internals.return-inventories.edit');
-        Route::post('/edit', 'App\Http\Controllers\Admin\ReturnInventoryController@update')->name('internals.return-inventories.update');
+        Route::get('/', 'App\Http\Controllers\Admin\ReturnInventory\ReturnInventoryController@show')->name('internals.return-inventories');
+        Route::get('/view/{return_inventory_id}', 'App\Http\Controllers\Admin\ReturnInventory\ReturnInventoryController@view')->name('internals.return-inventories.view');
+        Route::get('/add', 'App\Http\Controllers\Admin\ReturnInventory\ReturnInventoryController@add')->name('internals.return-inventories.add');
+        Route::post('/create', 'App\Http\Controllers\Admin\ReturnInventory\ReturnInventoryController@create')->name('internals.return-inventories.create');
+        Route::get('/edit/{return_inventory_id}', 'App\Http\Controllers\Admin\ReturnInventory\ReturnInventoryController@edit')->name('internals.return-inventories.edit');
+        Route::post('/edit', 'App\Http\Controllers\Admin\ReturnInventory\ReturnInventoryController@update')->name('internals.return-inventories.update');
         
-        Route::get('/recover/{return_inventory_id}', 'App\Http\Controllers\Admin\ReturnInventoryController@recover')->name('internals.return-inventories.recover');
-        Route::get('/cancel/{return_inventory_id}', 'App\Http\Controllers\Admin\ReturnInventoryController@cancel')->name('internals.return-inventories.cancel');
-        Route::get('/approve/{return_inventory_id}', 'App\Http\Controllers\Admin\ReturnInventoryController@approve')->name('internals.return-inventories.approve');
-        Route::get('/disapprove/{return_inventory_id}', 'App\Http\Controllers\Admin\ReturnInventoryController@disapprove')->name('internals.return-inventories.disapprove');
+        Route::get('/recover/{return_inventory_id}', 'App\Http\Controllers\Admin\ReturnInventory\ReturnInventoryController@recover')->name('internals.return-inventories.recover');
+        Route::get('/cancel/{return_inventory_id}', 'App\Http\Controllers\Admin\ReturnInventory\ReturnInventoryController@cancel')->name('internals.return-inventories.cancel');
+        Route::get('/approve/{return_inventory_id}', 'App\Http\Controllers\Admin\ReturnInventory\ReturnInventoryController@approve')->name('internals.return-inventories.approve');
+        Route::get('/disapprove/{return_inventory_id}', 'App\Http\Controllers\Admin\ReturnInventory\ReturnInventoryController@disapprove')->name('internals.return-inventories.disapprove');
 
         // exports
         Route::group(['prefix' => 'exports/'], function () {
@@ -909,75 +909,8 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'internal']], funct
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\ReturnInventoryController@search')->name('internals.return-inventories.search');
-            Route::get('/{reference_number}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ReturnInventoryController@filter')->name('internals.return-inventories.filter');
-        });
-    });
-
-    // rma
-    Route::group(['prefix' => 'rma/'], function () {
-        Route::get('/', 'App\Http\Controllers\Admin\RMAController@show')->name('internals.rma');
-        Route::get('/add', 'App\Http\Controllers\Admin\RMAController@add')->name('internals.rma.add');
-        Route::post('/find', 'App\Http\Controllers\Admin\RMAController@find')->name('internals.rma.find');
-        Route::post('/delivery-receipt/find', 'App\Http\Controllers\Admin\RMAController@delivery_receipt')->name('internals.rma.delivery-receipt.find');
-        Route::post('/action-taken', 'App\Http\Controllers\Admin\RMAItemController@action_taken')->name('internals.rma.action-taken');
-        Route::get('/view/{reference_number}', 'App\Http\Controllers\Admin\RMAController@view')->name('internals.rma.view');
-        Route::get('/manage/{reference_number}', 'App\Http\Controllers\Admin\RMAController@manage')->name('internals.rma.manage');
-        Route::get('/for-warranty/{reference_number}', 'App\Http\Controllers\Admin\RMAController@for_warranty')->name('internals.rma.for-warranty');
-        Route::get('/waiting/{reference_number}', 'App\Http\Controllers\Admin\RMAController@waiting')->name('internals.rma.waiting');
-        Route::get('/for-release/{reference_number}', 'App\Http\Controllers\Admin\RMAController@for_release')->name('internals.rma.for-release');
-        Route::get('/out-of-warranty/{reference_number}', 'App\Http\Controllers\Admin\RMAController@out_of_warranty')->name('internals.rma.out-of-warranty');
-        Route::get('/cleared/{reference_number}', 'App\Http\Controllers\Admin\RMAController@cleared')->name('internals.rma.cleared');
-        Route::get('/cancel/{reference_number}', 'App\Http\Controllers\Admin\RMAController@cancel')->name('internals.rma.cancel');
-
-        // suppliers
-        Route::group(['prefix' => 'manage/{reference_number}/suppliers/'], function () {
-            Route::get('/', 'App\Http\Controllers\Admin\RMASupplierController@show')->name('internals.rma.suppliers');
-            Route::get('/select/{inventory_id}', 'App\Http\Controllers\Admin\RMASupplierController@select')->name('internals.rma.suppliers.select');
-
-            // for searching
-            Route::group(['prefix' => 'search/'], function () {
-                Route::post('/', 'App\Http\Controllers\Admin\RMASupplierController@search')->name('internals.rma.suppliers.search');
-                Route::get('/{name}', 'App\Http\Controllers\Admin\RMASupplierController@filter')->name('internals.rma.suppliers.filter');
-            });
-        });
-
-        // items
-        Route::group(['prefix' => 'manage/{reference_number}/items/'], function () {
-            Route::get('/', 'App\Http\Controllers\Admin\RMAItemController@show')->name('internals.rma.items');
-            Route::get('/select/{inventory_id}', 'App\Http\Controllers\Admin\RMAItemController@select')->name('internals.rma.items.select');
-            Route::get('/review/{inventory_id}', 'App\Http\Controllers\Admin\RMAItemController@review')->name('internals.rma.items.review');
-            Route::post('/create', 'App\Http\Controllers\Admin\RMAItemController@create')->name('internals.rma.items.create');
-            Route::get('/delete/{return_inventory_item_id}', 'App\Http\Controllers\Admin\RMAItemController@delete')->name('internals.rma.items.delete');
-
-            // for searching
-            Route::group(['prefix' => 'search/'], function () {
-                Route::post('/', 'App\Http\Controllers\Admin\RMAItemController@search')->name('internals.rma.items.search');
-                Route::get('/{barcode}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\RMAItemController@filter')->name('internals.rma.items.filter');
-            });
-        });
-
-        // item-serial-numbers
-        Route::group(['prefix' => 'item-serial-numbers/'], function () {
-            Route::post('/create', 'App\Http\Controllers\Admin\RMAItemSerialNumberController@create')->name('internals.rma.item-serial-numbers.create');
-            Route::get('/recover/{rma_item_serial_number_id}', 'App\Http\Controllers\Admin\RMAItemSerialNumberController@recover')->name('internals.rma.item-serial-numbers.recover');
-            Route::get('/delete/{rma_item_serial_number_id}', 'App\Http\Controllers\Admin\RMAItemSerialNumberController@delete')->name('internals.rma.item-serial-numbers.delete');
-        });
-
-        // exports
-        Route::group(['prefix' => 'exports/'], function () {
-            Route::get('print/{return_inventory_id}', 'App\Http\Controllers\Export\RMAController@print')->name('internals.exports.rma.print');
-            Route::get('print/customer/{return_inventory_id}', 'App\Http\Controllers\Export\RMAController@customer_print')->name('internals.exports.rma.customer.print');
-            Route::get('print/supplier/{return_inventory_id}', 'App\Http\Controllers\Export\RMAController@supplier_print')->name('internals.exports.rma.supplier.print');
-            Route::get('excel/{return_inventory_id}', 'App\Http\Controllers\Export\RMAController@excel')->name('internals.exports.rma.excel');
-            Route::get('pdf/{return_inventory_id}', 'App\Http\Controllers\Export\RMAController@pdf')->name('internals.exports.rma.pdf');
-            Route::get('sql', 'App\Http\Controllers\Admin\Report\RMAController@sql')->name('internals.exports.rma.sql');
-        });
-
-        // for searching
-        Route::group(['prefix' => 'search/'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\RMAController@search')->name('internals.rma.search');
-            Route::get('/{reference_number}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\RMAController@filter')->name('internals.rma.filter');
+            Route::post('/', 'App\Http\Controllers\Admin\ReturnInventory\ReturnInventoryController@search')->name('internals.return-inventories.search');
+            Route::get('/{reference_number}/{name}/{status}/{from_date}/{to_date}', 'App\Http\Controllers\Admin\ReturnInventory\ReturnInventoryController@filter')->name('internals.return-inventories.filter');
         });
     });
 

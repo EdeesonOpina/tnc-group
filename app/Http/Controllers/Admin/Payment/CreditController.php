@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Payment;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ use App\Models\PaymentCreditStatus;
 use App\Models\ItemSerialNumberStatus;
 use App\Models\PaymentCreditRecordStatus;
 
-class PaymentCreditController extends Controller
+class CreditController extends Controller
 {
     public function show()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Payment;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ use App\Models\PaymentCreditStatus;
 use App\Models\ItemSerialNumberStatus;
 use App\Models\PaymentCreditRecordStatus;
 
-class PaymentCreditRecordController extends Controller
+class CreditRecordController extends Controller
 {
     public function approve(Request $request, $payment_credit_record_id)
     {

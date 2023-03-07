@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\ReturnInventory;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ use App\Models\ReturnInventoryStatus;
 use App\Models\InventoryReturnRecord;
 use App\Models\InventoryReceiveRecord;
 
-class ReturnInventoryItemController extends Controller
+class ItemController extends Controller
 {
     public function masterlist(Request $request, $return_inventory_id)
     {
