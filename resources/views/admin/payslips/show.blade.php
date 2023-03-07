@@ -115,10 +115,8 @@ use App\Models\UserStatus;
                                 <th id="compact-table">Name</th>
                                 <th id="compact-table">Position</th>
                                 <th id="compact-table">Company</th>
-                                <th id="compact-table">Role</th>
                                 <th id="compact-table">Email</th>
                                 <th id="compact-table">Contact</th>
-                                <th id="compact-table">Signature</th>
                                 <th id="compact-table">Status</th>
                                 <th id="compact-table">Created At</th>
                             </tr>
@@ -133,18 +131,10 @@ use App\Models\UserStatus;
                                                 <a href="{{ route('admin.users.view', [$user->id]) }}" style="text-decoration: none; color: #333;"><b>
                                                 @if ($user->avatar)
                                                     <img src="{{ url($user->avatar) }}" width="30px">
-                                                    @if ($user->role == 'Corporate')
-                                                        {{ $user->corporate }}
-                                                    @else
-                                                        {{ $user->firstname }} {{ $user->lastname }}
-                                                    @endif
+                                                    {{ $user->lastname }}, {{ $user->firstname }}
                                                 @else
                                                     <img src="{{ url(env('APP_ICON')) }}" width="30px" style="margin-right: 7px;">
-                                                    @if ($user->role == 'Corporate')
-                                                        {{ $user->corporate }}
-                                                    @else
-                                                        {{ $user->firstname }} {{ $user->lastname }}
-                                                    @endif
+                                                    {{ $user->lastname }}, {{ $user->firstname }}
                                                 @endif
                                                 </b></a>
                                             </div>
@@ -176,7 +166,6 @@ use App\Models\UserStatus;
                                             Not applicable
                                         @endif
                                     </td>
-                                    <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">face</i> {{ $user->role }}</td>
                                     <td id="compact-table"><i class="material-icons icon-16pt mr-1 text-muted">email</i> {{ $user->email }}</td>
                                     <td id="compact-table">
                                         @if ($user->mobile)
@@ -185,15 +174,6 @@ use App\Models\UserStatus;
                                         
                                         @if ($user->phone)
                                             <i class="material-icons icon-16pt mr-1 text-muted">phone</i> {{ $user->phone }}
-                                        @endif
-                                    </td>
-                                    <td id="compact-table">
-                                        @if ($user->signature)
-                                            <a href="{{ url($user->signature) }}" target="_blank">
-                                                <img src="{{ url($user->signature) }}" width="60px">
-                                            </a>
-                                        @else
-                                            N/A
                                         @endif
                                     </td>
                                     <td>

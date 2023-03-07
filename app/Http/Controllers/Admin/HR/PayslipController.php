@@ -79,7 +79,7 @@ class PayslipController extends Controller
         $from_date = $request->from_date ?? '*';
         $to_date = $request->to_date ?? '*';
 
-        return redirect()->route('admin.payslips.filter', [$name, $role, $status, $from_date, $to_date])->withInput();
+        return redirect()->route('hr.payslips.filter', [$name, $role, $status, $from_date, $to_date])->withInput();
     }
 
     public function filter($name, $role, $status, $from_date, $to_date)

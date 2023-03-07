@@ -42,29 +42,36 @@ class CVController extends Controller
     public function search(Request $request)
     {
         $reference_number = $request->reference_number ?? '*';
+        $name = $request->name ?? '*';
         $status = $request->status ?? '*';
         $from_date = $request->from_date ?? '*';
         $to_date = $request->to_date ?? '*';
 
-        return redirect()->route('internal.cv.filter', [$reference_number, $status, $from_date, $to_date])->withInput();
+        return redirect()->route('internals.cv.filter', [$reference_number, $name, $status, $from_date, $to_date])->withInput();
     }
 
-    public function filter($reference_number, $status, $from_date, $to_date)
+    public function filter($reference_number, $name, $status, $from_date, $to_date)
     {
-        $query = CheckVoucher::orderBy('created_at', 'desc');
+        $query = CheckVoucher::leftJoin('budget_request_forms', 'check_vouchers.budget_request_form_id', '=', 'budget_request_forms.id')
+                    ->select('check_vouchers.*')
+                    ->orderBy('check_vouchers.created_at', 'desc');
+
+        if ($name != '*') {
+            $query->where('budget_request_forms.name', $name);
+        }
 
         if ($reference_number != '*') {
-            $query->where('reference_number', $reference_number);
+            $query->where('check_vouchers.reference_number', $reference_number);
         }
 
         if ($status != '*') {
-            $query->where('status', $status);
+            $query->where('check_vouchers.status', $status);
         }
 
         /* date filter */
         // if they provided both from date and to date
         if ($from_date != '*' && $to_date != '*') {
-            $query->whereBetween('created_at', [$from_date . ' 00:00:00', $to_date . ' 23:59:59']);
+            $query->whereBetween('check_vouchers.created_at', [$from_date . ' 00:00:00', $to_date . ' 23:59:59']);
         }
         /* date filter */
 
