@@ -90,6 +90,30 @@ class TimeController extends Controller
         return back();
     }
 
+    public function approve_all(Request $request, $user_id)
+    {
+        DB::table('payslip_attendance')
+        ->where('user_id', $user_id)
+        ->update([
+            'status' => PayslipAttendanceStatus::APPROVED,
+        ]);
+
+        $request->session()->flash('success', 'Data has been approved');
+        return back();
+    }
+
+    public function disapprove_all(Request $request, $user_id)
+    {
+        DB::table('payslip_attendance')
+        ->where('user_id', $user_id)
+        ->update([
+            'status' => PayslipAttendanceStatus::DISAPPROVED,
+        ]);
+
+        $request->session()->flash('success', 'Data has been disapproved');
+        return back();
+    }
+
     public function delete_all(Request $request, $user_id)
     {
         DB::table('payslip_attendance')

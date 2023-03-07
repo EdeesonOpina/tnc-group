@@ -12,5 +12,6 @@ class UserStatus extends Model
     const INACTIVE = 0;
     const PENDING = 1;
     const ACTIVE = 2;
+    const RESIGNED = 3;
     const DEACTIVATED = 9;
 }

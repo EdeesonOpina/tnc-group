@@ -117,6 +117,14 @@
                 <div class="card-header card-header-large bg-white d-flex align-items-center">
                     <h4 class="card-header__title flex m-0">{{ $user->firstname }} {{ $user->lastname }} Attendance</h4>
 
+                    <a href="#" data-href="{{ route('hr.payslips.time.approve-all', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action">
+                        <button class="btn btn-sm btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Approve All</button>
+                    </a>
+
+                    <a href="#" data-href="{{ route('hr.payslips.time.disapprove-all', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action">
+                        <button class="btn btn-sm btn-danger" id="margin-right"><i class="fa fa-times" id="margin-right"></i>Disapprove All</button>
+                    </a>
+
                     <a href="#" data-href="{{ route('hr.payslips.time.delete-all', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action">
                         <button class="btn btn-sm btn-danger"><i class="fa fa-trash" id="margin-right"></i>Delete All</button>
                     </a>

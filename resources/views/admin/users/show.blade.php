@@ -168,6 +168,11 @@ use App\Models\UserStatus;
                                             @endif
                                             <!-- <a href="#" data-href="{{ route('admin.users.resend.email', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Resend Email</a> |  -->
                                             <a href="#" data-toggle="modal" data-target="#set-password-{{ $user->id }}" id="space-table">Set Password</a> | 
+
+                                            @if ($user->status == UserStatus::ACTIVE)
+                                                <a href="#" data-toggle="modal" data-target="#resign-{{ $user->id }}" id="space-table">Resign</a> | 
+                                            @endif
+
                                             @if ($user->status == UserStatus::ACTIVE || $user->status == UserStatus::PENDING)
                                                 <a href="#" data-href="{{ route('admin.users.delete', [$user->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Delete</a>
                                             @endif
@@ -213,11 +218,13 @@ use App\Models\UserStatus;
                                     </td>
                                     <td>
                                         @if ($user->status == UserStatus::ACTIVE)
-                                            <div class="badge badge-success ml-2">Active</div>
+                                            <div class="badge badge-success ml-2">ACTIVE</div>
                                         @elseif ($user->status == UserStatus::PENDING)
-                                            <div class="badge badge-warning ml-2">Pending</div>
+                                            <div class="badge badge-warning ml-2">PENDING</div>
+                                        @elseif ($user->status == UserStatus::RESIGNED)
+                                            <div class="badge badge-danger ml-2">RESIGNED</div>
                                         @elseif ($user->status == UserStatus::INACTIVE)
-                                            <div class="badge badge-danger ml-2">Inactive</div>
+                                            <div class="badge badge-danger ml-2">INACTIVE</div>
                                         @endif
                                     </td>
                                     <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ $user->created_at->format('M d Y') }}</td>

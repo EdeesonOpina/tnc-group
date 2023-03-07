@@ -36,6 +36,7 @@ class User extends Authenticatable
         'branch_id',
         'role',
         'avatar',
+        'resigned_date',
         'signature',
         'status',
     ];

@@ -40,4 +40,26 @@ class UserController extends Controller
         $request->session()->flash('success', 'Data has been updated');
         return back();
     }
+
+    public function resign(Request $request)
+    {
+        $rules = [
+            'resigned_date' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);
+        }
+
+        $data = $request->all();
+
+        $user = User::find($request->user_id);
+        $user->status = UserStatus::RESIGNED;
+        $user->fill($data)->save();
+
+        $request->session()->flash('success', 'Data has been updated');
+        return back();
+    }
 }

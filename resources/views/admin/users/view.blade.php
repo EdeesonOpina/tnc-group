@@ -1,4 +1,7 @@
 @include('layouts.auth.header')
+@php
+    use Carbon\Carbon;
+@endphp
 
 <div class="container page__heading-container">
     <div class="page__heading d-flex align-items-center">
@@ -25,31 +28,21 @@
                 <p class="text-muted mb-0">Here are the details of this user.</p>
             </div>
             <div class="col-lg-8 card-form__body card-body">
-                @if ($user->role == 'Corporate')
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label>Name</label><br />
-                                {{ $user->corporate }}
-                            </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Firstname</label><br />
+                            {{ $user->firstname }}
                         </div>
                     </div>
-                @else
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label>Firstname</label><br />
-                                {{ $user->firstname }}
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label>Lastname</label><br />
-                                {{ $user->lastname }}
-                            </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Lastname</label><br />
+                            {{ $user->lastname }}
                         </div>
                     </div>
-                @endif
+                </div>
 
                 <div class="row">
                     <div class="col">
@@ -101,7 +94,12 @@
                         </div>
                     </div>
                     <div class="col">
-                        &nbsp;
+                        @if ($user->resigned_date)
+                            <label>Date of Resignation</label><br />
+                            {{ Carbon::parse($user->resigned_date)->format('M d Y') }}
+                        @else
+                            &nbsp;
+                        @endif
                     </div>
                 </div>
 

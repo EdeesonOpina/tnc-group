@@ -37,8 +37,12 @@ Route::group(['prefix' => 'hr/', 'middleware' => ['auth', 'internal']], function
         Route::post('/edit/time', 'App\Http\Controllers\Admin\HR\TimeController@update')->name('hr.payslips.time.update');
         Route::get('/edit/time/approve/{user_id}', 'App\Http\Controllers\Admin\HR\TimeController@approve')->name('hr.payslips.time.approve');
         Route::get('/edit/time/disapprove/{user_id}', 'App\Http\Controllers\Admin\HR\TimeController@disapprove')->name('hr.payslips.time.disapprove');
+
+        Route::get('/approve/time/all/{user_id}', 'App\Http\Controllers\Admin\HR\TimeController@approve_all')->name('hr.payslips.time.approve-all');
+        Route::get('/disapprove/time/all/{user_id}', 'App\Http\Controllers\Admin\HR\TimeController@disapprove_all')->name('hr.payslips.time.disapprove-all');
         Route::get('/delete/time/all/{user_id}', 'App\Http\Controllers\Admin\HR\TimeController@delete_all')->name('hr.payslips.time.delete-all');
 
+        Route::post('/update/user/resign', 'App\Http\Controllers\Admin\HR\UserController@resign')->name('hr.users.update.resign');
         Route::post('/update/user/salary', 'App\Http\Controllers\Admin\HR\UserController@salary')->name('hr.users.update.salary');
 
         // exports
