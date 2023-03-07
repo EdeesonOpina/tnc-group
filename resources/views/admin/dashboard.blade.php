@@ -210,7 +210,7 @@
         labels: cData.label,
         datasets: [
           {
-            label: "Transactions",
+            label: "Projects",
             data: cData.data,
             backgroundColor: [
                "#51D016", 
@@ -262,7 +262,7 @@
         labels: cData.label,
         datasets: [
           {
-            label: "Transactions",
+            label: "BRF",
             data: cData.data,
             backgroundColor: [
                "#51D016", 
