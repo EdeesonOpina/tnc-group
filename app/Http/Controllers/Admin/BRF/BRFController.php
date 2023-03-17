@@ -180,7 +180,11 @@ class BRFController extends Controller
                         ->first();
 
         if ($project->status != ProjectStatus::APPROVED) {
-            $request->session()->flash('error', 'Selected CE is still not approved');
+            if ($project->status == ProjectStatus::DONE) {
+                $request->session()->flash('error', 'Selected CE is already marked as done. If marked by mistake; Please request admin to open the CE');
+            } else {
+                $request->session()->flash('error', 'Selected CE is still not approved');
+            }
             return back();
         }
 
@@ -242,7 +246,11 @@ class BRFController extends Controller
                         ->first();
 
         if ($project->status != ProjectStatus::APPROVED) {
-            $request->session()->flash('error', 'Selected CE is still not approved');
+            if ($project->status == ProjectStatus::DONE) {
+                $request->session()->flash('error', 'Selected CE is already marked as done. If marked by mistake; Please request admin to open the CE');
+            } else {
+                $request->session()->flash('error', 'Selected CE is still not approved');
+            }
             return back();
         }
 

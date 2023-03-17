@@ -19,10 +19,11 @@
 </div>
 
 <div class="container-fluid page__container">
-    @include('layouts.partials.alerts')
 
     <div class="row">
         <div class="col-md-8">
+            @include('layouts.partials.alerts')
+            
             <div id="spaced-card" class="card card-body">
                 <div class="row">
                     <div class="col">
