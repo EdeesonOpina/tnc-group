@@ -144,7 +144,7 @@ class DetailController extends Controller
         $budget_request_form->total += $budget_request_form_detail->total;
         $budget_request_form->save();
 
-        $request->session()->flash('success', 'Data has been approved');
+        $request->session()->flash('success', 'BRF details has been been added');
         return redirect()->route('internals.brf.manage', [$budget_request_form->id]);
     }
 

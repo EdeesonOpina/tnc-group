@@ -218,6 +218,20 @@ class BRFController extends Controller
             ->subject($subject);
         });
 
+        /* checked by user */
+        $name = $brf->checked_by_user->firstname . ' ' . $brf->checked_by_user->lastname;
+        $email = $brf->checked_by_user->email;
+        $subject = $brf->checked_by_user->firstname . ' ' . $brf->checked_by_user->lastname . ' created a BRF';
+
+        /* send mail to user */
+        Mail::send('emails.brf.create-for-approver', [
+            'brf' => $brf
+        ], function ($message) use ($name, $email, $subject) {
+            $message->to($email, $name)
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+            ->subject($subject);
+        });
+
         $request->session()->flash('success', 'Data has been added');
         return redirect()->route('internals.brf.manage', [$brf->id]);
     }
