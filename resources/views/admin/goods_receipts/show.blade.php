@@ -130,7 +130,7 @@
                                             <a href="{{ route('internals.goods-receipts.view', [$goods_receipt->id]) }}" id="table-letter-margin" target="_blank">View</a> |  
 
                                             @if ($goods_receipt->status == GoodsReceiptStatus::FULFILLING)
-                                                @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Stockman' || $goods_receipt->created_by_user->id == auth()->user()->id)
+                                                @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Stockman' || auth()->user()->role == 'Programs' || $goods_receipt->created_by_user->id == auth()->user()->id)
                                                     <a href="{{ route('internals.goods-receipts.manage', [$goods_receipt->id]) }}" id="space-table">Manage</a> | 
                                                 @endif
 
