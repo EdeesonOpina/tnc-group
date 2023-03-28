@@ -14,7 +14,7 @@
             </nav>
             <h1 class="m-0">Edit Project</h1>
         </div>
-        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="submit" class="btn btn-success" id="submitButton" onclick="submitForm(this);">Submit</button>
     </div>
 </div>
 
