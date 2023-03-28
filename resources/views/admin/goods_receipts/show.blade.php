@@ -106,7 +106,7 @@
                             <tr>
                                 <th id="compact-table">GRPO#</th>
                                 <th id="compact-table">PO#</th>
-                                <th id="compact-table">Amount Paid</th>
+                                <!-- <th id="compact-table">Amount Paid</th> -->
                                 <th id="compact-table">Grand Total</th>
                                 <th id="compact-table">Supplier</th>
                                 <th id="compact-table">Destination</th>
