@@ -625,9 +625,9 @@ class BRFController extends Controller
         $brf->status = BudgetRequestFormStatus::DONE;
         $brf->save();
 
-        $ce = Project::find($brf->project->id);
-        $ce->status = ProjectStatus::DONE;
-        $ce->save();
+        // $ce = Project::find($brf->project->id);
+        // $ce->status = ProjectStatus::DONE;
+        // $ce->save();
 
         /* requested by user */
         $name = $brf_file->budget_request_form->requested_by_user->firstname . ' ' . $brf_file->budget_request_form->requested_by_user->lastname;
