@@ -147,6 +147,12 @@
                                             <a href="#" data-href="{{ route('internals.inventories.items.serial-numbers.recover', [$item->id, $item_serial_number->id]) }}" data-toggle="modal" data-target="#confirm-action">Recover</a>
                                         @endif
 
+                                        @if ($item_serial_number->status == ItemSerialNumberStatus::FLOATING)
+                                            @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+                                                <a href="#" data-href="{{ route('internals.inventories.items.serial-numbers.delete', [$item->id, $item_serial_number->id]) }}" data-toggle="modal" data-target="#confirm-action">Delete</a>
+                                            @endif
+                                        @endif
+
                                     </td>
                                     <td id="compact-table">{{ $item_serial_number->delivery_receipt->delivery_receipt_number ?? null }}</td>
                                     <td id="compact-table">
