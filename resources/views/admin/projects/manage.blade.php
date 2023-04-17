@@ -278,8 +278,8 @@
                                                     <a href="#" data-href="{{ route('internals.projects.details.disapprove', [$pjd->id]) }}" data-toggle="modal" data-target="#confirm-action" id="space-table">Disapprove</a>
                                                 @endif
 
-                                                @if ($pjd->status == ProjectDetailStatus::APPROVED || $pjd->status == ProjectDetailStatus::OPEN_FOR_EDITING)
-                                                    @if (auth()->user()->id == $pjd->created_by_user_id || auth()->user()->id == $pjd->prepared_by_user_id || auth()->user()->id == $pjd->noted_by_user_id || auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+                                                @if ($pjd->status == ProjectDetailStatus::APPROVED)
+                                                    @if (auth()->user()->id == $project->created_by_user_id || auth()->user()->id == $project->prepared_by_user_id || auth()->user()->id == $project->noted_by_user_id || auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
                                                         <a href="#" data-href="{{ route('internals.projects.details.delete', [$pjd->id]) }}" data-toggle="modal" data-target="#confirm-action">Delete</a>
                                                     @endif
                                                 @endif
