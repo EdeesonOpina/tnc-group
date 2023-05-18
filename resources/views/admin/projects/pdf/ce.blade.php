@@ -176,7 +176,7 @@
                     </tr>  
                 @foreach ($pjds as $pjd)
                     <tr>
-                        <td class="table-black-border min-space">
+                        <td class="table-black-border">
                             @if ($pjd->sub_category)
                                 <strong>{{ $pjd->sub_category->name }}</strong>
                             @endif
