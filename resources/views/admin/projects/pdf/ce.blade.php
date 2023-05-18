@@ -62,7 +62,7 @@
 
     .min-space {
         padding: 5px !important;
-        font-size: 10px !important;
+        font-size: 7px !important;
     }
 
     #compact-table {
