@@ -14,6 +14,9 @@ use App\Models\CompanyStatus;
             </nav>
             <h1 class="m-0">Inventories</h1>
         </div>
+        <a href="{{ route('internals.inventories.print', ['*']) }}">
+            <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print</button>
+        </a>
     </div>
 </div>
 
