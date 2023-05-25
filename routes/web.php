@@ -1081,6 +1081,11 @@ Route::group(['prefix' => 'qr/'], function () {
     Route::group(['prefix' => 'items/'], function () {
         Route::get('/view/{item_id}', 'App\Http\Controllers\QR\ItemController@view')->name('qr.items.view');
     });
+
+    // items
+    Route::group(['prefix' => 'site/'], function () {
+        Route::get('/home', 'App\Http\Controllers\QR\SiteController@home')->name('qr.items.home');
+    });
 });
 
 // share group
