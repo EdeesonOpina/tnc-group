@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
-    return view('qr.site.home');
+    public function home ()
+    {
+        return view('qr.site.home');
+    }
 }
