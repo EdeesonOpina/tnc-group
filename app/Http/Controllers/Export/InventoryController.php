@@ -18,16 +18,29 @@ class InventoryController extends Controller
 {
     public function print($company_id)
     {
-        $company = Company::find($company_id);
+        if ($company_id != '*') {
+            $company = Company::find($company_id);
 
-        $inventories = Inventory::leftJoin('items', 'inventories.item_id', '=', 'items.id')
-                            ->select('inventories.*')
-                            ->where('inventories.company_id', $company->id)
-                            ->where('inventories.qty', '>', 0)
-                            ->where('inventories.status', InventoryStatus::ACTIVE)
-                            ->where('items.status', ItemStatus::ACTIVE)
-                            ->orderBy('items.name', 'asc')
-                            ->get();
+            $inventories = Inventory::leftJoin('items', 'inventories.item_id', '=', 'items.id')
+                                ->select('inventories.*')
+                                ->where('inventories.company_id', $company->id)
+                                ->where('inventories.qty', '>', 0)
+                                ->where('inventories.status', InventoryStatus::ACTIVE)
+                                ->where('items.status', ItemStatus::ACTIVE)
+                                ->orderBy('items.name', 'asc')
+                                ->get();
+        } else {
+            $inventories = Inventory::leftJoin('items', 'inventories.item_id', '=', 'items.id')
+                                ->select('inventories.*')
+                                ->where('inventories.qty', '>', 0)
+                                ->where('inventories.status', InventoryStatus::ACTIVE)
+                                ->where('items.status', ItemStatus::ACTIVE)
+                                ->orderBy('items.name', 'asc')
+                                ->get();
+
+            $company = null;
+        }
+        
 
         return view('admin.inventories.print', compact(
             'company',

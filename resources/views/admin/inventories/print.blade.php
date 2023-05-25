@@ -67,15 +67,26 @@
 <body>
 <div class="container">
   <br><br>
-  <a href="{{ route('internals.inventories.manage', [$company->id]) }}" class="no-underline">
-    <button class="btn btn-light">Go Back</button>
-  </a>
+  @if ($company)
+      <a href="{{ route('internals.inventories.manage', [$company->id]) }}" class="no-underline">
+        <button class="btn btn-light">Go Back</button>
+      </a>
+  @else
+    <a href="{{ route('internals.inventories') }}" class="no-underline">
+        <button class="btn btn-light">Go Back</button>
+    </a>
+  @endif
+
   <button class="btn btn-success" onclick="printDiv('printableArea')">Print Page</button>
   <br><br>
   <!-- START OF PRINTABLE AREA -->
   <div id="printableArea">
-    @if ($company->image)
-        <img src="{{ url($company->image) }}" width="150px">
+    @if ($company)
+        @if ($company->image)
+            <img src="{{ url($company->image) }}" width="150px">
+        @else
+            <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="40px" style="margin-right: 7px;">
+        @endif
     @else
         <img src="{{ url(env('BIG_FOUR_ICON')) }}" width="40px" style="margin-right: 7px;">
     @endif
@@ -88,10 +99,14 @@
                 <td class="text-left">
                     <p class="font-change">
                       <strong>Company:</strong><br>
-                      {{ $company->name }}<br>
-                      {{ $company->line_address_1 }}<br>
-                      {{ $company->line_address_2 }}<br>
-                      {{ $company->mobile }} / {{ $company->phone }}
+                      @if ($company)
+                          {{ $company->name }}<br>
+                          {{ $company->line_address_1 }}<br>
+                          {{ $company->line_address_2 }}<br>
+                          {{ $company->mobile }} / {{ $company->phone }}
+                      @else
+                        ALL
+                      @endif
                     </p>
                 </td>
             </tr>
