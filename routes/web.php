@@ -95,13 +95,13 @@ Route::group(['prefix' => 'accounting/', 'middleware' => ['auth', 'accounting']]
 
         Route::get('/add', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@add')->name('accounting.liquidations.add');
         Route::post('/create', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@create')->name('accounting.liquidations.create');
-        Route::get('/view/{expense_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@view')->name('accounting.liquidations.view');
-        Route::get('/edit/{expense_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@edit')->name('accounting.liquidations.edit');
+        Route::get('/view/{liquidation_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@view')->name('accounting.liquidations.view');
+        Route::get('/edit/{liquidation_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@edit')->name('accounting.liquidations.edit');
         Route::post('/edit', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@update')->name('accounting.liquidations.update');
-        Route::get('/approve/{expense_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@approve')->name('accounting.liquidations.approve');
-        Route::get('/disapprove/{expense_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@disapprove')->name('accounting.liquidations.disapprove');
-        Route::get('/delete/{expense_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@delete')->name('accounting.liquidations.delete');
-        Route::get('/recover/{expense_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@recover')->name('accounting.liquidations.recover');
+        Route::get('/approve/{liquidation_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@approve')->name('accounting.liquidations.approve');
+        Route::get('/disapprove/{liquidation_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@disapprove')->name('accounting.liquidations.disapprove');
+        Route::get('/delete/{liquidation_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@delete')->name('accounting.liquidations.delete');
+        Route::get('/recover/{liquidation_id}', 'App\Http\Controllers\Admin\Liquidation\LiquidationController@recover')->name('accounting.liquidations.recover');
 
         // for searching
         Route::group(['prefix' => 'search/'], function () {
