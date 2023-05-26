@@ -567,13 +567,12 @@
                                     <td id="compact-table"><i class="material-icons icon-16pt text-muted mr-1">today</i> {{ Carbon::parse($budget_request_form->needed_date)->format('M d Y') }}</td>
                                     <td>P{{ number_format($total, 2) }}</td>
                                 </tr>
-
-                                <tr>
-                                    <td colspan="3">&nbsp;</td>
-                                    <td><strong>Grand Total</strong></td>
-                                    <td><strong>P{{ number_format($project->used_cost(), 2) }}</strong></td>
-                                </tr>
                             @endforeach
+                            <tr>
+                                <td colspan="3">&nbsp;</td>
+                                <td><strong>Grand Total</strong></td>
+                                <td><strong>P{{ number_format($project->used_cost(), 2) }}</strong></td>
+                            </tr>
                         </tbody>
                     </table>
 
