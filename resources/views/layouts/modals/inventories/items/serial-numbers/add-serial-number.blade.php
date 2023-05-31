@@ -60,7 +60,7 @@
               <label>Delivery Receipt Number</label><br>
               <input type="text" name="delivery_receipt_number" class="form-control" placeholder="Enter delivery receipt number" value="{{ old('delivery_receipt_number') }}" required><hr>
               <label>Serial Number</label><br>
-              <input type="text" name="code[]" class="form-control" placeholder="Scan or enter serial number" value="{{ old('code') }}"><br>
+              <input type="text" name="code[]" class="form-control" placeholder="Scan or enter serial number" value=""><br>
 
               <div id="serial-div"></div>
 

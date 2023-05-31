@@ -31,7 +31,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Serial #</label>
-                            <input name="code" type="text" class="form-control" placeholder="Search by serial number" value="{{ old('code') }}">
+                            <input name="code" type="text" class="form-control" placeholder="Search by serial number" value="">
                         </div>
                     </div>
                     <div class="col">
