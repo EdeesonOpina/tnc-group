@@ -169,7 +169,7 @@
                 <th id="compact-table" class="table-black-border table-color-primary min-space">Description</th>
                 <th id="compact-table" class="table-black-border table-color-primary min-space">Quantity</th>
                 <th id="compact-table" class="table-black-border table-color-primary min-space">Internal Price</th>
-                <th id="compact-table" class="table-black-border table-color-primary min-space">Total Price</th>
+                <th id="compact-table" class="table-black-border table-color-primary min-space">CE Price</th>
             </tr>
         </thead>
         <tbody class="list" id="companies">
@@ -196,7 +196,7 @@
                         </td>
                         <td class="table-black-border min-space">{!! $pjd->description !!}</td>
                         <td class="table-black-border min-space">{{ $pjd->qty }}</td>
-                        <td class="table-black-border min-space">P{{ number_format($pjd->price, 2) }}</td>
+                        <td class="table-black-border min-space">P{{ number_format($pjd->internal_total, 2) }}</td>
                         <td class="table-black-border min-space">P{{ number_format($pjd->total, 2) }}</td>
                     </tr>
                 @endforeach

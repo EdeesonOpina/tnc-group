@@ -217,6 +217,24 @@ class DetailController extends Controller
         $project_detail->status = ProjectDetailStatus::DISAPPROVED; // mark data as cancelled
         $project_detail->save();
 
+        $project = Project::find($project_detail->project_id);
+        $project->usd_total -= $project_detail->usd_total;
+        $project->internal_total -= $project_detail->internal_total;
+        $project->total -= $project_detail->total;
+        $project->save();
+
+        /* update the asf */
+        $margin_price = ($project->total * ($project->margin / 100));
+        $project->asf = $margin_price;
+        $project->usd_asf = $margin_price / $project->usd_rate;
+        $project->save();
+
+        /* update the vat */
+        $vat_price = (($project->total + $project->asf) * ($project->vat_rate / 100));
+        $project->vat = $vat_price;
+        $project->usd_vat = $vat_price / $project->usd_rate;
+        $project->save();
+
         $request->session()->flash('success', 'Data has been disapproved');
 
         return back();
@@ -244,6 +262,24 @@ class DetailController extends Controller
         $project_detail = ProjectDetail::find($project_detail_id);
         $project_detail->status = ProjectDetailStatus::CANCELLED; // mark data as cancelled
         $project_detail->save();
+
+        $project = Project::find($project_detail->project_id);
+        $project->usd_total -= $project_detail->usd_total;
+        $project->internal_total -= $project_detail->internal_total;
+        $project->total -= $project_detail->total;
+        $project->save();
+
+        /* update the asf */
+        $margin_price = ($project->total * ($project->margin / 100));
+        $project->asf = $margin_price;
+        $project->usd_asf = $margin_price / $project->usd_rate;
+        $project->save();
+
+        /* update the vat */
+        $vat_price = (($project->total + $project->asf) * ($project->vat_rate / 100));
+        $project->vat = $vat_price;
+        $project->usd_vat = $vat_price / $project->usd_rate;
+        $project->save();
 
         $request->session()->flash('success', 'Data has been cancelled');
 

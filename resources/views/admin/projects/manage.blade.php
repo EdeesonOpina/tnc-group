@@ -27,6 +27,10 @@
             <button type="button" class="btn btn-light" id="margin-right"><i class="fa fa-print" id="margin-right"></i>Print Internal CE</button>
         </a> -->
 
+        <a href="{{ route('internals.exports.projects.excel', [$project->id]) }}">
+            <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-file-excel" id="margin-right"></i>Create Excel</button>
+        </a>
+
         @if ($project->status == ProjectStatus::ON_PROCESS || $project->status == ProjectStatus::DISAPPROVED || $project->status == ProjectStatus::OPEN_FOR_EDITING)
             <a href="{{ route('internals.projects.for-approval', [$project->id]) }}">
                 <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-check" id="margin-right"></i>Submit For Approval</button>

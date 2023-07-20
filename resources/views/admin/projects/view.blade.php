@@ -24,13 +24,14 @@
             </nav>
             <h1 class="m-0">Project</h1>
         </div>
+
+        <a href="{{ route('internals.exports.projects.excel', [$project->id]) }}">
+            <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-file-excel" id="margin-right"></i>Create Excel</button>
+        </a>
+        
         @if ($project->status == ProjectStatus::APPROVED)
             <a href="#" data-toggle="modal" data-target="#share-project-{{ $project->id }}">
                 <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-link" id="margin-right"></i>Share CE Link</button>
-            </a>
-
-            <a href="{{ route('internals.exports.projects.excel', [$project->id]) }}">
-                <button type="button" class="btn btn-success" id="margin-right"><i class="fa fa-file-excel" id="margin-right"></i>Create Excel</button>
             </a>
 
             <a href="{{ route('internals.exports.projects.pdf.ce', [$project->id]) }}">
