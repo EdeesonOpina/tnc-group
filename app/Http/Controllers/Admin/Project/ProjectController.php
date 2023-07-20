@@ -187,13 +187,13 @@ class ProjectController extends Controller
         $subject = auth()->user()->firstname . ' ' . auth()->user()->lastname . ' created a project';
 
         /* send mail to user */
-        Mail::send('emails.projects.create', [
-            'project' => $project
-        ], function ($message) use ($name, $email, $subject) {
-            $message->to($email, $name)
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject($subject);
-        });
+        // Mail::send('emails.projects.create', [
+        //     'project' => $project
+        // ], function ($message) use ($name, $email, $subject) {
+        //     $message->to($email, $name)
+        //     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        //     ->subject($subject);
+        // });
 
         $request->session()->flash('success', 'Data has been added');
         return redirect()->route('internals.projects.manage', [$project->id]);
@@ -204,7 +204,7 @@ class ProjectController extends Controller
         $project = Project::where('reference_number', $reference_number)->first();
         $project_details = ProjectDetail::where('project_id', $project->id)
                         ->where('status', '!=', ProjectDetailStatus::INACTIVE)
-                        ->paginate(15);
+                        ->get();
         $budget_request_forms = BudgetRequestForm::where('project_id', $project->id)
                         ->where('status', '!=', BudgetRequestFormStatus::DISAPPROVED)
                         ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
@@ -237,7 +237,7 @@ class ProjectController extends Controller
         $project = Project::find($project_id);
         $project_details = ProjectDetail::where('project_id', $project_id)
                                 ->where('status', '!=', ProjectDetailStatus::INACTIVE)
-                                ->paginate(15);
+                                ->get();
         $budget_request_forms = BudgetRequestForm::where('project_id', $project_id)
                         ->where('status', '!=', BudgetRequestFormStatus::DISAPPROVED)
                         ->where('status', '!=', BudgetRequestFormStatus::INACTIVE)
